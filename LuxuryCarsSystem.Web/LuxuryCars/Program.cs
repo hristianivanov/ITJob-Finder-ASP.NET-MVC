@@ -1,3 +1,6 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using LuxuryCars.Data;
 namespace LuxuryCars
 {
 	using Microsoft.AspNetCore.Identity;
