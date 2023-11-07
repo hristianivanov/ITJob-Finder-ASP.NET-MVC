@@ -1,8 +1,9 @@
 namespace LuxuryCars.Web
 {
-	using LuxuryCars.Web.Data;
 	using Microsoft.AspNetCore.Identity;
 	using Microsoft.EntityFrameworkCore;
+
+	using Data;
 
 	public class Program
 	{
