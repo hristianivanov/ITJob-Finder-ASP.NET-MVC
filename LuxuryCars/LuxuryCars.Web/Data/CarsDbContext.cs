@@ -3,9 +3,9 @@
 	using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 	using Microsoft.EntityFrameworkCore;
 
-	public class ApplicationDbContext : IdentityDbContext
+	public class CarsDbContext : IdentityDbContext
 	{
-		public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+		public CarsDbContext(DbContextOptions<CarsDbContext> options)
 			: base(options)
 		{
 		}
