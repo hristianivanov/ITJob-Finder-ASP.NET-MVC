@@ -1,6 +1,3 @@
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using LuxuryCars.Web.Data;
 namespace LuxuryCars.Web
 {
 	using Microsoft.AspNetCore.Identity;
