@@ -1,0 +1,66 @@
+/* This is the user panel off-canvas menu that opens whenever
+ * a user taps on their profile icon on a mobile device.
+ */
+
+.user-panel-menu {
+    position: fixed;
+    top: 117px;
+    padding: 50px 30px;
+    width: 100%;
+    left: 0;
+    background: white;
+    height: calc(100vh - 117px);
+    overflow: scroll;
+    z-index: 10;
+    transform: translate(100%, 0);
+    /* Hide the menu until it's toggled on, in an animateable way */
+    transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0);
+}
+
+/* Company reps don't have an admin bar */
+
+.is-company-rep .user-panel-menu {
+    top: 70px;
+}
+
+.user-panel-menu.open {
+    transform: none;
+}
+
+.user-panel-menu .button-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.user-panel-menu .sidebar-toggle {
+    display: none;
+}
+
+.user-panel-menu .user-management-menu-section {
+    font-size: 15px;
+    text-transform: uppercase;
+    color: #4F4F4F;
+    font-weight: 500;
+}
+
+.user-panel-menu .menu {
+    padding: 0;
+    margin-bottom: 20px;
+}
+
+.user-panel-menu .menu .menu-item {
+    display: flex;
+    align-items: center;
+    padding: 18px 0 16px;
+    font-size: 16px;
+    justify-content: flex-start;
+    border: none;
+}
+
+.user-panel-menu .menu .menu-item a {
+    font-size: 16px;
+    font-weight: 300;
+    text-transform: capitalize;
+    padding: 0;
+}

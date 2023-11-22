@@ -1,0 +1,314 @@
+/* General header styling */
+
+.site-header .inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 35px;
+    background-color: #fff;
+    height: 80px;
+}
+
+/** Hide the mobile menu on desktop */
+
+.site-header .inner .mobile-menu {
+    display: none;
+}
+
+/** Header left **/
+
+.site-header .inner .header-left .dev-bg-logo {
+    height: 24px;
+    width: 121px;
+    flex: 0 0 121px;
+}
+
+/** Navigation **/
+
+.site-header .inner .main-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    column-gap: 40px;
+    margin: auto;
+    padding-left: 100px;
+    /* moves the menu a bit more to the center, compensating for the logo */
+    list-style: none;
+}
+
+/** Header right **/
+
+.site-header .inner .header-right {
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: flex-end;
+    flex: 0 0 345px;
+    min-height: 48px;
+}
+
+.site-header .inner .header-right .button {
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.site-header .inner .header-language-switch,
+#menuToggle #menu .menu-buttons-wrap .header-language-switch {
+    margin-right: 22px;
+    border: 1px solid #595959;
+    padding: 13px;
+    border-radius: 7px;
+    font-size: 14px;
+    font-weight: 300;
+    color: #595959;
+    transition: all 0.2s ease-in-out;
+}
+
+.site-header .inner .header-language-switch:hover {
+    border-color: white;
+    box-shadow: 0 3px 10px #00000029;
+}
+
+/** OLD code | Header user menu  **/
+
+/* -- Header user toggle menu */
+
+.user-menu-wrapper {
+    display: flex;
+    width: 40px;
+    height: 40px;
+    margin: 4px 5px 4px 0;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background-color: #304ffe;
+    color: #fff;
+    /* These are to prevent text to be selectable */
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.user-profile-toggle {
+    color: #fff;
+    margin-top: 3px;
+    padding: 12px;
+    font-weight: 400;
+}
+
+.user-profile-dropdown {
+    list-style: none;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    display: none;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 5px;
+    width: 200px;
+    box-shadow: 10px 10px 40px rgba(0, 0, 0, 0.0509804);
+    z-index: 100;
+}
+
+.user-profile-dropdown.open {
+    display: block;
+}
+
+.user-profile-dropdown li a {
+    padding: 10px 0;
+    display: block;
+    color: #999999;
+    border-bottom: 1px solid #E0E2E9;
+}
+
+.user-profile-dropdown li a:visited {
+    color: #999999;
+}
+
+.user-profile-dropdown li:last-child a {
+    border: none;
+}
+
+/* -- End Header user toggle menu */
+
+/* mobile menu styles */
+
+.login-links {
+    right: 50px;
+}
+
+.mobile-menu {
+    display: block;
+    position: static;
+    margin-left: 55px;
+    z-index: 5;
+}
+
+.mobile-menu #menuToggle {
+    display: block;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    padding-right: 20px;
+    z-index: 1;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.mobile-menu #menuToggle a {
+    text-decoration: none;
+    color: #232323;
+    transition: color 0.3s ease;
+}
+
+.mobile-menu #menuToggle a:hover {
+    color: tomato;
+}
+
+.mobile-menu #menuToggle input {
+    display: block;
+    width: 40px;
+    height: 32px;
+    position: absolute;
+    top: -7px;
+    left: -5px;
+    cursor: pointer;
+    opacity: 0;
+    /* hide this */
+    z-index: 2;
+    /* and place it over the hamburger */
+    -webkit-touch-callout: none;
+}
+
+.mobile-menu #menuToggle span {
+    display: block;
+    width: 33px;
+    height: 4px;
+    margin-bottom: 5px;
+    position: relative;
+    background: #cecece;
+    border-radius: 3px;
+    z-index: 1;
+    transform-origin: 4px 0;
+    transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0), background 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0), opacity 0.55s ease;
+}
+
+.mobile-menu #menuToggle span:first-child {
+    transform-origin: 0% 0%;
+}
+
+.mobile-menu #menuToggle span:nth-last-child(2) {
+    transform-origin: 0% 100%;
+}
+
+.mobile-menu #menuToggle input:checked~span {
+    opacity: 1;
+    transform: rotate(-45deg) translate(1px, 2px);
+    background: #cecece;
+}
+
+.mobile-menu #menuToggle input:checked~span:nth-child(3) {
+    opacity: 0;
+    transform: rotate(0deg) scale(0.2, 0.2);
+}
+
+.mobile-menu #menuToggle input:checked~span:nth-child(2) {
+    transform: rotate(45deg) translate(1px, -1px);
+}
+
+.mobile-menu #menu {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    margin: 0;
+    padding: 90px 0 50px;
+    background: #fff;
+    list-style-type: none;
+    -webkit-font-smoothing: antialiased;
+    /* to stop flickering of text in safari */
+    transform-origin: 0% 0%;
+    transform: translate(100%, 0);
+    text-align: right;
+    transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0);
+}
+
+.mobile-menu #menu li {
+    display: block;
+    text-align: right;
+    height: auto;
+    font-size: 22px;
+    border-bottom: none;
+}
+
+.mobile-menu #menu li {
+    display: block;
+    padding: 15px 20px;
+}
+
+.mobile-menu #menu li .nav-link-txt {
+    color: #595959;
+    font-weight: 400;
+}
+
+.mobile-menu #menu li.current_page_item .nav-link-txt {
+    color: #304ffe;
+}
+
+.mobile-menu #menuToggle input:checked~ul {
+    transform: none;
+}
+
+.mobile-menu .nav-right-btn.mobile {
+    display: block;
+    visibility: visible;
+    position: fixed;
+    right: 15px;
+    bottom: 15px;
+}
+
+.mobile-menu .nav-right-btn.mobile .btn-txt {
+    color: #304ffe;
+}
+
+/**************** END mobile menu styling */
+
+/* Medium & down */
+
+@media screen and (max-width: 1200px) {
+    .site-header .inner .header-right {
+        flex: 0 0 auto;
+    }
+    /** Hide desktop-only things **/
+    .site-header .inner .main-nav {
+        display: none;
+    }
+    .site-header .inner .header-right>.button {
+        display: none;
+    }
+    /** Mobile menu **/
+    .site-header .inner .header-right .mobile-menu {
+        display: block;
+        position: static;
+        z-index: 7;
+    }
+    .site-header .inner .header-right #menuToggle {
+        top: 13px;
+        right: 0;
+        padding: 0;
+    }
+}
+
+/* Small */
+
+@media screen and (max-width: 950px) {
+    .site-header .inner {
+        height: 70px;
+        padding: 0 20px;
+    }
+}

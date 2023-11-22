@@ -1,0 +1,493 @@
+/* These are the general styles shared between the series of user management pages. */
+
+/* INDEX:
+ * 1. GENERAL
+ * 2. SIDEBAR
+ * 3. MY FILES
+ * 4. MY PROFILE
+ */
+
+/* 1. GENERAL */
+
+.subscriber-management-wrapper {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.subscriber-management-wrapper .subscriber-management-content {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin: 46px 0;
+    min-height: 500px;
+}
+
+.subscriber-management-wrapper .subscriber-management-content .subscriber-management-content-inner {
+    max-width: 946px;
+    width: 100%;
+    margin: 0 30px;
+}
+
+.subscriber-management-wrapper .subscriber-management-content .subscriber-profile-heading {
+    margin-bottom: 25px;
+}
+
+.subscriber-management-wrapper .subscriber-management-content .subscriber-profile-heading h1 {
+    font-size: 30px;
+}
+
+.subscriber-management-wrapper .unsubscribe-all-wrapper {
+    font-weight: 600;
+    color: #707070;
+}
+
+.user-management-container.two-col-container {
+    display: grid;
+    grid-template-columns: calc(50% - 35px) calc(50% - 35px);
+    grid-column-gap: 70px;
+}
+
+.user-management-container.two-col-container .column-title {
+    margin-bottom: 30px;
+    font-size: 16px;
+}
+
+.user-management-container.two-col-container .column-title::after {
+    content: '';
+    display: block;
+    height: 4px;
+    width: 36px;
+    border-radius: 5px;
+    background-color: #374FFE;
+}
+
+.external-unsubscribe {
+    max-width: 720px;
+    width: 100%;
+    margin: 40px auto 40px auto;
+}
+
+.external-unsubscribe form .buttons {
+    text-align: right;
+}
+
+/* 2. SIDEBAR */
+
+.subscriber-management-wrapper .subscriber-sidebar {
+    background-color: white;
+    padding: 55px 0 0 45px;
+    min-width: 375px;
+}
+
+.subscriber-management-wrapper .subscriber-sidebar .sidebar-toggle {
+    display: none;
+}
+
+.subscriber-management-wrapper .user-management-menu-section {
+    display: block;
+    font-size: 15px;
+    font-weight: 500;
+    color: #4F4F4F;
+    margin: 25px 0;
+    padding-left: 25px;
+}
+
+.subscriber-management-wrapper .menu {
+    padding-left: 0;
+    list-style: none;
+}
+
+.subscriber-management-wrapper .menu .menu-item {
+    padding: 24px 25px 20px;
+    font-size: 16px;
+    justify-content: flex-start;
+    width: fit-content;
+    border-radius: 10px;
+    transition: all 0.2s ease-in;
+}
+
+.subscriber-management-wrapper .menu .menu-item:hover {
+    background-color: #f5f5f5;
+    border-radius: 10px;
+    padding-right: 30px;
+}
+
+.subscriber-management-wrapper .menu .menu-item a {
+    color: #595959;
+}
+
+.subscriber-management-wrapper .menu .menu-item.current-menu-item {
+    background-color: #F5F5F5;
+    width: auto;
+    border: none;
+    border-radius: 10px 0 0 10px;
+}
+
+.subscriber-management-wrapper .menu .menu-item.current-menu-item a {
+    font-weight: 400;
+}
+
+.subscriber-management-wrapper .menu .menu-item.icon::before,
+.user-panel-menu .menu .menu-item.icon::before {
+    content: '';
+    display: inline-block;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: contain;
+    flex-shrink: 0;
+    margin-right: 10px;
+    margin-top: -5px;
+}
+
+.subscriber-management-wrapper .menu .menu-item.icon-calendar::before,
+.user-panel-menu .menu .menu-item.icon-calendar::before {
+    background-image: url('../../images/icon-it-calendar.svg');
+    width: 20px;
+    height: 20px;
+}
+
+.subscriber-management-wrapper .menu .menu-item.icon-applications::before,
+.user-panel-menu .menu .menu-item.icon-applications::before {
+    background-image: url('../../images/icon-applications.svg');
+    width: 20px;
+    height: 20px;
+}
+
+.subscriber-management-wrapper .menu .menu-item.icon-saved-job-listings::before,
+.user-panel-menu .menu .menu-item.icon-saved-job-listings::before {
+    background-image: url('../../images/icon-saved-job-listings.svg');
+    width: 20px;
+    height: 20px;
+}
+
+.subscriber-management-wrapper .menu .menu-item.icon-subscriptions::before,
+.user-panel-menu .menu .menu-item.icon-subscriptions::before {
+    background-image: url('../../images/icon-subscriptions.svg');
+    width: 20px;
+    height: 20px;
+}
+
+.subscriber-management-wrapper .menu .menu-item.icon-files::before,
+.user-panel-menu .menu .menu-item.icon-files::before {
+    background-image: url('../../images/icon-files.svg');
+    width: 20px;
+    height: 20px;
+}
+
+.subscriber-management-wrapper .menu .menu-item.icon-profile::before,
+.user-panel-menu .menu .menu-item.icon-profile::before {
+    background-image: url('../../images/icon-profile.svg');
+    width: 20px;
+    height: 20px;
+}
+
+.subscriber-management-wrapper .menu .menu-item.icon-profile-red::before,
+.user-panel-menu .menu .menu-item.icon-profile-red::before {
+    background-image: url('../../images/icon-profile-red.svg');
+    width: 20px;
+    height: 20px;
+}
+
+.subscriber-management-wrapper .menu .menu-item.icon-logout::before,
+.user-panel-menu .menu .menu-item.icon-logout::before {
+    background-image: url('../../images/icon-logout.svg');
+    width: 20px;
+    height: 20px;
+}
+
+.subscriber-management-wrapper hr,
+.user-panel-menu hr {
+    background-color: #f5f5f5;
+    border: none;
+    height: 1px;
+    margin-left: -45px;
+    /* compensate padding of the parent el */
+}
+
+/* END SIDEBAR */
+
+/* used on multiple pages */
+
+.box-container {
+    width: 100%;
+    max-width: 950px;
+    margin-top: 40px;
+    padding: 30px 30px;
+    background-color: white;
+    box-shadow: 0px 0px 50px #ADADAD1A;
+    border-radius: 5px;
+}
+
+.box-container.empty {
+    text-align: center;
+    padding: 80px 30px 60px 30px;
+}
+
+.box-container.empty .applications-not-found {
+    margin-bottom: 3em;
+}
+
+.box-container.empty h3 {
+    font-size: 20px;
+    color: #231F20;
+    margin-bottom: 0.4em;
+}
+
+.box-container.empty p {
+    font-size: 16px;
+    color: #595959;
+}
+
+.component-custom-pagination {
+    margin-top: 3em;
+}
+
+.cancel-link {
+    color: #CA472E;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 400;
+    border-bottom: 1px solid #CA472E;
+    transition: all 0.2s ease-in-out;
+}
+
+.cancel-link::before {
+    content: '';
+    display: inline-block;
+    width: 1em;
+    height: 1.3em;
+    margin-right: 0.2em;
+    background-image: url(../../images/icon-forbidden.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position-x: left;
+    background-position-y: center;
+    vertical-align: sub;
+    position: relative;
+}
+
+.cancel-link:hover {
+    opacity: 0.5;
+}
+
+/* APPLICATIONS HISTORY */
+
+.subscriber-applications .list-header {
+    display: flex;
+    font-size: 12px;
+    color: #ADADAD;
+    font-weight: bold;
+    padding: 0 0 10px 0;
+}
+
+.subscriber-applications .list-header .date {
+    flex-basis: 25%;
+}
+
+.subscriber-applications .list-header .title {
+    flex-basis: 55%;
+}
+
+.subscriber-applications .list-header .company {
+    flex-basis: 20%;
+}
+
+@media screen and (max-width: 950px) {
+    .subscriber-applications .list-header {
+        display: none;
+    }
+}
+
+/* END APPLICATIONS HISTORY */
+
+/* SAVED JOB ITEMS */
+
+.saved-jobs-list .list-header {
+    display: flex;
+    font-size: 12px;
+    color: #ADADAD;
+    font-weight: bold;
+    padding: 0 0 10px 0;
+}
+
+.saved-jobs-list .list-header .date {
+    flex-basis: 20%;
+}
+
+.saved-jobs-list .list-header .title {
+    flex-basis: 45%;
+}
+
+.saved-jobs-list .list-header .company {
+    flex-basis: 20%;
+}
+
+.saved-jobs-list .list-header .actions {
+    flex-basis: 15%;
+}
+
+@media screen and (max-width: 950px) {
+    .saved-jobs-list .list-header {
+        display: none;
+    }
+}
+
+/* SAVED JOB ITEMS */
+
+/* 3. MY FILES */
+
+.subscriber-management-wrapper .file-upload-form-wrap {
+    background-color: white;
+    padding: 30px;
+    border-radius: 5px;
+}
+
+.subscriber-management-wrapper .file-upload-form-wrap .field-description {
+    font-size: 14px;
+    font-weight: 300;
+}
+
+.subscriber-management-wrapper .file-upload-form-wrap .field-description.bold {
+    font-weight: 500;
+}
+
+.subscriber-management-wrapper .file-upload-form-wrap .file-upload-field-wrap {
+    display: flex;
+}
+
+.subscriber-management-wrapper .file-upload-form-wrap .file-upload-field-wrap .input {
+    height: 50px;
+    margin-right: 10px;
+}
+
+.subscriber-management-wrapper .file-upload-form-wrap .upload-field-block .upload-button {
+    margin-top: 20px;
+    width: 100%;
+    border: none;
+}
+
+/* END MY FILES */
+
+/* 4. MY PROFILE */
+
+.subscriber-management-wrapper .my-profile-column .user-details-form {
+    background-color: white;
+    padding: 30px;
+    border-radius: 5px;
+}
+
+.subscriber-management-wrapper .my-profile-column .user-details-form .field-wrap {
+    margin-top: 30px;
+}
+
+.subscriber-management-wrapper .my-profile-column .user-details-form .field-wrap .input,
+.subscriber-management-wrapper .my-profile-column .user-details-form .subscriber-field-wrap .input {
+    height: 50px;
+}
+
+.subscriber-management-wrapper .my-profile-column .user-details-form label {
+    font-size: 12px;
+    color: #ADADAD;
+}
+
+.subscriber-management-wrapper .my-profile-column .user-details-form .subscriber-submit-changes,
+.subscriber-management-wrapper .my-profile-column .user-details-form .subscriber-password-change {
+    width: 100%;
+}
+
+.subscriber-management-wrapper .my-profile-column .change-password-form .subscriber-submit {
+    margin-top: 30px;
+}
+
+/* END MY PROFILE */
+
+/* Small */
+
+@media screen and (max-width: 950px) {
+    .user-management-container.two-col-container {
+        grid-template-columns: 100%;
+        padding: 0 20px;
+    }
+    .subscriber-management-wrapper .subscriber-sidebar {
+        display: none;
+    }
+    .subscriber-management-wrapper .subscriber-management-content .subscriber-management-content-inner {
+        margin: 0;
+        padding: 0 20px;
+    }
+    .subscriber-management-wrapper .subscriber-management-content .subscriber-profile-heading {
+        text-align: center;
+    }
+    .subscriber-management-wrapper .subscriber-management-content .my-profile-column {
+        font-size: 12px;
+    }
+    .subscriber-management-wrapper .upload-field-block #uploadbrowsebutton {
+        font-size: 12px;
+        padding: 14px 10px;
+    }
+}
+
+/* Medium ONLY */
+
+@media screen and (max-width: 1200px) and (min-width: 950px) {
+    .subscriber-management-wrapper {
+        position: relative;
+    }
+    .subscriber-management-wrapper .subscriber-sidebar {
+        /* blame the webflow styles for this selector */
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 375px;
+        box-shadow: 0 3px 50px #0000003E;
+        z-index: 3;
+        transition: width 0.2s ease-in-out;
+    }
+    .subscriber-management-wrapper .subscriber-sidebar.closed {
+        padding: 60px 45px;
+        min-width: unset;
+        width: 146px;
+        box-shadow: none;
+    }
+    .subscriber-management-wrapper .subscriber-sidebar.closed .user-management-menu-section {
+        margin: 0;
+        padding: 0;
+    }
+    .subscriber-management-wrapper .subscriber-sidebar.closed .menu .menu-item {
+        position: relative;
+        width: 60px;
+        height: 60px;
+        justify-content: center;
+    }
+    .subscriber-management-wrapper .subscriber-sidebar.closed .menu .menu-item.current-menu-item {
+        border-radius: 10px;
+    }
+    .subscriber-management-wrapper .subscriber-sidebar.closed hr {
+        width: calc(100% + 90px);
+    }
+    .subscriber-management-wrapper .subscriber-sidebar.closed .menu .menu-item a {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        font-size: 0;
+    }
+    .subscriber-management-wrapper .subscriber-sidebar.closed .menu .menu-item.icon::before,
+    .user-panel-menu .subscriber-sidebar.closed .menu .menu-item.icon::before {
+        margin: 0 auto;
+    }
+    .subscriber-management-wrapper .subscriber-sidebar.open+.subscriber-management-content,
+    .subscriber-management-wrapper .subscriber-sidebar.closed+.subscriber-management-content {
+        margin-left: 146px;
+    }
+    .subscriber-management-wrapper .subscriber-sidebar .sidebar-toggle {
+        display: block;
+        position: absolute;
+        right: -20px;
+        transform: rotate(180deg);
+        transition: transform 0.2s ease-in-out;
+    }
+    .subscriber-management-wrapper .subscriber-sidebar.closed .sidebar-toggle {
+        transform: rotate(0deg);
+    }
+}

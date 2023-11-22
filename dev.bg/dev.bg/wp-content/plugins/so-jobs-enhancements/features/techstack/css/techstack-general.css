@@ -1,0 +1,15 @@
+/* Tech stack icons (DBR2-124 / DVB-861) */
+
+/* Make the tech stack badges grayscale unless hovered */
+
+.component-square-badge.tech-stack-item img {
+    filter: grayscale(1) opacity(0.5);
+    transition: all 0.2s linear;
+}
+
+.component-square-badge.tech-stack-item:hover>img,
+.component-square-badge.tech-stack-item:hover .archive-link>img {
+    filter: grayscale(0) opacity(1);
+}
+
+/* Tech stack icons END */

@@ -1,0 +1,39 @@
+.history-application-item {
+    display: flex;
+    padding: 25px 0;
+    border-bottom: 1px solid #DDD;
+}
+
+.history-application-item:last-child {
+    border-bottom: none;
+}
+
+.history-application-item .date {
+    font-size: 14px;
+    color: #595959;
+    flex-basis: 25%;
+}
+
+.history-application-item .title,
+.history-application-item .title a {
+    font-size: 14px;
+    color: #231F20;
+    font-weight: 400;
+    flex-basis: 55%;
+}
+
+.history-application-item .company,
+.history-application-item .company a {
+    color: #ADADAD;
+    flex-basis: 20%;
+}
+
+@media screen and (max-width: 950px) {
+    .history-application-item {
+        flex-direction: column;
+        padding: 15px 0;
+    }
+    .history-application-item .company {
+        margin-top: 0.5em;
+    }
+}

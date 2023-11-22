@@ -1,0 +1,123 @@
+/* Styles for various titles across the site. Be careful not to accidentally override an old webflow class, that's in use. New classes are preferred */
+
+/* CSS only component, no template part for this one. just use the classes wherever. */
+
+.page-title.big {
+    font-size: 60px;
+    font-weight: 900;
+    text-transform: uppercase;
+    margin-bottom: 50px;
+}
+
+.section-title {
+    line-height: 1.2;
+}
+
+/** we have the 'underlined' text in a bunch of places in our designs
+ * It's a thick, colored line, overlapping the text, while behind it.
+ * Some color choices are there, but the main one (very light blue) is by far the most used around the site.
+ */
+
+.underlined {
+    position: relative;
+    display: inline-block;
+    z-index: 0;
+}
+
+.underlined::after {
+    content: '';
+    display: block;
+    position: absolute;
+    width: calc(100% + 6px);
+    height: 0.25em;
+    /* 11px previously */
+    left: -2px;
+    bottom: 0.17em;
+    background-color: #CED4F5;
+    z-index: -1;
+    /* this might bury the line behind something in some cases, might need to rethink at some point */
+}
+
+.underlined.underline-gold::after {
+    background-color: #FCE8B3;
+}
+
+.underlined.underline-yellow::after {
+    background-color: #FCE8B3;
+    opacity: 50%
+}
+
+.underlined.underline-pink::after {
+    background-color: #FACCC2;
+    opacity: 50%;
+}
+
+.underlined.underline-teal::after {
+    background-color: #89DAD5;
+    opacity: 50%;
+}
+
+.underlined.underline-green::after {
+    background-color: #D4E4B0;
+    opacity: 50%;
+}
+
+.underlined.underline-orange::after {
+    background-color: #FAD4A9;
+    opacity: 50%;
+}
+
+.underlined.underline-purple::after {
+    background-color: #D9C2FF;
+    opacity: 50%;
+}
+
+.underlined.underline-deep-purple::after {
+    background-color: #CED4F5;
+    opacity: 50%;
+}
+
+.underlined.underline-blue::after {
+    background-color: #DEF;
+    opacity: 100%;
+}
+
+.underlined.underline-bright-green::after {
+    background-color: #B3F7D6;
+    opacity: 100%;
+}
+
+.underlined.underline-grey::after {
+    background-color: #EBEBEB;
+    opacity: 100%;
+}
+
+.underlined.underline-white::after {
+    background-color: #fff;
+    opacity: 100%;
+}
+
+/* Small */
+
+@media screen and (max-width: 950px) {
+    .underlined::after {
+        height: 6px;
+    }
+    .page-title.big {
+        font-size: 30px;
+    }
+    .job-listing-category-archive-container .page-header-container .page-title {
+        padding-bottom: 20px;
+    }
+    .job-listing-category-archive-container .page-header-container .page-title .term-name-big {
+        font-size: 30px;
+        line-height: 1.2em;
+    }
+    .job-listing-category-archive-container .page-header-container .page-title .title-wrap .job-count-big {
+        font-size: 45px;
+    }
+    .job-listing-category-archive-container .page-header-container .page-title .title-wrap .title-small {
+        font-size: 18px;
+        line-height: 21px;
+    }
+}

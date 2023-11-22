@@ -1,0 +1,105 @@
+.popup-dialog {
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    align-items: center;
+    justify-content: center;
+    background-color: #70707080;
+    z-index: 16;
+}
+
+.popup-dialog.open {
+    display: flex;
+}
+
+.popup-dialog .inner {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 800px;
+    width: 100%;
+    padding: 60px 150px 80px;
+    text-align: center;
+    background-color: #fff;
+    border-radius: 5px;
+}
+
+.popup-dialog .inner .close-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    transform: rotate(45deg);
+    font-size: 35px;
+    color: #ACACAC;
+    cursor: pointer;
+    transition: color 0.2s ease-in-out;
+}
+
+.popup-dialog .inner .close-button:hover {
+    color: #8e8e8e;
+}
+
+.popup-dialog .inner .popup-image {
+    margin-bottom: 40px;
+}
+
+.popup-dialog .inner .main-text {
+    font-size: 20px;
+    font-weight: bold;
+    color: #231F20;
+}
+
+.popup-dialog .inner .main-text span {
+    color: #304ffe;
+}
+
+.popup-dialog .inner .secondary-text {
+    font-size: 16px;
+    color: #595959;
+    font-weight: 100;
+    margin-bottom: 60px;
+    line-height: 22px;
+}
+
+.popup-dialog .inner .action-buttons-wrap {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    column-gap: 40px;
+}
+
+.popup-dialog#plan-change-successful-dialog .inner .action-buttons-wrap {
+    justify-content: center;
+}
+
+.popup-dialog .inner .action-buttons-wrap .button {
+    display: flex;
+    width: 210px;
+    justify-content: center;
+    align-items: center;
+}
+
+.popup-dialog .inner .action-buttons-wrap .button.spend-credits:hover {
+    background-color: #6376FA;
+}
+
+@media screen and (max-width: 950px) {
+    .popup-dialog .inner {
+        max-width: 90%;
+        padding: 50px 20px;
+    }
+    .popup-dialog .inner .main-text {
+        font-size: 16px;
+    }
+    .popup-dialog .inner .secondary-text {
+        font-size: 14px;
+    }
+    .popup-dialog .inner .action-buttons-wrap {
+        column-gap: 15px;
+    }
+}

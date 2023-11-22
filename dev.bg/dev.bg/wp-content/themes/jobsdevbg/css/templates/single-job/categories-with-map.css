@@ -1,0 +1,91 @@
+.section-categories-with-map {
+    display: flex;
+    justify-content: space-between;
+    padding: 0;
+    margin-bottom: 15px;
+}
+
+.section-categories-with-map.aside {
+    flex-direction: column;
+}
+
+.section-categories-with-map .inner-left {
+    padding: 17px;
+}
+
+.section-categories-with-map .inner-left .section-title {
+    display: inline;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin: 0;
+}
+
+.section-categories-with-map .inner-left .section-title::after {
+    bottom: 1px;
+}
+
+.section-categories-with-map .inner-left .categories-wrap {
+    margin-top: 20px;
+}
+
+.section-categories-with-map .inner-right {
+    display: flex;
+    padding: 4px;
+    flex: 0 0 290px;
+}
+
+.section-categories-with-map.aside .inner-right {
+    flex-basis: 135px;
+}
+
+.section-categories-with-map .inner-right .inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    background-image: url('../../../images/map-cropped.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    border-radius: 5px;
+}
+
+.section-categories-with-map .inner-right .inner .button {
+    padding: 13px 20px;
+    line-height: 1;
+}
+
+/**** Tech stack ****/
+
+.section-categories-with-map .inner-left .tech-stack {
+    margin-top: 30px;
+    margin-bottom: 15px;
+}
+
+.section-categories-with-map .inner-left .tech-stack .tech-stack-title {
+    font-size: 14px;
+    text-transform: uppercase;
+    line-height: 1.2;
+}
+
+.section-categories-with-map .inner-left .tech-stack>.inner {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+/**** END Tech stack ****/
+
+@media screen and (max-width: 950px) {
+    .section-categories-with-map {
+        flex-direction: column;
+    }
+    .section-categories-with-map .inner-left .section-title {
+        display: inline;
+        font-size: 14px;
+    }
+    .section-categories-with-map .inner-right {
+        flex-basis: 136px;
+    }
+}
