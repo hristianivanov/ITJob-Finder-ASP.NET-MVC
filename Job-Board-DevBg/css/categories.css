@@ -131,7 +131,7 @@
 }
 
 .child-term .term-icon {
-    background-image: url('logo-icons-sprite-5.svg');
+    background-image: url('../svg/logo-icons-sprite-5.svg');
     background-repeat: no-repeat;
     height: 28px;
     width: 38px;
@@ -308,7 +308,7 @@
 }
 
 .show-all-jobs-cat:after {
-    content: url(arrow-right-blue.svg);
+    content: url(svg/arrow-right-blue.svg);
     position: absolute;
     top: 0;
     right: -15px;
