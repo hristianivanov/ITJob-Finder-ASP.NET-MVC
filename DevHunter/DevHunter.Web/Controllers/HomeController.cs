@@ -1,8 +1,10 @@
 ﻿namespace DevHunter.Web.Controllers
 {
-	using DevHunter.Web.Models;
-	using Microsoft.AspNetCore.Mvc;
 	using System.Diagnostics;
+
+	using Microsoft.AspNetCore.Mvc;
+
+	using Models;
 
 	public class HomeController : Controller
 	{

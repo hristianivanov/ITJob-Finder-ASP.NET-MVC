@@ -13,7 +13,7 @@ namespace DevHunter.Web
 
 			var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
-			builder.Services.AddDbContext<ApplicationDbContext>(options =>
+			builder.Services.AddDbContext<DevHunterDbContext>(options =>
 				options.UseSqlServer(connectionString));
 
 			builder.Services.AddDatabaseDeveloperPageExceptionFilter();
@@ -22,7 +22,7 @@ namespace DevHunter.Web
 				{
 					options.SignIn.RequireConfirmedAccount = true;
 				})
-				.AddEntityFrameworkStores<ApplicationDbContext>();
+				.AddEntityFrameworkStores<DevHunterDbContext>();
 
 			builder.Services.AddControllersWithViews();
 
