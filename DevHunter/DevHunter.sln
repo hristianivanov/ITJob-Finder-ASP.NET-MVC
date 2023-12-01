@@ -11,19 +11,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{E0114117-6A0
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{32405E8B-61E7-4A01-8761-C817DC012DAE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevHunter.Data", "DevHunter.Data\DevHunter.Data.csproj", "{D6D38535-D9C4-458F-9012-EDB0F06AB348}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevHunter.Data", "DevHunter.Data\DevHunter.Data.csproj", "{D6D38535-D9C4-458F-9012-EDB0F06AB348}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevHunter.Data.Models", "DevHunter.Data.Models\DevHunter.Data.Models.csproj", "{E15A02F9-96C3-4E68-8E99-0F4D7CCCCEB7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevHunter.Data.Models", "DevHunter.Data.Models\DevHunter.Data.Models.csproj", "{E15A02F9-96C3-4E68-8E99-0F4D7CCCCEB7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevHunter.Services.Data.Models", "DevHunter.Services.Data.Models\DevHunter.Services.Data.Models.csproj", "{B6D4BDFC-3D65-4D86-9C33-F26DDB3F835C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevHunter.Services.Data.Models", "DevHunter.Services.Data.Models\DevHunter.Services.Data.Models.csproj", "{B6D4BDFC-3D65-4D86-9C33-F26DDB3F835C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevHunter.Services.Data", "DevHunter.Services.Data\DevHunter.Services.Data.csproj", "{F4B56907-4146-4C5E-8ACF-97442751B27A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevHunter.Services.Data", "DevHunter.Services.Data\DevHunter.Services.Data.csproj", "{F4B56907-4146-4C5E-8ACF-97442751B27A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevHunter.Web.ViewModels", "DevHunter.Web.ViewModels\DevHunter.Web.ViewModels.csproj", "{37ED7C70-B4F1-4640-960E-496ECFDB194A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevHunter.Web.ViewModels", "DevHunter.Web.ViewModels\DevHunter.Web.ViewModels.csproj", "{37ED7C70-B4F1-4640-960E-496ECFDB194A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevHunter.Web.Infrastructure", "DevHunter.Web.Infrastructure\DevHunter.Web.Infrastructure.csproj", "{B95A3E65-FC8E-4A69-8AFE-2DC673445796}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevHunter.Web.Infrastructure", "DevHunter.Web.Infrastructure\DevHunter.Web.Infrastructure.csproj", "{B95A3E65-FC8E-4A69-8AFE-2DC673445796}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevHunter.Common", "DevHunter.Common\DevHunter.Common.csproj", "{7CF6B311-9377-4ED8-902E-DBFEA9EA83C2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevHunter.Common", "DevHunter.Common\DevHunter.Common.csproj", "{BE709AAA-8728-4EFD-A959-8ADE8808C859}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -59,10 +59,10 @@ Global
 		{B95A3E65-FC8E-4A69-8AFE-2DC673445796}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B95A3E65-FC8E-4A69-8AFE-2DC673445796}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B95A3E65-FC8E-4A69-8AFE-2DC673445796}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7CF6B311-9377-4ED8-902E-DBFEA9EA83C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7CF6B311-9377-4ED8-902E-DBFEA9EA83C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7CF6B311-9377-4ED8-902E-DBFEA9EA83C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7CF6B311-9377-4ED8-902E-DBFEA9EA83C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE709AAA-8728-4EFD-A959-8ADE8808C859}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE709AAA-8728-4EFD-A959-8ADE8808C859}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE709AAA-8728-4EFD-A959-8ADE8808C859}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE709AAA-8728-4EFD-A959-8ADE8808C859}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
