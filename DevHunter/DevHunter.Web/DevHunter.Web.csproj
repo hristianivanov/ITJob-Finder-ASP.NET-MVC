@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DevHunter.Common\DevHunter.Common.csproj" />
+    <ProjectReference Include="..\DevHunter.Data.Models\DevHunter.Data.Models.csproj" />
     <ProjectReference Include="..\DevHunter.Data\DevHunter.Data.csproj" />
     <ProjectReference Include="..\DevHunter.Services.Data.Models\DevHunter.Services.Data.Models.csproj" />
     <ProjectReference Include="..\DevHunter.Services.Data\DevHunter.Services.Data.csproj" />
