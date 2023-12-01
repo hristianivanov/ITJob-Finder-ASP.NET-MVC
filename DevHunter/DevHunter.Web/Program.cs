@@ -30,6 +30,7 @@ namespace DevHunter.Web
 
 			if (app.Environment.IsDevelopment())
 			{
+				app.UseDeveloperExceptionPage();
 				app.UseMigrationsEndPoint();
 			}
 			else
