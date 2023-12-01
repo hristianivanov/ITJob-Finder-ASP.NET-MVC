@@ -1,5 +1,7 @@
-﻿namespace DevHunter.Web.Infrastructure;
-public class Class1
+﻿namespace DevHunter.Web.Infrastructure
 {
+	public class Class1
+	{
 
+	}
 }
