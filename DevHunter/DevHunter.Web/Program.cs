@@ -20,7 +20,7 @@ namespace DevHunter.Web
 
 			builder.Services.AddDefaultIdentity<IdentityUser>(options =>
 				{
-					options.SignIn.RequireConfirmedAccount = true;
+					options.SignIn.RequireConfirmedAccount = false;
 				})
 				.AddEntityFrameworkStores<DevHunterDbContext>();
 
