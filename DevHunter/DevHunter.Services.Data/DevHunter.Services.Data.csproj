@@ -6,4 +6,12 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DevHunter.Common\DevHunter.Common.csproj" />
+    <ProjectReference Include="..\DevHunter.Data.Models\DevHunter.Data.Models.csproj" />
+    <ProjectReference Include="..\DevHunter.Data\DevHunter.Data.csproj" />
+    <ProjectReference Include="..\DevHunter.Services.Data.Models\DevHunter.Services.Data.Models.csproj" />
+    <ProjectReference Include="..\DevHunter.Web.ViewModels\DevHunter.Web.ViewModels.csproj" />
+  </ItemGroup>
+
 </Project>
