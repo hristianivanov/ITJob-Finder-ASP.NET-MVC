@@ -1,10 +1,10 @@
-﻿namespace DevHunter.Web.Controllers
+﻿using DevHunter.Web.ViewModels;
+
+namespace DevHunter.Web.Controllers
 {
 	using System.Diagnostics;
 
 	using Microsoft.AspNetCore.Mvc;
-
-	using Models;
 
 	public class HomeController : Controller
 	{

@@ -1,4 +1,4 @@
-namespace DevHunter.Web.Models
+namespace DevHunter.Web.ViewModels
 {
 	public class ErrorViewModel
 	{

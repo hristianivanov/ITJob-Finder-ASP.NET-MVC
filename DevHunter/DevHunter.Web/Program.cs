@@ -1,9 +1,9 @@
+using DevHunter.Data;
+
 namespace DevHunter.Web
 {
 	using Microsoft.AspNetCore.Identity;
 	using Microsoft.EntityFrameworkCore;
-
-	using Data;
 
 	public class Program
 	{

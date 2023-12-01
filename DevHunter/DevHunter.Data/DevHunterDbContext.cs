@@ -1,4 +1,4 @@
-﻿namespace DevHunter.Web.Data
+﻿namespace DevHunter.Data
 {
 	using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 	using Microsoft.EntityFrameworkCore;
