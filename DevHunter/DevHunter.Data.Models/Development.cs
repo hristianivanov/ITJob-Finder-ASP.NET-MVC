@@ -13,6 +13,8 @@
         [Key]
         public Guid Id { get; set; }
 
+        public string Name { get; set; }
+
         public string ImageUrl { get; set; } = null!;
 
         public ICollection<Technology> Technologies { get; set; }
