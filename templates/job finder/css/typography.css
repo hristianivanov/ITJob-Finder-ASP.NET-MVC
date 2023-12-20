@@ -1,0 +1,18 @@
+@import url(../fonts/Satoshi/WEB/css/satoshi.css);
+@import url('https://fonts.cdnfonts.com/css/mona-sans');
+
+html {
+    font: 16px/1.4 'Satoshi-Variable',sans-serif;
+}
+
+body, table, input, textarea, button {
+    font: inherit;
+}
+
+body {
+    background: #000614;
+}
+
+p {
+    color: white;
+}
