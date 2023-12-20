@@ -1,0 +1,16 @@
+.site-footer{
+    background: #010715;
+}
+
+.site-title a {
+    text-decoration: none;
+}
+
+.socials-icons > .socials-icon p{
+    display: none;
+}
+
+.socials-icon svg {
+    width: 34px;
+    height: 34px;
+}

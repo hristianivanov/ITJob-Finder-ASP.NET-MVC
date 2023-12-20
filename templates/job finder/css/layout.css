@@ -1,0 +1,38 @@
+.site-container {
+    display: flex;
+    flex-flow: column;
+    align-content: center;
+}
+
+.site-footer {
+    min-height: 10em;
+}
+
+.site-footer > .container-wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 4em;
+}
+
+.site-footer > .container-wrap * {
+    align-content: center;
+}
+
+.container-wrap {
+    max-width: 60em;
+    margin: 0 auto;
+    position: relative;
+}
+
+.site-header {
+    display: flex;
+    justify-content: space-between;
+    margin: 1em 2em;
+}
+
+.socials-icons {
+    display: flex;
+    gap: 2.3em;
+}
+
