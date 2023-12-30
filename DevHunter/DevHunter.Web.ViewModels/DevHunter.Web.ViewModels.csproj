@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DevHunter.Common\DevHunter.Common.csproj" />
+  </ItemGroup>
+
 </Project>
