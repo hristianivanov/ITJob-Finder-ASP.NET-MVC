@@ -4,6 +4,7 @@ using DevHunter.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DevHunter.Data.Migrations
 {
     [DbContext(typeof(DevHunterDbContext))]
-    partial class DevHunterDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231230154247_InitialCreateDbTables")]
+    partial class InitialCreateDbTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -179,30 +181,6 @@ namespace DevHunter.Data.Migrations
                     b.HasIndex("CompanyId");
 
                     b.ToTable("JobOffers");
-                });
-
-            modelBuilder.Entity("DevHunter.Data.Models.SavedJobOffer", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("JobOfferId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("JobOfferId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("SavedJobOffer");
                 });
 
             modelBuilder.Entity("DevHunter.Data.Models.Technology", b =>
@@ -385,25 +363,6 @@ namespace DevHunter.Data.Migrations
                     b.Navigation("Company");
                 });
 
-            modelBuilder.Entity("DevHunter.Data.Models.SavedJobOffer", b =>
-                {
-                    b.HasOne("DevHunter.Data.Models.JobOffer", "JobOffer")
-                        .WithMany("SavedJobOffers")
-                        .HasForeignKey("JobOfferId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DevHunter.Data.Models.ApplicationUser", "User")
-                        .WithMany("SavedJobOffers")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("JobOffer");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("DevHunter.Data.Models.Technology", b =>
                 {
                     b.HasOne("DevHunter.Data.Models.Company", "Company")
@@ -482,11 +441,6 @@ namespace DevHunter.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("DevHunter.Data.Models.ApplicationUser", b =>
-                {
-                    b.Navigation("SavedJobOffers");
-                });
-
             modelBuilder.Entity("DevHunter.Data.Models.Company", b =>
                 {
                     b.Navigation("UsedTechnologies");
@@ -499,8 +453,6 @@ namespace DevHunter.Data.Migrations
 
             modelBuilder.Entity("DevHunter.Data.Models.JobOffer", b =>
                 {
-                    b.Navigation("SavedJobOffers");
-
                     b.Navigation("Technologies");
                 });
 #pragma warning restore 612, 618
