@@ -48,8 +48,8 @@
 .main-nav ul {
     border: 2px solid #000058;
     border-radius: 4em;
-    box-shadow: 0 0 0 0.5px #4056C0 inset, 0 0 26px -3px rgba(0, 102, 255, 0.25);
-    backdrop-filter: blur(12.5px);
+    box-shadow: 0 0 0 2px #4056C0 inset, 0 0 26px 3px rgba(0, 102, 255, 0.25);
+    backdrop-filter: blur(12px);
     padding: 0.3em 0.4em;
 }
 
@@ -64,9 +64,9 @@
 .cta a:first-child {
     color: #E5E4E6;
     border: 2px solid #000058;
-    box-shadow: 0 0 0 0.5px #4056C0 inset, 
+    box-shadow: 0 0 0 3px #4056C0 inset,
     0 0 26px -3px rgba(0, 102, 255, 0.25);
-    backdrop-filter: blur(12.5px);
+    backdrop-filter: blur(12px);
 }
 
 .cta a:last-child {

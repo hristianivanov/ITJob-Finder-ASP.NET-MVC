@@ -27,7 +27,7 @@
 }
 
 .glow-ellipse-background {
-    background: var(--tg-primary-blue, #02174c);
+    background: #02174c;
     border-radius: 50%;
     width: 28em;
     height: 28em;
