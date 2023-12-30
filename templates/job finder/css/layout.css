@@ -1,22 +1,9 @@
+/*---------------BASE STYLES---------------*/
 .site-container {
     display: flex;
     flex-flow: column;
     align-content: center;
-}
-
-.site-footer {
-    min-height: 10em;
-}
-
-.site-footer > .container-wrap {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 4em;
-}
-
-.site-footer > .container-wrap * {
-    align-content: center;
+    height: 100vh;
 }
 
 .container-wrap {
@@ -31,8 +18,25 @@
     margin: 1em 2em;
 }
 
+/*---------------FOOTER STYLES---------------*/
+
+.site-footer {
+    margin-top: auto;
+    min-height: 10em;
+}
+
+.site-footer > .container-wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 4em;
+}
+
+.site-footer > .container-wrap * {
+    align-content: center;
+}
+
 .socials-icons {
     display: flex;
     gap: 2.3em;
 }
-
