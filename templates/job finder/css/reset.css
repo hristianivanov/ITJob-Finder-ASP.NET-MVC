@@ -10,3 +10,8 @@
 html {
     box-sizing: border-box;
 }
+
+input {
+    outline: none;
+    border: 0;
+}
