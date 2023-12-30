@@ -22,6 +22,9 @@ namespace DevHunter.Web
 			builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
 				{
 					options.SignIn.RequireConfirmedAccount = false;
+					options.Password.RequireNonAlphanumeric = false;
+					options.Password.RequireLowercase = false;
+					options.Password.RequireUppercase = false;
 				})
 				.AddEntityFrameworkStores<DevHunterDbContext>();
 
