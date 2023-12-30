@@ -10,7 +10,6 @@
     display: none;
 }
 
-.socials-icon svg {
-    width: 34px;
-    height: 34px;
+.socials-icons {
+    text-align: center;
 }

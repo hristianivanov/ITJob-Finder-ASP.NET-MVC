@@ -1,0 +1,90 @@
+.btn {
+    display: inline-block;
+    width: 48px;
+    height: 46px;
+    background: #f1f1f1;
+    border-radius: 30%;
+    /*box-shadow: 0 0 25px -1px #1da1f2;*/
+    box-shadow: 0 0 25px -1px #f1f1f1;
+    overflow: hidden;
+    position: relative;
+    transition: 0.3s linear;
+}
+
+.btn i {
+    line-height: 45px;
+    font-size: 26px;
+    transition: 0.3s linear;
+}
+
+.social-icon:nth-child(1) i {
+    color: #1da1f2;
+}
+
+.social-icon:nth-child(4) i {
+    color: #3b5998;
+}
+
+.social-icon:nth-child(2) i {
+    color: #c32aa3;
+}
+
+.social-icon:nth-child(3) i {
+    color: #db4437;
+}
+
+.btn:hover {
+    transform: scale(1.1);
+}
+
+.btn:hover i {
+    transform: scale(1.2);
+    color: #fff;
+}
+
+.btn:before {
+    content: "";
+    position: absolute;
+    width: 120%;
+    height: 120%;
+    transform: rotate(45deg);
+    left: -110%;
+    top: 90%;
+}
+
+.social-icon:nth-child(1) .btn::before {
+    background: #1da1f2;
+}
+
+.social-icon:nth-child(2) .btn::before {
+    background: #c32aa3;
+}
+
+.social-icon:nth-child(3) .btn::before {
+    background: #db4437;
+}
+
+.social-icon:nth-child(4) .btn::before {
+    background: #3b5998;
+}
+
+.btn:hover::before {
+    animation: aaa 0.7s 1;
+    top: -10%;
+    left: -10%;
+}
+
+@keyframes aaa {
+    0% {
+        left: -110%;
+        top: 90%;
+    }
+    50% {
+        left: 10%;
+        top: -30%;
+    }
+    100% {
+        left: -10%;
+        top: -10%;
+    }
+}
