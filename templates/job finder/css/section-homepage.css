@@ -5,7 +5,7 @@
 .site-homepage .container-wrap h2 {
     font-size: 4.5em;
     font-family: 'Mona-Sans';
-    background: var(--text-radial, radial-gradient(1779.2% 193.77% at 21.33% -10.76%, #E5E4E6 22.6%, rgba(255, 255, 255, 0.00) 100%));
+    background: radial-gradient(1779.2% 193.77% at 21.33% -10.76%, #E5E4E6 22.6%, rgba(255, 255, 255, 0.00) 100%);
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -57,10 +57,9 @@
     color: #fff;
     font-family: inherit;
     font-size: 1.1em;
-    border: none;
     outline: none;
     border: 2px solid #000058;
     border-radius: 4em;
-    box-shadow: 0 0 0 0.5px #4056C0 inset, 0 0 26px -3px rgba(0, 102, 255, 0.25);
-    backdrop-filter: blur(12.5px);
+    box-shadow: 0 0 0 2px #4056C0 inset, 0 0 26px -3px rgba(0, 102, 255, 0.25);
+    backdrop-filter: blur(12px);
 }
