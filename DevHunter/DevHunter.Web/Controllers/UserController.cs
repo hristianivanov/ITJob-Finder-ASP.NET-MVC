@@ -87,10 +87,8 @@ namespace DevHunter.Web.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> Logout()
+		public async Task<IActionResult> Logout(string? returnUrl)
 		{
-			string returnUrl = HttpContext.Request.Form["returnUrl"];
-
 			await signInManager.SignOutAsync();
 
 			if (returnUrl != null)
