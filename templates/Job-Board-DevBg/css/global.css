@@ -20,7 +20,7 @@
 
 @font-face {
   font-family: 'Axiforma';
-  src: url('../fonts/Axiforma-Thin.woff') format('woff');
+  src: url('../../job finder/fonts/AxiForma/Axiforma-Thin.woff') format('woff');
   font-weight: 100;
   font-style: normal;
   font-display: optional;
@@ -28,7 +28,7 @@
 
 @font-face {
   font-family: 'Axiforma';
-  src: url('../fonts/Axiforma-Light.woff') format('woff');
+  src: url('../../job finder/fonts/AxiForma/Axiforma-Light.woff') format('woff');
   font-weight: 300;
   font-style: normal;
   font-display: optional;
@@ -36,7 +36,7 @@
 
 @font-face {
   font-family: 'Axiforma';
-  src: url('../fonts/Axiforma-Regular.woff') format('woff');
+  src: url('../../job finder/fonts/AxiForma/Axiforma-Regular.woff') format('woff');
   font-weight: 400;
   font-style: normal;
   font-display: optional;
@@ -44,7 +44,7 @@
 
 @font-face {
   font-family: 'Axiforma';
-  src: url('../fonts/Axiforma-Medium.woff') format('woff');
+  src: url('../../job finder/fonts/AxiForma/Axiforma-Medium.woff') format('woff');
   font-weight: 500;
   font-style: normal;
   font-display: optional;
@@ -52,7 +52,7 @@
 
 @font-face {
   font-family: 'Axiforma';
-  src: url('../fonts/Axiforma-SemiBold.woff') format('woff');
+  src: url('../../job finder/fonts/AxiForma/Axiforma-SemiBold.woff') format('woff');
   font-weight: 600;
   font-style: normal;
   font-display: optional;
@@ -60,7 +60,7 @@
 
 @font-face {
   font-family: 'Axiforma';
-  src: url('../fonts/Axiforma-Bold.woff') format('woff');
+  src: url('../../job finder/fonts/AxiForma/Axiforma-Bold.woff') format('woff');
   font-weight: 700;
   font-style: normal;
   font-display: optional;
@@ -68,7 +68,7 @@
 
 @font-face {
   font-family: 'Axiforma';
-  src: url('../fonts/Axiforma-Black.woff') format('woff');
+  src: url('../../job finder/fonts/AxiForma/Axiforma-Black.woff') format('woff');
   font-weight: 900;
   font-style: normal;
   font-display: optional;
