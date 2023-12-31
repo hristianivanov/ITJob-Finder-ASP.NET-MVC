@@ -3,6 +3,7 @@
 
 html {
     font: 16px/1.4 'Satoshi-Variable',sans-serif;
+    color: #fff;
 }
 
 body, table, input, textarea, button {
@@ -11,8 +12,4 @@ body, table, input, textarea, button {
 
 body {
     background: #000614;
-}
-
-p {
-    color: white;
 }
