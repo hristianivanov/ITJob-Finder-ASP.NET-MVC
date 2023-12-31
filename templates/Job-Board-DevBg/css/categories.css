@@ -4,13 +4,16 @@
  * Our goal is to eventually either refactor them, or at least bring
  * them over in this file. Any *new* styles for the section should go here.
  */
+
 .homepage-categories .inner {
     width: 90%;
     max-width: 1585px;
     margin: 0 auto;
     padding-top: 9em;
     border-radius: 1em;
-    background-color: white;
+    background: rgba(0,0,88,0.10) !important;
+    box-shadow: inset 0 0 0 1px rgba(0,0,73,1);
+    backdrop-filter: blur(12px);
 }
 
 .homepage-categories .inner .section-category-block .child-term a {
@@ -18,6 +21,7 @@
 }
 
 /* from custom.css */
+
 .section-category-block {
     column-count: 3;
     column-gap: 0;
@@ -43,20 +47,21 @@
     break-inside: avoid;
     display: flex;
     flex-flow: wrap;
-    overflow: hidden;
+    overflow: visible;
 }
 
 /* TODO: Are these border classes used elsewhere? If not, add .category-block to them */
+
 .border-left {
-    border-left: 1px solid #E0E2E9;
+    border-left: 1px solid rgba(0,0,73,1);
 }
 
 .border-right {
-    border-right: 1px solid #E0E2E9;
+    border-right: 1px solid rgba(0,0,73,1);
 }
 
 .border-bottom {
-    border-bottom: 1px solid #E0E2E9;
+    border-bottom: 1px solid rgba(0,0,73,1);
 }
 
 .category-block-title-holder {
@@ -67,23 +72,13 @@
 
 .category-name {
     font-size: 22px;
-    color: #272222;
+    color: #fff;
     font-weight: 600;
     /*width: 50%;*/
     max-width: 152px;
     position: relative;
     z-index: 1;
     display: inline-block;
-
-}
-
-.category-name:before {
-    content: '';
-    width: 80%;
-    height: 6px;
-    position: absolute;
-    bottom: 2px;
-    z-index: -1;
 }
 
 .category-name .job-qty {
@@ -93,13 +88,13 @@
     z-index: 0;
     top: 5px;
     right: -58px;
-
     left: auto;
     width: 50px;
     text-align: center;
 }
 
-.category-name .job-qty:after {
+.category-name .job-qty:after,
+.badge-count::after {
     content: '';
     border-radius: 50%;
     width: 50px;
@@ -109,6 +104,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    box-shadow: 0 0 20px 0 #0868e5, 0 0 42px 0 #091970;
 }
 
 .child-term {
@@ -117,14 +113,14 @@
     padding: 0 20px 0 20px;
     width: max-content;
     height: 58px;
-    background: #F7F8FB;
+    background: #060C20;
     border-radius: 4px;
     flex-grow: 0;
     margin: 8px 8px 8px 0;
 }
 
 .child-term a {
-    color: #272222;
+    color: #fff;
     display: flex;
     align-self: center;
     align-items: center;
@@ -137,15 +133,15 @@
     width: 38px;
     background-position: 0 0;
     background-size: 235px;
-    filter: gray;
-    filter: grayscale(100%);
+    /*filter: gray;*/
+    /*filter: grayscale(100%);*/
     filter: url("data:image/svg+xml;utf8,<svg version='1.1' xmlns='http://www.w3.org/2000/svg' height='0'><filter id='greyscale'><feColorMatrix type='matrix' values='0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0' /></filter></svg>#greyscale");
     transition: all 0.2s ease-in-out;
     opacity: 0.8;
 }
 
 .child-term .term-icon.icon-technical-writer {
-    background-image: url('logo-icon-tech-writer.svg');
+    background-image: url('../svg/logo-icon-tech-writer.svg');
 }
 
 .child-term .term-icon.icon-non-sprite {
@@ -288,10 +284,6 @@
     background-position: -2px -433px;
 }
 
-.term-icon.icon-ui-ux-design {
-    background-position: -68px -437px;
-}
-
 .term-icon.icon-product-manager {
     background-position: -200px -438px;
 }
@@ -303,12 +295,12 @@
 
 .show-all-jobs-cat {
     position: relative;
-    color: #272222;
+    color: #fff;
     font-weight: 400;
 }
 
 .show-all-jobs-cat:after {
-    content: url(svg/arrow-right-blue.svg);
+    content: url(../svg/arrow-right-blue.svg);
     position: absolute;
     top: 0;
     right: -15px;
@@ -331,8 +323,7 @@
     color: #C53A1E;
 }
 
-.color-full-stack-development .category-name:before,
-.color-full-stack-development .job-qty:after {
+.color-full-stack-development .category-name:before, .color-full-stack-development .job-qty:after {
     background: #FDCCC2;
 }
 
@@ -340,8 +331,7 @@
     color: #0926CB;
 }
 
-.color-back-end-development .category-name:before,
-.color-back-end-development .job-qty:after {
+.color-back-end-development .category-name:before, .color-back-end-development .job-qty:after {
     background: #CED4F5;
 }
 
@@ -349,8 +339,7 @@
     color: #8C591D;
 }
 
-.color-operations .category-name:before,
-.color-operations .job-qty:after {
+.color-operations .category-name:before, .color-operations .job-qty:after {
     background: #FAD4A9;
 }
 
@@ -358,8 +347,7 @@
     color: #466406;
 }
 
-.color-quality-assurance .category-name:before,
-.color-quality-assurance .job-qty:after {
+.color-quality-assurance .category-name:before, .color-quality-assurance .job-qty:after {
     background: #D4E4B0;
 }
 
@@ -367,8 +355,7 @@
     color: #1D7671;
 }
 
-.color-erp-crm-development .category-name:before,
-.color-erp-crm-development .job-qty:after {
+.color-erp-crm-development .category-name:before, .color-erp-crm-development .job-qty:after {
     background: #89DAD5;
 }
 
@@ -377,8 +364,7 @@
     top: -5px;
 }
 
-.color-infrastructure .category-name:before,
-.color-infrastructure .job-qty:after {
+.color-infrastructure .category-name:before, .color-infrastructure .job-qty:after {
     background: #FAD4A9;
 }
 
@@ -386,8 +372,7 @@
     color: #750808;
 }
 
-.color-mobile-development .category-name:before,
-.color-mobile-development .job-qty:after {
+.color-mobile-development .category-name:before, .color-mobile-development .job-qty:after {
     background: #F5CECE;
 }
 
@@ -396,8 +381,7 @@
     top: -5px;
 }
 
-.color-ui-ux-and-arts .category-name:before,
-.color-ui-ux-and-arts .job-qty:after {
+.color-ui-ux-and-arts .category-name:before, .color-ui-ux-and-arts .job-qty:after {
     background: #FCE8B3;
 }
 
@@ -406,8 +390,7 @@
     /*top: -5px;*/
 }
 
-.color-technical-support .category-name:before,
-.color-technical-support .job-qty:after {
+.color-technical-support .category-name:before, .color-technical-support .job-qty:after {
     background: #ffdbcb;
 }
 
@@ -415,8 +398,7 @@
     color: #197488;
 }
 
-.color-customer-support .category-name::before,
-.color-customer-support .job-qty::after {
+.color-customer-support .category-name::before, .color-customer-support .job-qty::after {
     background-color: #C7E9F0;
 }
 
@@ -424,8 +406,7 @@
     color: #57512C;
 }
 
-.color-pm-ba-and-more .category-name:before,
-.color-pm-ba-and-more .job-qty:after {
+.color-pm-ba-and-more .category-name:before, .color-pm-ba-and-more .job-qty:after {
     background: #F5EFCE;
 }
 
@@ -434,8 +415,7 @@
     top: -5px;
 }
 
-.color-data-science .category-name:before,
-.color-data-science .job-qty:after {
+.color-data-science .category-name:before, .color-data-science .job-qty:after {
     background: #D9C2FF;
 }
 
@@ -458,11 +438,11 @@
     }
 
     .category-block.color-back-end-development {
-        border-right: 1px solid #E0E2E9;
+        border-right: 1px solid rgba(0,0,73,1);
     }
 
     .category-block.color-infrastructure {
-        border-right: 1px solid #E0E2E9;
+        border-right: 1px solid rgba(0,0,73,1);;
     }
 
     .category-block.color-data-science {
@@ -476,14 +456,14 @@
     }
 
     .category-block.color-mobile-development {
-        border-bottom: 1px solid #E0E2E9;
-        border-right: 1px solid #E0E2E9;
+        border-bottom: 1px solid rgba(0,0,73,1);;
+        border-right: 1px solid rgba(0,0,73,1);;
     }
 
     .category-block.color-customer-support {
         border-right: none;
         border-left: none;
-        border-bottom: 1px solid #E0E2E9;
+        border-bottom: 1px solid rgba(0,0,73,1);
     }
 
     .category-block.color-quality-assurance {
@@ -493,6 +473,7 @@
 }
 
 /* TODO: Everything should be rewritten for max-width: 950px */
+
 @media screen and (max-width: 779px) {
     .section-category-block {
         column-count: 1;
@@ -537,7 +518,7 @@
     .section-category-block .category-block {
         border-width: 0 0 1px 0;
         border-style: solid;
-        border-color: #E0E2E9;
+        border-color: rgba(0,0,73,1);
     }
 
     .category-block .child-term {
@@ -563,8 +544,7 @@
         left: -15px;
     }
 
-    .color-data-science .job-qty,
-    .color-ui-ux-and-arts .job-qty {
+    .color-data-science .job-qty, .color-ui-ux-and-arts .job-qty {
         top: 5px;
     }
 

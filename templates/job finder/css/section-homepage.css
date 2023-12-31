@@ -47,6 +47,8 @@
     border-radius: 50%;
     padding: 0.8em;
     font-size: large;
+    color: #000;
+    cursor: pointer;
 }
 
 .site-homepage .section-search-job input {
