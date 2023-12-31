@@ -7,7 +7,7 @@
 
 .homepage-other-categories {
     display: flex;
-    margin-bottom: 80px;
+    /*padding-bottom: 5em;*/
 }
 
 .homepage-other-categories .homepage-other-category {
@@ -42,7 +42,9 @@
 }
 
 .homepage-other-categories .homepage-other-category .content {
+    color: #595959;
     font-size: 16px;
+    margin-bottom: 0.8em;
 }
 
 .homepage-other-categories .homepage-other-category .see-all {
@@ -54,7 +56,7 @@
 
 .homepage-other-categories .homepage-other-category .see-all::after {
     display: block;
-    content: url('../../job finder/svgs/arrow-right-blue.svg');
+    content: url('../../svgs/arrow-right-blue.svg');
     position: absolute;
     top: 0;
     right: -15px;

@@ -1,5 +1,4 @@
-@import url(../fonts/Satoshi/WEB/css/satoshi.css);
-@import url('https://fonts.cdnfonts.com/css/mona-sans');
+@import url(fonts/global.css);
 
 html {
     font: 16px/1.4 'Satoshi-Variable',sans-serif;

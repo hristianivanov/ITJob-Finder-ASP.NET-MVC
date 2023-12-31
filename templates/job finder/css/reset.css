@@ -15,3 +15,7 @@ input {
     outline: none;
     border: 0;
 }
+
+a {
+    text-decoration: none;
+}
