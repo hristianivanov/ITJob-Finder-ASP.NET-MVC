@@ -54,7 +54,7 @@
     padding: 0.3em 0.4em;
 }
 
-.cta a {
+.login-register-cta a {
     font-family: Satoshi-Bold, sans-serif;
     display: inline-block;
     text-decoration: none;
@@ -63,7 +63,7 @@
     font-size: 1.5em;
 }
 
-.cta a:first-child {
+.login-register-cta a:first-child {
     color: #E5E4E6;
     border: 2px solid #000058;
     box-shadow: 0 0 0 3px #4056C0 inset,
@@ -71,7 +71,7 @@
     backdrop-filter: blur(12px);
 }
 
-.cta a:last-child {
+.login-register-cta a:last-child {
     color: #0C0C0E;
     background: #fff;
 }
