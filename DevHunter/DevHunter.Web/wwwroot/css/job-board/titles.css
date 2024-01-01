@@ -1,0 +1,27 @@
+/* Styles for various titles across the site. Be careful not to accidentally override an old webflow class, that's in use. New classes are preferred */
+
+/* CSS only component, no template part for this one. just use the classes wherever. */
+
+.section-title {
+  line-height: 1.2;
+}
+
+/** we have the 'underlined' text in a bunch of places in our designs
+   * It's a thick, colored line, overlapping the text, while behind it.
+   * Some color choices are there, but the main one (very light blue) is by far the most used around the site.
+   */
+
+.underlined {
+  position: relative;
+  display: inline-block;
+  z-index: 0;
+}
+
+
+/* Small */
+
+@media screen and (max-width: 950px) {
+  .underlined::after {
+    height: 6px;
+  }
+}
