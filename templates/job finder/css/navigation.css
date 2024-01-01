@@ -1,0 +1,71 @@
+.site-header > .site-title {
+    margin: 0.5em 0;
+}
+
+.site-full-name {
+    color: #E5E4E6;
+}
+
+.site-title p {
+    font-family: 'Satoshi-Bold', sans-serif;
+    font-size: 1.6em;
+}
+
+.site-title span {
+    color: #000614;
+    background: #E5E4E6;
+    padding: 0.2em 0.4em;
+    border-radius: 0.4em;
+    margin-right: 0.3em;
+}
+
+.main-nav ul {
+    display: flex;
+    gap: 1em;
+}
+
+.main-nav ul li,
+.main-nav ul li a {
+    display: block;
+    font-size: 1.1em;
+}
+
+.main-nav a {
+    font-family: Satoshi-Bold, sans-serif;
+    padding: 0.5em 1em;
+    color: #7D7D7D;
+}
+
+.main-nav a:hover {
+    color: #E5E4E6;
+    transition: ease-in 400ms;
+}
+
+.main-nav ul {
+    border: 2px solid #000058;
+    border-radius: 4em;
+    box-shadow: 0 0 0 2px #4056C0 inset, 0 0 26px 3px rgba(0, 102, 255, 0.25);
+    backdrop-filter: blur(12px);
+    padding: 0.3em 0.4em;
+}
+
+.login-register-cta a {
+    font-family: Satoshi-Bold, sans-serif;
+    display: inline-block;
+    padding: 0.6em 0.9em;
+    border-radius: 4em;
+    font-size: 1.5em;
+}
+
+.login-register-cta a:first-child {
+    color: #E5E4E6;
+    border: 2px solid #000058;
+    box-shadow: 0 0 0 3px #4056C0 inset,
+    0 0 26px -3px rgba(0, 102, 255, 0.25);
+    backdrop-filter: blur(12px);
+}
+
+.login-register-cta a:last-child {
+    color: #0C0C0E;
+    background: #fff;
+}

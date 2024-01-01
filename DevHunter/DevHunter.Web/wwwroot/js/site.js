@@ -1,4 +1,14 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿$('.section-collapse').on('click', function () {
+    $(this).siblings('.child-term, .mt-25').toggle(200);
+    $(this).toggleClass('collapsed');
+})
 
-// Write your JavaScript code.
+function so_smooth_scroll(target = null, duration = 500, offset = 0) {
+    if (!target) {
+        return;
+    }
+
+    $('html, body').stop().animate({
+        scrollTop: target.offset().top - offset
+    }, 500, 'swing');
+}

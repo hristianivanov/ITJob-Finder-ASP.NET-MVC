@@ -1,0 +1,14 @@
+@import url(fonts/global.css);
+
+html {
+    font: 16px/1.4 'Satoshi-Variable',sans-serif;
+    color: #fff;
+}
+
+body, table, input, textarea, button {
+    font: inherit;
+}
+
+body {
+    background: #000614;
+}

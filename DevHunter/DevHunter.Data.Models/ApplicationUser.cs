@@ -10,15 +10,18 @@
 	{
 		public ApplicationUser()
 		{
-			Id = Guid.NewGuid();
+			base.Id = Guid.NewGuid();
+			this.SavedJobOffers = new HashSet<SavedJobOffer>();
 		}
 
-		//[Required]
-		//[MaxLength(FirstNameMaxLength)]
-		//public string FirstName { get; set; } = null!;
+        //[Required]
+        //[MaxLength(FirstNameMaxLength)]
+        //public string FirstName { get; set; } = null!;
 
-		//[Required]
-		//[MaxLength(LastNameMaxLength)]
-		//public string LastName { get; set; } = null!;
-	}
+        //[Required]
+        //[MaxLength(LastNameMaxLength)]
+        //public string LastName { get; set; } = null!;
+
+        public ICollection<SavedJobOffer> SavedJobOffers { get; set; }
+    }
 }

@@ -5,6 +5,8 @@ namespace DevHunter.Web
 
 	using Data;
 	using DevHunter.Data.Models;
+	using DevHunter.Web.Infrastructure.ModelBinders;
+	using Microsoft.AspNetCore.Mvc;
 
 	public class Program
 	{
@@ -22,10 +24,23 @@ namespace DevHunter.Web
 			builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
 				{
 					options.SignIn.RequireConfirmedAccount = false;
+					options.Password.RequireNonAlphanumeric = false;
+					options.Password.RequireLowercase = false;
+					options.Password.RequireUppercase = false;
 				})
 				.AddEntityFrameworkStores<DevHunterDbContext>();
 
-			builder.Services.AddControllersWithViews();
+			builder.Services.ConfigureApplicationCookie(cfg =>
+			{
+				cfg.LoginPath = "/User/Login";
+			});
+
+			builder.Services.AddControllersWithViews()
+				.AddMvcOptions(options =>
+				{
+					options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
+					options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
+				});
 
 			var app = builder.Build();
 
