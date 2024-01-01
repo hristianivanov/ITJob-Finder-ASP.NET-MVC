@@ -1,0 +1,90 @@
+.badge {
+  display: inline-block;
+  position: relative;
+  background-color: #fff;
+  font-size: 16px;
+  font-weight: 400;
+  padding: 6px 16px 5px 16px;
+  min-width: 130px;
+  margin-right: 16px;
+  margin-bottom: 5px;
+  border-radius: 25px;
+  text-align: center;
+  z-index: 1;
+}
+
+.badge.green {
+  background-color: #CEF5D9;
+  color: #127C30;
+}
+
+.badge.blue {
+  background-color: #EBF3FF;
+  color: #374FFE;
+}
+
+.badge > img {
+  max-height: 20px;
+  vertical-align: middle;
+  margin-right: 7px;
+}
+
+/* hybrid badge styling */
+
+/* end of hybrid badge styling */
+
+/* Badge counts */
+
+.badge-count {
+  position: relative;
+  padding-top: 4px;
+  font-size: 22px;
+  font-weight: 500;
+  color: white;
+  line-height: 2;
+  text-shadow: 0 0 1px #1e1d1d;
+  z-index: 1;
+}
+
+/* bright green */
+
+.badge-count.badge-bright-green {
+  color: #127C30;
+}
+
+.badge-count.badge-bright-green::after {
+  background-color: #B3F7D6;
+}
+
+/* red */
+
+.badge-count.badge-red {
+  color: #750808;
+}
+
+.badge-count.badge-red::after {
+  background-color: #F5CECE;
+}
+
+/* END Badge counts */
+
+/********** INPUT TAGS *********/
+
+/* Small */
+
+@media screen and (max-width: 950px) {
+  .badge {
+    padding: 0 !important;
+    background-color: transparent !important;
+    text-align: left;
+    font-size: 12px;
+    margin-right: 2px;
+    min-width: 70px;
+  }
+
+  .badge > img {
+    margin-right: 2px;
+  }
+
+  /* disable the badge toggle on mobile (DVB-854) */
+}
