@@ -1,0 +1,555 @@
+/* styles for the categories section on the homepage */
+
+/* There are a lot of styles for this section, left in custom.css.
+ * Our goal is to eventually either refactor them, or at least bring
+ * them over in this file. Any *new* styles for the section should go here.
+ */
+
+.homepage-categories .inner {
+    width: 90%;
+    max-width: 1585px;
+    margin: 0 auto;
+    padding: 5em 0;
+    border-radius: 1em;
+    background: rgba(0,0,88,0.10) !important;
+    box-shadow: inset 0 0 0 1px rgba(0,0,73,1);
+    backdrop-filter: blur(12px);
+}
+
+.homepage-categories .inner .section-category-block .child-term a {
+    font-weight: 300;
+}
+
+/* from custom.css */
+
+.section-category-block {
+    column-count: 3;
+    column-gap: 0;
+}
+
+.section-category-block .section-collapse {
+    display: none;
+    cursor: pointer;
+}
+
+.homepage-categories .section-category-block .section-collapse.collapsed img {
+    transform: rotate(270deg);
+}
+
+.homepage-categories .section-category-block .section-collapse img {
+    transform: rotate(-270deg);
+    transition: transform 0.13s ease-in-out;
+}
+
+.section-category-block .category-block {
+    padding: 30px 15px;
+    position: relative;
+    break-inside: avoid;
+    display: flex;
+    flex-flow: wrap;
+    overflow: visible;
+}
+
+.border-left {
+    border-left: 1px solid rgba(0,0,73,1);
+}
+
+.border-right {
+    border-right: 1px solid rgba(0,0,73,1);
+}
+
+.border-bottom {
+    border-bottom: 1px solid rgba(0,0,73,1);
+}
+
+.category-block-title-holder {
+    padding: 15px;
+    display: block;
+    width: 100%;
+}
+
+.category-name {
+    font-size: 22px;
+    color: #fff;
+    font-weight: 600;
+    /*width: 50%;*/
+    max-width: 152px;
+    position: relative;
+    z-index: 1;
+    display: inline-block;
+}
+
+.category-name .job-qty {
+    font-size: 22px;
+    padding-top: 5px;
+    position: absolute;
+    z-index: 0;
+    top: 5px;
+    right: -58px;
+    left: auto;
+    width: 50px;
+    text-align: center;
+}
+
+.category-name .job-qty:after,
+.badge-count::after {
+    content: '';
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    z-index: -1;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 20px 0 #0868e5, 0 0 42px 0 #091970;
+}
+
+.child-term {
+    color: #272222;
+    display: inline-flex;
+    padding: 0 20px 0 20px;
+    width: max-content;
+    height: 58px;
+    background: #060C20;
+    border-radius: 4px;
+    flex-grow: 0;
+    margin: 8px 8px 8px 0;
+}
+
+.child-term a {
+    color: #fff;
+    display: flex;
+    align-self: center;
+    align-items: center;
+}
+
+.child-term .term-icon {
+    background-image: url('../../svgs/logo-icons-sprite-5.svg');
+    background-repeat: no-repeat;
+    height: 28px;
+    width: 38px;
+    background-position: 0 0;
+    background-size: 235px;
+    /*filter: gray;*/
+    /*filter: grayscale(100%);*/
+    filter: url("data:image/svg+xml;utf8,<svg version='1.1' xmlns='http://www.w3.org/2000/svg' height='0'><filter id='greyscale'><feColorMatrix type='matrix' values='0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0' /></filter></svg>#greyscale");
+    transition: all 0.2s ease-in-out;
+    opacity: 0.8;
+}
+
+.child-term .term-icon.icon-technical-writer {
+    background-image: url('../../svgs/logo-icon-tech-writer.svg');
+}
+
+.child-term .term-icon.icon-non-sprite {
+    background-size: unset;
+    background-position-x: 5px;
+}
+
+.child-term:hover .term-icon {
+    filter: none;
+    opacity: 1;
+}
+
+.term-icon.icon-pm {
+    background-position: 0 1px;
+}
+
+.term-icon.icon-bi {
+    background-position: -90px 0;
+}
+
+.term-icon.icon-ba {
+    background-position: -139px 0;
+}
+
+.term-icon.icon-html {
+    background-position: -206px 1px;
+}
+
+.term-icon.icon-js {
+    background-position: 0 -68px;
+}
+
+.term-icon.icon-react {
+    background-position: -71px -67px;
+}
+
+.term-icon.icon-angular {
+    background-position: -138px -66px;
+}
+
+.term-icon.icon-vuejs {
+    background-position: -207px -66px;
+}
+
+.term-icon.icon-sap {
+    background-position: 0 -136px;
+}
+
+.term-icon.icon-salesforce {
+    background-position: -71px -135px;
+}
+
+.term-icon.icon-java {
+    background-position: -154px -153px;
+    background-size: 260px;
+}
+
+.term-icon.icon-dotnet {
+    background-position: -208px -137px;
+}
+
+.term-icon.icon-php {
+    background-position: -3px -265px;
+    background-size: 300px;
+}
+
+.term-icon.icon-cpp {
+    background-position: -76px -222px;
+    background-size: 253px;
+}
+
+.term-icon.icon-python {
+    background-position: -149px -223px;
+    background-size: 253px;
+}
+
+.term-icon.icon-ruby {
+    background-position: -226px -223px;
+    background-size: 253px;
+}
+
+.term-icon.icon-golang {
+    background-position: 0 -299px;
+    background-size: 253px;
+}
+
+.term-icon.icon-nodejs {
+    background-position: -76px -295px;
+    background-size: 253px;
+}
+
+.term-icon.icon-ios {
+    background-position: -146px -294px;
+    background-size: 250px;
+}
+
+.term-icon.icon-android {
+    background-position: -219px -294px;
+    background-size: 250px;
+}
+
+.term-icon.icon-devops {
+    background-position: -202px -329px;
+}
+
+.term-icon.icon-it-security {
+    background-position: 0 -356px;
+    background-size: 215px;
+}
+
+.term-icon.icon-db-engineer {
+    background-position: -71px -328px;
+}
+
+.term-icon.icon-big-data {
+    background-position: -68px -388px;
+}
+
+.term-icon.icon-bi-data {
+    background-position: -139px -328px;
+}
+
+.term-icon.icon-data-wh {
+    background-position: 1px -328px;
+}
+
+.term-icon.icon-manual-qa {
+    background-position: -136px -391px;
+}
+
+.term-icon.icon-automation-qa {
+    background-position: -201px -390px;
+}
+
+.term-icon.icon-sysadmin {
+    background-position: -137px -436px;
+}
+
+.term-icon.icon-data-modeling {
+    background-position: -2px -433px;
+}
+
+.term-icon.icon-product-manager {
+    background-position: -200px -438px;
+}
+
+.child-qty {
+    color: #0926CB;
+    margin-left: 5px;
+}
+
+.show-all-jobs-cat {
+    position: relative;
+    color: #fff;
+    font-weight: 400;
+}
+
+.show-all-jobs-cat:after {
+    content: url(../../svgs/arrow-right-blue.svg);
+    position: absolute;
+    top: 0;
+    right: -15px;
+    width: 7px;
+}
+
+.color-front-end-development .job-qty {
+    color: #127C30;
+}
+
+.color-front-end-development .job-qty:after {
+    background: #CEF5D9;
+}
+
+.color-front-end-development .category-name:before {
+    background-color: #CEF5D9;
+}
+
+.color-full-stack-development .job-qty {
+    color: #C53A1E;
+}
+
+.color-full-stack-development .category-name:before, .color-full-stack-development .job-qty:after {
+    background: #FDCCC2;
+}
+
+.color-back-end-development .job-qty {
+    color: #0926CB;
+}
+
+.color-back-end-development .category-name:before, .color-back-end-development .job-qty:after {
+    background: #CED4F5;
+}
+
+.color-operations .job-qty {
+    color: #8C591D;
+}
+
+.color-operations .category-name:before, .color-operations .job-qty:after {
+    background: #FAD4A9;
+}
+
+.color-quality-assurance .job-qty {
+    color: #466406;
+}
+
+.color-quality-assurance .category-name:before, .color-quality-assurance .job-qty:after {
+    background: #D4E4B0;
+}
+
+.color-erp-crm-development .job-qty {
+    color: #1D7671;
+}
+
+.color-erp-crm-development .category-name:before, .color-erp-crm-development .job-qty:after {
+    background: #89DAD5;
+}
+
+.color-infrastructure .job-qty {
+    color: #8C591D;
+    top: -5px;
+}
+
+.color-infrastructure .category-name:before, .color-infrastructure .job-qty:after {
+    background: #FAD4A9;
+}
+
+.color-mobile-development .job-qty {
+    color: #750808;
+}
+
+.color-mobile-development .category-name:before, .color-mobile-development .job-qty:after {
+    background: #F5CECE;
+}
+
+.color-ui-ux-and-arts .job-qty {
+    color: #98792D;
+    top: -5px;
+}
+
+.color-ui-ux-and-arts .category-name:before, .color-ui-ux-and-arts .job-qty:after {
+    background: #FCE8B3;
+}
+
+.color-technical-support .job-qty {
+    color: #f35c49;
+    /*top: -5px;*/
+}
+
+.color-technical-support .category-name:before, .color-technical-support .job-qty:after {
+    background: #ffdbcb;
+}
+
+.color-customer-support .job-qty {
+    color: #197488;
+}
+
+.color-customer-support .category-name::before, .color-customer-support .job-qty::after {
+    background-color: #C7E9F0;
+}
+
+.color-pm-ba-and-more .job-qty {
+    color: #57512C;
+}
+
+.color-pm-ba-and-more .category-name:before, .color-pm-ba-and-more .job-qty:after {
+    background: #F5EFCE;
+}
+
+.color-data-science .job-qty {
+    color: #7745C8;
+    top: -5px;
+}
+
+.color-data-science .category-name:before, .color-data-science .job-qty:after {
+    background: #D9C2FF;
+}
+
+/* end from custom.css */
+
+@media screen and (max-width: 1200px) {
+    .category-name {
+        width: 75%;
+    }
+}
+
+@media screen and (max-width: 950px) {
+    .section-category-block {
+        columns: 2;
+    }
+
+    .category-name .job-qty {
+        font-size: 20px;
+        right: -78px;
+    }
+
+    .category-block.color-back-end-development {
+        border-right: 1px solid rgba(0,0,73,1);
+    }
+
+    .category-block.color-infrastructure {
+        border-right: 1px solid rgba(0,0,73,1);;
+    }
+
+    .category-block.color-data-science {
+        /*padding-bottom: 0;*/
+        border-left: none;
+        border-right: none;
+    }
+
+    .category-block.color-front-end-development {
+        border-left: none;
+    }
+
+    .category-block.color-mobile-development {
+        border-bottom: 1px solid rgba(0,0,73,1);;
+        border-right: 1px solid rgba(0,0,73,1);;
+    }
+
+    .category-block.color-customer-support {
+        border-right: none;
+        border-left: none;
+        border-bottom: 1px solid rgba(0,0,73,1);
+    }
+
+    .category-block.color-quality-assurance {
+        border-bottom: none;
+        border-left: none;
+    }
+}
+
+/* TODO: Everything should be rewritten for max-width: 950px */
+
+@media screen and (max-width: 779px) {
+    .section-category-block {
+        column-count: 1;
+    }
+
+    .section-category-block .category-block {
+        padding: 10px 0;
+        position: relative;
+        border-right: none;
+        min-height: 92px;
+    }
+
+    .section-category-block .section-collapse {
+        display: block;
+        position: absolute;
+        top: 20px;
+        right: 0;
+        padding: 10px;
+        height: 40px;
+        background-color: #F3F8FF;
+        border-radius: 50%;
+    }
+
+    .section-category-block .section-collapse img {
+        width: 20px;
+        height: 20px;
+    }
+
+    .category-block .category-block-title-holder .category-name {
+        padding-left: 50px;
+        width: 75%;
+    }
+
+    .category-block .category-block-title-holder .category-name .job-qty {
+        right: auto;
+        left: 0;
+    }
+
+    .category-block .category-name::before {
+        display: none;
+    }
+
+    .section-category-block .category-block {
+        border-width: 0 0 1px 0;
+        border-style: solid;
+        border-color: rgba(0,0,73,1);
+    }
+
+    .category-block .child-term {
+        height: 47px;
+        padding: 0 15px;
+    }
+
+    .child-term .term-icon {
+        filter: none;
+    }
+
+    .homepage-categories .category-name {
+        line-height: 23px;
+        font-size: 20px;
+    }
+
+    .section-category-block .category-block {
+        align-items: center;
+    }
+
+    .category-block .category-block-title-holder .category-name {
+        padding-left: 65px;
+        left: -15px;
+    }
+
+    .color-data-science .job-qty, .color-ui-ux-and-arts .job-qty {
+        top: 5px;
+    }
+
+    .homepage-categories .badge-count {
+        width: 50px;
+        text-align: center;
+        font-size: 18px;
+    }
+}

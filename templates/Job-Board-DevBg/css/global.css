@@ -1,4 +1,5 @@
 /* Global styles go here. */
+
 /* Be civil and keep this file as small as possible, please */
 
 /* IF YOU CREATE A NEW SECTION, ADD IT TO THE INDEX! */
@@ -16,9 +17,10 @@
  */
 
 /************* 1. TYPOGRAPHY *****************************/
+
 @font-face {
   font-family: 'Axiforma';
-  src: url('../fonts/leanfonts/Axiforma-Thin.woff') format('woff');
+  src: url('../../job finder/fonts/AxiForma/Axiforma-Thin.woff') format('woff');
   font-weight: 100;
   font-style: normal;
   font-display: optional;
@@ -26,7 +28,7 @@
 
 @font-face {
   font-family: 'Axiforma';
-  src: url('../fonts/leanfonts/Axiforma-Light.woff') format('woff');
+  src: url('../../job finder/fonts/AxiForma/Axiforma-Light.woff') format('woff');
   font-weight: 300;
   font-style: normal;
   font-display: optional;
@@ -34,7 +36,7 @@
 
 @font-face {
   font-family: 'Axiforma';
-  src: url('../fonts/leanfonts/Axiforma-Regular.woff') format('woff');
+  src: url('../../job finder/fonts/AxiForma/Axiforma-Regular.woff') format('woff');
   font-weight: 400;
   font-style: normal;
   font-display: optional;
@@ -42,7 +44,7 @@
 
 @font-face {
   font-family: 'Axiforma';
-  src: url('../fonts/leanfonts/Axiforma-Medium.woff') format('woff');
+  src: url('../../job finder/fonts/AxiForma/Axiforma-Medium.woff') format('woff');
   font-weight: 500;
   font-style: normal;
   font-display: optional;
@@ -50,7 +52,7 @@
 
 @font-face {
   font-family: 'Axiforma';
-  src: url('../fonts/leanfonts/Axiforma-SemiBold.woff') format('woff');
+  src: url('../../job finder/fonts/AxiForma/Axiforma-SemiBold.woff') format('woff');
   font-weight: 600;
   font-style: normal;
   font-display: optional;
@@ -58,7 +60,7 @@
 
 @font-face {
   font-family: 'Axiforma';
-  src: url('../fonts/leanfonts/Axiforma-Bold.woff') format('woff');
+  src: url('../../job finder/fonts/AxiForma/Axiforma-Bold.woff') format('woff');
   font-weight: 700;
   font-style: normal;
   font-display: optional;
@@ -66,7 +68,7 @@
 
 @font-face {
   font-family: 'Axiforma';
-  src: url('../fonts/leanfonts/Axiforma-Black.woff') format('woff');
+  src: url('../../job finder/fonts/AxiForma/Axiforma-Black.woff') format('woff');
   font-weight: 900;
   font-style: normal;
   font-display: optional;
@@ -90,63 +92,45 @@ body {
   /* TODO: this is the correct value, we need to implement it when we're ready to test */
 }
 
-h1,
-.h1,
-h2,
-.h2,
-h3,
-.h3,
-h4,
-.h4,
-h5,
-.h5,
-h6,
-.h6 {
+h1,.h1,h2,.h2,h3,.h3,h4,.h4,h5,.h5,h6,.h6 {
   margin: 0;
 }
 
-h1,
-.h1 {
+h1,.h1 {
   font-size: 60px;
   font-weight: 900;
   line-height: 66px;
   /*letter-spacing: 1.2px;*/
 }
 
-h2,
-.h2 {
+h2,.h2 {
   font-size: 48px;
   font-weight: 700;
   line-height: 55px;
   letter-spacing: 1px;
 }
 
-h3,
-.h3 {
+h3,.h3 {
   font-size: 40px;
   font-weight: 700;
   line-height: 45px;
-  letter-spacing: 0.8px;
+  letter-spacing: 1px;
 }
 
-h4,
-.h4 {
+h4,.h4 {
   font-size: 30px;
   font-weight: 700;
   line-height: 33px;
-  letter-spacing: 0.6px;
+  letter-spacing: 1px;
 }
 
-h5,
-.h5 {
+h5,.h5 {
   font-size: 20px;
   font-weight: 300;
   line-height: 33px;
-  /*letter-spacing: 3px;*/
 }
 
-h6,
-.h6 {
+h6,.h6 {
   font-size: 16px;
   font-weight: 700;
   line-height: 23px;
@@ -154,10 +138,6 @@ h6,
 
 a {
   text-decoration: none;
-}
-
-.highlighted-text {
-  color: #304ffe;
 }
 
 /************* 2. GENERAL GLOBAL STYLES ******************/
@@ -168,19 +148,6 @@ img {
   display: inline-block;
   width: auto;
   height: auto;
-}
-
-img.aligncenter {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.card {
-  padding: 25px;
-  background-color: #fff;
-  border-radius: 5px;
-  box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.02);
 }
 
 .w-100 {
@@ -194,246 +161,19 @@ img.aligncenter {
 /********** 3. HELPER CLASSES *************/
 
 /* Apply this one to the body, for example when opening modal dialogs */
-.disable-scroll {
-  overflow-y: hidden;
-}
 
 /* Rounds elements */
-.rounded {
-  border-radius: 50%;
-}
 
 /* Makes text uppercase */
-.uppercase {
-  text-transform: uppercase;
-}
 
 /* spaces out the letters in a title (or text). Used in some page titles */
-.spaced {
-  letter-spacing: 2px;
-}
 
 /* Visually hides an element, but keeps it visible to screen readers */
-.sr-only {
-  border: 0;
-  clip: rect(1px, 1px, 1px, 1px);
-  height: 1px;
-  margin: -1px;
-  overflow: hidden;
-  padding: 0;
-  position: absolute;
-  width: 1px;
-}
 
 /* creates an 'X' close button. You'll need to position it yourself though. */
-.button-close::before {
-  display: block;
-  content: '+';
-  width: 20px;
-  height: 20px;
-  font-size: 45px;
-  transform: rotate(45deg);
-  color: #cecece;
-  cursor: pointer;
-}
 
 /* adds a white background and a border radius to a section */
-.white-section {
-  background-color: white;
-  border-radius: 5px;
-  padding: 50px 48px;
-}
 
 /* creates an absolute 100% width/height link overlay. Make sure its parent is relatively positioned */
-.overlay-link {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  z-index: 2;
-}
 
 /* A overlay that covers the whole page. */
-.curtain {
-  position: fixed;
-  width: 0;
-  height: 0;
-  background: rgba(0, 0, 0, 0);
-  top: 0;
-  left: 0;
-  z-index: -1;
-  transition: background 0.5s ease-in-out;
-}
-
-.curtain.open {
-  width: 100%;
-  height: 100%;
-  background: #000000d9;
-  z-index: 6;
-}
-
-.curtain.open.invisible {
-  background: rgba(0, 0, 0, 0);
-  z-index: 15;
-}
-
-/******************* 4. SITE HEADER ***********************/
-.nav .login-links .button {
-  font-size: 14px;
-}
-
-/******************* 5. INPUTS ****************************/
-.devbg-input {
-  padding: 14px 17px 12px;
-  border: 1px solid #59595980;
-  border-radius: 5px;
-  color: #231F20;
-  font-weight: 400;
-  font-size: 16px;
-  transition: all 0.2s ease-in-out;
-  resize: none;
-}
-
-.devbg-input::placeholder {
-  font-size: 16px;
-  color: #ADADAD;
-}
-
-.devbg-input:focus {
-  border-color: #595959;
-  outline: none;
-}
-
-.input-error,
-.devbg-input-error {
-  border-color: #D34835;
-}
-
-.input-error-hint {
-  display: block;
-  margin-top: 10px;
-  color: #D34835;
-}
-
-.devbg-input-label {
-  font-size: 13px;
-  font-weight: 300;
-  color: #595959;
-}
-
-.devbg-input-label.required::after {
-  content: '*';
-  color: #C53A1F;
-  margin-left: 2px;
-}
-
-.devbg-input.input-disabled {
-  background-color: #EBEBEB;
-  color: #595959;
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-/******************* 6. WP-POLLS ****************************/
-.entry-content .wp-polls {
-  display: block;
-  float: right;
-  width: 300px;
-}
-
-.entry-content .wp-polls .poll-inner {
-  margin: 20px 0 20px 20px;
-  padding: 20px 30px;
-  border-radius: 5px;
-  background-color: #f5f5f5;
-  background-image: url('./../images/polls-bg.svg');
-  background-position: top right;
-  background-repeat: no-repeat;
-}
-
-.entry-content .wp-polls .poll-descriptor {
-  display: block;
-  font-size: 14px;
-  margin-bottom: 20px;
-  color: #000;
-}
-
-.entry-content .wp-polls .poll-question {
-  font-size: 18px;
-  font-weight: 700;
-}
-
-.entry-content .wp-polls ul {
-  margin: 10px 0;
-}
-
-.entry-content .wp-polls ul label {
-  font-size: 15px;
-  font-weight: 100;
-}
-
-.entry-content .wp-polls .vote-button {
-  font-size: 12px;
-  height: 30px;
-  width: 100px;
-  line-height: 32px;
-  border-radius: 5px;
-  font-weight: 500;
-  margin-top: 20px;
-}
-
-/* Small breakpoint */
-@media screen and (max-width: 950px) {
-
-  .h1 {
-    font-size: 28px;
-    /* this is based on an existing design, we need to standardize our heading sizes.. */
-    line-height: 32px;
-  }
-
-  .h3 {
-    font-size: 30px;
-    line-height: 33px;
-  }
-
-  .white-section {
-    padding: 25px;
-  }
-
-  .devbg-input {
-    padding: 7px 17px 5px;
-  }
-
-  .hide-for-small {
-    display: none !important;
-  }
-
-  .entry-content .wp-polls {
-    display: block;
-    float: none;
-    margin: 0 auto;
-    width: 300px;
-  }
-
-  .entry-content .wp-polls .poll-inner {
-    margin-left: 0;
-  }
-}
-
-/* Medium ONLY  */
-@media screen and (min-width: 951px) and (max-width: 1200px) {
-  .mobile-only {
-    display: none !important;
-  }
-}
-
-/* large ONLY - > 1200px */
-@media screen and (min-width: 1200px) {
-  .mobile-only {
-    display: none !important;
-  }
-
-  /*.wide-section {*/
-  /*  width: 116%;*/
-  /*  margin-left: -8%;*/
-  /*}*/
-}

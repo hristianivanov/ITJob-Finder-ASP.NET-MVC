@@ -1,0 +1,49 @@
+.eclipse {
+    border-radius: 50%;
+    border-style: dashed;
+    border-color: #000058;
+    border-width: 0.13em;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.ellipse-1 {
+    width: 78em;
+    height: 58em;
+    top: calc(-68em / 2);
+}
+
+.ellipse-2 {
+    width: 102em;
+    height: 68em;
+    top: calc(-68em / 2);
+}
+
+.ellipse-3 {
+    width: 123em;
+    height: 93em;
+    top: calc(-93em / 2);
+}
+
+.glow-ellipse-background {
+    background: #02174c;
+    border-radius: 50%;
+    width: 28em;
+    height: 28em;
+    position: absolute;
+    left: calc(50% - 234px);
+    top: 169px;
+    filter: blur(200px);
+}
+
+.background-element {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: -100000;
+}

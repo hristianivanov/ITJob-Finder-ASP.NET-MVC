@@ -5,23 +5,6 @@
  * them over in this file. Any *new* styles for the section should go here.
  */
 
-/*.homepage-other-categories {*/
-/*  padding-top: 0;*/
-/*  margin-bottom: 80px;*/
-/*}*/
-
-/*.homepage-other-categories .inner .other-job-categories {*/
-/*  column-gap: 28px;*/
-/*}*/
-
-/*.homepage-other-categories .big-box {*/
-/*  background-color: #fff;*/
-/*}*/
-
-/*.homepage-other-categories .big-box .p-big {*/
-/*  font-weight: 600;*/
-/*}*/
-
 .homepage-other-categories {
     display: flex;
     margin-bottom: 80px;
@@ -31,11 +14,11 @@
     flex: 1 1 0;
     width: 50%;
     padding: 80px 60px 30px 20px;
-    border-top: 1px solid #E0E2E9;
+    border-top: 1px solid rgba(0,0,73,1);
 }
 
 .homepage-other-categories .junior-intern {
-    border-right: 1px solid #E0E2E9;
+    border-right: 1px solid rgba(0,0,73,1);
     padding-left: 15px;
 }
 
@@ -55,7 +38,7 @@
 .homepage-other-categories .homepage-other-category .cat-title {
     font-size: 22px;
     margin: 0;
-    color: #000;
+    color: #fff;
 }
 
 .homepage-other-categories .homepage-other-category .content {
@@ -66,12 +49,12 @@
     position: relative;
     font-size: 14px;
     font-weight: 400;
-    color: #231F20;
+    color: #fff;
 }
 
 .homepage-other-categories .homepage-other-category .see-all::after {
     display: block;
-    content: url('arrow-right-blue.svg');
+    content: url('../../job finder/svgs/arrow-right-blue.svg');
     position: absolute;
     top: 0;
     right: -15px;
@@ -79,6 +62,7 @@
 }
 
 /* Small */
+
 @media screen and (max-width: 950px) {
     .homepage-other-categories {
         flex-direction: column;
@@ -100,6 +84,7 @@
 }
 
 /* TODO: Everything should be rewritten for max-width: 950px */
+
 @media screen and (max-width: 767px) {
     .homepage-other-categories .homepage-other-category:first-of-type {
         border-top: none;

@@ -1,0 +1,101 @@
+/* styles for the categories section on the homepage */
+
+/* There are a lot of styles for this section, left in custom.css.
+ * Our goal is to eventually either refactor them, or at least bring
+ * them over in this file. Any *new* styles for the section should go here.
+ */
+
+.homepage-other-categories {
+    display: flex;
+}
+
+.homepage-other-categories .homepage-other-category {
+    flex: 1 1 0;
+    width: 50%;
+    padding: 80px 60px 30px 20px;
+    border-top: 1px solid rgba(0,0,73,1);
+}
+
+.homepage-other-categories .junior-intern {
+    border-right: 1px solid rgba(0,0,73,1);
+    padding-left: 15px;
+}
+
+.homepage-other-categories .it-management {
+    padding-left: 50px;
+    padding-right: 15px;
+}
+
+.homepage-other-categories .homepage-other-category .title-count-wrap {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 25px;
+    margin-bottom: 15px;
+}
+
+.homepage-other-categories .homepage-other-category .cat-title {
+    font-size: 22px;
+    margin: 0;
+    color: #fff;
+}
+
+.homepage-other-categories .homepage-other-category .content {
+    color: #595959;
+    font-size: 16px;
+    margin-bottom: 0.8em;
+}
+
+.homepage-other-categories .homepage-other-category .see-all {
+    position: relative;
+    font-size: 14px;
+    font-weight: 400;
+    color: #fff;
+}
+
+.homepage-other-categories .homepage-other-category .see-all::after {
+    display: block;
+    content: url('../../svgs/arrow-right-blue.svg');
+    position: absolute;
+    top: 0;
+    right: -15px;
+    width: 7px;
+}
+
+/* Small */
+
+@media screen and (max-width: 950px) {
+    .homepage-other-categories {
+        flex-direction: column;
+    }
+
+    .homepage-other-categories .homepage-other-category {
+        width: 100%;
+        border-right: none;
+    }
+
+    .homepage-other-categories .homepage-other-category {
+        padding: 30px 0;
+    }
+
+    .homepage-other-categories .homepage-other-category .title-count-wrap {
+        flex-direction: row-reverse;
+        justify-content: flex-end;
+    }
+}
+
+/* TODO: Everything should be rewritten for max-width: 950px */
+
+@media screen and (max-width: 767px) {
+    .homepage-other-categories .homepage-other-category:first-of-type {
+        border-top: none;
+    }
+
+    .homepage-other-categories .homepage-other-category .cat-title {
+        font-size: 20px;
+    }
+
+    .homepage-other-categories .homepage-other-category .title-count-wrap {
+        gap: 15px;
+    }
+}
