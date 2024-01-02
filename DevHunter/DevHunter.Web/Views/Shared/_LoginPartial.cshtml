@@ -24,7 +24,7 @@
 <div class="modal-container">
 	<div class="form-wrapper sign-in">
 		<div class="close-form">+</div>
-		<form asp-area="" asp-controller="User" asp-action="Login" method="post">
+		<form asp-area="" asp-controller="User" asp-action="Login" asp-route-returnUrl="@(Context.Request.Path + Context.Request.QueryString)" method="post">
 			<h2>Login</h2>
 			<div class="input-group">
 				<input asp-for="Email" type="text" required/>
@@ -48,7 +48,7 @@
 	</div>
 	<div class="form-wrapper sign-up">
 		<div class="close-form">+</div>
-		<form asp-area="" asp-controller="User" asp-action="Register" method="post">
+		<form asp-area="" asp-controller="User" asp-action="Register" asp-route-returnUrl="@(Context.Request.Path + Context.Request.QueryString)" method="post">
 			<h2>Sign Up</h2>
 			<div class="input-group">
 				<input @* asp-for="Username" *@ type="text" required/>
