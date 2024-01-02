@@ -55,12 +55,14 @@
 				<label for="">Username</label>
 			</div>
 			<div class="input-group">
-				<input type="text" required>
-				<label for="">Email</label>
+				<input asp-for="Email" type="text" aria-required="true">
+				<label asp-for="Email">Username</label>
+				<span asp-validation-for="Email" class="text-danger"></span>
 			</div>
 			<div class="input-group">
-				<input type="password" required>
-				<label for="">Password</label>
+				<input asp-for="Password" type="password" aria-required="true" />
+				<label asp-for="Password">Password</label>
+				<span asp-validation-for="Password" class="text-danger"></span>
 			</div>
 			<div class="remember">
 				<label><input type="checkbox"> I agree to the terms & conditions</label>
