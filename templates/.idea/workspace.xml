@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="7cf63690-33fe-4ec8-9ef5-643554557ab8" name="Changes" comment="Clear console errors">
+      <change afterPath="$PROJECT_DIR$/job finder/test.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../DevHunter/DevHunter.Web/Views/Shared/_Layout.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/../DevHunter/DevHunter.Web/Views/Shared/_Layout.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../DevHunter/DevHunter.Web/Views/Shared/_LoginPartial.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/../DevHunter/DevHunter.Web/Views/Shared/_LoginPartial.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/templates.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/templates.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/job finder/companies.html" beforeDir="false" afterPath="$PROJECT_DIR$/job finder/companies.html" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+        <option value="TypeScript File" />
+        <option value="HTML File" />
+        <option value="CSS File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6
+}</component>
+  <component name="ProjectId" id="2ZZgiSQpzBuZn9iMVqnY915xo6j" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;create-db-entites&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Graduate-Web-project/School-WebProject/DevHunter&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;D:\\Webstorm\\WebStorm 2023.2.5\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Graduate-Web-project\School-WebProject\templates\job finder\fonts\Satoshi" />
+      <recent name="D:\Graduate-Web-project\School-WebProject\templates\job finder\css" />
+      <recent name="D:\Graduate-Web-project\School-WebProject\templates\Job-Board-DevBg\fonts" />
+      <recent name="D:\Graduate-Web-project\School-WebProject\templates\Job-Board-DevBg" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Graduate-Web-project\School-WebProject\templates\job finder\css\fonts" />
+      <recent name="D:\Graduate-Web-project\School-WebProject\templates\job finder\svgs" />
+      <recent name="D:\Graduate-Web-project\School-WebProject\templates\job finder\fonts\AxiForma" />
+      <recent name="D:\Graduate-Web-project\School-WebProject\templates\job finder\css\job-board" />
+      <recent name="D:\Graduate-Web-project\School-WebProject\templates\Job-Board-DevBg\fonts" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="7cf63690-33fe-4ec8-9ef5-643554557ab8" name="Changes" comment="" />
+      <created>1702635141406</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1702635141406</updated>
+      <workItem from="1702635142455" duration="3077000" />
+      <workItem from="1702678274882" duration="595000" />
+      <workItem from="1702967622708" duration="639000" />
+      <workItem from="1703139686267" duration="34000" />
+      <workItem from="1703442231802" duration="4299000" />
+      <workItem from="1703490626019" duration="7667000" />
+      <workItem from="1703789099656" duration="33540000" />
+      <workItem from="1703936691722" duration="2994000" />
+      <workItem from="1703952258903" duration="22358000" />
+      <workItem from="1704017835827" duration="19456000" />
+      <workItem from="1704056269267" duration="11552000" />
+      <workItem from="1704128336222" duration="48000" />
+      <workItem from="1704129927586" duration="7757000" />
+      <workItem from="1704138994942" duration="4187000" />
+      <workItem from="1704149002960" duration="375000" />
+    </task>
+    <task id="LOCAL-00001" summary="Adding files via upload">
+      <option name="closed" value="true" />
+      <created>1703975865677</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1703975865677</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Fix css values">
+      <option name="closed" value="true" />
+      <created>1703976288617</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1703976288617</updated>
+    </task>
+    <task id="LOCAL-00003" summary="delete unused css file">
+      <option name="closed" value="true" />
+      <created>1703976310511</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1703976310511</updated>
+    </task>
+    <task id="LOCAL-00004" summary="footer glow lighter">
+      <option name="closed" value="true" />
+      <created>1703976533466</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1703976533466</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Change job-board styles">
+      <option name="closed" value="true" />
+      <created>1704047993796</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1704047993796</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Configure fonts">
+      <option name="closed" value="true" />
+      <created>1704064529552</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1704064529552</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Add mona-sans font">
+      <option name="closed" value="true" />
+      <created>1704065740174</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1704065740174</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Add mona-sans font">
+      <option name="closed" value="true" />
+      <created>1704065781181</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1704065781181</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Clear console errors">
+      <option name="closed" value="true" />
+      <created>1704066148705</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1704066148705</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Adding files via upload" />
+    <MESSAGE value="Fix css values" />
+    <MESSAGE value="delete unused css file" />
+    <MESSAGE value="footer glow lighter" />
+    <MESSAGE value="Change job-board styles" />
+    <MESSAGE value="Configure fonts" />
+    <MESSAGE value="Add mona-sans font" />
+    <MESSAGE value="Clear console errors" />
+    <option name="LAST_COMMIT_MESSAGE" value="Clear console errors" />
+  </component>
+</project>
