@@ -18,12 +18,6 @@ namespace DevHunter.Web.Controllers
 			this.userManager = userManager;
 		}
 
-		[HttpGet]
-		public async Task<IActionResult> Register()
-		{
-			return View();
-		}
-
 		[HttpPost]
 		public async Task<IActionResult> Register(RegisterFormModel model)
 		{
@@ -54,22 +48,11 @@ namespace DevHunter.Web.Controllers
 			return RedirectToAction("Index", "Home");
 		}
 
-		[HttpGet]
-		public async Task<IActionResult> Login(string? returnUrl = null)
+		[HttpPost]
+		public async Task<IActionResult> Login(LoginFormModel model, string? returnUrl = null)
 		{
 			await this.HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
-			LoginFormModel model = new LoginFormModel()
-			{
-				ReturnUrl = returnUrl,
-			};
-
-			return this.View(model);
-		}
-
-		[HttpPost]
-		public async Task<IActionResult> Login(LoginFormModel model)
-		{
 			if (!ModelState.IsValid)
 			{
 				return this.View();

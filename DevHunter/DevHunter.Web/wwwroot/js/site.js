@@ -17,40 +17,51 @@ function so_smooth_scroll(target = null, duration = 500, offset = 0) {
 /*************Login-register-modal*************/
 const signInBtnLink = document.querySelector('.signInBtn-link');
 const signUpBtnLink = document.querySelector('.signUpBtn-link');
-const wrapper = document.querySelector('.modal-container');
+const modalContainer = document.querySelector('.modal-container');
+const curtain = document.querySelector('.curtain');
+const loginBtn = document.getElementById('login-btn');
+const registerBtn = document.getElementById('register-btn');
 const closeBtns = Array.from(document.querySelectorAll('.modal-container .close-form'));
 
-signUpBtnLink.addEventListener('click', () => {
-    wrapper.classList.toggle('active');
-    closeBtns[0].style.display = 'none';
-    setTimeout(() => {
-        closeBtns[1].style.display = 'block';
-    }, 1000);
-});
-
-signInBtnLink.addEventListener('click', () => {
-    wrapper.classList.toggle('active');
-    closeBtns[1].style.display = 'none';
-    setTimeout(() => {
-        closeBtns[0].style.display = 'block';
-    }, 1000);
-});
-
-document.getElementById('login-btn').addEventListener('click', function (e) {
+// Open modal
+loginBtn.addEventListener('click', function (e) {
     e.preventDefault();
-    document.querySelector('.modal-container').classList.add('open');
-    document.querySelector('.curtain').classList.add('open');
+    showModal();
+});
+registerBtn.addEventListener('click', function (e) {
+    e.preventDefault();
+    switchDialog(1, 0, 0);
+    showModal();
+});
+
+// Close modal
+closeBtns.forEach(btn => btn.addEventListener('click', closeModal));
+
+curtain.addEventListener('click', closeModal);
+
+// Switch dialog
+signUpBtnLink.addEventListener('click', () => switchDialog(1, 0));
+signInBtnLink.addEventListener('click', () => switchDialog(0, 1));
+
+function showModal() {
+    modalContainer.classList.add('open');
+    curtain.classList.add('open');
     document.body.classList.add('login-dialog-open');
-});
+}
 
-closeBtns.forEach(btn => btn.addEventListener('click', () => {
-    document.querySelector('.modal-container').classList.remove('open');
-    document.querySelector('.curtain').classList.remove('open');
+function closeModal() {
+    modalContainer.classList.remove('open', 'active');
+    curtain.classList.remove('open');
     document.body.classList.remove('login-dialog-open');
-}));
+    closeBtns[1].style.display = 'none';
+    closeBtns[0].style.display = 'block';
+}
 
-document.querySelector('.curtain').addEventListener('click', function () {
-    document.querySelector('.modal-container').classList.remove('open');
-    document.querySelector('.curtain').classList.remove('open');
-    document.body.classList.remove('login-dialog-open');
-});
+function switchDialog(indexToShow, indexToHide, timeout = 1000) {
+    modalContainer.classList.toggle('active');
+    closeBtns[indexToHide].style.display = 'none';
+    setTimeout(() => {
+        closeBtns[indexToShow].style.display = 'block';
+    }, timeout);
+}
+
