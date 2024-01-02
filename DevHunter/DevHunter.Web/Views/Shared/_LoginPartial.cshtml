@@ -3,6 +3,32 @@
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
+<<<<<<< Updated upstream
+=======
+<ul class="navbar-nav">
+@if (SignInManager.IsSignedIn(User))
+{
+    <li class="nav-item">
+        <a  class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
+    </li>
+    <li class="nav-item">
+        <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+            <button  type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+        </form>
+    </li>
+}
+else
+{
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
+    </li>
+}
+</ul>
+@model DevHunter.Web.ViewModels.User.LoginFormModel
+>>>>>>> Stashed changes
 <div class="login-register-cta">
 	@if (SignInManager.IsSignedIn(User))
 	{
@@ -16,4 +42,60 @@
 		<a asp-area="" asp-controller="User" asp-action="Login">Log In.</a>
 		<a asp-area="" asp-controller="User" asp-action="Register">Register.</a>
 	}
+<<<<<<< Updated upstream
 </div>
+=======
+</div>
+
+<div class="curtain"></div>
+<div class="modal-container">
+	<div class="form-wrapper sign-in">
+		<div class="close-form">+</div>
+		<form asp-area="" asp-controller="User" asp-action="Login" method="post">
+			<h2>Login</h2>
+			<div class="input-group">
+				<input asp-for="Email" type="text" aria-required="true">
+				<label asp-for="Email">Username</label>
+				<span asp-validation-for="Email" class="text-danger"></span>
+			</div>
+			<div class="input-group">
+				<input asp-for="Password" type="password" aria-required="true"/>
+				<label asp-for="Password">Password</label>
+				<span asp-validation-for="Password" class="text-danger"></span>
+			</div>
+			<div class="remember">
+				<label><input type="checkbox"> Remember me</label>
+			</div>
+			<button type="submit">Login</button>
+			<div class="signUp-link">
+				<p>Don't have an account? <a href="#" class="signUpBtn-link">Sign Up</a></p>
+			</div>
+		</form>
+	</div>
+	<div class="form-wrapper sign-up">
+		<div class="close-form">+</div>
+		<form asp-area="" asp-controller="User" asp-action="Register" method="post">
+			<h2>Sign Up</h2>
+			<div class="input-group">
+				<input type="text" required>
+				<label for="">Username</label>
+			</div>
+			<div class="input-group">
+				<input type="text" required>
+				<label for="">Email</label>
+			</div>
+			<div class="input-group">
+				<input type="password" required>
+				<label for="">Password</label>
+			</div>
+			<div class="remember">
+				<label><input type="checkbox"> I agree to the terms & conditions</label>
+			</div>
+			<button type="submit">Sign Up</button>
+			<div class="signUp-link">
+				<p>Already have an account? <a href="#" class="signInBtn-link">Sign In</a></p>
+			</div>
+		</form>
+	</div>
+</div>
+>>>>>>> Stashed changes
