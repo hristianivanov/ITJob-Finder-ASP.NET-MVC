@@ -19,7 +19,7 @@ namespace DevHunter.Web.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> Register(RegisterFormModel model)
+		public async Task<IActionResult> Register(RegisterFormModel model, string? returnUrl = null)
 		{
 			if (!ModelState.IsValid)
 			{
@@ -42,8 +42,13 @@ namespace DevHunter.Web.Controllers
 
 				return View(model);
 			}
-
+				
 			await this.signInManager.SignInAsync(user, isPersistent: false);
+
+			if (returnUrl != null)
+			{
+				return LocalRedirect(returnUrl);
+			}
 
 			return RedirectToAction("Index", "Home");
 		}
@@ -64,6 +69,11 @@ namespace DevHunter.Web.Controllers
 			if (!result.Succeeded)
 			{
 				return this.View(model);
+			}
+
+			if (returnUrl != null)
+			{
+				return LocalRedirect(returnUrl);
 			}
 
 			return this.Redirect(model.ReturnUrl ?? "/Home/Index");
