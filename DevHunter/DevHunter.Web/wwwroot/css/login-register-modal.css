@@ -1,0 +1,191 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+.modal-container.open {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background: rgba(0, 0, 0, 0.38);
+    z-index: 15;
+}
+
+.curtain {
+    position: fixed;
+    width: 0;
+    height: 0;
+    background: rgba(0, 0, 0, 0);
+    top: 0;
+    left: 0;
+    z-index: -1;
+    transition: background 0.5s ease-in-out;
+}
+
+    .curtain.open {
+        width: 100%;
+        height: 100%;
+        /* ReSharper disable once HexColorValueWithAlpha */
+        /* ReSharper disable once SyntaxIsNotAllowed */
+        background: #000000d9;
+        z-index: 13;
+    }
+
+body.login-dialog-open {
+    overflow-y: hidden;
+}
+
+.modal-container {
+    background: rgba(0, 0, 88, 0.10);
+    backdrop-filter: blur(12.5px);
+    position: relative;
+    width: 400px;
+    height: 500px;
+    box-shadow: 0 0 0 2px #4056C0 inset, 0 0 26px -3px rgba(0, 102, 255, 0.25);
+    border-radius: 20px;
+    padding: 40px;
+    overflow: hidden;
+    font-family: 'Poppins', sans-serif;
+    display: none;
+}
+
+.form-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    transition: 1s ease-in-out;
+}
+
+.close-form {
+    display: block;
+    position: absolute;
+    right: 10px;
+    top: 0px;
+    padding: 10px;
+    font-size: 40px;
+    transform: rotate(45deg);
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+}
+
+    .close-form:hover {
+        transform: rotate(-45deg);
+        font-size: 45px;
+        color: #fff;
+    }
+
+.modal-container .form-wrapper.sign-up .close-form {
+    display: none;
+}
+
+.modal-container.active .form-wrapper.sign-in {
+    transform: translateY(-450px);
+}
+
+.modal-container .form-wrapper.sign-up {
+    position: absolute;
+    top: 450px;
+    left: 0;
+    margin-top: 1em;
+}
+
+.modal-container.active .form-wrapper.sign-up {
+    transform: translateY(-450px);
+    margin-top: 0;
+}
+
+.modal-container h2 {
+    font-size: 30px;
+    color: #fff;
+    text-align: center;
+}
+
+.input-group {
+    position: relative;
+    margin: 30px 0;
+    border-bottom: 2px solid #fff;
+}
+
+    .input-group label {
+        position: absolute;
+        top: 50%;
+        left: 5px;
+        transform: translateY(-50%);
+        font-size: 16px;
+        color: #fff;
+        pointer-events: none;
+        transition: .5s;
+    }
+
+    .input-group input {
+        width: 320px;
+        height: 40px;
+        font-size: 16px;
+        color: #fff;
+        padding: 0 5px;
+        background: transparent;
+        border: none;
+        outline: none;
+    }
+
+        .input-group input:focus ~ label,
+        .input-group input:valid ~ label {
+            top: -5px;
+        }
+
+.remember {
+    margin: -5px 0 15px 5px;
+}
+
+    .remember label {
+        color: #fff;
+        font-size: 14px;
+    }
+
+        .remember label input {
+            /* ReSharper disable once CssNotResolved */
+            accent-color: #4056c0;
+        }
+
+.modal-container button {
+    padding: 0.5em 0;
+    position: relative;
+    width: 100%;
+    background: #000;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 30px;
+    outline: none;
+    color: #E5E4E6;
+    border: 2px solid #000058;
+    box-shadow: 0 0 0 2px #4056C0 inset, 0 0 26px -3px rgba(0, 102, 255, 0.25);
+}
+
+.signUp-link {
+    display: flex;
+    justify-content: center;
+    font-size: 14px;
+    margin: 15px 0;
+    gap: 0.5em;
+}
+
+    .signUp-link p {
+        color: #fff;
+    }
+
+    .signInBtn-link,
+    .signUpBtn-link {
+        cursor: pointer;
+    }
+
+    .signUp-link .signUpBtn-link,
+    .signUp-link .signInBtn-link {
+        color: #4056c0;
+        font-weight: 500;
+    }
+
+    .signUp-link p .signUpBtn-link:hover,
+    .signUp-link p .signInBtn-link:hover{
+        text-decoration: underline;
+    }
