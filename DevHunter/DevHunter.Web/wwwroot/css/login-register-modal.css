@@ -163,21 +163,29 @@ body.login-dialog-open {
 }
 
 .signUp-link {
+    display: flex;
+    justify-content: center;
     font-size: 14px;
-    text-align: center;
     margin: 15px 0;
+    gap: 0.5em;
 }
 
     .signUp-link p {
         color: #fff;
     }
 
-        .signUp-link p a {
-            color: #4056c0;
-            text-decoration: none;
-            font-weight: 500;
-        }
+    .signInBtn-link,
+    .signUpBtn-link {
+        cursor: pointer;
+    }
 
-            .signUp-link p a:hover {
-                text-decoration: underline;
-            }
+    .signUp-link .signUpBtn-link,
+    .signUp-link .signInBtn-link {
+        color: #4056c0;
+        font-weight: 500;
+    }
+
+    .signUp-link p .signUpBtn-link:hover,
+    .signUp-link p .signInBtn-link:hover{
+        text-decoration: underline;
+    }

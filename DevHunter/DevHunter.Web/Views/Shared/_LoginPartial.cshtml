@@ -20,7 +20,6 @@
 
 </div>
 
-
 <div class="curtain"></div>
 <div class="modal-container">
 	<div class="form-wrapper sign-in">
@@ -28,12 +27,12 @@
 		<form asp-area="" asp-controller="User" asp-action="Login" method="post">
 			<h2>Login</h2>
 			<div class="input-group">
-				<input asp-for="Email" type="text" aria-required="true">
-				<label asp-for="Email">Username</label>
+				<input asp-for="Email" type="text" required/>
+				<label asp-for="Email">Email</label>
 				<span asp-validation-for="Email" class="text-danger"></span>
 			</div>
 			<div class="input-group">
-				<input asp-for="Password" type="password" aria-required="true"/>
+				<input asp-for="Password" type="password" required/>
 				<label asp-for="Password">Password</label>
 				<span asp-validation-for="Password" class="text-danger"></span>
 			</div>
@@ -42,7 +41,8 @@
 			</div>
 			<button type="submit">Login</button>
 			<div class="signUp-link">
-				<p>Don't have an account? <a href="#" class="signUpBtn-link">Sign Up</a></p>
+				<p>Don't have an account?</p>
+				<div class="signUpBtn-link">Sign Up</div>
 			</div>
 		</form>
 	</div>
@@ -51,16 +51,17 @@
 		<form asp-area="" asp-controller="User" asp-action="Register" method="post">
 			<h2>Sign Up</h2>
 			<div class="input-group">
-				<input type="text" required>
-				<label for="">Username</label>
+				<input @* asp-for="Username" *@ type="text" required/>
+				<label @* asp-for="Username" *@>Username</label>
+				<span @* asp-validation-for="Username" *@ class="text-danger"></span>
 			</div>
 			<div class="input-group">
-				<input asp-for="Email" type="text" aria-required="true">
-				<label asp-for="Email">Username</label>
+				<input asp-for="Email" type="text" required/>
+				<label asp-for="Email">Email</label>
 				<span asp-validation-for="Email" class="text-danger"></span>
 			</div>
 			<div class="input-group">
-				<input asp-for="Password" type="password" aria-required="true" />
+				<input asp-for="Password" type="password" required/>
 				<label asp-for="Password">Password</label>
 				<span asp-validation-for="Password" class="text-danger"></span>
 			</div>
@@ -69,7 +70,8 @@
 			</div>
 			<button type="submit">Sign Up</button>
 			<div class="signUp-link">
-				<p>Already have an account? <a href="#" class="signInBtn-link">Sign In</a></p>
+				<p>Already have an account?</p>
+				<div class="signInBtn-link">Sign In</div>
 			</div>
 		</form>
 	</div>
