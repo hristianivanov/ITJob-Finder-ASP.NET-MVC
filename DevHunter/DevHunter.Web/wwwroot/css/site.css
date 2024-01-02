@@ -1,9 +1,14 @@
+<<<<<<< Updated upstream
 @import url(reset.css);
 
 @import url(typography.css);
 
 @import url(layout.css);
 
+=======
+
+
+>>>>>>> Stashed changes
 @import url(background.css);
 
 @import url(navigation.css);
@@ -12,4 +17,10 @@
 
 @import url(job-board.css);
 
+<<<<<<< Updated upstream
 @import url(footer.css);
+=======
+@import url(login-register-modal.css);
+
+@import url(footer.css);
+>>>>>>> Stashed changes
