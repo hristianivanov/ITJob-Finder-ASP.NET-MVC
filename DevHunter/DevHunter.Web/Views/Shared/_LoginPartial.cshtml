@@ -2,6 +2,7 @@
 @using DevHunter.Data.Models
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
+@model DevHunter.Web.ViewModels.User.LoginFormModel
 
 <div class="login-register-cta">
 	@if (SignInManager.IsSignedIn(User))
@@ -13,7 +14,65 @@
 	}
 	else
 	{
-		<a asp-area="" asp-controller="User" asp-action="Login">Log In.</a>
-		<a asp-area="" asp-controller="User" asp-action="Register">Register.</a>
+		<div id="login-btn">Log In.</div>
+		<div id="register-btn">Register.</div>
 	}
+
+</div>
+
+<div class="curtain"></div>
+<div class="modal-container">
+	<div class="form-wrapper sign-in">
+		<div class="close-form">+</div>
+		<form asp-area="" asp-controller="User" asp-action="Login" asp-route-returnUrl="@(Context.Request.Path + Context.Request.QueryString)" method="post">
+			<h2>Login</h2>
+			<div class="input-group">
+				<input asp-for="Email" type="text" required/>
+				<label asp-for="Email">Email</label>
+				<span asp-validation-for="Email" class="text-danger"></span>
+			</div>
+			<div class="input-group">
+				<input asp-for="Password" type="password" required/>
+				<label asp-for="Password">Password</label>
+				<span asp-validation-for="Password" class="text-danger"></span>
+			</div>
+			<div class="remember">
+				<label><input type="checkbox"> Remember me</label>
+			</div>
+			<button type="submit">Login</button>
+			<div class="signUp-link">
+				<p>Don't have an account?</p>
+				<div class="signUpBtn-link">Sign Up</div>
+			</div>
+		</form>
+	</div>
+	<div class="form-wrapper sign-up">
+		<div class="close-form">+</div>
+		<form asp-area="" asp-controller="User" asp-action="Register" asp-route-returnUrl="@(Context.Request.Path + Context.Request.QueryString)" method="post">
+			<h2>Sign Up</h2>
+			<div class="input-group">
+				<input @* asp-for="Username" *@ type="text" required/>
+				<label @* asp-for="Username" *@>Username</label>
+				<span @* asp-validation-for="Username" *@ class="text-danger"></span>
+			</div>
+			<div class="input-group">
+				<input asp-for="Email" type="text" required/>
+				<label asp-for="Email">Email</label>
+				<span asp-validation-for="Email" class="text-danger"></span>
+			</div>
+			<div class="input-group">
+				<input asp-for="Password" type="password" required/>
+				<label asp-for="Password">Password</label>
+				<span asp-validation-for="Password" class="text-danger"></span>
+			</div>
+			<div class="remember">
+				<label><input type="checkbox"> I agree to the terms & conditions</label>
+			</div>
+			<button type="submit">Sign Up</button>
+			<div class="signUp-link">
+				<p>Already have an account?</p>
+				<div class="signInBtn-link">Sign In</div>
+			</div>
+		</form>
+	</div>
 </div>
