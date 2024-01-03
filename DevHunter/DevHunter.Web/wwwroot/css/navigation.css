@@ -86,3 +86,7 @@
     color: #0C0C0E;
     background: #fff;
 }
+
+.login-register-cta > * {
+    cursor: pointer;
+}
