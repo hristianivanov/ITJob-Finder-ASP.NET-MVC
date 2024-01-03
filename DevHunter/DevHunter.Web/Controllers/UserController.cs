@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.Authentication;
-
-namespace DevHunter.Web.Controllers
+﻿namespace DevHunter.Web.Controllers
 {
-	using DevHunter.Web.ViewModels.User;
-	using DevHunter.Data.Models;
+	using Microsoft.AspNetCore.Authentication;
 	using Microsoft.AspNetCore.Mvc;
 	using Microsoft.AspNetCore.Identity;
+
+	using Data.Models;
+	using ViewModels.User;
 
 	public class UserController : Controller
 	{
@@ -42,7 +42,7 @@ namespace DevHunter.Web.Controllers
 
 				return View(model);
 			}
-				
+
 			await this.signInManager.SignInAsync(user, isPersistent: false);
 
 			if (returnUrl != null)

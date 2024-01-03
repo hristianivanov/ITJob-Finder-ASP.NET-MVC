@@ -1,12 +1,11 @@
 namespace DevHunter.Web
 {
-	using Microsoft.AspNetCore.Identity;
+	using Microsoft.AspNetCore.Mvc;
 	using Microsoft.EntityFrameworkCore;
 
 	using Data;
-	using DevHunter.Data.Models;
-	using DevHunter.Web.Infrastructure.ModelBinders;
-	using Microsoft.AspNetCore.Mvc;
+	using Data.Models;
+	using Infrastructure.ModelBinders;
 
 	public class Program
 	{
