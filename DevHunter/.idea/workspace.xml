@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5524ad82-825a-4eb9-9897-a94178bea7f6" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DevHunter.Web/Controllers/UserController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DevHunter.Web/Controllers/UserController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DevHunter.Web/Views/Shared/_LoginPartial.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/DevHunter.Web/Views/Shared/_LoginPartial.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DevHunter.Web/wwwroot/js/site.js" beforeDir="false" afterPath="$PROJECT_DIR$/DevHunter.Web/wwwroot/js/site.js" afterDir="false" />
-    </list>
+    <list default="true" id="5524ad82-825a-4eb9-9897-a94178bea7f6" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -31,7 +26,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "login-register",
+    "git-widget-placeholder": "main",
     "last_opened_file_path": "D:/Graduate-Web-project/School-WebProject/DevHunter",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -51,6 +46,7 @@
       <workItem from="1704128385643" duration="167000" />
       <workItem from="1704149383229" duration="1416000" />
       <workItem from="1704195842952" duration="2591000" />
+      <workItem from="1704263216329" duration="8000" />
     </task>
     <servers />
   </component>
