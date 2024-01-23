@@ -10,40 +10,8 @@
 </head>
 
 <body>
-<div class="radio-container">
-    <div class="radio-btn active">
-        <p>Popular</p>
-    </div>
-    <div class="radio-btn">
-        <p>Latest</p>
-    </div>
-    <div class="sliding-bubble"></div>
-</div>
 
-<div class="radio-macro">
-  <span class="label1 active">
-    Popular
-  </span>
-    <span class="label2">
-    Latest
-  </span>
-    <div class="sliding-bubble">
-    </div>
-</div>
 
-<script>
-    document.querySelectorAll('.radio-macro span').forEach(function(span) {
-        span.addEventListener('click', function() {
-            document.querySelectorAll('.radio-macro span').forEach(function(item) {
-                item.classList.toggle('active');
-            });
-            document.querySelectorAll('.radio-macro .sliding-bubble').forEach(function(bubble) {
-                bubble.classList.toggle('switch');
-            });
-        });
-    });
-
-</script>
 </body>
 
 </html>
