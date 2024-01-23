@@ -4,9 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7cf63690-33fe-4ec8-9ef5-643554557ab8" name="Changes" comment="Clear console errors">
+    <list default="true" id="7cf63690-33fe-4ec8-9ef5-643554557ab8" name="Changes" comment="Creating job category heading">
+      <change beforePath="$PROJECT_DIR$/../DevHunter/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../DevHunter/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../DevHunter/DevHunter.Web/Controllers/UserController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../DevHunter/DevHunter.Web/Controllers/UserController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../DevHunter/DevHunter.Web/wwwroot/js/site.js" beforeDir="false" afterPath="$PROJECT_DIR$/../DevHunter/DevHunter.Web/wwwroot/js/site.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/job finder/about.html" beforeDir="false" afterPath="$PROJECT_DIR$/job finder/about.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/job finder/companies.html" beforeDir="false" afterPath="$PROJECT_DIR$/job finder/companies.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/job finder/test.css" beforeDir="false" afterPath="$PROJECT_DIR$/job finder/test.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/job finder/test2.css" beforeDir="false" afterPath="$PROJECT_DIR$/job finder/test2.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -95,6 +100,13 @@
       <workItem from="1704263225406" duration="2126000" />
       <workItem from="1704265593179" duration="7184000" />
       <workItem from="1704352014817" duration="3952000" />
+      <workItem from="1704487012897" duration="593000" />
+      <workItem from="1704871330525" duration="2168000" />
+      <workItem from="1704956311144" duration="2813000" />
+      <workItem from="1705053772622" duration="1523000" />
+      <workItem from="1705310319352" duration="1968000" />
+      <workItem from="1705441041377" duration="28000" />
+      <workItem from="1705441096455" duration="5000" />
     </task>
     <task id="LOCAL-00001" summary="Adding files via upload">
       <option name="closed" value="true" />
@@ -168,7 +180,15 @@
       <option name="project" value="LOCAL" />
       <updated>1704066148705</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Creating job category heading">
+      <option name="closed" value="true" />
+      <created>1704486508645</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1704486508645</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -183,6 +203,7 @@
     <MESSAGE value="Configure fonts" />
     <MESSAGE value="Add mona-sans font" />
     <MESSAGE value="Clear console errors" />
-    <option name="LAST_COMMIT_MESSAGE" value="Clear console errors" />
+    <MESSAGE value="Creating job category heading" />
+    <option name="LAST_COMMIT_MESSAGE" value="Creating job category heading" />
   </component>
 </project>
