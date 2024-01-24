@@ -11,158 +11,94 @@ body {
     font-family: 'Poppins', sans-serif;
 }
 
-.modal-container {
-    background: #00051b;
-    backdrop-filter: blur(12px);
-}
-
-.modal-container.open {
-    z-index: 10;
+img {
+    width: 100%;
     display: block;
+    height: auto;
 }
 
-.curtain
-{
-    position: fixed;
-    width: 0;
-    height: 0;
-    background: rgba(0, 0, 0, 0);
-    top: 0;
-    left: 0;
-    z-index: -1;
-    transition: background 0.5s ease-in-out;
-}
-
-.curtain.open
-{
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.5);
-    z-index: 6;
-}
-
-body.login-dialog-open
-{
-    overflow-y: hidden;
-}
-
-.modal-container {
+.outer-circle {
     position: relative;
-    width: 400px;
-    height: 500px;
-    background: #000;
-    box-shadow: 0 0 50px #0ef,
-    0 0 0 1px rgba(0, 0, 73, 1.00) inset;
-    border-radius: 20px;
-    padding: 40px;
-    overflow: hidden;
+    display: block;
+    background: #152262 ;
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    box-shadow: 0 0 35px 0 #02174c, 0 0 42px 0 #091970;
 }
 
-.form-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-    transition: 1s ease-in-out;
-}
-
-.modal-container.active .form-wrapper.sign-in {
-    transform: translateY(-450px);
-}
-
-.modal-container .form-wrapper.sign-up {
-    position: absolute;
-    top: 450px;
-    left: 0;
-}
-
-.modal-container.active .form-wrapper.sign-up {
-    transform: translateY(-450px);
-}
-
-h2 {
-    font-size: 30px;
-    color: #fff;
-    text-align: center;
-}
-
-.input-group {
-    position: relative;
-    margin: 30px 0;
-    border-bottom: 2px solid #fff;
-}
-
-.input-group label {
+.inner-circle {
     position: absolute;
     top: 50%;
-    left: 5px;
-    transform: translateY(-50%);
-    font-size: 16px;
-    color: #fff;
-    pointer-events: none;
-    transition: .5s;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 80%;
+    height: 80%;
+    border-radius: 50%;
+    background: white;
 }
 
-.input-group input {
-    width: 320px;
-    height: 40px;
-    font-size: 16px;
-    color: #fff;
-    padding: 0 5px;
-    background: transparent;
-    border: none;
-    outline: none;
+.inner-circle img {
+    scale: 0.7;
 }
 
-.input-group input:focus~label,
-.input-group input:valid~label {
-    top: -5px;
+.job-listing-category-container {
+    margin: 0 auto;
+    width: fit-content;
 }
 
-.remember {
-    margin: -5px 0 15px 5px;
+.job-listing-category-header {
+    display: flex;
+    gap: 3em;
+    color: white;
+    max-width: 1300px;
+}
+.job-listing-category-header > .outer-circle {
+    flex: 0 0 auto;
+    align-self: center;
 }
 
-.remember label {
-    color: #fff;
-    font-size: 14px;
-}
-
-.remember label input {
-    accent-color: #0ef;
-}
-
-button {
+.miniboard {
+    background: rgba(0, 0, 88, 0.10);
+    border-radius: 1em;
     position: relative;
-    width: 100%;
-    height: 40px;
-    background: #0ef;
-    box-shadow: 0 0 10px #0ef;
-    font-size: 18px;
-    color: #000;
-    cursor: pointer;
-    border-radius: 30px;
-    border: none;
-    outline: none;
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 73, 1.00);
+    backdrop-filter: blur(12px);
+    padding: 2em;
+    overflow: hidden;
+    background: linear-gradient(270deg, rgba(0, 0, 73, 1.00) 0%, rgba(255, 255, 255, 0) 100%);
 }
 
-.signUp-link {
-    font-size: 14px;
-    text-align: center;
-    margin: 15px 0;
+.ellipse-26 {
+    position: absolute;
+    background: #010149;
+    border-radius: 50%;
+    width: 185px;
+    height: 185px;
+    top: 0;
+    left: 0;
+    filter: blur(130px);
+    z-index: -5;
 }
 
-.signUp-link p {
-    color: #fff;
+.miniboard .title {
+    font-size: 3.5em;
+    color: #174499;
+    line-height: 1.1;
+    word-spacing: 12px;
 }
 
-.signUp-link p a {
-    color: #0ef;
-    text-decoration: none;
-    font-weight: 500;
+.miniboard .title span {
+    font-family: 'Mona-Sans', sans-serif;
+    background: radial-gradient(1779.2% 193.77% at 21.33% -10.76%, #E5E4E6 22.6%, rgba(255, 255, 255, 0.00) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    word-spacing: 4px;
 }
 
-.signUp-link p a:hover {
-    text-decoration: underline;
+.miniboard .description {
+    margin-top: 2.5em;
+    font-size: 15px;
+    color: #E5E4E6;
+    width: 85ch;
 }
