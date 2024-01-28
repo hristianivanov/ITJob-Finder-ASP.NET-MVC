@@ -1,14 +1,29 @@
 ﻿namespace DevHunter.Web.Controllers
 {
 	using Microsoft.AspNetCore.Mvc;
+	using DevHunter.Services.Data.Interfaces;
+	using DevHunter.Services.Data.Models.JobOffer;
+
+	using ViewModels.JobOffer;
 
 	public class JobOfferController : Controller
 	{
-		
+		private readonly IJobOfferService jobOfferService;
 
-		public IActionResult All()
+		public JobOfferController(IJobOfferService jobOfferService)
 		{
-			return View();
+			this.jobOfferService = jobOfferService;
+		}
+
+		public async Task<IActionResult> All([FromQuery] AllJobOffersQueryModel queryModel)
+		{
+			AllJobOffersFilteredAndPagedServiceModel serviceModel =
+				await jobOfferService.AllAsync(queryModel);
+
+			queryModel.JobOffers = serviceModel.JobOffers;
+			queryModel.TotalJobOffersCount = serviceModel.TotalJobOffersCount;
+
+			return View(queryModel);
 		}
 	}
 }
