@@ -66,6 +66,7 @@ function switchDialog(indexToShow, indexToHide, timeout = 1000) {
 }
 
 
+
 /* Validation*/
  let loginSubmitBtn = document.getElementById('submit-login-btn')
 
