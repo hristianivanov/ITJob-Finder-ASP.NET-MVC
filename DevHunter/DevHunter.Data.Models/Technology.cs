@@ -28,7 +28,7 @@
         public Company Company { get; set; } = null!;
 
         [ForeignKey(nameof(Development))]
-        public Guid DelopmentId { get; set; }
+        public Guid DevelopmentId { get; set; }
 
         public Development Development { get; set; }
     }
