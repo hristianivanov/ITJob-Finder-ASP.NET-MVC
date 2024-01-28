@@ -17,12 +17,17 @@
         [Key]
         public Guid Id { get; set; }
 
-        public string Title { get; set; } = null!;
-
         public string JobPosition { get; set; } = null!;
 
         [Precision(18,2)]
-        public decimal? Salary { get; set; }
+        public decimal? MinSalary { get; set; }
+
+        [Precision(18, 2)]
+		public decimal? MaxSalary { get; set; }
+
+        [Required]
+        [MaxLength(int.MaxValue)]
+        public string Description { get; set; }
 
         public DateTime CreatedOn { get; set; }
 
