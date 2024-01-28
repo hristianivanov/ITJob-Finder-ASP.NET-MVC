@@ -27,6 +27,8 @@
 
         public string Activity { get; set; } = null!;
 
+        public string ImageUrl { get; set; } = null!;
+
         public ICollection<Technology> UsedTechnologies { get; set; }
     }
 }
