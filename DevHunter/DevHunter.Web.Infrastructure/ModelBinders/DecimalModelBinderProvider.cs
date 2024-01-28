@@ -12,7 +12,7 @@
 			}
 
 			if (context.Metadata.ModelType == typeof(decimal) ||
-				context.Metadata.ModelType == typeof(decimal?))
+			    context.Metadata.ModelType == typeof(decimal?))
 			{
 				return new DecimalModelBinder();
 			}
