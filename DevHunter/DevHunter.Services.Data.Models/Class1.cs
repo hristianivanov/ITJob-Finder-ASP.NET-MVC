@@ -1,5 +1,7 @@
-﻿namespace DevHunter.Services.Data.Models;
-public class Class1
+﻿namespace DevHunter.Services.Data.Models
 {
+	public class Class1
+	{
 
+	}
 }
