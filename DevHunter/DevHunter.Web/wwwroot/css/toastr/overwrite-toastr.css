@@ -1,0 +1,130 @@
+﻿#toast-container {
+    position: fixed;
+    margin-top: 5em;
+}
+
+.toast-message {
+    font-size: 16px;
+    opacity: 0.6;
+    color: #fff;
+    font-family: "Poppins", sans-serif;
+    margin-left: 48px;
+}
+
+.toast-progress {
+    z-index: 1000;
+}
+
+.toast-success > .toast-progress {
+    background-color: rgb(10, 191, 48);
+    box-shadow: rgb(10, 191, 48) 0px 0px 10px 0px;
+}
+
+.toast-error > .toast-progress {
+    background-color: rgb(242, 77, 76);
+    box-shadow: rgb(242, 77, 76) 0px 0px 10px 0px;
+}
+
+.toast-info > .toast-progress {
+    background-color: rgb(52, 152, 219);
+    box-shadow: rgb(52, 152, 219) 0px 0px 10px 0px;
+}
+
+.toast-warning > .toast-progress {
+    background-color: rgb(233, 189, 12);
+    box-shadow: rgb(233, 189, 12) 0px 0px 10px 0px;
+}
+
+
+#toast-container > div {
+    position: relative !important;
+    pointer-events: auto !important;
+    overflow: hidden !important;
+    margin: 0 !important;
+    padding: 1.5em 2em !important;
+    width: 400px !important;
+    opacity: 1 !important;
+    border-radius: 5px !important;
+    box-shadow: none !important;
+    margin-bottom: 0.7em !important;
+}
+
+.toast-title {
+    font-size: x-large;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    left: 75px;
+}
+
+#toast-container > div.toast-error,
+#toast-container > div.toast-warning,
+#toast-container > div.toast-info,
+#toast-container > div.toast-success {
+    background-image: none !important;
+    background-position: unset;
+    background-repeat: unset;
+}
+
+#toast-container > div.toast-success {
+    /* ReSharper disable once HexColorValueWithAlpha */
+    background-image: linear-gradient(to right, #0abf3055, #060606 45%) !important;
+}
+
+#toast-container > div.toast-info {
+    /* ReSharper disable once HexColorValueWithAlpha */
+    background-image: linear-gradient(to right, #0099ff55, #060606 45%) !important;
+}
+
+#toast-container > div.toast-warning {
+    /* ReSharper disable once HexColorValueWithAlpha */
+    background-image: linear-gradient(to right, #ffcc0055, #060606 45%) !important;
+}
+
+#toast-container > div.toast-error {
+    /* ReSharper disable once HexColorValueWithAlpha */
+    background-image: linear-gradient(to right, #ff020054, #060606 45%) !important;
+}
+
+#toast-container .svg-inline--fa,
+#toast-container i.fa-solid {
+    font-size: x-large;
+    position: sticky;
+    top: 10px;
+    left: 0;
+}
+
+#toast-container .fa-circle-check {
+    color: rgb(10, 191, 48);
+}
+
+.fa-circle-info {
+    color: rgb(52, 152, 219);
+}
+
+.fa-circle-exclamation {
+    color: rgb(242, 77, 76);
+}
+
+.fa-triangle-exclamation {
+    color: rgb(233, 189, 12);
+}
+
+.toast-error,
+.toast-warning,
+.toast-info,
+.toast-success {
+    background: #22242f;
+}
+
+.toast-close-button:hover {
+    transform: rotate(-90deg);
+    color: #fff;
+    font-size: 26px;
+    opacity: unset;
+}
+
+.toast-close-button {
+    font-size: 24px;
+    transition: all 0.2s ease-in-out;
+}

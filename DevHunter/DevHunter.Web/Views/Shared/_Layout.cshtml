@@ -8,8 +8,10 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 
-	@await Html.PartialAsync("_Favicons")
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
 
+	@await Html.PartialAsync("_ToastrScriptsPartial");
+	@await Html.PartialAsync("_Favicons")
 </head>
 <body>
 	<div class="site-container">
@@ -87,10 +89,9 @@
 				</ul>
 			</div>
 		</footer>
+		<partial name="_NotificationsPartial" />
 	</div>
 
-
-	<script src="~/lib/jquery/dist/jquery.min.js"></script>
 	<script src="~/js/site.js" asp-append-version="true"></script>
 	@await RenderSectionAsync("Scripts", required: false)
 </body>

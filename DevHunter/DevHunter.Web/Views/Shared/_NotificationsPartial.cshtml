@@ -1,0 +1,57 @@
+﻿@using static DevHunter.Common.NotificationMessagesConstants;
+
+<script>
+	toastr.options.progressBar = true;
+	toastr.options.newestOnTop = false;
+	toastr.options.closeButton = true;
+</script>
+
+<script>
+	function configureToastrMessage(toastContainerClass, titleText, iconClass) {
+		let toastContainer = document.getElementById('toast-container');
+		let successMessageContainer = toastContainer.querySelector(`.${toastContainerClass}`);
+
+		let newDiv = document.createElement('div');
+		newDiv.classList.add('toast-title');
+		newDiv.textContent = titleText;
+
+		successMessageContainer.insertBefore(newDiv, successMessageContainer.querySelector('.toast-message'));
+
+		let newIcon = document.createElement('i');
+		newIcon.classList.add("fa-solid", iconClass);
+
+		successMessageContainer.insertBefore(newIcon, newDiv);
+	}
+</script>
+
+@if (TempData.ContainsKey(ErrorMessage))
+{
+	<script>
+		toastr.error('@TempData[ErrorMessage]');
+		configureToastrMessage('toast-error', 'Error', 'fa-circle-exclamation');
+	</script>
+}
+
+@if (TempData.ContainsKey(WarningMessage))
+{
+	<script>
+		toastr.warning('@TempData[WarningMessage]')
+		configureToastrMessage('toast-warning', 'Warning', 'fa-triangle-exclamation');
+	</script>
+}
+
+@if (TempData.ContainsKey(InformationMessage))
+{
+	<script>
+		toastr.info('@TempData[InformationMessage]')
+		configureToastrMessage('toast-info', 'Info', 'fa-circle-info');
+	</script>
+}
+
+@if (TempData.ContainsKey(SuccessMessage))
+{
+	<script>
+		toastr.success('@TempData[SuccessMessage]');
+		configureToastrMessage('toast-success', 'Success', 'fa-circle-check')
+	</script>
+}

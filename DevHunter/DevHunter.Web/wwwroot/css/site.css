@@ -14,5 +14,6 @@
 
 @import url(login-register-modal.css);
 
-@import url(footer.css);
+@import url(toastr/overwrite-toastr.css);
 
+@import url(footer.css);
