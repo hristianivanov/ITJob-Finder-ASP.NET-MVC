@@ -1,7 +1,5 @@
 ﻿namespace DevHunter.Web.ViewModels.JobOffer
 {
-	using System.ComponentModel.DataAnnotations;
-
 	public class AllJobOffersQueryModel
 	{
 		public AllJobOffersQueryModel()

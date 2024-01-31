@@ -6,8 +6,8 @@ namespace DevHunter.Web
 	using Data;
 	using Data.Models;
 	using Infrastructure.ModelBinders;
-	using DevHunter.Services.Data.Interfaces;
-	using DevHunter.Services.Data;
+	using Services.Data.Interfaces;
+	using Services.Data;
 
 	public class Program
 	{
