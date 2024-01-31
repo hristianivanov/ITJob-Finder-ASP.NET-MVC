@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16.232" height="16.853"
+     viewBox="0 0 16.232 16.853">
+    <defs>
+        <clipPath id="clip-path">
+            <rect id="Rectangle_10279" width="16.232" height="16.853" fill="#374ffe" stroke="#374ffe" stroke-width="1"/>
+        </clipPath>
+    </defs>
+    <g id="Group_28250" transform="translate(0 0)">
+        <g id="Group_28252" transform="translate(0 0)" clip-path="url(#clip-path)">
+            <path id="Path_20054"
+                  d="M13.679,15.282V1.09a.591.591,0,0,0-.59-.59H4.372a.59.59,0,0,0-.59.59V6.172L7.429,9.724a.112.112,0,0,1,.036.081v6.067h5.625A.59.59,0,0,0,13.679,15.282Z"
+                  transform="translate(1.813 0.24)" fill="none" stroke="#127c30" stroke-width="1.5"/>
+            <path id="Path_20055"
+                  d="M3.144,13.532v-2.5a.705.705,0,0,1,.7-.706H5.69a.707.707,0,0,1,.706.706v2.5a.59.59,0,0,0,.59.59H9.039v-6.1l-3.8-3.7a.591.591,0,0,0-.823,0L.68,7.913a.593.593,0,0,0-.18.426v5.193a.589.589,0,0,0,.59.59H2.553A.59.59,0,0,0,3.144,13.532Z"
+                  transform="translate(0.24 1.99)" fill="none" stroke="#127c30" stroke-width="1.5"/>
+            <g id="Group_28262">
+                <path id="Path_20056" d="M7.1,2.991a.8.8,0,1,1-.8-.8.8.8,0,0,1,.8.8" transform="translate(2.638 1.052)"
+                      fill="#127c30"/>
+                <path id="Path_20057" d="M7.1,5.223a.8.8,0,1,1-.8-.8.8.8,0,0,1,.8.8" transform="translate(2.638 2.122)"
+                      fill="#127c30"/>
+                <path id="Path_20058" d="M9.406,5.223a.8.8,0,1,1-.8-.8.8.8,0,0,1,.8.8"
+                      transform="translate(3.745 2.122)" fill="#127c30"/>
+                <path id="Path_20059" d="M9.406,7.686a.8.8,0,1,1-.8-.8.8.8,0,0,1,.8.8"
+                      transform="translate(3.745 3.303)" fill="#127c30"/>
+                <path id="Path_20060" d="M7.812,2.991a.8.8,0,1,1,.8.8.8.8,0,0,1-.8-.8"
+                      transform="translate(3.745 1.052)" fill="#127c30"/>
+            </g>
+        </g>
+    </g>
+</svg>
