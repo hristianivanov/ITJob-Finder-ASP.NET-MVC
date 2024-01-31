@@ -6,6 +6,8 @@ namespace DevHunter.Web
 	using Data;
 	using Data.Models;
 	using Infrastructure.ModelBinders;
+	using DevHunter.Services.Data.Interfaces;
+	using DevHunter.Services.Data;
 
 	public class Program
 	{
@@ -40,6 +42,8 @@ namespace DevHunter.Web
 					options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
 					options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
 				});
+
+			builder.Services.AddScoped<IJobOfferService, JobOfferService>();
 
 			var app = builder.Build();
 

@@ -5,24 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7cf63690-33fe-4ec8-9ef5-643554557ab8" name="Changes" comment="Job listing aside view done">
-      <change afterPath="$PROJECT_DIR$/job finder/svgs/bookmark-ribbon-outline.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/job finder/svgs/chevron.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/job finder/svgs/collapse-icon-filter.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/job finder/svgs/office-montly-calendar.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/job finder/test-money.svg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../DevHunter/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../DevHunter/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DevHunter/DevHunter.Web.ViewModels/User/LoginFormModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../DevHunter/DevHunter.Web.ViewModels/User/LoginFormModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DevHunter/DevHunter.Web/Controllers/UserController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../DevHunter/DevHunter.Web/Controllers/UserController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DevHunter/DevHunter.Web/Views/Shared/_Layout.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/../DevHunter/DevHunter.Web/Views/Shared/_Layout.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DevHunter/DevHunter.Web/Views/Shared/_LoginPartial.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/../DevHunter/DevHunter.Web/Views/Shared/_LoginPartial.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DevHunter/DevHunter.Web/Views/User/Login.cshtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DevHunter/DevHunter.Web/Views/User/Register.cshtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DevHunter/DevHunter.Web/wwwroot/js/site.js" beforeDir="false" afterPath="$PROJECT_DIR$/../DevHunter/DevHunter.Web/wwwroot/js/site.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/job finder/companies.html" beforeDir="false" afterPath="$PROJECT_DIR$/job finder/companies.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/job finder/search-job.html" beforeDir="false" afterPath="$PROJECT_DIR$/job finder/search-job.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/job finder/test.css" beforeDir="false" afterPath="$PROJECT_DIR$/job finder/test.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/job finder/website.zip" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,7 +40,7 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;login-register&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;last_opened_file_path&quot;: &quot;D:/Graduate-Web-project/School-WebProject/DevHunter&quot;,
     &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
@@ -115,6 +99,10 @@
       <workItem from="1706255956621" duration="14738000" />
       <workItem from="1706291230275" duration="29652000" />
       <workItem from="1706426680600" duration="4476000" />
+      <workItem from="1706514633481" duration="389000" />
+      <workItem from="1706550394197" duration="597000" />
+      <workItem from="1706597404636" duration="18000" />
+      <workItem from="1706597469022" duration="70000" />
     </task>
     <task id="LOCAL-00001" summary="Adding files via upload">
       <option name="closed" value="true" />
