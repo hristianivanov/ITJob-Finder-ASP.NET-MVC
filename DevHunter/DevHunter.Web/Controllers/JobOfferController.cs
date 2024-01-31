@@ -1,9 +1,9 @@
 ﻿namespace DevHunter.Web.Controllers
 {
 	using Microsoft.AspNetCore.Mvc;
-	using DevHunter.Services.Data.Interfaces;
-	using DevHunter.Services.Data.Models.JobOffer;
 
+	using Services.Data.Interfaces;
+	using Services.Data.Models.JobOffer;
 	using ViewModels.JobOffer;
 
 	public class JobOfferController : Controller
