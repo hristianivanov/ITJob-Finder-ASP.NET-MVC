@@ -8,6 +8,7 @@
 		public Technology()
 		{
 			this.Id = Guid.NewGuid();
+			this.TechnologyDevelopments = new HashSet<TechnologyDevelopments>();
 		}
 
 		[Key]
@@ -27,9 +28,6 @@
 
 		public Company Company { get; set; } = null!;
 
-		[ForeignKey(nameof(Development))]
-		public Guid DevelopmentId { get; set; }
-
-		public Development Development { get; set; }
-	}
+        public ICollection<TechnologyDevelopments> TechnologyDevelopments { get; set; }
+    }
 }
