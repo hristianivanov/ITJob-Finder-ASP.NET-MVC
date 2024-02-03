@@ -7,7 +7,7 @@
 <div class="login-register-cta">
 	@if (SignInManager.IsSignedIn(User))
 	{
-		<a class="" asp-area="" asp-controller="User" asp-action="Manage">Hello @User.Identity?.Name!</a>
+		@* <a class="" asp-area="" asp-controller="User" asp-action="Manage">Hello @User.Identity?.Name!</a> *@
 		<form class="" asp-area="" asp-controller="User" asp-action="Logout" asp-route-returnUrl="@(Context.Request.Path + Context.Request.QueryString)" method="post">
 			<button type="submit" class="">Logout</button>
 		</form>

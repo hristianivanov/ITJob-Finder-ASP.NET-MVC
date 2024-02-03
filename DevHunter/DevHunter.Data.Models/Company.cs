@@ -7,7 +7,7 @@
 		public Company()
 		{
 			this.Id = Guid.NewGuid();
-			this.UsedTechnologies = new HashSet<Technology>();
+			this.UsedTechnologies = new HashSet<CompanyTechnologies>();
 		}
 
 		[Key]
@@ -29,6 +29,6 @@
 
 		public string ImageUrl { get; set; } = null!;
 
-		public ICollection<Technology> UsedTechnologies { get; set; }
+		public ICollection<CompanyTechnologies> UsedTechnologies { get; set; }
 	}
 }

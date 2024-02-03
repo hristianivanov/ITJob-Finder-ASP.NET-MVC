@@ -8,6 +8,7 @@ namespace DevHunter.Web
 	using Infrastructure.ModelBinders;
 	using Services.Data.Interfaces;
 	using Services.Data;
+	using SixLabors.ImageSharp.Formats;
 
 	public class Program
 	{
@@ -44,6 +45,7 @@ namespace DevHunter.Web
 				});
 
 			builder.Services.AddScoped<IJobOfferService, JobOfferService>();
+			builder.Services.AddScoped<ITechnologyService, TechnologyService>();
 
 			var app = builder.Build();
 

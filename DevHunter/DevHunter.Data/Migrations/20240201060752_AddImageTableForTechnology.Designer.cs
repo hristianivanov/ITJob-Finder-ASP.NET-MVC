@@ -4,6 +4,7 @@ using DevHunter.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DevHunter.Data.Migrations
 {
     [DbContext(typeof(DevHunterDbContext))]
-    partial class DevHunterDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240201060752_AddImageTableForTechnology")]
+    partial class AddImageTableForTechnology
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -128,21 +130,6 @@ namespace DevHunter.Data.Migrations
                     b.ToTable("Companies");
                 });
 
-            modelBuilder.Entity("DevHunter.Data.Models.CompanyTechnologies", b =>
-                {
-                    b.Property<Guid>("CompanyId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("TechnologyId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("CompanyId", "TechnologyId");
-
-                    b.HasIndex("TechnologyId");
-
-                    b.ToTable("CompanyTechnologies");
-                });
-
             modelBuilder.Entity("DevHunter.Data.Models.Development", b =>
                 {
                     b.Property<Guid>("Id")
@@ -160,6 +147,42 @@ namespace DevHunter.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Developments");
+                });
+
+            modelBuilder.Entity("DevHunter.Data.Models.ImageData", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<byte[]>("FullscreenContent")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<byte[]>("OriginalContent")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<string>("OriginalFileName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OriginalType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("TechnologyId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<byte[]>("ThumbnailContent")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TechnologyId");
+
+                    b.ToTable("Images");
                 });
 
             modelBuilder.Entity("DevHunter.Data.Models.JobOffer", b =>
@@ -235,11 +258,21 @@ namespace DevHunter.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("CompanyId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("JobOfferId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
+
+                    b.HasIndex("JobOfferId");
 
                     b.ToTable("Technologies");
                 });
@@ -257,21 +290,6 @@ namespace DevHunter.Data.Migrations
                     b.HasIndex("DevelopmentId");
 
                     b.ToTable("TechnologiesDevelopments");
-                });
-
-            modelBuilder.Entity("DevHunter.Data.Models.TechnologyJobOffers", b =>
-                {
-                    b.Property<Guid>("JobOfferId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("TechnologyId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("JobOfferId", "TechnologyId");
-
-                    b.HasIndex("TechnologyId");
-
-                    b.ToTable("TechnologyJobOffers");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", b =>
@@ -409,21 +427,13 @@ namespace DevHunter.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("DevHunter.Data.Models.CompanyTechnologies", b =>
+            modelBuilder.Entity("DevHunter.Data.Models.ImageData", b =>
                 {
-                    b.HasOne("DevHunter.Data.Models.Company", "Company")
-                        .WithMany("UsedTechnologies")
-                        .HasForeignKey("CompanyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("DevHunter.Data.Models.Technology", "Technology")
-                        .WithMany("CompanyTechnologies")
+                        .WithMany("Images")
                         .HasForeignKey("TechnologyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Company");
 
                     b.Navigation("Technology");
                 });
@@ -460,41 +470,21 @@ namespace DevHunter.Data.Migrations
 
             modelBuilder.Entity("DevHunter.Data.Models.Technology", b =>
                 {
-                    b.OwnsOne("DevHunter.Data.Models.Complex_types.ImageData", "Image", b1 =>
-                        {
-                            b1.Property<Guid>("TechnologyId")
-                                .HasColumnType("uniqueidentifier");
-
-                            b1.Property<byte[]>("OriginalContent")
-                                .IsRequired()
-                                .HasColumnType("varbinary(max)")
-                                .HasColumnName("ImageOriginalContent");
-
-                            b1.Property<string>("OriginalFileName")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)")
-                                .HasColumnName("ImageFileName");
-
-                            b1.Property<string>("OriginalType")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)")
-                                .HasColumnName("ImageOriginalType");
-
-                            b1.Property<byte[]>("ThumbnailContent")
-                                .IsRequired()
-                                .HasColumnType("varbinary(max)")
-                                .HasColumnName("ImageThumbnailContent");
-
-                            b1.HasKey("TechnologyId");
-
-                            b1.ToTable("Technologies");
-
-                            b1.WithOwner()
-                                .HasForeignKey("TechnologyId");
-                        });
-
-                    b.Navigation("Image")
+                    b.HasOne("DevHunter.Data.Models.Company", "Company")
+                        .WithMany("UsedTechnologies")
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("DevHunter.Data.Models.JobOffer", "JobOffer")
+                        .WithMany("Technologies")
+                        .HasForeignKey("JobOfferId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Company");
+
+                    b.Navigation("JobOffer");
                 });
 
             modelBuilder.Entity("DevHunter.Data.Models.TechnologyDevelopments", b =>
@@ -512,25 +502,6 @@ namespace DevHunter.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Development");
-
-                    b.Navigation("Technology");
-                });
-
-            modelBuilder.Entity("DevHunter.Data.Models.TechnologyJobOffers", b =>
-                {
-                    b.HasOne("DevHunter.Data.Models.JobOffer", "JobOffer")
-                        .WithMany("technologyJobOffers")
-                        .HasForeignKey("JobOfferId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DevHunter.Data.Models.Technology", "Technology")
-                        .WithMany("TechnologyJobOffers")
-                        .HasForeignKey("TechnologyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("JobOffer");
 
                     b.Navigation("Technology");
                 });
@@ -605,16 +576,14 @@ namespace DevHunter.Data.Migrations
                 {
                     b.Navigation("SavedJobOffers");
 
-                    b.Navigation("technologyJobOffers");
+                    b.Navigation("Technologies");
                 });
 
             modelBuilder.Entity("DevHunter.Data.Models.Technology", b =>
                 {
-                    b.Navigation("CompanyTechnologies");
+                    b.Navigation("Images");
 
                     b.Navigation("TechnologyDevelopments");
-
-                    b.Navigation("TechnologyJobOffers");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,5 +1,54 @@
-﻿@model DevHunter.Web.ViewModels.Technology.TechnologyFormModel
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model DevHunter.Web.ViewModels.Technology.TechnologyFormModel
 
-@{
 
-}
+<form asp-action="Add" method="post" enctype="multipart/form-data">
+	<label asp-for="Name" class="form-label">Name</label>
+	<input asp-for="Name" class="form-control" placeholder="Name...">
+	<span asp-validation-for="Name" class="text-danger small"></span>
+	
+	<br />
+
+	<label asp-for="Image" class="form-label">Image</label>
+	<input asp-for="Image" type="file" id="image_input" name="Image" accept="image/png, image/jpeg"/>
+	<span asp-validation-for="Image" class="text-danger small" style="color:wheat"></span>
+
+	<div id="display_image">
+	</div>
+	<input type="submit"/>
+</form>
+
+<style>
+	body {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: 10px;
+		flex-direction: column;
+		height: 100vh;
+	}
+
+	#display_image {
+		width: 375px;
+		height: 211px;
+		border: 1px solid black;
+		background-position: center;
+		background-size: cover;
+	}
+</style>
+<script>
+	const image_input = document.getElementById('image_input');
+	const display_image = document.getElementById('display_image');
+	let uploaded_image = "";
+
+	image_input.addEventListener("change", function () {
+		const reader = new FileReader();
+
+		reader.addEventListener("load", () => {
+			uploaded_image = reader.result;
+			display_image.style.backgroundImage = `url(${uploaded_image})`;
+		});
+
+		reader.readAsDataURL(this.files[0]);
+	});
+</script>
