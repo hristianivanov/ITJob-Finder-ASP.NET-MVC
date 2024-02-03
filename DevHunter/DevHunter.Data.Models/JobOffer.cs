@@ -10,7 +10,7 @@
 		public JobOffer()
 		{
 			this.Id = Guid.NewGuid();
-			this.Technologies = new HashSet<Technology>();
+			this.technologyJobOffers = new HashSet<TechnologyJobOffers>();
 			this.SavedJobOffers = new HashSet<SavedJobOffer>();
 		}
 
@@ -40,7 +40,7 @@
 
 		public int Seniority { get; set; }
 
-		public ICollection<Technology> Technologies { get; set; }
+		public ICollection<TechnologyJobOffers> technologyJobOffers { get; set; }
 		public ICollection<SavedJobOffer> SavedJobOffers { get; set; }
 	}
 }

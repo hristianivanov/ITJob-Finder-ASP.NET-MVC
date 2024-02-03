@@ -4,6 +4,7 @@ using DevHunter.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DevHunter.Data.Migrations
 {
     [DbContext(typeof(DevHunterDbContext))]
-    partial class DevHunterDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240203072028_RemoveImageTableAndMoveItAsComplexType")]
+    partial class RemoveImageTableAndMoveItAsComplexType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -468,22 +470,22 @@ namespace DevHunter.Data.Migrations
                             b1.Property<byte[]>("OriginalContent")
                                 .IsRequired()
                                 .HasColumnType("varbinary(max)")
-                                .HasColumnName("ImageOriginalContent");
+                                .HasColumnName("OriginalContent");
 
                             b1.Property<string>("OriginalFileName")
                                 .IsRequired()
                                 .HasColumnType("nvarchar(max)")
-                                .HasColumnName("ImageFileName");
+                                .HasColumnName("OriginalFileName");
 
                             b1.Property<string>("OriginalType")
                                 .IsRequired()
                                 .HasColumnType("nvarchar(max)")
-                                .HasColumnName("ImageOriginalType");
+                                .HasColumnName("OriginalType");
 
                             b1.Property<byte[]>("ThumbnailContent")
                                 .IsRequired()
                                 .HasColumnType("varbinary(max)")
-                                .HasColumnName("ImageThumbnailContent");
+                                .HasColumnName("ThumbnailContent");
 
                             b1.HasKey("TechnologyId");
 
