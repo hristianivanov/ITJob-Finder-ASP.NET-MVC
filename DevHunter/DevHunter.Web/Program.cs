@@ -8,7 +8,6 @@ namespace DevHunter.Web
 	using Infrastructure.ModelBinders;
 	using Services.Data.Interfaces;
 	using Services.Data;
-	using SixLabors.ImageSharp.Formats;
 
 	public class Program
 	{
