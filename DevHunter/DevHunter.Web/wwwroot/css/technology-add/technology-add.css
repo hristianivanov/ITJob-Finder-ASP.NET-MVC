@@ -145,8 +145,18 @@
 }
 
 .error_msg {
-    text-align: center;
-    color: #f00
+    text-align: right;
+    color: #f00;
+    color: #ff2929;
+    font-family: 'Satoshi-Medium', sans-serif;
+    font-size: 19px;
+    display: inherit;
+}
+
+.input-info > .technology-name > .text {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5em;
 }
 
 .submit-btn {
@@ -192,7 +202,7 @@
     }
 
     .technology-upload-container form section:nth-child(2) {
-        margin-top: 2.5em;
+        margin-top: 3.5em;
         display: flex;
         justify-content: center;
         align-content: center;
@@ -212,7 +222,6 @@
         font-family: 'Satoshi-Medium', sans-serif;
         font-size: 20px;
         font-weight: 500;
-        margin-bottom: 0.5em;
     }
 
     .technology-upload-container form .technology-name input {
