@@ -7,9 +7,11 @@
 		<section>
 			<div class="input-info">
 				<div class="technology-name">
-					<label asp-for="Name">Name</label>
+					<div class="text">
+						<label asp-for="Name">Name</label>
+						<span class="error_msg" asp-validation-for="Name"></span>
+					</div>
 					<input asp-for="Name" type="text" name="name" placeholder="Type technology name..." />
-					<span asp-validation-for="Name"></span>
 				</div>
 				<div class="technology-image">
 					<div class="upload-image-input panel">
@@ -17,12 +19,11 @@
 							<div class="btn_upload">
 								<label asp-for="Image">Upload Image</label>
 								<input asp-for="Image" type="file" id="upload_file" name="Image" accept="image/png, image/jpeg">
-								<span asp-validation-for="Image"></span>
 							</div>
 							<div class="processing_bar"></div>
 							<div class="success_box"></div>
 						</div>
-						<div class="error_msg"></div>
+						<span class="error_msg" asp-validation-for="Image"></span>
 					</div>
 				</div>
 			</div>
