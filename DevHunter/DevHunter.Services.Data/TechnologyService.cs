@@ -1,5 +1,4 @@
-﻿
-namespace DevHunter.Services.Data
+﻿namespace DevHunter.Services.Data
 {
 	using Microsoft.Data.SqlClient;
 	using Microsoft.EntityFrameworkCore;

@@ -25,7 +25,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevHunter.Web.Infrastructur
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevHunter.Web.ViewModels", "DevHunter.Web.ViewModels\DevHunter.Web.ViewModels.csproj", "{0B4AEA4B-EBAB-40AA-9C7F-C29339580846}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevHunter.Data.Models.Complex", "DevHunter.Data.Models.Complex\DevHunter.Data.Models.Complex.csproj", "{14653357-F29A-4598-9658-AEDA449C06DC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevHunter.Data.Models.Complex", "DevHunter.Data.Models.Complex\DevHunter.Data.Models.Complex.csproj", "{14653357-F29A-4598-9658-AEDA449C06DC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

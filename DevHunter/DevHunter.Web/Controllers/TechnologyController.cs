@@ -63,7 +63,7 @@
 
 				if (technologyExists)
 				{
-					ModelState.AddModelError(nameof(formModel.Name), 
+					ModelState.AddModelError(nameof(formModel.Name),
 						"Technology with this name already exists!");
 				}
 

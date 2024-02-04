@@ -1,54 +1,39 @@
 ﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
 @model DevHunter.Web.ViewModels.Technology.TechnologyFormModel
 
-
-<form asp-action="Add" method="post" enctype="multipart/form-data">
-	<label asp-for="Name" class="form-label">Name</label>
-	<input asp-for="Name" class="form-control" placeholder="Name...">
-	<span asp-validation-for="Name" class="text-danger small"></span>
-	
-	<br />
-
-	<label asp-for="Image" class="form-label">Image</label>
-	<input asp-for="Image" type="file" id="image_input" name="Image" accept="image/png, image/jpeg"/>
-	<span asp-validation-for="Image" class="text-danger small" style="color:wheat"></span>
-
-	<div id="display_image">
-	</div>
-	<input type="submit"/>
-</form>
-
-<style>
-	body {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		gap: 10px;
-		flex-direction: column;
-		height: 100vh;
-	}
-
-	#display_image {
-		width: 375px;
-		height: 211px;
-		border: 1px solid black;
-		background-position: center;
-		background-size: cover;
-	}
-</style>
-<script>
-	const image_input = document.getElementById('image_input');
-	const display_image = document.getElementById('display_image');
-	let uploaded_image = "";
-
-	image_input.addEventListener("change", function () {
-		const reader = new FileReader();
-
-		reader.addEventListener("load", () => {
-			uploaded_image = reader.result;
-			display_image.style.backgroundImage = `url(${uploaded_image})`;
-		});
-
-		reader.readAsDataURL(this.files[0]);
-	});
-</script>
+<div class="technology-upload-container">
+	<h1>Technology Create</h1>
+	<form asp-area="" asp-controller="Technology" asp-action="Add" method="post" enctype="multipart/form-data">
+		<section>
+			<div class="input-info">
+				<div class="technology-name">
+					<label asp-for="Name">Name</label>
+					<input asp-for="Name" type="text" name="name" placeholder="Type technology name..." />
+					<span asp-validation-for="Name"></span>
+				</div>
+				<div class="technology-image">
+					<div class="upload-image-input panel">
+						<div class="button_outer">
+							<div class="btn_upload">
+								<label asp-for="Image">Upload Image</label>
+								<input asp-for="Image" type="file" id="upload_file" name="Image" accept="image/png, image/jpeg">
+								<span asp-validation-for="Image"></span>
+							</div>
+							<div class="processing_bar"></div>
+							<div class="success_box"></div>
+						</div>
+						<div class="error_msg"></div>
+					</div>
+				</div>
+			</div>
+			<div class="img-upload-container">
+				<div class="uploaded_file_view" id="uploaded_view">
+					<span class="file_remove">X</span>
+				</div>
+			</div>
+		</section>
+		<section>
+			<button class="submit-btn" type="submit">Submit</button>
+		</section>
+	</form>
+</div>
