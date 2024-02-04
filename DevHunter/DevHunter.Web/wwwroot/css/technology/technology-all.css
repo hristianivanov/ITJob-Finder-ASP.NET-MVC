@@ -1,0 +1,38 @@
+﻿.technology-all-container:hover .technology-card {
+    opacity: 0.3;
+    transition: all 0.3s ease-in-out;
+}
+
+    .technology-all-container:hover .technology-card:hover {
+        opacity: 1;
+    }
+
+.technology-card:hover img {
+    filter: grayscale(0) opacity(1);
+}
+
+.technology-all-container {
+    margin: 4em auto;
+    max-width: 1200px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5em;
+}
+
+    .technology-all-container .technology-card {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 6px;
+        border-radius: 5px;
+        box-shadow: 0 3px 20px #0000001A;
+        line-height: 1;
+        background: #111A39;
+    }
+
+    .technology-all-container img {
+        filter: grayscale(1) opacity(0.5);
+        transition: all 0.2s linear;
+        object-fit: contain;
+    }

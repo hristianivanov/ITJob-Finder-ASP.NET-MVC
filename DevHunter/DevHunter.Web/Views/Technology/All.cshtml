@@ -1,7 +1,10 @@
 ﻿@model IEnumerable<DevHunter.Web.ViewModels.Technology.TechnologyViewModel>
 
-@foreach (var image in Model)
-{
-	<p>@image.Name</p>
-	<img src="@image.ImageUrl" />
-}
+<div class="technology-all-container">
+	@foreach (var image in Model)
+	{
+		<div class="technology-card">
+			<img src="@image.ImageUrl" title="@image.Name" />
+		</div>
+	}
+</div> 
