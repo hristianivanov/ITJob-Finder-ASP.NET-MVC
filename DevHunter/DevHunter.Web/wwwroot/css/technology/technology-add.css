@@ -17,9 +17,9 @@
     overflow: hidden;
 }
 
-.technology-upload-container .button_outer.file_uploading {
-    background: #fff;
-}
+    .technology-upload-container .button_outer.file_uploading {
+        background: #fff;
+    }
 
 .button_outer .btn_upload {
     color: #fff;
@@ -182,6 +182,7 @@
     margin-bottom: 1.5em;
     border-bottom: 1px solid rgb(0, 0, 73);
     padding-bottom: 0.5em;
+    font-family: 'Axiforma',sans-serif;
 }
 
 .technology-upload-container {
