@@ -4,25 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5524ad82-825a-4eb9-9897-a94178bea7f6" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DevHunter.Common/EntityValidationConstants.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DevHunter.Common/EntityValidationConstants.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DevHunter.Common/GeneralApplicationConstants.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DevHunter.Common/GeneralApplicationConstants.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DevHunter.Data.Models/Company.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DevHunter.Data.Models/Company.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DevHunter.Data/Migrations/DevHunterDbContextModelSnapshot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DevHunter.Data/Migrations/DevHunterDbContextModelSnapshot.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DevHunter.Web/Controllers/UserController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DevHunter.Web/Controllers/UserController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DevHunter.Web/DevHunter.Web.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/DevHunter.Web/DevHunter.Web.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DevHunter.Web/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DevHunter.Web/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DevHunter.Web/Views/Shared/_LoginPartial.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/DevHunter.Web/Views/Shared/_LoginPartial.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DevHunter.Web/Views/Technology/Add.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/DevHunter.Web/Views/Technology/Add.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DevHunter.Web/Views/User/Register.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/DevHunter.Web/Views/User/Register.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DevHunter.Web/Views/_ViewStart.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/DevHunter.Web/Views/_ViewStart.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DevHunter.Web/wwwroot/css/navigation.css" beforeDir="false" afterPath="$PROJECT_DIR$/DevHunter.Web/wwwroot/css/navigation.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DevHunter.Web/wwwroot/css/site.css" beforeDir="false" afterPath="$PROJECT_DIR$/DevHunter.Web/wwwroot/css/site.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DevHunter.Web/wwwroot/js/site.js" beforeDir="false" afterPath="$PROJECT_DIR$/DevHunter.Web/wwwroot/js/site.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../templates/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../templates/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../templates/job finder/companies.html" beforeDir="false" afterPath="$PROJECT_DIR$/../templates/job finder/companies.html" afterDir="false" />
-    </list>
+    <list default="true" id="5524ad82-825a-4eb9-9897-a94178bea7f6" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -70,7 +52,7 @@
       <workItem from="1706222933713" duration="2000" />
       <workItem from="1706597424438" duration="41000" />
       <workItem from="1709323499599" duration="645000" />
-      <workItem from="1709374890534" duration="1447000" />
+      <workItem from="1709374890534" duration="1448000" />
     </task>
     <servers />
   </component>

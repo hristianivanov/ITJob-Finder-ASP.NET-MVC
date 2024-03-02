@@ -8,14 +8,20 @@
 	
 	using static Common.EntityValidationConstants.Company;
 
-	public class CompanyRegisterFormModel
+	public class CompanyRegisterFormModel : RegisterFormModel
 	{
-		public string Email { get; set; } = null!;
-
-		public string Password { get; set; } = null!;
-
+		[Required]
+		[StringLength(NameMaxLength,MinimumLength = NameMinLength)]
 		public string Name { get; set; } = null!;
 
+		[WebsiteUrl(ErrorMessage = "Please enter a valid website URL.")]
+		public string? WebsiteUrl { get; set; }
+
+		[DataType(DataType.Upload)]
+		[Required(ErrorMessage = "Please select a file.")]
+		[MaxFileSize(ImageMaxMegaBytesFileSize * 1024 * 1024)]
+		[AllowedExtensions(new string[] { ".jpg", ".png" })]
 		public IFormFile Image { get; set; } = null!;
+
 	}
 }

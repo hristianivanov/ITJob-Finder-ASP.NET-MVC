@@ -105,6 +105,8 @@
 			await this.userManager.SetEmailAsync(user, model.Email);
 			await this.userManager.SetUserNameAsync(user, model.Email);
 
+
+
 			var result = await this.userManager.CreateAsync(user, model.Password);
 
 			if (!result.Succeeded)
