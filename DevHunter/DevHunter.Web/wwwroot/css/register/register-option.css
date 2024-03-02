@@ -1,0 +1,149 @@
+﻿#register-option-container {
+    margin: 6em auto;
+}
+
+#register-option-container .section-header {
+    text-align: center;
+}
+
+.section-register-option {
+    display: flex;
+    gap: 2em;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1.8em;
+    margin-top: 2em;
+}
+
+#register-option-container > .section-header {
+    font-family: Axiforma, sans-serif;
+    font-size: 18px;
+}
+
+.option-title {
+    font-family: "Neue Montreal",sans-serif;
+    font-size: 27px;
+    font-weight: 500;
+    text-align: left;
+    line-height: 28px;
+    padding-right: 12px;
+}
+
+.option-svg-icon {
+    width: 40px;
+    height: 30px;
+    z-index: 1;
+    display: block;
+}
+
+.section-register-option .radio-btn {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 1em 1em 1em 1.5em;
+    border: 2px solid rgba(0,0,73,1);
+    border-radius: .4em;
+    width: 300px;
+    height: 190px;
+    overflow: hidden;
+}
+
+.radio-btn input[type=radio] {
+    border: unset;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+    border: 2px solid #9aaa97;
+    appearance: auto;
+}
+
+.section-footer {
+    display: flex;
+    gap: 1em;
+    flex-flow: wrap column;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+
+    .section-footer .create-btn {
+        text-align: center;
+        background: #e4ebe4;
+        color: #9aaa97;
+        padding: 0.6em 1.9em;
+        border-radius: 3em;
+        font-weight: 500;
+        user-select: none;
+        cursor: not-allowed;
+    }
+
+.background-circle {
+    background: #010149;
+    border-radius: 50%;
+    width: 12.4em;
+    height: 12.4em;
+    position: absolute;
+    left: -35%;
+    filter: blur(8em);
+    top: -55%;
+}
+
+.custom-vector {
+    width: 12em;
+    height: 10em;
+    position: absolute;
+    left: 8em;
+    top: 5em;
+    z-index: -1;
+}
+
+.custom-vector-background {
+    background: #010149;
+    border-radius: 50%;
+    width: 12.4em;
+    height: 12.4em;
+    position: absolute;
+    right: -35%;
+    filter: blur(8em);
+    top: 50%;
+}
+
+.radio-btn {
+    cursor: pointer;
+    transition: 0.1s all ease-in-out;
+}
+
+    .radio-btn.active,
+    .radio-btn:hover {
+        box-shadow: inset 0 0 0 1px rgba(0,0,73,1);
+        background: rgba(0,0,88,0.10);
+    }
+
+    .radio-btn:active {
+        transform: scale(0.96);
+    }
+
+    .radio-btn input[type="radio"] {
+        /* ReSharper disable once CssNotResolved */
+        accent-color: #010149;
+    }
+
+.create-btn.active {
+    cursor: pointer;
+    color: #fff;
+    background: #cc338b;
+    box-shadow: 0 0 0 2px rgb(136, 6, 81);
+}
+
+    .create-btn.active:hover {
+        background: #ff3fa8;
+    }
+
+.section-footer .cta-link {
+    color: #2929c8;
+    text-decoration: underline;
+}

@@ -69,8 +69,7 @@
     font-size: 19px;
 }
 
-.login-register-cta a,
-.login-register-cta div:first-of-type {
+.login-register-cta a {
     color: #E5E4E6;
     border: 2px solid #000058;
     box-shadow: 0 0 0 3px #4056C0 inset, 0 0 26px -3px rgba(0, 102, 255, 0.25);
@@ -81,11 +80,11 @@
     color: #0C0C0E;
 }
 
-.login-register-cta:last-child,
-.login-register-cta div:last-of-type {
-    color: #0C0C0E;
-    background: #fff;
-}
+    .login-register-cta .last-btn {
+        color: #0C0C0E;
+        background: #fff;
+        box-shadow: unset;
+    }
 
 .login-register-cta > * {
     cursor: pointer;
