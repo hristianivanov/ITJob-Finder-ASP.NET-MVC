@@ -4,6 +4,7 @@ using DevHunter.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DevHunter.Data.Migrations
 {
     [DbContext(typeof(DevHunterDbContext))]
-    partial class DevHunterDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240302070327_CompanyDetailsToNullable")]
+    partial class CompanyDetailsToNullable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -121,7 +123,7 @@ namespace DevHunter.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Companies", (string)null);
+                    b.ToTable("Companies");
                 });
 
             modelBuilder.Entity("DevHunter.Data.Models.CompanyTechnologies", b =>
@@ -136,7 +138,7 @@ namespace DevHunter.Data.Migrations
 
                     b.HasIndex("TechnologyId");
 
-                    b.ToTable("CompanyTechnologies", (string)null);
+                    b.ToTable("CompanyTechnologies");
                 });
 
             modelBuilder.Entity("DevHunter.Data.Models.Development", b =>
@@ -155,7 +157,7 @@ namespace DevHunter.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Developments", (string)null);
+                    b.ToTable("Developments");
                 });
 
             modelBuilder.Entity("DevHunter.Data.Models.JobOffer", b =>
@@ -198,7 +200,7 @@ namespace DevHunter.Data.Migrations
 
                     b.HasIndex("CompanyId");
 
-                    b.ToTable("JobOffers", (string)null);
+                    b.ToTable("JobOffers");
                 });
 
             modelBuilder.Entity("DevHunter.Data.Models.SavedJobOffer", b =>
@@ -222,7 +224,7 @@ namespace DevHunter.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("SavedJobOffers", (string)null);
+                    b.ToTable("SavedJobOffers");
                 });
 
             modelBuilder.Entity("DevHunter.Data.Models.Technology", b =>
@@ -237,7 +239,7 @@ namespace DevHunter.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Technologies", (string)null);
+                    b.ToTable("Technologies");
                 });
 
             modelBuilder.Entity("DevHunter.Data.Models.TechnologyDevelopments", b =>
@@ -252,7 +254,7 @@ namespace DevHunter.Data.Migrations
 
                     b.HasIndex("DevelopmentId");
 
-                    b.ToTable("TechnologiesDevelopments", (string)null);
+                    b.ToTable("TechnologiesDevelopments");
                 });
 
             modelBuilder.Entity("DevHunter.Data.Models.TechnologyJobOffers", b =>
@@ -267,7 +269,7 @@ namespace DevHunter.Data.Migrations
 
                     b.HasIndex("TechnologyId");
 
-                    b.ToTable("TechnologyJobOffers", (string)null);
+                    b.ToTable("TechnologyJobOffers");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", b =>
@@ -456,7 +458,7 @@ namespace DevHunter.Data.Migrations
 
             modelBuilder.Entity("DevHunter.Data.Models.Technology", b =>
                 {
-                    b.OwnsOne("DevHunter.Data.Models.Technology.Image#DevHunter.Data.Models.Complex.ImageData", "Image", b1 =>
+                    b.OwnsOne("DevHunter.Data.Models.Complex.ImageData", "Image", b1 =>
                         {
                             b1.Property<Guid>("TechnologyId")
                                 .HasColumnType("uniqueidentifier");
@@ -483,7 +485,7 @@ namespace DevHunter.Data.Migrations
 
                             b1.HasKey("TechnologyId");
 
-                            b1.ToTable("Technologies", (string)null);
+                            b1.ToTable("Technologies");
 
                             b1.WithOwner()
                                 .HasForeignKey("TechnologyId");
