@@ -1,8 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Http;
-
-namespace DevHunter.Web.Infrastructure.Extensions
+﻿namespace DevHunter.Web.Infrastructure.Extensions
 {
+	using System.ComponentModel.DataAnnotations;
+
+	using Microsoft.AspNetCore.Http;
+
 	public class AllowedExtensionsAttribute : ValidationAttribute
 	{
 		private readonly string[] extensions;

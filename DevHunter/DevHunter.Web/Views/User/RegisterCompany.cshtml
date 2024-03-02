@@ -37,10 +37,14 @@
 					<span asp-validation-for="Password"></span>
 				</div>
 				<div class="input-field company-details">
-					<input asp-for="Name" type="text" name="name" placeholder="Your company name" />
-					<span asp-validation-for="Name"></span>
-
-					<input type="text" name="name" placeholder="Your company website" />
+					<div style="flex: 1">
+						<input asp-for="Name" type="text" placeholder="Your company name" />
+						<span asp-validation-for="Name"></span>
+					</div>
+					<div style="flex: 1">
+						<input asp-for="WebsiteUrl" type="text" placeholder="Your company website" />
+						<span asp-validation-for="WebsiteUrl"></span>
+					</div>
 				</div>
 				<button type="submit" class="submit-register-btn">Register</button>
 			</form>
