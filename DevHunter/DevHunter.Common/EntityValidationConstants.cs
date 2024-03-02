@@ -22,5 +22,14 @@
 			public const int ThumbnailWidth = 100;
 			public const int ImageMaxMegaBytesFileSize = 8;
 		}
+
+		public static class Company
+		{
+			public const int NameMinLength = 2;
+			public const int NameMaxLength = 50;
+
+			public const int ThumbnailWidth = 100;
+			public const int ImageMaxMegaBytesFileSize = 8;
+		}
     }
 }
