@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" data-name="Layer 1" viewBox="0 0 24 24" role="img">
+    <polygon fill="none" vector-effect="non-scaling-stroke" stroke="#fff" stroke-linecap="round"
+             stroke-linejoin="round" stroke-width="1.5" points="19.38 21 8.38 21 10 14 21 14 19.38 21"></polygon>
+    <circle cx="14.69" cy="17.5" r=".5" fill="#fff" vector-effect="non-scaling-stroke"
+            stroke="#fff" stroke-linecap="round" stroke-linejoin="round"></circle>
+    <line x1="9.43" x2="5.99" y1="21" y2="21" fill="none" vector-effect="non-scaling-stroke" stroke="fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></line>
+    <circle cx="10.04" cy="5.73" r="2.73" fill="none" vector-effect="non-scaling-stroke"
+            stroke="#fff" stroke-linecap="round" stroke-linejoin="round"
+            stroke-width="1.5"></circle>
+    <path fill="none" vector-effect="non-scaling-stroke" stroke="#fff" stroke-linecap="round"
+          stroke-linejoin="round" stroke-width="1.5" d="M3 18.45v-.9a7 7 0 017-7h.09a6.94 6.94 0 013.79 1.12"></path>
+</svg>
