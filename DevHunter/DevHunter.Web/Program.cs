@@ -8,6 +8,8 @@ namespace DevHunter.Web
 	using Infrastructure.ModelBinders;
 	using Services.Data.Interfaces;
 	using Services.Data;
+	using Microsoft.AspNetCore.Identity;
+	using DevHunter.Web.Infrastructure.Extensions;
 
 	public class Program
 	{
@@ -28,7 +30,9 @@ namespace DevHunter.Web
 					options.Password.RequireNonAlphanumeric = false;
 					options.Password.RequireLowercase = false;
 					options.Password.RequireUppercase = false;
+					options.Password.RequireDigit = false;
 				})
+				.AddRoles<IdentityRole<Guid>>()
 				.AddEntityFrameworkStores<DevHunterDbContext>();
 
 			builder.Services.ConfigureApplicationCookie(cfg =>
@@ -45,6 +49,7 @@ namespace DevHunter.Web
 
 			builder.Services.AddScoped<IJobOfferService, JobOfferService>();
 			builder.Services.AddScoped<ITechnologyService, TechnologyService>();
+			builder.Services.AddScoped<ICompanyService, CompanyService>();
 
 			var app = builder.Build();
 
@@ -66,6 +71,9 @@ namespace DevHunter.Web
 
 			app.UseAuthentication();
 			app.UseAuthorization();
+
+			//TODO: in development state
+			app.SeedCompany();
 
 			app.MapControllerRoute(
 				name: "default",
