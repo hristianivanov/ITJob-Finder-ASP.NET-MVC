@@ -82,8 +82,18 @@
 			return RedirectToAction("Index", "Home");
 		}
 
+		public IActionResult Register()
+		{
+			if (User?.Identity?.IsAuthenticated ?? false)
+			{
+				return RedirectToAction("Index", "Home");
+			}
+
+			return View();
+		}
+
 		[HttpPost]
-		public async Task<IActionResult> Register(RegisterFormModel model, string? returnUrl = null)
+		public async Task<IActionResult> Register(RegisterFormModel model)
 		{
 			if (!ModelState.IsValid)
 			{
@@ -108,11 +118,6 @@
 			}
 
 			await this.signInManager.SignInAsync(user, isPersistent: false);
-
-			if (returnUrl != null)
-			{
-				return LocalRedirect(returnUrl);
-			}
 
 			return RedirectToAction("Index", "Home");
 		}
