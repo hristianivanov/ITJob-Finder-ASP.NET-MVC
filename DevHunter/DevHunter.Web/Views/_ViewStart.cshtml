@@ -1,3 +1,10 @@
 ﻿@{
-    Layout = "_Layout";
+	if (this.User.IsInRole("Company"))
+	{
+		Layout = "~/Areas/Company/Views/Shared/_CompanyLayout.cshtml";
+	}
+	else
+	{
+		Layout = "_Layout";
+	}
 }

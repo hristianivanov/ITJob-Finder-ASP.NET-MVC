@@ -1,5 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
-@model DevHunter.Web.ViewModels.User.RegisterFormModel
+@model DevHunter.Web.ViewModels.User.CompanyRegisterFormModel
 @{
 	ViewData["Title"] = "";
 }
@@ -8,28 +8,39 @@
 	<div class="top-content">
 		<div class="register-container">
 			<form class="company-register-form" method="post" enctype="multipart/form-data">
-				<div asp-validation-summary="ModelOnly"></div>
 				<header>
 					<div class="profile-icon">
 						<svg class="user" width="24" height="25" viewBox="0 0 24 25" fill="none"
-						     xmlns="http://www.w3.org/2000/svg">
+							 xmlns="http://www.w3.org/2000/svg">
 							<path d="M21.4867 20.4687C20.0045 17.9075 17.6776 16.1103 14.9739 15.3481C16.2884 14.6799 17.3396 13.5885 17.9579 12.2498C18.5762 10.911 18.7256 9.40311 18.382 7.9691C18.0385 6.53508 17.222 5.25856 16.0642 4.34537C14.9064 3.43218 13.4747 2.93555 12.0001 2.93555C10.5255 2.93555 9.09392 3.43218 7.93611 4.34537C6.7783 5.25856 5.96179 6.53508 5.61824 7.9691C5.27468 9.40311 5.4241 10.911 6.04241 12.2498C6.66072 13.5885 7.71188 14.6799 9.02639 15.3481C6.32264 16.1094 3.99577 17.9065 2.51358 20.4687C2.47288 20.5328 2.44555 20.6043 2.43324 20.6792C2.42093 20.7541 2.42388 20.8306 2.44193 20.9043C2.45998 20.978 2.49275 21.0473 2.53826 21.108C2.58378 21.1687 2.6411 21.2195 2.70678 21.2575C2.77246 21.2955 2.84514 21.3197 2.92045 21.3289C2.99576 21.338 3.07215 21.3319 3.14501 21.3107C3.21786 21.2896 3.2857 21.2539 3.34442 21.2059C3.40314 21.1579 3.45154 21.0985 3.4867 21.0312C5.28764 17.9197 8.46952 16.0625 12.0001 16.0625C15.5308 16.0625 18.7126 17.9197 20.5136 21.0312C20.5487 21.0985 20.5971 21.1579 20.6559 21.2059C20.7146 21.2539 20.7824 21.2896 20.8553 21.3107C20.9281 21.3319 21.0045 21.338 21.0798 21.3289C21.1551 21.3197 21.2278 21.2955 21.2935 21.2575C21.3592 21.2195 21.4165 21.1687 21.462 21.108C21.5075 21.0473 21.5403 20.978 21.5583 20.9043C21.5764 20.8306 21.5794 20.7541 21.567 20.6792C21.5547 20.6043 21.5274 20.5328 21.4867 20.4687ZM6.56264 9.49998C6.56264 8.42455 6.88155 7.37326 7.47903 6.47907C8.07651 5.58488 8.92573 4.88794 9.9193 4.47639C10.9129 4.06484 12.0062 3.95716 13.0609 4.16696C14.1157 4.37677 15.0846 4.89464 15.845 5.65509C16.6055 6.41554 17.1234 7.38441 17.3332 8.43918C17.543 9.49395 17.4353 10.5873 17.0237 11.5808C16.6122 12.5744 15.9152 13.4236 15.0211 14.0211C14.1269 14.6186 13.0756 14.9375 12.0001 14.9375C10.5586 14.9357 9.17652 14.3623 8.15717 13.343C7.13781 12.3236 6.56438 10.9416 6.56264 9.49998Z"
-							      fill="white"/>
+								  fill="white" />
 						</svg>
+					</div>
+					<div class="upload-btn">
+						<input asp-for="Image" type="file" name="Image" accept="image/png, image/jpeg">
+						<span asp-validation-for="Image"></span>
+						<svg class="upload-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
+							 xmlns="http://www.w3.org/2000/svg">
+							<path d="M20.8125 14.25V19.5C20.8125 19.8481 20.6742 20.1819 20.4281 20.4281C20.1819 20.6742 19.8481 20.8125 19.5 20.8125H4.5C4.1519 20.8125 3.81806 20.6742 3.57192 20.4281C3.32578 20.1819 3.1875 19.8481 3.1875 19.5V14.25C3.1875 14.1008 3.24676 13.9577 3.35225 13.8522C3.45774 13.7468 3.60082 13.6875 3.75 13.6875C3.89918 13.6875 4.04226 13.7468 4.14775 13.8522C4.25324 13.9577 4.3125 14.1008 4.3125 14.25V19.5C4.3125 19.5497 4.33225 19.5974 4.36742 19.6326C4.40258 19.6677 4.45027 19.6875 4.5 19.6875H19.5C19.5497 19.6875 19.5974 19.6677 19.6326 19.6326C19.6677 19.5974 19.6875 19.5497 19.6875 19.5V14.25C19.6875 14.1008 19.7468 13.9577 19.8523 13.8522C19.9577 13.7468 20.1008 13.6875 20.25 13.6875C20.3992 13.6875 20.5423 13.7468 20.6477 13.8522C20.7532 13.9577 20.8125 14.1008 20.8125 14.25ZM8.6475 7.89749L11.4375 5.10843V14.25C11.4375 14.3992 11.4968 14.5423 11.6023 14.6477C11.7077 14.7532 11.8508 14.8125 12 14.8125C12.1492 14.8125 12.2923 14.7532 12.3977 14.6477C12.5032 14.5423 12.5625 14.3992 12.5625 14.25V5.10843L15.3525 7.89749C15.4591 7.99685 15.6002 8.05095 15.7459 8.04837C15.8916 8.0458 16.0307 7.98677 16.1337 7.88371C16.2368 7.78065 16.2958 7.64161 16.2984 7.49588C16.301 7.35016 16.2469 7.20912 16.1475 7.10249L12.3975 3.35249C12.292 3.24716 12.1491 3.18799 12 3.18799C11.8509 3.18799 11.708 3.24716 11.6025 3.35249L7.8525 7.10249C7.75314 7.20912 7.69905 7.35016 7.70162 7.49588C7.70419 7.64161 7.76322 7.78065 7.86628 7.88371C7.96934 7.98677 8.10838 8.0458 8.25411 8.04837C8.39983 8.05095 8.54087 7.99685 8.6475 7.89749Z"
+								  fill="white" />
+						</svg>
+						<p>Upload Photo</p>
 					</div>
 				</header>
 				<h2>Your account</h2>
 				<div class="input-field">
-					<input type="email" placeholder="Full name"/>
-					<span></span>
-				</div>
-				<div class="input-field">
-					<input asp-for="Email" type="email" autocomplete="username" aria-required="true" placeholder="Professional email" />
+					<input asp-for="Email" type="email" placeholder="Professional email" />
 					<span asp-validation-for="Email"></span>
 				</div>
 				<div class="input-field">
-					<input asp-for="Password" type="password" autocomplete="new-password" aria-required="true" placeholder="Password" />
+					<input asp-for="Password" type="password" placeholder="Password" />
 					<span asp-validation-for="Password"></span>
+				</div>
+				<div class="input-field company-details">
+					<input asp-for="Name" type="text" name="name" placeholder="Your company name" />
+					<span asp-validation-for="Name"></span>
+
+					<input type="text" name="name" placeholder="Your company website" />
 				</div>
 				<button type="submit" class="submit-register-btn">Register</button>
 			</form>
@@ -49,8 +60,20 @@
 	</div>
 </div>
 
+
+<style>
+	.upload-btn > input[type=file] {
+		position: absolute;
+		width: 100%;
+		left: 0;
+		top: 0;
+		height: 100%;
+		cursor: pointer;
+		opacity: 0;
+	}
+</style>
+
+
 @section Scripts {
 	<script src="~/js/login-register-bg-rm.js"></script>
-	<partial name="_ValidationScriptsPartial" />
 }
-
