@@ -5,8 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7cf63690-33fe-4ec8-9ef5-643554557ab8" name="Changes" comment="Job listing aside view done">
-      <change beforePath="$PROJECT_DIR$/../DevHunter/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../DevHunter/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/job finder/companies.html" beforeDir="false" afterPath="$PROJECT_DIR$/job finder/companies.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,14 +41,14 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Graduate-Web-project/School-WebProject/DevHunter&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/pc/GitHub/SoftUni-Courses/Containers and Cloud/Exam prep/11-Exam-Preparation-Resources/Task-1&quot;,
     &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;settings.sync&quot;,
     &quot;ts.external.directory.path&quot;: &quot;D:\\Webstorm\\WebStorm 2023.2.5\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
@@ -103,6 +103,12 @@
       <workItem from="1706550394197" duration="597000" />
       <workItem from="1706597404636" duration="18000" />
       <workItem from="1706597469022" duration="70000" />
+      <workItem from="1707335009025" duration="163000" />
+      <workItem from="1707335386330" duration="916000" />
+      <workItem from="1707435190366" duration="35000" />
+      <workItem from="1707439544190" duration="12000" />
+      <workItem from="1707999541731" duration="763000" />
+      <workItem from="1708023834406" duration="653000" />
     </task>
     <task id="LOCAL-00001" summary="Adding files via upload">
       <option name="closed" value="true" />
