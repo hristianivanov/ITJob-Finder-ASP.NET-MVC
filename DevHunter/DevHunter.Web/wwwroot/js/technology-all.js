@@ -81,12 +81,39 @@ document.querySelectorAll('.technology-card')
         ]);
     });
 
-function editTechnology(id) {
-    console.log(`Edit technology with ID: ${id}`);
-    // Add your edit logic here
+function editTechnology(cardId) {
+    const anchor = document.createElement('a');
+    anchor.href = `/Technology/Edit/${cardId}`;
+    anchor.click();
 }
 
-function deleteTechnology(id) {
-    console.log(`Delete technology with ID: ${id}`);
-    // Add your delete logic here
+function deleteTechnology(cardId) {
+    const url = `/Technology/Delete/${cardId}`;
+
+    const confirmation = confirm("Are you sure you want to delete this technology?");
+    if (!confirmation) {
+        return;
+    }
+
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            // Include any additional headers if needed
+        },
+        body: JSON.stringify({ id: cardId }), // Convert the data to JSON format
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Failed to delete technology: ${response.statusText}`);
+            }
+            // Optionally handle success response
+            console.log(`Technology with ID ${cardId} deleted successfully.`);
+            // Reload the page or update the UI as needed
+            location.reload();
+        })
+        .catch(error => {
+            console.error(`Error deleting technology: ${error.message}`);
+            // Handle the error, such as displaying an error message to the user
+        });
 }
