@@ -94,6 +94,70 @@
 			return View(formModel);
 		}
 
+		public async Task<IActionResult> Edit(string id)
+		{
+			try
+			{
+				bool technologyExists = await this.technologyService.ExistsByIdAsync(id);
+
+				if (!technologyExists)
+				{
+					TempData[ErrorMessage] = "Technology with the provided id does not exist!";
+
+					return RedirectToAction("All");
+				}
+
+				var model = await this.technologyService.GetForEditByIdAsync(id);
+
+				return View(model);
+			}
+			catch (Exception)
+			{
+				return GeneralError();
+			}
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> Edit(string id, TechnologyFormModel model)
+		{
+			if (!ModelState.IsValid)
+			{
+				return this.View();
+			}
+
+			try
+			{
+				bool technologyExists = await this.technologyService.ExistsByIdAsync(id);
+
+				if (!technologyExists)
+				{
+					TempData[ErrorMessage] = "Technology with the provided id does not exist!";
+
+					return RedirectToAction("All");
+				}
+
+				await this.technologyService.EditTechnologyAsync(id,model);
+			}
+			catch (Exception )
+			{
+				ModelState.AddModelError(string.Empty,
+					"Unexpected error occurred while trying to edit the technology!");
+
+				return View(model);
+			}
+
+			return RedirectToAction("All");
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> Delete(string id)
+		{
+			await technologyService.DeleteByIdAsync(id);
+
+			return RedirectToAction("All");
+		}
+
+
 		private IActionResult ReturnImage(Stream image)
 		{
 			var headers = this.Response.GetTypedHeaders();

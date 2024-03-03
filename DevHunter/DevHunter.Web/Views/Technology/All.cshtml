@@ -3,8 +3,12 @@
 <div class="technology-all-container">
 	@foreach (var image in Model)
 	{
-		<div class="technology-card">
+		<div class="technology-card" id="@image.Id">
 			<img src="@image.ImageUrl" title="@image.Name" />
 		</div>
 	}
-</div> 
+</div>
+
+@section Scripts {
+	<script src="~/js/technology-all.js"></script>
+}
