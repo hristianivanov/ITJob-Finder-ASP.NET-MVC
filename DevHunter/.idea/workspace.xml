@@ -6,6 +6,13 @@
   <component name="ChangeListManager">
     <list default="true" id="5524ad82-825a-4eb9-9897-a94178bea7f6" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DevHunter.Data.Models/SavedJobOffer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DevHunter.Data.Models/SavedJobOffer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DevHunter.Data/Configurations/TechnologyEntityConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DevHunter.Data/Configurations/TechnologyEntityConfiguration.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DevHunter.Data/DevHunterDbContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DevHunter.Data/DevHunterDbContext.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DevHunter.Data/Migrations/DevHunterDbContextModelSnapshot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DevHunter.Data/Migrations/DevHunterDbContextModelSnapshot.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DevHunter.Web/Controllers/TechnologyController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DevHunter.Web/Controllers/TechnologyController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DevHunter.Web/Views/Technology/All.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/DevHunter.Web/Views/Technology/All.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DevHunter.Web/wwwroot/css/technology/technology-all.css" beforeDir="false" afterPath="$PROJECT_DIR$/DevHunter.Web/wwwroot/css/technology/technology-all.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,6 +63,7 @@
       <workItem from="1709323499599" duration="645000" />
       <workItem from="1709374890534" duration="1448000" />
       <workItem from="1709410906963" duration="597000" />
+      <workItem from="1709498525663" duration="1413000" />
     </task>
     <servers />
   </component>

@@ -5,9 +5,6 @@
 
 	public class SavedJobOffer
 	{
-		[Key]
-		public Guid Id { get; set; }
-
 		[ForeignKey(nameof(User))]
 		public Guid UserId { get; set; }
 		public ApplicationUser User { get; set; } = null!;

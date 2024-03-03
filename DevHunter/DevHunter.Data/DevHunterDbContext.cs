@@ -1,4 +1,6 @@
-﻿namespace DevHunter.Data
+﻿using System.Reflection;
+
+namespace DevHunter.Data
 {
 	using Microsoft.AspNetCore.Identity;
 	using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -34,6 +36,14 @@
 
 			builder.Entity<TechnologyJobOffers>()
 				.HasKey(tj => new { tj.JobOfferId, tj.TechnologyId });
+
+			builder.Entity<SavedJobOffer>()
+				.HasKey(sj => new { sj.UserId, sj.JobOfferId });
+
+			Assembly configAssembly = Assembly.GetAssembly(typeof(DevHunterDbContext)) ??
+			                          Assembly.GetExecutingAssembly();
+
+			builder.ApplyConfigurationsFromAssembly(configAssembly);
 		}
 	}
 }

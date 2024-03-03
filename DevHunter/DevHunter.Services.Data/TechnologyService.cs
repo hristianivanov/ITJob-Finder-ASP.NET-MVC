@@ -60,5 +60,51 @@
 
 			return technologies;
 		}
+
+		public async Task<bool> ExistsByIdAsync(string id)
+		{
+			bool result = await this.dbContext
+				.Technologies
+				.AnyAsync(t => t.Id.ToString() == id);
+
+			return result;
+		}
+
+		public async Task<TechnologyFormModel> GetForEditByIdAsync(string id)
+		{
+			var technology = await this.dbContext
+				.Technologies
+				.FirstAsync(t => t.Id.ToString() == id);
+
+			return new TechnologyFormModel
+			{
+				Name = technology.Name,
+				ImageUrl = technology.ImageUrl,
+			};
+		}
+
+		public async Task EditTechnologyAsync(string technologyId, TechnologyFormModel model)
+		{
+			var technology = await this.dbContext
+				.Technologies
+				.FirstAsync(t => t.Id.ToString() == technologyId);
+
+			technology.Name = model.Name;
+
+			await this.dbContext.SaveChangesAsync();
+		}
+
+		public async Task DeleteByIdAsync(string id)
+		{
+			var technology = await this.dbContext
+				.Technologies
+				.FirstOrDefaultAsync(t => t.Id.ToString() == id);
+
+			if (technology != null)
+			{
+				this.dbContext.Technologies.Remove(technology);
+				await this.dbContext.SaveChangesAsync();
+			}
+		}
 	}
 }
