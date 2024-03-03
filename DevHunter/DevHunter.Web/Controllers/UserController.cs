@@ -8,6 +8,8 @@
 	using ViewModels.User;
 	using DevHunter.Services.Data.Interfaces;
 
+	using static Common.NotificationMessagesConstants;
+
 	public class UserController : Controller
 	{
 		private readonly SignInManager<ApplicationUser> signInManager;
@@ -33,12 +35,14 @@
 
 		public IActionResult RegisterCompany()
 		{
+			var model = new CompanyRegisterFormModel();
+
 			if (User?.Identity?.IsAuthenticated ?? false)
 			{
 				return RedirectToAction("Index", "Home");
 			}
 
-			return View();
+			return View(model);
 		}
 
 		[HttpPost]
@@ -84,12 +88,14 @@
 
 		public IActionResult Register()
 		{
+			var model = new RegisterFormModel();
+
 			if (User?.Identity?.IsAuthenticated ?? false)
 			{
 				return RedirectToAction("Index", "Home");
 			}
 
-			return View();
+			return View(model);
 		}
 
 		[HttpPost]
@@ -105,8 +111,6 @@
 			await this.userManager.SetEmailAsync(user, model.Email);
 			await this.userManager.SetUserNameAsync(user, model.Email);
 
-
-
 			var result = await this.userManager.CreateAsync(user, model.Password);
 
 			if (!result.Succeeded)
@@ -114,6 +118,7 @@
 				foreach (var error in result.Errors)
 				{
 					ModelState.AddModelError(string.Empty, error.Description);
+					TempData[ErrorMessage] = error.Description;
 				}
 
 				return View(model);
@@ -124,8 +129,13 @@
 			return RedirectToAction("Index", "Home");
 		}
 
+		public IActionResult Login()
+		{
+			return View();
+		}
+
 		[HttpPost]
-		public async Task<IActionResult> Login(LoginFormModel model, string? returnUrl = null)
+		public async Task<IActionResult> Login(LoginFormModel model)
 		{
 			await this.HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
@@ -139,12 +149,9 @@
 
 			if (!result.Succeeded)
 			{
-				return this.View(model);
-			}
+				this.TempData[ErrorMessage] = "Invalid login attempt!";
 
-			if (returnUrl != null)
-			{
-				return LocalRedirect(returnUrl);
+				return this.View(model);
 			}
 
 			return this.Redirect(model.ReturnUrl ?? "/Home/Index");
