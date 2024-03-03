@@ -1,3 +1,5 @@
+using CloudinaryDotNet;
+
 namespace DevHunter.Web
 {
 	using Microsoft.AspNetCore.Identity;
@@ -10,6 +12,7 @@ namespace DevHunter.Web
 	using Infrastructure.ModelBinders;
 	using Services.Data;
 	using Services.Data.Interfaces;
+	using System.Security.Principal;
 
 	public class Program
 	{
@@ -40,16 +43,19 @@ namespace DevHunter.Web
 				cfg.LoginPath = "/User/Login";
 			});
 
+			builder.Services.AddScoped<IImageService, ImageService>();
+			builder.Services.AddScoped<IJobOfferService, JobOfferService>();
+			builder.Services.AddScoped<ITechnologyService, TechnologyService>();
+			builder.Services.AddScoped<ICompanyService, CompanyService>();
+
+			ConfigureCloudaryService(builder.Services, builder.Configuration);
+
 			builder.Services.AddControllersWithViews()
 				.AddMvcOptions(options =>
 				{
 					options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
 					options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
 				});
-
-			builder.Services.AddScoped<IJobOfferService, JobOfferService>();
-			builder.Services.AddScoped<ITechnologyService, TechnologyService>();
-			builder.Services.AddScoped<ICompanyService, CompanyService>();
 
 			var app = builder.Build();
 
@@ -81,6 +87,20 @@ namespace DevHunter.Web
 			app.MapRazorPages();
 
 			app.Run();
+		}
+
+		private static void ConfigureCloudaryService(IServiceCollection services, IConfiguration configuration)
+		{
+			var cloudName = configuration.GetValue<string>("AccountSettings:CloudName");
+			var apiKey = configuration.GetValue<string>("AccountSettings:ApiKey");
+			var apiSecret = configuration.GetValue<string>("AccountSettings:ApiSecret");
+
+			if (new[] { cloudName, apiKey, apiSecret }.Any(string.IsNullOrWhiteSpace))
+			{
+				throw new ArgumentException("Please specify your Cloudinary account Information");
+			}
+
+			services.AddSingleton(new Cloudinary(new Account(cloudName, apiKey, apiSecret)));
 		}
 	}
 }

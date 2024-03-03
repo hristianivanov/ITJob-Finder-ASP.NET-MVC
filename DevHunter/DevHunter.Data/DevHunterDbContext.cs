@@ -26,15 +26,6 @@
 		{
 			base.OnModelCreating(builder);
 
-			builder.Entity<Technology>()
-				.OwnsOne(t => t.Image, i =>
-				{
-					i.Property(i => i.OriginalFileName).HasColumnName("ImageFileName");
-					i.Property(i => i.OriginalContent).HasColumnName("ImageOriginalContent");
-					i.Property(i => i.ThumbnailContent).HasColumnName("ImageThumbnailContent");
-					i.Property(i => i.OriginalType).HasColumnName("ImageOriginalType");
-				});
-
 			builder.Entity<TechnologyDevelopments>()
 				.HasKey(td => new { td.TechnologyId, td.DevelopmentId });
 
