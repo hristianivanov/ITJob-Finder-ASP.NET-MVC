@@ -7,7 +7,8 @@ namespace DevHunter.Services.Data.Interfaces
 		Task<bool> TechnologyExistsByNameAsync(string technologyName);
 		Task AddAsync(TechnologyFormModel formModel);
 		Task<IEnumerable<TechnologyViewModel>> AllAsync();
-		Task<Stream> GetThumbnail(string id);
-		Task<Stream> GetOriginal(string id);
+
+		//Task<Stream> GetThumbnail(string id);
+		//Task<Stream> GetOriginal(string id);
 	}
 }

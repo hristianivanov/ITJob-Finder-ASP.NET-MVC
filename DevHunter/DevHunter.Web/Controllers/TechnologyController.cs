@@ -94,12 +94,6 @@
 			return View(formModel);
 		}
 
-		public async Task<IActionResult> Thumbnail(string id)
-			=> this.ReturnImage(await this.technologyService.GetThumbnail(id));
-
-		public async Task<IActionResult> Fullscreen(string id)
-			=> this.ReturnImage(await this.technologyService.GetOriginal(id));
-
 		private IActionResult ReturnImage(Stream image)
 		{
 			var headers = this.Response.GetTypedHeaders();
