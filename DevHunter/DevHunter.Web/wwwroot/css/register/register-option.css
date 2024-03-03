@@ -2,9 +2,9 @@
     margin: 6em auto;
 }
 
-#register-option-container .section-header {
-    text-align: center;
-}
+    #register-option-container .section-header {
+        text-align: center;
+    }
 
 .section-register-option {
     display: flex;
@@ -92,7 +92,7 @@
     top: -55%;
 }
 
-.custom-vector {
+.radio-btn > .custom-vector {
     width: 12em;
     height: 10em;
     position: absolute;
