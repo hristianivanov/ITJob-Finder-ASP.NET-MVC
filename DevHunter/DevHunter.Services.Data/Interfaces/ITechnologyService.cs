@@ -8,8 +8,8 @@
 		Task AddAsync(TechnologyFormModel formModel);
 		Task<IEnumerable<TechnologyViewModel>> AllAsync();
 		Task<bool> ExistsByIdAsync(string id);
-		Task<TechnologyFormModel> GetForEditByIdAsync(string id);
-		Task EditTechnologyAsync(string technologyId, TechnologyFormModel model);
+		Task<TechnologyEditFormModel> GetForEditByIdAsync(string id);
+		Task EditTechnologyAsync(string technologyId, TechnologyEditFormModel model);
 		Task DeleteByIdAsync(string id);
 
 		//Task<Stream> GetThumbnail(string id);

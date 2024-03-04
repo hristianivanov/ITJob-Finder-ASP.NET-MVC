@@ -29,6 +29,8 @@
 
 		public string? ImageUrl { get; set; } = null!;
 
-		public ICollection<CompanyTechnologies> UsedTechnologies { get; set; }
+        public string? WebsiteUrl { get; set; } = null!;
+
+        public ICollection<CompanyTechnologies> UsedTechnologies { get; set; }
 	}
 }

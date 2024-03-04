@@ -10,6 +10,8 @@
 	using Web.Infrastructure.Extensions;
 
 	using static Common.EntityValidationConstants.Technology;
+	using Microsoft.AspNetCore.Http.Internal;
+	using Microsoft.AspNetCore.Http;
 
 	public class TechnologyService : ITechnologyService
 	{
@@ -70,28 +72,43 @@
 			return result;
 		}
 
-		public async Task<TechnologyFormModel> GetForEditByIdAsync(string id)
+		public async Task<TechnologyEditFormModel> GetForEditByIdAsync(string id)
 		{
 			var technology = await this.dbContext
 				.Technologies
 				.FirstAsync(t => t.Id.ToString() == id);
 
-			return new TechnologyFormModel
+			return new TechnologyEditFormModel
 			{
 				Name = technology.Name,
 				ImageUrl = technology.ImageUrl,
 			};
 		}
 
-		public async Task EditTechnologyAsync(string technologyId, TechnologyFormModel model)
+		public async Task EditTechnologyAsync(string technologyId, TechnologyEditFormModel model)
 		{
 			var technology = await this.dbContext
 				.Technologies
 				.FirstAsync(t => t.Id.ToString() == technologyId);
 
-			technology.Name = model.Name;
+			bool isChanged = false;
 
-			await this.dbContext.SaveChangesAsync();
+			if (technology.Name != model.Name)
+			{
+				technology.Name = model.Name;
+				isChanged = true;
+			}
+
+			if (model.Image != null)
+			{
+				technology.ImageUrl = await this.imageService.EditImage(model.Image, technology.ImageUrl, technology.Name, "DevHunter/technology");
+				isChanged = true;
+			}
+
+			if (isChanged)
+			{
+				await this.dbContext.SaveChangesAsync();
+			}
 		}
 
 		public async Task DeleteByIdAsync(string id)
@@ -104,6 +121,23 @@
 			{
 				this.dbContext.Technologies.Remove(technology);
 				await this.dbContext.SaveChangesAsync();
+			}
+		}
+
+		private async Task<IFormFile> ConvertImageUrlToFormFileAsync(string imageUrl)
+		{
+			using (HttpClient client = new HttpClient())
+			{
+				byte[] imageBytes = await client.GetByteArrayAsync(imageUrl);
+
+				string fileName = Path.GetFileName(imageUrl);
+
+				using (MemoryStream stream = new MemoryStream(imageBytes))
+				{
+					IFormFile formFile = new FormFile(stream, 0, imageBytes.Length, "file", fileName);
+
+					return formFile;
+				}
 			}
 		}
 	}

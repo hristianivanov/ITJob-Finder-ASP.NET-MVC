@@ -1,5 +1,68 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model DevHunter.Web.ViewModels.Technology.TechnologyEditFormModel
+
+<div class="technology-upload-container">
+	<h1>Technology Create</h1>
+	<form asp-area="" asp-controller="Technology" asp-action="Edit" method="post" enctype="multipart/form-data">
+		<section>
+			<div class="input-info">
+				<div class="technology-name">
+					<div class="text">
+						<label asp-for="Name">Name</label>
+						<span class="error_msg" asp-validation-for="Name"></span>
+					</div>
+					<input asp-for="Name" type="text" name="name" placeholder="Type technology name..." />
+				</div>
+				<div class="technology-image">
+					<div class="upload-image-input panel">
+						<div class="button_outer">
+							<div class="btn_upload">
+								<label asp-for="Image">Upload Image</label>
+								<input asp-for="Image" type="file" id="upload_file" name="Image" accept="image/png, image/jpeg">
+							</div>
+							<div class="processing_bar"></div>
+							<div class="success_box"></div>
+						</div>
+						<span class="error_msg" asp-validation-for="Image"></span>
+					</div>
+				</div>
+			</div>
+			<div class="img-upload-container">
+				<div class="uploaded_file_view" id="uploaded_view">
+					<span class="file_remove">
+						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+						     stroke="currentColor"
+						     stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x">
+							<line x1="18" y1="6" x2="6" y2="18"></line>
+							<line x1="6" y1="6" x2="18" y2="18"></line>
+						</svg>
+					</span>
+					@if (!string.IsNullOrWhiteSpace(Model.ImageUrl))
+					{
+						<img src="@Model.ImageUrl" alt="Uploaded Image" />
+					}
+				</div>
+			</div>
+		</section>
+		<section>
+			<button class="submit-btn" type="submit">Submit</button>
+		</section>
+	</form>
+</div>
+
+<style>
+	.file_remove > svg {
+		color: white;
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		transform: translate(-50%,-50%);
+		width: 19px;
+		height: 19px;
+		stroke-width: 3px;
+	}
+</style>
+
+@section Scripts {
+	<script src="~/js/technology-edit.js"></script>
 }

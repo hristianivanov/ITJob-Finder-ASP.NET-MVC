@@ -2,12 +2,12 @@
 @using DevHunter.Data.Models
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
-@* @model DevHunter.Web.ViewModels.User.LoginFormModel *@
 
 <div class="login-register-cta">
 	@if (SignInManager.IsSignedIn(User))
 	{
-		@* <a class="" asp-area="" asp-controller="User" asp-action="Manage">Hello @User.Identity?.Name!</a> *@
+		//Hello @User.Identity?.Name!
+		<a class="user-manage-icon" asp-area="" asp-controller="User" asp-action="Manage">HI</a>
 		<form asp-area="" asp-controller="User" asp-action="Logout" asp-route-returnUrl="@(Context.Request.Path + Context.Request.QueryString)" method="post">
 			<button type="submit" class="last-btn">Logout</button>
 		</form>
