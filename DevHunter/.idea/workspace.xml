@@ -6,6 +6,17 @@
   <component name="ChangeListManager">
     <list default="true" id="5524ad82-825a-4eb9-9897-a94178bea7f6" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DevHunter.Data.Models/Company.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DevHunter.Data.Models/Company.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DevHunter.Data/Migrations/DevHunterDbContextModelSnapshot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DevHunter.Data/Migrations/DevHunterDbContextModelSnapshot.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DevHunter.Services.Data/CompanyService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DevHunter.Services.Data/CompanyService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DevHunter.Services.Data/ImageService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DevHunter.Services.Data/ImageService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DevHunter.Services.Data/Interfaces/IImageService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DevHunter.Services.Data/Interfaces/IImageService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DevHunter.Services.Data/TechnologyService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DevHunter.Services.Data/TechnologyService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DevHunter.Web/Areas/Company/Views/Shared/_LoginPartial.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/DevHunter.Web/Areas/Company/Views/Shared/_LoginPartial.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DevHunter.Web/Controllers/JobOfferController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DevHunter.Web/Controllers/JobOfferController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DevHunter.Web/Controllers/TechnologyController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DevHunter.Web/Controllers/TechnologyController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DevHunter.Web/Controllers/UserController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DevHunter.Web/Controllers/UserController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DevHunter.Web/Views/Shared/_LoginPartial.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/DevHunter.Web/Views/Shared/_LoginPartial.cshtml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DevHunter.Web/wwwroot/js/technology-all.js" beforeDir="false" afterPath="$PROJECT_DIR$/DevHunter.Web/wwwroot/js/technology-all.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -59,6 +70,7 @@
       <workItem from="1709410906963" duration="597000" />
       <workItem from="1709498525663" duration="1413000" />
       <workItem from="1709503320461" duration="1480000" />
+      <workItem from="1709542828169" duration="2382000" />
     </task>
     <servers />
   </component>

@@ -87,33 +87,30 @@ function editTechnology(cardId) {
     anchor.click();
 }
 
-function deleteTechnology(cardId) {
-    const url = `/Technology/Delete/${cardId}`;
-
+async function deleteTechnology(cardId) {
     const confirmation = confirm("Are you sure you want to delete this technology?");
-    if (!confirmation) {
+    if (!confirm) {
         return;
     }
 
-    fetch(url, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            // Include any additional headers if needed
-        },
-        body: JSON.stringify({ id: cardId }), // Convert the data to JSON format
-    })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`Failed to delete technology: ${response.statusText}`);
-            }
-            // Optionally handle success response
-            console.log(`Technology with ID ${cardId} deleted successfully.`);
-            // Reload the page or update the UI as needed
-            location.reload();
-        })
-        .catch(error => {
-            console.error(`Error deleting technology: ${error.message}`);
-            // Handle the error, such as displaying an error message to the user
+    let csrfToken = document.querySelector('input[name="__RequestVerificationToken"]').value;
+
+    try {
+        const response = await fetch(`/Technology/Delete/${cardId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'RequestVerificationToken': csrfToken
+            },
+            body: `id=${cardId}`
         });
+
+        if (response.ok) {
+            window.location.href = response.url;
+        } else {
+            console.error(`Error: ${response.status} - ${response.statusText}`);
+        }
+    } catch (error) {
+        console.error('An error occurred:', error);
+    }
 }

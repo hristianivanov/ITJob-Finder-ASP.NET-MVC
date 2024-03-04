@@ -9,17 +9,21 @@
 	public class CompanyService : ICompanyService
 	{
 		private readonly DevHunterDbContext context;
+		private readonly IImageService imageService;
 
-		public CompanyService(DevHunterDbContext context)
-		{
-			this.context = context;
-		}
+		public CompanyService(DevHunterDbContext context, IImageService imageService)
+        {
+            this.context = context;
+            this.imageService = imageService;
+        }
 
 		public async Task AddAsync(CompanyRegisterFormModel model)
 		{
 			var company = new Company()
 			{
 				Name = model.Name,
+				WebsiteUrl = model.WebsiteUrl,
+				ImageUrl = await this.imageService.UploadImage(model.Image,"DevHunter/companies",model.Name),
 			};
 
 			await context.Companies.AddAsync(company);

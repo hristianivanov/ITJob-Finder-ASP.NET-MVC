@@ -25,5 +25,5 @@
 
 			return View(queryModel);
 		}
-	}
+    }
 }
