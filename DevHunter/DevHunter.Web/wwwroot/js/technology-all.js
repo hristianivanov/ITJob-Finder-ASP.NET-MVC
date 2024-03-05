@@ -89,7 +89,7 @@ function editTechnology(cardId) {
 
 async function deleteTechnology(cardId) {
     const confirmation = confirm("Are you sure you want to delete this technology?");
-    if (!confirm) {
+    if (!confirmation) {
         return;
     }
 
