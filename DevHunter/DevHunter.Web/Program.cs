@@ -1,10 +1,10 @@
-using CloudinaryDotNet;
-
 namespace DevHunter.Web
 {
 	using Microsoft.AspNetCore.Identity;
 	using Microsoft.AspNetCore.Mvc;
 	using Microsoft.EntityFrameworkCore;
+
+	using CloudinaryDotNet;
 
 	using Data;
 	using Data.Models;
@@ -12,7 +12,6 @@ namespace DevHunter.Web
 	using Infrastructure.ModelBinders;
 	using Services.Data;
 	using Services.Data.Interfaces;
-	using System.Security.Principal;
 
 	public class Program
 	{
@@ -48,7 +47,7 @@ namespace DevHunter.Web
 			builder.Services.AddScoped<ITechnologyService, TechnologyService>();
 			builder.Services.AddScoped<ICompanyService, CompanyService>();
 
-			ConfigureCloudaryService(builder.Services, builder.Configuration);
+			ConfigureCloudinaryService(builder.Services, builder.Configuration);
 
 			builder.Services.AddControllersWithViews()
 				.AddMvcOptions(options =>
@@ -89,7 +88,7 @@ namespace DevHunter.Web
 			app.Run();
 		}
 
-		private static void ConfigureCloudaryService(IServiceCollection services, IConfiguration configuration)
+		private static void ConfigureCloudinaryService(IServiceCollection services, IConfiguration configuration)
 		{
 			var cloudName = configuration.GetValue<string>("AccountSettings:CloudName");
 			var apiKey = configuration.GetValue<string>("AccountSettings:ApiKey");
