@@ -21,7 +21,7 @@
 
 .dropdown .select-clicked {
     border: 1px solid #000058;
-    box-shadow: 0 0 0.8em rgba(0, 102, 255);
+    box-shadow: 0 0 0.8em rgb(0, 102, 255);
     /*box-shadow: 0 0 0 1px  inset, 0 0 26px -3px ;*/
 }
 
@@ -83,11 +83,11 @@
 }
 
 .menu li:hover {
-    background: #1e1e1e69;
+    background: rgba(30, 30, 105, 0.12);
 }
 
 .dropdown .active {
-    background: #1e1e1e69;
+    background: rgba(30, 30, 105, 0.12);
     color: white;
 }
 
