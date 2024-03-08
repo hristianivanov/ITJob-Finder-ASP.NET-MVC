@@ -1,0 +1,122 @@
+.multiselect-autocomplete-tech-stack {
+    width: 600px;
+    border-radius: 10px;
+    padding: 18px 25px 20px;
+    background: rgb(13, 17, 23);
+    color: rgb(201, 209, 217);
+}
+
+    .multiselect-autocomplete-tech-stack .job-offer-technology-tags {
+        position: relative;
+    }
+
+        .multiselect-autocomplete-tech-stack .job-offer-technology-tags .job-tags {
+            position: relative;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            padding: 7px;
+            margin: 12px 0;
+            border-radius: 5px;
+            border: 1px solid #30363d;
+        }
+
+            .multiselect-autocomplete-tech-stack .job-offer-technology-tags .job-tags li {
+                display: flex;
+                align-items: center;
+                color: #58a6ff;
+                margin: 4px 3px;
+                font-size: 14px;
+                list-style: none;
+                background: rgba(56, 139, 253, 0.1);
+                padding: 0 8px 0 10px;
+                border-radius: 24px;
+                line-height: 0;
+            }
+
+                .multiselect-autocomplete-tech-stack .job-offer-technology-tags .job-tags li i {
+                    height: 20px;
+                    width: 20px;
+                    color: #808080;
+                    margin-left: 8px;
+                    font-size: 12px;
+                    cursor: pointer;
+                    border-radius: 50%;
+                    background: #dfdfdf;
+                    justify-content: center;
+                }
+
+            .multiselect-autocomplete-tech-stack .job-offer-technology-tags .job-tags .search {
+                padding: 5px;
+                border: none;
+                outline: none;
+                width: 250px;
+                background: transparent;
+                color: inherit;
+                border-radius: 6px;
+                height: 27px;
+                font-size: 14px;
+            }
+
+        .multiselect-autocomplete-tech-stack .job-offer-technology-tags .suggester.active {
+            display: block;
+        }
+
+    .multiselect-autocomplete-tech-stack .suggester {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        z-index: 100;
+        width: 100%;
+        min-width: 180px;
+        background: rgb(13, 17, 23);
+        border-radius: 6px;
+        box-shadow: rgb(1, 4, 9) 0 3px 6px 0;
+        color: rgb(201, 209, 217);
+        border: 1px solid #30363d;
+        margin-top: -1px;
+    }
+
+        .multiselect-autocomplete-tech-stack .suggester .suggestion:first-child {
+            border-top-left-radius: 6px;
+            border-top-right-radius: 6px;
+        }
+
+
+    .multiselect-autocomplete-tech-stack .job-tags input:focus {
+        border: 1px solid #58a6ff !important;
+    }
+
+    .multiselect-autocomplete-tech-stack .job-offer-technology-tags .resultBox {
+        padding: 0;
+        opacity: 0;
+        pointer-events: none;
+        max-height: 280px;
+        overflow-y: auto;
+    }
+
+    .multiselect-autocomplete-tech-stack .suggester .suggestion.active {
+        background: #1f6feb;
+    }
+
+    .multiselect-autocomplete-tech-stack .suggester .suggestion {
+        display: block;
+        padding: 4px 16px;
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    .multiselect-autocomplete-tech-stack .job-tags li .remove-tag-icon {
+        background: rgba(56, 139, 253, 0.1);
+        vertical-align: sub;
+        width: 19px;
+        border-radius: 24px;
+        height: 20px;
+        transform: translateX(7px);
+    }
+
+    .multiselect-autocomplete-tech-stack .suggester .suggestion:not(:last-child) {
+        border-bottom: 1px solid #30363d;
+        ;
+    }

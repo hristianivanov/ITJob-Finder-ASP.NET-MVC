@@ -1,12 +1,12 @@
-﻿using DevHunter.Services.Data.Models.JobOffer;
-using DevHunter.Web.ViewModels.JobOffer;
-
-namespace DevHunter.Services.Data
+﻿namespace DevHunter.Services.Data
 {
+	using Microsoft.EntityFrameworkCore;
+
 	using DevHunter.Data;
 	using DevHunter.Data.Models;
 	using Interfaces;
-	using Microsoft.EntityFrameworkCore;
+	using Models.JobOffer;
+	using Web.ViewModels.JobOffer;
 
 	public class JobOfferService : IJobOfferService
 	{
