@@ -1,1 +1,161 @@
-﻿<h1>Post a Job</h1>
+﻿@model DevHunter.Web.ViewModels.JobOffer.JobOfferFormModel
+
+<div class="jon-offer-container">
+	<h1 class="heading">Job post</h1>
+	<form asp-area="Company" asp-controller="JobOffer" asp-action="Add" class="job-offer-add-form" method="post">
+		<div class="input-field">
+			<input asp-for="Title" type="text" placeholder="Job title" />
+			<span asp-validation-for="Title"></span>
+		</div>
+
+		<div class="dropdown">
+			<div class="select">
+				<span class="selected">Select job-location</span>
+				<div class="caret"></div>
+			</div>
+			<ul class="menu">
+				<li data-location="In-person, precise location">In-person, precise location</li>
+				<li data-location="Remote">Remote</li>
+				<li data-location="Hybrid remote">Hybrid remote</li>
+				<li data-location="On the road">On the road</li>
+			</ul>
+
+			<div class="input-field" style="display: none">
+				<input asp-for="Location" type="password" placeholder="Job location address" />
+			</div>
+			<input asp-for="IsRemote" type="hidden" id="IsRemote" />
+		</div>
+
+
+		<!--    experience level-->
+		<div class="select seniority">
+			<header class="option-title">Seniority</header>
+			<ul class="options radio">
+				<li class="option">Junior</li>
+				<li class="option">1-2 years work experience</li>
+				<li class="option">2-5 years work experience</li>
+				<li class="option">5+ years work experience</li>
+				<li class="option">Team Lead</li>
+			</ul>
+		</div>
+		<input type="hidden" id="workingExperience" asp-for="WorkingExperience" />
+
+
+		<div class="select work-hours">
+			<header class="option-title">Schedule</header>
+			<ul class="options radio">
+				<li class="option">4 hours shift</li>
+				<li class="option">8 hours shift</li>
+				<li class="option">10 hours shift</li>
+				<li class="option">12 hours shift</li>
+				<li class="option">Monday to Friday</li>
+				<li class="option">Day shift</li>
+				<li class="option">Night shift</li>
+				<li class="option">On call</li>
+				<li class="option">After school</li>
+				<li class="option">Choose your own hours</li>
+				<li class="option">Weekends only</li>
+			</ul>
+		</div>
+
+		<!--PAY-->
+		<!--    maximum week hours 168-->
+		<div class="input-field">
+			<input asp-for="WorkingHours" type="number" placeholder="Working hours" />
+			<span asp-validation-for="WorkingHours"></span>
+			<!--        fixed hours-->
+			<!--        range-->
+			<!--        maximum -->
+			<!--        minimum-->
+		</div>
+
+		<div class="input-field">
+			<!--        range-->
+			<!--        starting amount-->
+			<!--        exact amount-->
+			<!--        per year day month week hour-->
+			<input asp-for="Salary" type="number" placeholder="Salary">
+			<span asp-validation-for="Salary"></span>
+		</div>
+
+
+		<!--    JOB DESCRIPTION-->
+		<div class="rich-text-editor">
+			<div class="options">
+				<button id="bold" class="option-button format">
+					<i class="fa-solid fa-bold"></i>
+				</button>
+				<button id="italic" class="option-button format">
+					<i class="fa-solid fa-italic"></i>
+				</button>
+				<button id="underline" class="option-button format">
+					<i class="fa-solid fa-underline"></i>
+				</button>
+				<button id="strikethrough" class="option-button format">
+					<i class="fa-solid fa-strikethrough"></i>
+				</button>
+				<button id="insertOrderedList" class="option-button">
+					<i class="fa-solid fa-list-ol"></i>
+				</button>
+				<button id="insertUnorderedList" class="option-button">
+					<i class="fa-solid fa-list"></i>
+				</button>
+			</div>
+			<div class="rich-text-area" id="description-editor" contenteditable="true"></div>
+			<input type="hidden" asp-for="Description" id="description-input" />
+			<span asp-validation-for="Description"></span>
+		</div>
+		
+		<div class="multiselect-autocomplete-tech-stack">
+			<div class="job-offer-technology-tags">
+				<p class="title">Press enter or add a comma after each tag</p>
+				<ul class="job-tags">
+					<input class="search" type="text" spellcheck="false">
+				</ul>
+				<div class="suggester">
+
+				</div>
+			</div>
+		</div>
+
+		<button type="submit">Submit btn</button>
+	</form>
+</div>
+
+@section Scripts {
+	<link rel="stylesheet" href="~/css/job-offer-add/style.css">
+	<link rel="stylesheet" href="~/css/job-offer-add/dropdown.css">
+	<link rel="stylesheet" href="~/css/job-offer-add/select-option.css">
+	<link rel="stylesheet" href="~/css/job-offer-add/rich-text-editor.css">
+	<link rel="stylesheet" href="~/css/job-offer-add/tech-stack.css">
+
+
+	<script src="~/js/job-offer-add/script.js"></script>
+	<script src="~/js/job-offer-add/dropdown.js"></script>
+	<script src="~/js/job-offer-add/select-option.js"></script>
+	<script src="~/js/job-offer-add/rich-tech-editor.js"></script>
+	<script src="~/js/job-offer-add/tech-stack.js"></script>
+
+	<script>
+		$(document).ready(function () {
+			var descriptionEditor = $("#description-editor");
+			var descriptionInput = $("#description-input");
+
+			descriptionEditor.on("input", function () {
+				descriptionInput.val(descriptionEditor.html());
+			});
+
+
+			var locationDropdown = $(".menu");
+			var isRemoteInput = $("#IsRemote");
+
+			locationDropdown.on("click", "li", function () {
+				var selectedLocation = $(this).data("location");
+
+				var isRemote = selectedLocation === "Remote";
+
+				isRemoteInput.val(isRemote ? "true" : "false");
+			});
+		});
+	</script>
+}

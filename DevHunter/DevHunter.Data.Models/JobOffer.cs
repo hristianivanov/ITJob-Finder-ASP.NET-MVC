@@ -10,7 +10,7 @@
 		public JobOffer()
 		{
 			this.Id = Guid.NewGuid();
-			this.technologyJobOffers = new HashSet<TechnologyJobOffers>();
+			this.TechnologyJobOffers = new HashSet<TechnologyJobOffers>();
 			this.SavedJobOffers = new HashSet<SavedJobOffer>();
 		}
 
@@ -38,9 +38,13 @@
 
 		public string PlaceToWork { get; set; } = null!;
 
-		public int Seniority { get; set; }
+        public int WorkingHours { get; set; }
 
-		public ICollection<TechnologyJobOffers> technologyJobOffers { get; set; }
+        public int Seniority { get; set; }
+
+        public string? WorkingExperience { get; set; }
+
+        public ICollection<TechnologyJobOffers> TechnologyJobOffers { get; set; }
 		public ICollection<SavedJobOffer> SavedJobOffers { get; set; }
 	}
 }
