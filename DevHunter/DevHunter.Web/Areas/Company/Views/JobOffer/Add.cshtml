@@ -21,7 +21,7 @@
 			</ul>
 
 			<div class="input-field" style="display: none">
-				<input asp-for="Location" type="password" placeholder="Job location address" />
+				<input asp-for="Location" type="text" placeholder="Job location address" />
 			</div>
 			<input asp-for="IsRemote" type="hidden" id="IsRemote" />
 		</div>
@@ -41,23 +41,23 @@
 		<input type="hidden" id="workingExperience" asp-for="WorkingExperience" />
 
 
-		<div class="select work-hours">
-			<header class="option-title">Schedule</header>
-			<ul class="options radio">
-				<li class="option">4 hours shift</li>
-				<li class="option">8 hours shift</li>
-				<li class="option">10 hours shift</li>
-				<li class="option">12 hours shift</li>
-				<li class="option">Monday to Friday</li>
-				<li class="option">Day shift</li>
-				<li class="option">Night shift</li>
-				<li class="option">On call</li>
-				<li class="option">After school</li>
-				<li class="option">Choose your own hours</li>
-				<li class="option">Weekends only</li>
-			</ul>
+		@* <div class="select work-hours">
+		<header class="option-title">Schedule</header>
+		<ul class="options radio">
+		<li class="option">4 hours shift</li>
+		<li class="option">8 hours shift</li>
+		<li class="option">10 hours shift</li>
+		<li class="option">12 hours shift</li>
+		<li class="option">Monday to Friday</li>
+		<li class="option">Day shift</li>
+		<li class="option">Night shift</li>
+		<li class="option">On call</li>
+		<li class="option">After school</li>
+		<li class="option">Choose your own hours</li>
+		<li class="option">Weekends only</li>
+		</ul>
 		</div>
-
+		*@
 		<!--PAY-->
 		<!--    maximum week hours 168-->
 		<div class="input-field">
@@ -105,7 +105,7 @@
 			<input type="hidden" asp-for="Description" id="description-input" />
 			<span asp-validation-for="Description"></span>
 		</div>
-		
+
 		<div class="multiselect-autocomplete-tech-stack">
 			<div class="job-offer-technology-tags">
 				<p class="title">Press enter or add a comma after each tag</p>
@@ -113,23 +113,26 @@
 					<input class="search" type="text" spellcheck="false">
 				</ul>
 				<div class="suggester">
-
 				</div>
 			</div>
 		</div>
+		<input type="hidden" asp-for="SelectedTechnologies" id="selectedTechnologiesInput" />
 
 		<button type="submit">Submit btn</button>
 	</form>
 </div>
 
 @section Scripts {
+	@* TODO: integrate section styles *@
 	<link rel="stylesheet" href="~/css/job-offer-add/style.css">
 	<link rel="stylesheet" href="~/css/job-offer-add/dropdown.css">
 	<link rel="stylesheet" href="~/css/job-offer-add/select-option.css">
 	<link rel="stylesheet" href="~/css/job-offer-add/rich-text-editor.css">
 	<link rel="stylesheet" href="~/css/job-offer-add/tech-stack.css">
 
-
+	<script>
+		var technologiesArray = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.Technologies.Select(t => t.Name)));
+	</script>
 	<script src="~/js/job-offer-add/script.js"></script>
 	<script src="~/js/job-offer-add/dropdown.js"></script>
 	<script src="~/js/job-offer-add/select-option.js"></script>

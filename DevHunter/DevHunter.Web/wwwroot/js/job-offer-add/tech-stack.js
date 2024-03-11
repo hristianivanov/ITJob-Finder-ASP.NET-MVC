@@ -4,16 +4,7 @@ let techUl = document.querySelector(".multiselect-autocomplete-tech-stack .job-t
 
 let suggestContainer = document.querySelector(".multiselect-autocomplete-tech-stack .suggester");
 
-let suggestionsDb = [
-    "Channel",
-    "CodingLab",
-    "CodingNepal",
-    "YouTube",
-    "YouTuber",
-    "How to start YouTube Channel",
-    "What does HTML stands for?",
-    "What does CSS stands for?",
-];
+var suggestionsDb = technologiesArray;
 
 let maxTags = 10,
     tags = [];

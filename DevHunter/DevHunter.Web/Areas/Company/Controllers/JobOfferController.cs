@@ -1,5 +1,6 @@
 ﻿namespace DevHunter.Web.Areas.Company.Controllers
 {
+	using DevHunter.Services.Data.Interfaces;
 	using Microsoft.AspNetCore.Authorization;
 	using Microsoft.AspNetCore.Mvc;
 
@@ -9,17 +10,22 @@
 	[Area("Company")]
 	public class JobOfferController : Controller
 	{
-		public JobOfferController()
-		{
+		private readonly ITechnologyService technologyService;
 
+		public JobOfferController(ITechnologyService technologyService)
+		{
+			this.technologyService = technologyService;
 		}
 
 		[Route("company/postjob")]
-		public IActionResult Add()
+		public async Task<IActionResult> Add()
 		{
-			var model = new JobOfferFormModel();
+			var model = new JobOfferFormModel()
+			{
+				Technologies = await this.technologyService.AllAsync()
+			};
 
-			return View();
+			return View(model);
 		}
 
 
