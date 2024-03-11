@@ -19,14 +19,29 @@ var workingExperienceInput = document.getElementById("workingExperience");
 var btnSubmit = document.querySelector(".job-offer-add-form button[type=submit]");
 var form = document.querySelector('.job-offer-add-form');
 
-
 btnSubmit.addEventListener("click", (e) => {
-    e.preventDefault();
+	e.preventDefault();
 
-    var option =  document.querySelector(".seniority .options .selected");
-    if (option) {
-        workingExperienceInput.value = option.textContent;
-    }
+	var option = document.querySelector(".seniority .options .selected");
 
-    form.submit();
+	if (option) {
+		workingExperienceInput.value = option.textContent;
+	}
+
+	var techStack = document.querySelectorAll(".job-offer-technology-tags .job-tags > li");
+	var selectedTechnologies = [];
+
+	if (techStack) {
+		techStack.forEach(stack => {
+			let name = stack.textContent.trim();
+			selectedTechnologies.push(name);
+		});
+	}
+
+	document.getElementById('selectedTechnologiesInput').value = JSON.stringify(selectedTechnologies);
+
+	form.submit();
 })
+
+
+

@@ -31,5 +31,11 @@
 			public const int ThumbnailWidth = 100;
 			public const int ImageMaxMegaBytesFileSize = 8;
 		}
+
+		public static class JobOffer
+		{
+			public const int TitleMinLength = 2;
+			public const int TitleMaxLength = 40;
+		}
     }
 }
