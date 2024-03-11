@@ -1,13 +1,16 @@
-﻿@model DevHunter.Web.ViewModels.JobOffer.JobOfferFormModel
+﻿@using System.Text.Json;
+@model DevHunter.Web.ViewModels.JobOffer.JobOfferFormModel
 
 <div class="jon-offer-container">
 	<h1 class="heading">Job post</h1>
 	<form asp-area="Company" asp-controller="JobOffer" asp-action="Add" class="job-offer-add-form" method="post">
+		<!--    JOB TITLE-->
 		<div class="input-field">
 			<input asp-for="Title" type="text" placeholder="Job title" />
 			<span asp-validation-for="Title"></span>
 		</div>
 
+		<!--    JOB LOCATION-->
 		<div class="dropdown">
 			<div class="select">
 				<span class="selected">Select job-location</span>
@@ -26,8 +29,7 @@
 			<input asp-for="IsRemote" type="hidden" id="IsRemote" />
 		</div>
 
-
-		<!--    experience level-->
+		<!--    EXPERIENCE LEVEL-->
 		<div class="select seniority">
 			<header class="option-title">Seniority</header>
 			<ul class="options radio">
@@ -56,8 +58,8 @@
 		<li class="option">Choose your own hours</li>
 		<li class="option">Weekends only</li>
 		</ul>
-		</div>
-		*@
+		</div>*@
+
 		<!--PAY-->
 		<!--    maximum week hours 168-->
 		<div class="input-field">
@@ -77,7 +79,6 @@
 			<input asp-for="Salary" type="number" placeholder="Salary">
 			<span asp-validation-for="Salary"></span>
 		</div>
-
 
 		<!--    JOB DESCRIPTION-->
 		<div class="rich-text-editor">
@@ -106,6 +107,7 @@
 			<span asp-validation-for="Description"></span>
 		</div>
 
+		<!--    TECH STACK-->
 		<div class="multiselect-autocomplete-tech-stack">
 			<div class="job-offer-technology-tags">
 				<p class="title">Press enter or add a comma after each tag</p>
@@ -122,43 +124,19 @@
 	</form>
 </div>
 
-@section Scripts {
-	@* TODO: integrate section styles *@
+@section Styles {
 	<link rel="stylesheet" href="~/css/job-offer-add/style.css">
 	<link rel="stylesheet" href="~/css/job-offer-add/dropdown.css">
 	<link rel="stylesheet" href="~/css/job-offer-add/select-option.css">
 	<link rel="stylesheet" href="~/css/job-offer-add/rich-text-editor.css">
 	<link rel="stylesheet" href="~/css/job-offer-add/tech-stack.css">
+}
 
-	<script>
-		var technologiesArray = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.Technologies.Select(t => t.Name)));
-	</script>
+@section Scripts {
+	<script>var technologiesArray = @Html.Raw(JsonSerializer.Serialize(Model.Technologies.Select(t => t.Name)));</script>
 	<script src="~/js/job-offer-add/script.js"></script>
 	<script src="~/js/job-offer-add/dropdown.js"></script>
 	<script src="~/js/job-offer-add/select-option.js"></script>
 	<script src="~/js/job-offer-add/rich-tech-editor.js"></script>
 	<script src="~/js/job-offer-add/tech-stack.js"></script>
-
-	<script>
-		$(document).ready(function () {
-			var descriptionEditor = $("#description-editor");
-			var descriptionInput = $("#description-input");
-
-			descriptionEditor.on("input", function () {
-				descriptionInput.val(descriptionEditor.html());
-			});
-
-
-			var locationDropdown = $(".menu");
-			var isRemoteInput = $("#IsRemote");
-
-			locationDropdown.on("click", "li", function () {
-				var selectedLocation = $(this).data("location");
-
-				var isRemote = selectedLocation === "Remote";
-
-				isRemoteInput.val(isRemote ? "true" : "false");
-			});
-		});
-	</script>
 }
