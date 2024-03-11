@@ -1,9 +1,9 @@
 ﻿namespace DevHunter.Web.Areas.Company.Controllers
 {
-	using DevHunter.Services.Data.Interfaces;
 	using Microsoft.AspNetCore.Authorization;
 	using Microsoft.AspNetCore.Mvc;
 
+	using Services.Data.Interfaces;
 	using ViewModels.JobOffer;
 
 	[Authorize]
@@ -27,7 +27,6 @@
 
 			return View(model);
 		}
-
 
 		//TODO: XSS on Description HTMLSanitizer
 		[HttpPost]
