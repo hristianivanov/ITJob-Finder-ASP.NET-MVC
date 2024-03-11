@@ -4,8 +4,6 @@ const selectedOpt = dropdown.querySelector('.select > .selected');
 
 
 function seniorityOptions() {
-    console.log(selectedOpt.textContent)
-
     switch (selectedOpt.textContent) {
         case 'Remote': {
             input.style.display = 'none';
@@ -44,4 +42,23 @@ btnSubmit.addEventListener("click", (e) => {
 })
 
 
+var descriptionEditor = document.getElementById("description-editor");
+var descriptionInput = document.getElementById("description-input");
 
+descriptionEditor.addEventListener("input", function () {
+    descriptionInput.value = descriptionEditor.innerHTML;
+});
+
+var locationDropdown = document.querySelector(".menu");
+var isRemoteInput = document.getElementById("IsRemote");
+
+locationDropdown.addEventListener("click", function (event) {
+    var target = event.target;
+
+    if (target.tagName === "LI") {
+        var selectedLocation = target.dataset.location;
+        var isRemote = selectedLocation === "Remote";
+
+        isRemoteInput.value = isRemote ? "true" : "false";
+    }
+});

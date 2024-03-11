@@ -9,6 +9,7 @@
 	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 
 	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	@await RenderSectionAsync("Styles", required: false)
 
 	@await Html.PartialAsync("_ToastrScriptsPartial")
 	@await Html.PartialAsync("_Favicons")
