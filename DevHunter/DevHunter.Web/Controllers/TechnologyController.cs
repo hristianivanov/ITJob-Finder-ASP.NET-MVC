@@ -154,9 +154,27 @@
         [Route("/Technology/Delete/{id}")]
         public async Task<IActionResult> Delete([FromRoute] string id)
         {
-            await technologyService.DeleteByIdAsync(id);
+	        try
+	        {
+		        bool technologyExists = await this.technologyService.ExistsByIdAsync(id);
 
-            return RedirectToAction("All");
+		        if (!technologyExists)
+		        {
+			        TempData[ErrorMessage] = "Technology with the provided id does not exist!";
+
+			        return RedirectToAction("All");
+		        }
+
+		        await technologyService.DeleteByIdAsync(id);
+
+		        TempData[WarningMessage] = "The technology successfully was deleted!";
+
+		        return RedirectToAction("All");
+			}
+	        catch (Exception)
+	        {
+		        return GeneralError();
+	        }
         }
 
 
