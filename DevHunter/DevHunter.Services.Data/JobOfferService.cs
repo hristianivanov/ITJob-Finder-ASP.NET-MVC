@@ -120,30 +120,19 @@ namespace DevHunter.Services.Data
 		{
 			var jobOffer = await this.dbContext
 				.JobOffers
-				.Include(j => j.Company)
 				.Include(j => j.TechnologyJobOffers)
+				.ThenInclude(jt => jt.Technology)
+				.Include(j => j.Company)
 				.FirstOrDefaultAsync(j => j.Id.ToString() == id);
 
-			//var techStack = jobOffer
-			//	.TechnologyJobOffers
-			//	.Select(tj => new TechnologyViewModel()
-			//{
-			//	Id = tj.Technology.Id.ToString(),
-			//	Name = tj.Technology.Name,
-			//	ImageUrl = tj.Technology.ImageUrl,
-			//});
-
-			var techStack = await this.dbContext
+			var techStack = jobOffer!
 				.TechnologyJobOffers
-				.Include(j => j.Technology)
-				.Where(tj => tj.JobOfferId == jobOffer.Id)
 				.Select(tj => new TechnologyViewModel()
 				{
 					Id = tj.Technology.Id.ToString(),
 					Name = tj.Technology.Name,
 					ImageUrl = tj.Technology.ImageUrl,
-				})
-				.ToListAsync();
+				}).ToList();
 
 			return new JobOfferDetailsViewModel()
 			{
