@@ -1,0 +1,105 @@
+﻿@model DevHunter.Web.ViewModels.JobOffer.JobOfferDetailsViewModel
+
+<div class="container-single-job">
+	<div class="job-list-item single-job">
+		<div class="company-logo-wrap">
+			<!--                    TODO: try to remove attributes-->
+			<img width="120" height="19"
+			     src="@Model.CompanyImageUrl"
+			     class="company-logo" decoding="async"
+			     sizes="(max-width: 120px) 100vw, 120px">
+			<span class="company-name"></span>
+		</div>
+		<div class="listing-content-wrap">
+			<div class="title-date-wrap">
+				<h6 class="job-title">@Model.Title</h6>
+			</div>
+			<a class="apply-button" href="#">
+				<img class="btn-icon" src="icon-paper-plane.svg" alt="">
+				Apply for the job
+			</a>
+			<div class="component-footer">
+				<div class="tags-wrap">
+					<span class="badge hybrid has-tooltip">
+						<img class="tooltip-img" src="../../imgs/pin.png" width="12" height="20" alt="София" />
+						Sofia
+						<span class="suffix-hybrid">
+							<img src="~/svgs/icon-green-hybrid.svg" />
+							Hybrid
+						</span>
+					</span>
+					<div class="badge salary">
+						<img class="salary-icon" src="~/svgs/icon-neto.svg" />
+						6 500 - 10 000 lv.
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="content-container left-side">
+		<section class="section-categories">
+			<h4 class="section-title">Обявата е публикувана в следните категории</h4>
+			<div class="categories-wrap">
+				@foreach (var tech in Model.TechStack)
+				{
+					<a href="#" class="category">@tech.Name <span class="count">58</span></a>
+				}
+			</div>
+		</section>
+		<div class="job-box">
+			<ul class="job-listing-meta">
+				<li class="date-posted">
+					<time datetime="2024-03-01">Публикувана преди 3 дни</time>
+				</li>
+				<li class="save-job">
+					<span class="save-job-container" data-job-id="311885">
+						<button class="save-cta">
+							<span class="label label-save">Запази</span>
+							<span class="icon save-icon"></span>
+						</button>
+					</span>
+				</li>
+			</ul>
+			<div class="tech-stack">
+				<h6 class="tech-stack-title">Tech Stack / Изисквания</h6>
+				<ul class="tech-stack-ul">
+					@foreach (var tech in Model.TechStack)
+					{
+						<li class="tech-stack-item">
+							<img src="@tech.ImageUrl" alt=""/>
+						</li>
+					}
+				</ul>
+			</div>
+			<div class="job-description">@Html.Raw(Model.Description)</div>
+		</div>
+		<a class="apply-button" href="#">
+			<img class="btn-icon" src="~/svgs/icon-paper-plane.svg" alt="">
+			Apply for the job
+		</a>
+	</div>
+	<aside class="sidebar-container right-sidebar-company">
+		<div class="box-company">
+			<div class="logo-in-company-info">
+				<a href="#"><img class="company-logo" src="@Model.CompanyImageUrl" alt=""></a>
+			</div>
+			<h3 class="company-name-in-company-box">People and Places</h3>
+			<div class="company-name-small-heading">За агенцията</div>
+			<p>Изгради своето бъдеще с вдъхновяващи хора на правилното място!
+
+				People and Places Ltd. e основана преди няколко години от експерти по подбор и набиране на IT специалисти с
+				визия да създадат и приемстват общност от компании и кандидати, свързани помежду си от сходствата им в
+				културните и техническите предпочитания. Предоставяме възможности за работа в най-добрите софтуерни компании
+				в България. Фокусът ни е върху консултирането, развитието на хора, търсенето и набирането на професионалисти
+				в IT сферата. Създаваме значими връзки между талантите и организациите. Нашите ценности са професионализъм,
+				доверие и бързи резултати. Специализирани сме в управлението на процеси по наемане от край до край както за
+				кандидати, така и за работодатели.</p>
+			<a class="company-link-details more-btn" href="#">More about the company</a>
+			<a class="company-link-details" href="#">Look all company job offers</a>
+		</div>
+	</aside>
+</div>
+
+@section Styles {
+	<link href="~/css/job-offer-detail/styles.css" rel="stylesheet" />
+}

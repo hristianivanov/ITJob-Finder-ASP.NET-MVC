@@ -1,0 +1,308 @@
+﻿.container-single-job {
+    padding-top: 40px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+
+.job-list-item.single-job {
+    min-height: 138px;
+    width: 100%;
+}
+
+.job-list-item {
+    display: flex;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border-radius: 5px;
+    transition: all 0.2s ease-in-out;
+}
+
+.content-container.left-side {
+    margin-right: 30px;
+}
+
+.content-container {
+    flex: 1;
+}
+
+.sidebar-container.right-sidebar-company {
+    width: 350px;
+    display: block;
+}
+
+.tags-wrap > .badge {
+    background: none;
+}
+
+.container-single-job .apply-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 500;
+    font-size: 16px;
+    background-color: #304ffe;
+    padding: 14px 25px 12px;
+    color: #fff;
+    border-radius: 5px;
+    text-align: center;
+    column-gap: 10px;
+}
+
+.job-list-item .apply-button {
+    transition: all 0.2s ease-in-out;
+    position: absolute;
+    right: 67px;
+    top: calc(50% - 25px);
+}
+
+.content-container .section-categories {
+    padding: 17px;
+    background: white;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.02);
+}
+
+    .content-container .section-categories .section-title {
+        position: relative;
+        display: inline;
+        z-index: 0;
+        color: rgb(89, 89, 89);
+        font-family: Axiforma, sans-serif;
+        font-size: 14px;
+        font-weight: 700;
+        letter-spacing: 0.6px;
+        text-transform: uppercase;
+        margin: 0;
+    }
+
+        .content-container .section-categories .section-title::after {
+            content: '';
+            display: block;
+            position: absolute;
+            bottom: 1px;
+            width: calc(100% + 6px);
+            height: 0.25em;
+            left: -2px;
+            z-index: -1;
+            background-color: rgb(221, 238, 255);
+            /* ReSharper disable once InvalidValue */
+            opacity: 100%;
+        }
+
+.section-categories .categories-wrap {
+    margin-top: 20px
+}
+
+    .section-categories .categories-wrap .category {
+        display: inline-block;
+        padding: 13px 29px 13px 18px;
+        margin: 0 12px 12px 0;
+        background-color: #F7F8FB;
+        border-radius: 5px;
+        color: #898989;
+        font-size: 14px;
+        line-height: 1;
+    }
+
+        .section-categories .categories-wrap .category .count {
+            margin-left: 5px;
+            color: #304ffe;
+        }
+
+.container-single-job .job-box {
+    display: flex;
+    margin-bottom: 10px;
+    padding: 20px;
+    flex-direction: column;
+    border-radius: 5px;
+    background-color: white;
+    box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.02);
+    color: #898989;
+}
+
+.job-box .job-listing-meta {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    list-style: none outside;
+    padding: 0;
+    margin: 0 0 1.5em;
+    overflow: hidden;
+    clear: both;
+}
+
+.job-listing-meta li {
+    padding-right: 0;
+    margin-right: 0;
+}
+
+.job-listing-meta .date-posted {
+    display: flex;
+    flex: 1 1 auto;
+    gap: 8px;
+    line-height: 1.5em;
+}
+
+    .job-listing-meta .date-posted::before {
+        content: '';
+        display: block;
+        width: 17px;
+        height: 17px;
+        background-image: url('0.finished-pages/job-offer-detail/icon-calendar.svg');
+        background-size: contain;
+        background-repeat: no-repeat;
+        flex-shrink: 0;
+    }
+
+.save-job-container .save-cta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    font-size: 15px;
+    color: #374EF5;
+    font-weight: 300;
+    border: 0;
+    cursor: pointer;
+}
+
+    .save-job-container .save-cta .save-icon {
+        width: 15px;
+        height: 17px;
+        background-image: url("../../svgs/bookmark-ribbon-outline2.svg");
+        display: inline-block;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: contain;
+    }
+
+.container-single-job .tech-stack {
+    margin-bottom: 30px;
+}
+
+    .container-single-job .tech-stack .tech-stack-title {
+        font-size: 14px;
+        text-transform: uppercase;
+        position: relative;
+        display: inline-block;
+        z-index: 0;
+        line-height: 18px;
+        margin-top: 10px;
+        font-weight: bold;
+    }
+
+        .container-single-job .tech-stack .tech-stack-title::after {
+            background: rgb(221, 238, 255);
+            content: '';
+            display: block;
+            position: absolute;
+            width: calc(100% + 6px);
+            height: 0.25em;
+            left: -2px;
+            bottom: 0.17em;
+            z-index: -1;
+        }
+
+    .container-single-job .tech-stack .tech-stack-ul {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+.tech-stack .tech-stack-ul .tech-stack-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    min-height: 32px;
+    padding: 3px;
+    border-radius: 5px;
+    background-color: white;
+    /* ReSharper disable once HexColorValueWithAlpha */
+    box-shadow: 0 3px 20px #0000001A;
+    line-height: 1;
+}
+
+    .tech-stack .tech-stack-ul .tech-stack-item img {
+        max-width: 100%;
+        display: inline-block;
+        width: 24px;
+        height: 24px;
+        object-fit: contain;
+    }
+
+.container-single-job .job-description {
+    margin: 0 0 1.5em;
+}
+
+.container-single-job .apply-btn {
+    display: flex;
+    justify-content: center;
+}
+
+.sidebar-container .box-company {
+    padding: 30px;
+    display: flex;
+    margin-bottom: 10px;
+    flex-direction: column;
+    border-radius: 5px;
+    background-color: white;
+    box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.02);
+    color: #898989;
+}
+
+.box-company .logo-in-company-info {
+    margin-bottom: 20px;
+    max-height: 40px;
+    max-width: 120px;
+}
+
+.logo-in-company-info img {
+    max-width: 100%;
+    vertical-align: middle;
+    display: inline-block;
+    width: auto;
+    height: auto;
+}
+
+.company-name-in-company-box {
+    font-size: 18px;
+    line-height: 30px;
+    font-weight: 400;
+    margin-bottom: 30px;
+    color: rgb(89, 89, 89);
+    font-family: Axiforma, sans-serif;
+}
+
+
+.box-company .company-name-small-heading {
+    margin-bottom: 10px;
+    color: #ccc;
+    font-size: 12px;
+    line-height: 16px;
+    text-transform: uppercase;
+}
+
+.box-company .more-btn {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.box-company .company-link-details {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    background: #ebf3ff;
+    text-align: center;
+    white-space: nowrap;
+    text-decoration: none;
+    max-width: 100%;
+    height: 50px;
+    padding: 14px 25px;
+    line-height: 140%;
+    font-weight: 400;
+}

@@ -1,9 +1,10 @@
 ﻿namespace DevHunter.Services.Data
 {
+	using Microsoft.EntityFrameworkCore;
+
 	using DevHunter.Data;
 	using DevHunter.Data.Models;
 	using Interfaces;
-	using Microsoft.EntityFrameworkCore;
 	using Web.ViewModels.User;
 
 	public class CompanyService : ICompanyService
@@ -17,11 +18,12 @@
             this.imageService = imageService;
         }
 
-		public async Task AddAsync(CompanyRegisterFormModel model)
+		public async Task AddAsync(CompanyRegisterFormModel model, Guid userId)
 		{
 			var company = new Company()
 			{
 				Name = model.Name,
+				CreatorId = userId,
 				WebsiteUrl = model.WebsiteUrl,
 				ImageUrl = await this.imageService.UploadImage(model.Image,"DevHunter/companies",model.Name),
 			};

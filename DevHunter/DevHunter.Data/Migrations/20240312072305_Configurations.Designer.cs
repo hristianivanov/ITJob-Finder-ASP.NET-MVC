@@ -4,6 +4,7 @@ using DevHunter.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DevHunter.Data.Migrations
 {
     [DbContext(typeof(DevHunterDbContext))]
-    partial class DevHunterDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240312072305_Configurations")]
+    partial class Configurations
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -199,7 +201,7 @@ namespace DevHunter.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("Seniority")
+                    b.Property<int>("Seniority")
                         .HasColumnType("int");
 
                     b.Property<string>("WorkingExperience")
@@ -254,145 +256,145 @@ namespace DevHunter.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("15ff2965-3d68-41f6-a067-702a1bd6d885"),
+                            Id = new Guid("64331a9f-90ea-4d30-a8d3-49de31997dc0"),
                             ImageUrl = "http://res.cloudinary.com/dlffxtrek/image/upload/v1709491632/DevHunter/technology/Go.png",
                             Name = "Go"
                         },
                         new
                         {
-                            Id = new Guid("ac182c79-6536-47e1-bf17-8eb93abf3d98"),
+                            Id = new Guid("c89a6832-6585-4124-915d-74ea8f81c557"),
                             ImageUrl = "http://res.cloudinary.com/dlffxtrek/image/upload/v1709496382/DevHunter/technology/HTML5.png",
                             Name = "Html5"
                         },
                         new
                         {
-                            Id = new Guid("11ec66c8-6f99-4c5d-ad1c-5cb1367d142e"),
+                            Id = new Guid("64372de6-eac2-46a1-b53b-37f6b859f34f"),
                             ImageUrl = "http://res.cloudinary.com/dlffxtrek/image/upload/v1709495915/DevHunter/technology/Kubernetes.png",
                             Name = "Kubernetes"
                         },
                         new
                         {
-                            Id = new Guid("5d34cfde-9fdf-47a0-b079-2f07da493418"),
+                            Id = new Guid("40d21c9c-ea90-4751-a1db-f48ff951bae0"),
                             ImageUrl = "http://res.cloudinary.com/dlffxtrek/image/upload/v1709496039/DevHunter/technology/Apache.png",
                             Name = "Apache"
                         },
                         new
                         {
-                            Id = new Guid("9aeaf7dc-2339-4cdc-ad76-866f521d790b"),
+                            Id = new Guid("8de636d1-022c-41fd-a015-c2b5121bc49c"),
                             ImageUrl = "http://res.cloudinary.com/dlffxtrek/image/upload/v1709496307/DevHunter/technology/Angular.png",
                             Name = "Angular"
                         },
                         new
                         {
-                            Id = new Guid("1bade1ff-48ee-47f9-bd90-6e003b087b03"),
+                            Id = new Guid("d0a9f22c-be2c-4155-b3e8-879428afcfd5"),
                             ImageUrl = "http://res.cloudinary.com/dlffxtrek/image/upload/v1709495970/DevHunter/technology/Javascript.png",
                             Name = "Javascript"
                         },
                         new
                         {
-                            Id = new Guid("86bd85de-1907-4e11-8cc5-559a5fc3b83c"),
+                            Id = new Guid("c0ccf87c-7dd7-48c5-a87e-943bfef35118"),
                             ImageUrl = "http://res.cloudinary.com/dlffxtrek/image/upload/v1709491632/DevHunter/technology/Go.png",
                             Name = "Go"
                         },
                         new
                         {
-                            Id = new Guid("dc1fc49b-4036-496c-b9d6-fdd8e05ecd63"),
+                            Id = new Guid("b742a185-cd98-47fc-81d2-52227e13cb80"),
                             ImageUrl = "http://res.cloudinary.com/dlffxtrek/image/upload/v1709496353/DevHunter/technology/Gitlab.jpg",
                             Name = "Gitlab"
                         },
                         new
                         {
-                            Id = new Guid("6fccfd01-a3d2-4f06-b5d1-c9606647e34a"),
+                            Id = new Guid("39c802ed-15f7-4d23-9dbf-5e21dbbf5a88"),
                             ImageUrl = "http://res.cloudinary.com/dlffxtrek/image/upload/v1709495888/DevHunter/technology/CSS.png",
                             Name = "CSS"
                         },
                         new
                         {
-                            Id = new Guid("de944478-66c4-4b17-a975-94cef1c7b776"),
+                            Id = new Guid("38a6d987-783b-437c-bca8-dbcdc7969bb5"),
                             ImageUrl = "http://res.cloudinary.com/dlffxtrek/image/upload/v1709495873/DevHunter/technology/Bootstrap.png",
                             Name = "Bootstrap"
                         },
                         new
                         {
-                            Id = new Guid("0495bf8f-ceda-4199-a1f4-b1ffb59495da"),
+                            Id = new Guid("6e3fb6e5-cd66-4e03-8dfa-74c3ba428378"),
                             ImageUrl = "http://res.cloudinary.com/dlffxtrek/image/upload/v1709495988/DevHunter/technology/React.png",
                             Name = "React"
                         },
                         new
                         {
-                            Id = new Guid("76f0e99b-b7a2-4a02-9dfe-d30b8146a57e"),
+                            Id = new Guid("da5aaa3b-bff1-4127-b51d-9afafe5d9751"),
                             ImageUrl = "http://res.cloudinary.com/dlffxtrek/image/upload/v1709496410/DevHunter/technology/Python.png",
                             Name = "Python"
                         },
                         new
                         {
-                            Id = new Guid("d8c4e1ad-ad44-46fe-ad3b-926f22c04936"),
+                            Id = new Guid("b24c3615-7d01-418b-871c-d0e6620fe5b1"),
                             ImageUrl = "http://res.cloudinary.com/dlffxtrek/image/upload/v1709495978/DevHunter/technology/Django.png",
                             Name = "Django"
                         },
                         new
                         {
-                            Id = new Guid("3dcd6ce5-fa91-4fbf-aed4-1085fd4da409"),
+                            Id = new Guid("2f6a4590-1d88-4d5d-9017-5cbe7bf79fa2"),
                             ImageUrl = "http://res.cloudinary.com/dlffxtrek/image/upload/v1709496008/DevHunter/technology/MongoDb.png",
                             Name = "MongoDb"
                         },
                         new
                         {
-                            Id = new Guid("8621d025-d801-4d97-806f-e29ea241bb38"),
+                            Id = new Guid("93b4359a-df30-4eea-8177-3069b9dfc5cf"),
                             ImageUrl = "http://res.cloudinary.com/dlffxtrek/image/upload/v1709496318/DevHunter/technology/Ansible.png",
                             Name = "Ansible"
                         },
                         new
                         {
-                            Id = new Guid("0fd920f2-f3a2-440b-80c1-6d5f9a85d5cd"),
+                            Id = new Guid("e6988196-3e3e-4f81-8f30-27e65aeb5ea1"),
                             ImageUrl = "http://res.cloudinary.com/dlffxtrek/image/upload/v1709495978/DevHunter/technology/Django.png",
                             Name = "Django"
                         },
                         new
                         {
-                            Id = new Guid("232d3c96-1c09-42e7-aebc-ccb27f9602e0"),
+                            Id = new Guid("db7c3ea5-4769-4762-a2d5-bac25172632f"),
                             ImageUrl = "http://res.cloudinary.com/dlffxtrek/image/upload/v1709496362/DevHunter/technology/Flink.png",
                             Name = "Flink"
                         },
                         new
                         {
-                            Id = new Guid("470206d5-f404-479d-a990-b9bfe6109e7d"),
+                            Id = new Guid("d1bd3812-1b57-4ca2-8081-b936623e0042"),
                             ImageUrl = "http://res.cloudinary.com/dlffxtrek/image/upload/v1709496341/DevHunter/technology/Ecma.png",
                             Name = "Ecma"
                         },
                         new
                         {
-                            Id = new Guid("4ac52817-206c-4acc-b97f-a98252081c5b"),
+                            Id = new Guid("2e3c5d7a-ee77-4b93-b119-7b1c6a9ac747"),
                             ImageUrl = "http://res.cloudinary.com/dlffxtrek/image/upload/v1709495925/DevHunter/technology/Linux.png",
                             Name = "Linux"
                         },
                         new
                         {
-                            Id = new Guid("5dc9ac9d-9a37-4cea-922e-072700db70ae"),
+                            Id = new Guid("81708738-4602-487e-b684-8e13574202aa"),
                             ImageUrl = "http://res.cloudinary.com/dlffxtrek/image/upload/v1709496395/DevHunter/technology/Typescript.png",
                             Name = "Typescript"
                         },
                         new
                         {
-                            Id = new Guid("9264106a-6c5c-4071-b2ca-06f0eee31965"),
+                            Id = new Guid("0e345e05-4c39-4127-a831-54713c1f2d63"),
                             ImageUrl = "http://res.cloudinary.com/dlffxtrek/image/upload/v1709495940/DevHunter/technology/MariaDb.png",
                             Name = "MariaDb"
                         },
                         new
                         {
-                            Id = new Guid("7a320b78-3aee-40ad-bd4d-9ddde33ef1ae"),
+                            Id = new Guid("b8f0894d-7c51-47fc-ad52-1c501384c5b9"),
                             ImageUrl = "http://res.cloudinary.com/dlffxtrek/image/upload/v1709495957/DevHunter/technology/Nodejs.png",
                             Name = "Nodejs"
                         },
                         new
                         {
-                            Id = new Guid("7af33a43-9d28-4ea6-bde8-c640e9ec10ce"),
+                            Id = new Guid("17ab75e8-b2f3-4471-b578-dcfbc27d077e"),
                             ImageUrl = "http://res.cloudinary.com/dlffxtrek/image/upload/v1709495897/DevHunter/technology/Docker.jpg",
                             Name = "Docker"
                         },
                         new
                         {
-                            Id = new Guid("e70bec80-9618-44ee-9bd7-bc740c02d45e"),
+                            Id = new Guid("897424c8-cd85-497a-83ac-07af54f37ae4"),
                             ImageUrl = "http://res.cloudinary.com/dlffxtrek/image/upload/v1709496838/DevHunter/technology/Vue.png",
                             Name = "Vue"
                         });

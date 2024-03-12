@@ -5,6 +5,8 @@
 
 	using Microsoft.EntityFrameworkCore;
 
+	using static Common.EntityValidationConstants.JobOffer;
+
 	public class JobOffer
 	{
 		public JobOffer()
@@ -17,7 +19,7 @@
 		[Key]
 		public Guid Id { get; set; }
 
-		public string JobPosition { get; set; } = null!;
+        public string JobPosition { get; set; } = null!;
 
 		[Precision(18,2)]
 		public decimal? MinSalary { get; set; }
@@ -26,8 +28,8 @@
 		public decimal? MaxSalary { get; set; }
 
 		[Required]
-		[MaxLength(int.MaxValue)]
-		public string Description { get; set; }
+		[MaxLength(int.MaxValue)] 
+		public string Description { get; set; } = null!;
 
 		public DateTime CreatedOn { get; set; }
 
@@ -40,7 +42,7 @@
 
         public int WorkingHours { get; set; }
 
-        public int Seniority { get; set; }
+        public int? Seniority { get; set; }
 
         public string? WorkingExperience { get; set; }
 

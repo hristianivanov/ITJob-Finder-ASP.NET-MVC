@@ -41,9 +41,16 @@ namespace DevHunter.Data
 				.HasKey(sj => new { sj.UserId, sj.JobOfferId });
 
 			Assembly configAssembly = Assembly.GetAssembly(typeof(DevHunterDbContext)) ??
-			                          Assembly.GetExecutingAssembly();
+									  Assembly.GetExecutingAssembly();
 
 			builder.ApplyConfigurationsFromAssembly(configAssembly);
+
+
+			builder.Entity<Company>()
+				.HasOne(c => c.Creator)
+				.WithMany(u => u.Companies)
+				.HasForeignKey(c => c.CreatorId )
+				.OnDelete(DeleteBehavior.Restrict);
 		}
 	}
 }

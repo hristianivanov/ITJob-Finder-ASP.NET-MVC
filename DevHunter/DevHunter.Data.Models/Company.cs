@@ -1,6 +1,7 @@
 ﻿namespace DevHunter.Data.Models
 {
 	using System.ComponentModel.DataAnnotations;
+	using System.ComponentModel.DataAnnotations.Schema;
 
 	public class Company
 	{
@@ -27,9 +28,14 @@
 
 		public string? Activity { get; set; } = null!;
 
-		public string? ImageUrl { get; set; } = null!;
+		public string? ImageUrl { get; set; }
 
-        public string? WebsiteUrl { get; set; } = null!;
+        public string? WebsiteUrl { get; set; }
+
+		[ForeignKey(nameof(Creator))]
+        public Guid CreatorId { get; set; }
+
+        public ApplicationUser Creator { get; set; } = null!;
 
         public ICollection<CompanyTechnologies> UsedTechnologies { get; set; }
 	}
