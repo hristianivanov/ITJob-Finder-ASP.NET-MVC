@@ -4,7 +4,7 @@
 
 	public interface ICompanyService
 	{
-		Task AddAsync(CompanyRegisterFormModel model);
+		Task AddAsync(CompanyRegisterFormModel model, Guid userId);
 		Task<bool> ExistsByNameAsync(string name);
 	}
 }

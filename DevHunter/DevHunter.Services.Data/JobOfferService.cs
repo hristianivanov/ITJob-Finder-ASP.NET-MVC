@@ -1,4 +1,6 @@
-﻿namespace DevHunter.Services.Data
+﻿using DevHunter.Web.ViewModels.Technology;
+
+namespace DevHunter.Services.Data
 {
 	using Microsoft.EntityFrameworkCore;
 
@@ -7,6 +9,9 @@
 	using Interfaces;
 	using Models.JobOffer;
 	using Web.ViewModels.JobOffer;
+	using Newtonsoft.Json;
+	using System.ComponentModel.DataAnnotations;
+	using static DevHunter.Common.EntityValidationConstants;
 
 	public class JobOfferService : IJobOfferService
 	{
@@ -19,7 +24,7 @@
 
 		public async Task<AllJobOffersFilteredAndPagedServiceModel> AllAsync(AllJobOffersQueryModel queryModel)
 		{
-			IQueryable<JobOffer> jobOffersQuery = this.dbContext
+			IQueryable<DevHunter.Data.Models.JobOffer> jobOffersQuery = this.dbContext
 				.JobOffers
 				//.Where(j => j.IsActive)
 				.AsQueryable();
@@ -52,6 +57,149 @@
 				TotalJobOffersCount = totalJobOffers,
 				JobOffers = allJobOffers
 			};
+		}
+
+		public async Task AddAsync(JobOfferFormModel model, string userId)
+		{
+			var company = await this.dbContext
+				.Companies
+				.FirstOrDefaultAsync(c => c.CreatorId.ToString() == userId);
+
+			if (company != null)
+			{
+				var jobOffer = new DevHunter.Data.Models.JobOffer()
+				{
+					JobPosition = model.Title,
+					Description = model.Description,
+					WorkingHours = model.WorkingHours!.Value,
+					CreatedOn = DateTime.UtcNow,
+					PlaceToWork = model.IsRemote ? "Remote" : model.Location!,
+					MaxSalary = model.Salary!.Value,
+					CompanyId = company.Id,
+				};
+
+				string[] techStackNames = JsonConvert.DeserializeObject<string[]>(model.SelectedTechnologies)!;
+				var techStack = new List<DevHunter.Data.Models.Technology>();
+
+				foreach (var techName in techStackNames)
+				{
+					var tech = await this.dbContext.Technologies.FirstOrDefaultAsync(t => t.Name == techName);
+
+					if (tech != null)
+					{
+						techStack.Add(tech);
+					}
+				}
+
+				foreach (var tech in techStack)
+				{
+					var jobOfferTechnology = new TechnologyJobOffers()
+					{
+						JobOfferId = jobOffer.Id,
+						TechnologyId = tech.Id,
+					};
+
+					await this.dbContext.TechnologyJobOffers.AddAsync(jobOfferTechnology);
+				}
+
+				await this.dbContext.JobOffers.AddAsync(jobOffer);
+				await this.dbContext.SaveChangesAsync();
+			}
+		}
+
+		public async Task<bool> ExistsByIdAsync(string id)
+		{
+			var result = await this.dbContext
+				.JobOffers
+				.FirstOrDefaultAsync(j => j.Id.ToString() == id);
+
+			return result != null;
+		}
+
+		public async Task<JobOfferDetailsViewModel> GetDetailsByIdAsync(string id)
+		{
+			var jobOffer = await this.dbContext
+				.JobOffers
+				.Include(j => j.Company)
+				.Include(j => j.TechnologyJobOffers)
+				.FirstOrDefaultAsync(j => j.Id.ToString() == id);
+
+			//var techStack = jobOffer
+			//	.TechnologyJobOffers
+			//	.Select(tj => new TechnologyViewModel()
+			//{
+			//	Id = tj.Technology.Id.ToString(),
+			//	Name = tj.Technology.Name,
+			//	ImageUrl = tj.Technology.ImageUrl,
+			//});
+
+			var techStack = await this.dbContext
+				.TechnologyJobOffers
+				.Include(j => j.Technology)
+				.Where(tj => tj.JobOfferId == jobOffer.Id)
+				.Select(tj => new TechnologyViewModel()
+				{
+					Id = tj.Technology.Id.ToString(),
+					Name = tj.Technology.Name,
+					ImageUrl = tj.Technology.ImageUrl,
+				})
+				.ToListAsync();
+
+			return new JobOfferDetailsViewModel()
+			{
+				Id = jobOffer!.Id.ToString(),
+				Description = jobOffer.Description,
+				CompanyImageUrl = jobOffer.Company.ImageUrl!,
+				TechStack = techStack
+			};
+		}
+
+		public async Task<string> CreateAndReturnIdAsync(JobOfferFormModel model,string userId)
+		{
+			var company = await this.dbContext
+			.Companies
+				.FirstOrDefaultAsync(c => c.CreatorId.ToString() == userId);
+
+				var jobOffer = new DevHunter.Data.Models.JobOffer()
+				{
+					JobPosition = model.Title,
+					Description = model.Description,
+					WorkingHours = model.WorkingHours!.Value,
+					CreatedOn = DateTime.UtcNow,
+					PlaceToWork = model.IsRemote ? "Remote" : model.Location!,
+					MaxSalary = model.Salary!.Value,
+					CompanyId = company.Id,
+				};
+
+				string[] techStackNames = JsonConvert.DeserializeObject<string[]>(model.SelectedTechnologies)!;
+				var techStack = new List<DevHunter.Data.Models.Technology>();
+
+				foreach (var techName in techStackNames)
+				{
+					var tech = await this.dbContext.Technologies.FirstOrDefaultAsync(t => t.Name == techName);
+
+					if (tech != null)
+					{
+						techStack.Add(tech);
+					}
+				}
+
+				foreach (var tech in techStack)
+				{
+					var jobOfferTechnology = new TechnologyJobOffers()
+					{
+						JobOfferId = jobOffer.Id,
+						TechnologyId = tech.Id,
+					};
+
+					await this.dbContext.TechnologyJobOffers.AddAsync(jobOfferTechnology);
+				}
+
+				await this.dbContext.JobOffers.AddAsync(jobOffer);
+				await this.dbContext.SaveChangesAsync();
+
+
+				return jobOffer.Id!.ToString();
 		}
 	}
 }

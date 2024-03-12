@@ -1,10 +1,14 @@
-﻿using DevHunter.Services.Data.Models.JobOffer;
-using DevHunter.Web.ViewModels.JobOffer;
-
-namespace DevHunter.Services.Data.Interfaces
+﻿namespace DevHunter.Services.Data.Interfaces
 {
+	using Models.JobOffer;
+	using Web.ViewModels.JobOffer;
+
 	public interface IJobOfferService
 	{
 		Task<AllJobOffersFilteredAndPagedServiceModel> AllAsync(AllJobOffersQueryModel queryModel);
+		Task AddAsync(JobOfferFormModel model, string userId);
+		Task<string> CreateAndReturnIdAsync(JobOfferFormModel model,string userId);
+		Task<bool> ExistsByIdAsync(string id);
+		Task<JobOfferDetailsViewModel> GetDetailsByIdAsync(string id);
 	}
 }

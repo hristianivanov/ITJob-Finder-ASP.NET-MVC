@@ -6,6 +6,8 @@
 	using Services.Data.Models.JobOffer;
 	using ViewModels.JobOffer;
 
+	using static Common.NotificationMessagesConstants;
+
 	public class JobOfferController : Controller
 	{
 		private readonly IJobOfferService jobOfferService;
@@ -25,5 +27,37 @@
 
 			return View(queryModel);
 		}
-    }
+
+		public async Task<IActionResult> Detail(string id)
+		{
+			bool jobOfferExists = await this.jobOfferService
+				.ExistsByIdAsync(id);
+
+			if (!jobOfferExists)
+			{
+				TempData[ErrorMessage] = "Job offer with the provided id does not exist!";
+
+				return Ok();
+			}
+
+			try
+			{
+				var model = await this.jobOfferService
+					.GetDetailsByIdAsync(id);
+
+				return View(model);
+			}
+			catch (Exception)
+			{
+				return GeneralError();
+			}
+		}
+
+		private IActionResult GeneralError()
+		{
+			TempData[ErrorMessage] = "Unexpected error occurred!";
+
+			return RedirectToAction("Index", "Home");
+		}
+	}
 }

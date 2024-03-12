@@ -79,7 +79,7 @@
 				return View(model);
 			}
 
-			await this.companyService.AddAsync(model);
+			await this.companyService.AddAsync(model,user.Id);
 
 			await this.signInManager.SignInAsync(user, isPersistent: false);
 
