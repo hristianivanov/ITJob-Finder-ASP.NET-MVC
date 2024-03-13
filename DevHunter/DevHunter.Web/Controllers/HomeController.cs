@@ -6,7 +6,10 @@
 
 	using ViewModels.Home;
 
-    public class HomeController : Controller
+	using static Common.NotificationMessagesConstants;
+
+
+	public class HomeController : Controller
 	{
 		private readonly ILogger<HomeController> _logger;
 
