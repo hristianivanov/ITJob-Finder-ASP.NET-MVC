@@ -37,7 +37,7 @@
 			{
 				TempData[ErrorMessage] = "Job offer with the provided id does not exist!";
 
-				return Ok();
+				return RedirectToAction("All");
 			}
 
 			try

@@ -7,6 +7,6 @@
 		public const string AdminEmail = "admin@gmail.com";
 		public const string AdminPass = "admin1234";
 
-		public const int ImageMaxMegaBytesFileSize = 10;
+		public const int AllImageMaxMegaBytesFileSize = 10;
 	}
 }
