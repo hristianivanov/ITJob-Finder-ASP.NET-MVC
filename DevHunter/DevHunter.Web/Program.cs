@@ -13,6 +13,8 @@ namespace DevHunter.Web
 	using Services.Data;
 	using Services.Data.Interfaces;
 
+	using static Common.GeneralApplicationConstants;
+
 	public class Program
 	{
 		public static void Main(string[] args)
@@ -79,6 +81,7 @@ namespace DevHunter.Web
 
 			//TODO: in development state
 			app.SeedCompany();
+			app.SeedAdministrator();
 
 			app.MapControllerRoute(
 				name: "default",
