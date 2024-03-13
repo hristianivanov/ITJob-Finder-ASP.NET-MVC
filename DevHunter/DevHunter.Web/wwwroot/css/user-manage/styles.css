@@ -1,0 +1,199 @@
+﻿.management-wrapper p {
+    margin-bottom: 10px;
+}
+
+.management-wrapper {
+    display: flex;
+    justify-content: flex-start;
+    overflow: hidden;
+}
+
+    .management-wrapper .subscriber-sidebar {
+        display: block;
+        background: #fff;
+        padding: 55px 0 0 45px;
+        min-width: 375px;
+    }
+
+    .management-wrapper .subscriber-management-content {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        margin: 46px 0;
+        min-height: 500px;
+    }
+
+    /*CONTENT STYLES*/
+    .management-wrapper .subscriber-management-content {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        margin: 46px 0;
+        min-height: 500px;
+    }
+
+        .management-wrapper .subscriber-management-content .subscriber-management-content-inner {
+            max-width: 946px;
+            width: 100%;
+            margin: 0 30px;
+        }
+
+        .management-wrapper .subscriber-management-content .profile-heading {
+            margin-bottom: 25px;
+        }
+
+            .management-wrapper .subscriber-management-content .profile-heading h1 {
+                font-size: 30px;
+            }
+
+.user-management-container.two-col-container {
+    display: grid;
+    /* ReSharper disable once UnexpectedValue */
+    grid-template-columns: calc(50% - 35px) calc(50% - 35px);
+    grid-column-gap: 70px;
+}
+
+    .user-management-container.two-col-container .column-title {
+        margin-top: 20px;
+        margin-bottom: 30px;
+        font-size: 16px;
+        line-height: 36px;
+        font-weight: bold;
+        letter-spacing: 1px;
+    }
+
+        .user-management-container.two-col-container .column-title::after {
+            content: '';
+            display: block;
+            height: 4px;
+            width: 36px;
+            border-radius: 5px;
+            background: rgb(55, 79, 254);
+        }
+
+.management-wrapper .my-profile-column .user-details-form {
+    /* ReSharper disable once HexColorValueWithAlpha */
+    background: #00005857;
+    padding: 30px;
+    border-radius: 5px;
+}
+
+    .management-wrapper .my-profile-column .user-details-form .field-wrap {
+        margin-top: 30px;
+    }
+
+    .management-wrapper .my-profile-column .user-details-form label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+        font-size: 12px;
+        color: #adadad;
+    }
+
+    .management-wrapper .my-profile-column .user-details-form input {
+        display: block;
+        height: 50px;
+        padding: 8px 12px;
+        width: 100%;
+        margin-bottom: 10px;
+        font-size: 14px;
+        line-height: 1.4;
+        color: #333333;
+        background: white;
+        border: 1px solid #ccc;
+    }
+
+    .management-wrapper .my-profile-column .user-details-form .subscriber-submit {
+        width: 100%;
+        border: 0;
+        cursor: pointer;
+        display: inline-block;
+        font-size: 16px;
+        background-color: #304ffe;
+        padding: 14px 25px 12px;
+        color: #fff;
+        border-radius: 5px;
+        text-align: center;
+        transition: all 0.2s ease-in-out;
+    }
+
+/*ASIDE STYLES*/
+.management-wrapper .menu-section {
+    display: block;
+    font-size: 15px;
+    font-weight: 500;
+    color: #4f4f4f;
+    margin: 25px 0;
+    padding-left: 25px;
+}
+
+.management-wrapper .menu {
+    list-style: none;
+    padding-left: 0;
+    margin: 10px 0;
+}
+
+    .management-wrapper .menu .menu-item {
+        display: flex;
+        align-items: center;
+        padding: 24px 25px 20px;
+        font-size: 16px;
+        width: fit-content;
+        border-radius: 10px;
+        transition: all 0.2s ease-in;
+    }
+
+        .management-wrapper .menu .menu-item:hover {
+            background: #f5f5f5;
+            border-radius: 10px;
+            padding-right: 30px;
+        }
+
+        .management-wrapper .menu .menu-item::before {
+            content: '';
+            width: 20px;
+            height: 20px;
+            display: inline-block;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: contain;
+            margin-right: 10px;
+            margin-top: -5px;
+        }
+
+        .management-wrapper .menu .menu-item.application-icon::before {
+            background-image: url("../../svgs/job-application-icon.svg");
+        }
+
+        .management-wrapper .menu .menu-item.saved-job-icon::before {
+            background-image: url("../../svgs/saved-job-icon.svg");
+        }
+
+        .management-wrapper .menu .menu-item.my-profile-icon::before {
+            background-image: url("../../svgs/my-profile-icon.svg");
+        }
+
+        .management-wrapper .menu .menu-item a {
+            color: rgb(89, 89, 89);
+        }
+
+.management-wrapper hr {
+    background: #f5f5f5;
+    border: none;
+    height: 1px;
+    margin-left: -45px;
+}
+
+
+.ellipse-6 {
+    position: absolute;
+    left: -15%;
+    top: -14%;
+    z-index: -1;
+    width: 300px;
+    height: 560px;
+    background: #02174c;
+    border-radius: 50%;
+    filter: blur(330px);
+}
