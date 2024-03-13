@@ -1,1 +1,69 @@
-﻿<h1>Manage</h1>
+﻿<div class="management-wrapper">
+	<aside class="subscriber-sidebar">
+		<span class="menu-section">DEVHUNTER.JOBS</span>
+		<div class="menu-user-profile-jobs-container">
+			<ul id="user-profile-jobs" class="menu">
+				<li class="menu-item application-icon"><a href="#">My applications</a></li>
+				<li class="menu-item saved-job-icon"><a href="#">Saved offers</a></li>
+			</ul>
+		</div>
+		<hr>
+		<div class="menu-user-profile-personal-container">
+			<ul id="user-profile-personal" class="menu">
+				<li class="menu-item my-profile-icon"><a class="icon-profile" href="">My profile</a></li>
+			</ul>
+		</div>
+	</aside>
+	<div class="subscriber-management-content">
+		<div class="subscriber-management-content-inner">
+			<div class="profile-heading">
+				<h1>My profile</h1>
+				<p>Change the information about your profile</p>
+			</div>
+			<div class="user-management-container two-col-container">
+				<div class="my-profile-column user-details">
+					<h2 class="column-title">User details</h2>
+					<form id="edit-profile-form" class="user-details-form" method="post">
+						<p class="form-info">
+							The data you enter will be the data that will be sent to the employer when
+							you apply for a job advertisement.
+						</p>
+						<div class="subscriber-names-wrap field-wrap">
+							<label>First name</label>
+							<input type="text" class="input-field">
+						</div>
+						<div class="subscriber-names-wrap field-wrap">
+							<label>Last name</label>
+							<input type="text" class="input-field">
+						</div>
+						<div class="subscriber-names-wrap field-wrap">
+							<label>E-mail</label>
+							<input type="email" class="input-field">
+						</div>
+						<button class="subscriber-submit" type="submit">Save changes</button>
+					</form>
+				</div>
+				<div class="my-profile-column">
+					<h2 class="column-title">User details</h2>
+					<form id="edit-password-form" class="user-details-form change-password-form " method="post">
+						<div class="subscriber-names-wrap field-wrap">
+							<label>Type new password</label>
+							<input type="password" class="input-field">
+						</div>
+						<div class="subscriber-names-wrap field-wrap">
+							<label>Confirm new password</label>
+							<input type="password" class="input-field">
+						</div>
+						<button class="subscriber-submit" type="submit">Save changes</button>
+					</form>
+				</div>
+			</div>
+		</div>
+		<div class="ellipse-6"></div>
+		<div class="ellipse-6" style="bottom: -22%;top: unset;"></div>
+	</div>
+</div>
+
+@section Styles {
+	<link href="~/css/user-manage/styles.css" rel="stylesheet" />
+}

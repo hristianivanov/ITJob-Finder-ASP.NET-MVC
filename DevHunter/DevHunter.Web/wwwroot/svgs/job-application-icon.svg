@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24.536" height="20.51" viewBox="0 0 24.536 20.51">
+    <g id="Group_27346" data-name="Group 27346" transform="translate(5388.942 -17869.813)">
+        <g id="Group_10808" data-name="Group 10808" transform="translate(-5384.515 17866.662)">
+            <g id="Group_10806" data-name="Group 10806" transform="translate(3.036 3.149)">
+                <g id="Group_10804" data-name="Group 10804" transform="translate(0 0)">
+                    <g id="Group_10121" data-name="Group 10121" transform="translate(0 0)">
+                        <g id="Group_10120" data-name="Group 10120" transform="translate(0 0)">
+                            <g id="Group_10117" data-name="Group 10117" transform="translate(0 0)">
+                                <path id="Path_3916" data-name="Path 3916" d="M1.274,0H10.3c3.168,0,5.382,2.7,5.382,5.989V16.647a1.334,1.334,0,0,1-1.274,1.387H1.274A1.334,1.334,0,0,1,0,16.647V1.387A1.334,1.334,0,0,1,1.274,0Z" transform="translate(1.391 0)" fill="#faccc2"/>
+                                <line id="Line_363" data-name="Line 363" x1="9.293" transform="translate(4.585 9.016)" fill="none" stroke="#fff" stroke-linecap="round" stroke-width="1"/>
+                                <line id="Line_364" data-name="Line 364" x1="9.293" transform="translate(4.585 13.016)" fill="none" stroke="#fff" stroke-linecap="round" stroke-width="1"/>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+                <path id="Path_3915" data-name="Path 3915" d="M-2079.149-8909.378v-4.417a4.774,4.774,0,0,1,2.866,1.759c1.539,1.68,1.551,2.658,1.551,2.658Z" transform="translate(2090.515 8914.822)" fill="#fff"/>
+            </g>
+        </g>
+        <g id="Group_27345" data-name="Group 27345" transform="translate(20.176 -8)">
+            <path id="Icon_ionic-md-people" data-name="Icon ionic-md-people" d="M10.82,17.154a3.608,3.608,0,1,0-3.673-3.607A3.651,3.651,0,0,0,10.82,17.154Zm0,2.645c-2.877,0-8.57,1.383-8.57,4.209v3.247H19.566V24.008C19.566,21.182,13.7,19.8,10.82,19.8Z" transform="translate(-5411.368 17871.066)" fill="#c53a1e"/>
+            <g id="Group_10799" data-name="Group 10799" transform="translate(-5406.444 17893.877)">
+                <path id="Path_846" data-name="Path 846" d="M277.209,227.863a1.312,1.312,0,1,1-1.312-1.312h0A1.313,1.313,0,0,1,277.209,227.863Z" transform="translate(-274.584 -226.551)" fill="#faccc2"/>
+                <path id="Path_846-2" data-name="Path 846" d="M277.209,227.863a1.312,1.312,0,1,1-1.312-1.312h0A1.313,1.313,0,0,1,277.209,227.863Z" transform="translate(-269.912 -226.551)" fill="#faccc2"/>
+                <path id="Path_846-3" data-name="Path 846" d="M277.209,227.863a1.312,1.312,0,1,1-1.312-1.312h0A1.313,1.313,0,0,1,277.209,227.863Z" transform="translate(-265.24 -226.551)" fill="#faccc2"/>
+            </g>
+        </g>
+    </g>
+</svg>

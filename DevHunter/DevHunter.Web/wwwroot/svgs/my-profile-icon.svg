@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24.408" height="22.137" viewBox="0 0 24.408 22.137">
+    <defs>
+        <style>.a{fill:#f5efce;}.b{fill:#57512c;}</style>
+    </defs>
+    <g transform="translate(-74.5 -197.224)">
+        <g transform="translate(74.5 197.224)">
+            <g transform="translate(0 0)">
+                <rect class="a" width="24.408" height="22.137" rx="3"/>
+            </g>
+        </g>
+        <path class="b"
+              d="M10.82,17.154a3.608,3.608,0,1,0-3.673-3.607A3.651,3.651,0,0,0,10.82,17.154Zm0,2.645c-2.877,0-8.57,1.383-8.57,4.209v3.247H19.566V24.008C19.566,21.182,13.7,19.8,10.82,19.8Z"
+              transform="translate(75.796 192.106)"/>
+        <g transform="translate(80.72 214.917)">
+            <path class="a" d="M277.209,227.863a1.312,1.312,0,1,1-1.312-1.312h0A1.313,1.313,0,0,1,277.209,227.863Z"
+                  transform="translate(-274.584 -226.551)"/>
+            <path class="a" d="M277.209,227.863a1.312,1.312,0,1,1-1.312-1.312h0A1.313,1.313,0,0,1,277.209,227.863Z"
+                  transform="translate(-269.912 -226.551)"/>
+            <path class="a" d="M277.209,227.863a1.312,1.312,0,1,1-1.312-1.312h0A1.313,1.313,0,0,1,277.209,227.863Z"
+                  transform="translate(-265.24 -226.551)"/>
+        </g>
+    </g>
+</svg>
