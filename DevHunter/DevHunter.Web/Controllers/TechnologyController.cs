@@ -8,15 +8,14 @@
 
     using ViewModels.Technology;
 
+    using static Common.GeneralApplicationConstants;
     using static Common.NotificationMessagesConstants;
     using static Common.EntityValidationConstants.Technology;
 
-    [Authorize]
+    [Authorize(Roles = AdminRoleName)]
     public class TechnologyController : Controller
     {
         private readonly ITechnologyService technologyService;
-
-        //TODO: only admin
 
         public TechnologyController(ITechnologyService technologyService)
         {
