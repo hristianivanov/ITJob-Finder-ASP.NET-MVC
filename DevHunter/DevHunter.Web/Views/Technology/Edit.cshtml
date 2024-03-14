@@ -1,8 +1,12 @@
 ﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
 @model DevHunter.Web.ViewModels.Technology.TechnologyEditFormModel
 
+@{
+	ViewData["Title"] = "Technology Edit";
+}
+
 <div class="technology-upload-container">
-	<h1>Technology Create</h1>
+	<h1>@ViewData["Title"]</h1>
 	<form asp-area="" asp-controller="Technology" asp-action="Edit" method="post" enctype="multipart/form-data">
 		<section>
 			<div class="input-info">

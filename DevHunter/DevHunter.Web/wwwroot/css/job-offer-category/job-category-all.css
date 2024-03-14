@@ -366,6 +366,7 @@ input {
 
     .jobs-container > .job-list-item {
         /*min-height: 160px;*/
+        min-width: 990px;
         flex: 1 1 160px;
         display: flex;
         margin-bottom: 20px;
@@ -404,6 +405,12 @@ input {
     display: inline-block;
     width: auto;
     height: auto;
+}
+
+.company-logo-wrap .company-name {
+    text-align: center;
+    color: #adadad;
+    margin-top: 8px;
 }
 
 /*job-item content styles*/
@@ -501,12 +508,21 @@ input {
     min-width: 80px;
 }
 
+.job-list-item .overlay-link {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 2
+}
+
 .job-list-item .date::before {
     content: '';
     display: inline-block;
     width: 17px;
     height: 17px;
-    background-image: url('~/svgs/office-montly-calendar.svg');
+    background-image: url('../../svgs/office-montly-calendar.svg');
     background-repeat: no-repeat;
     background-size: contain;
     margin-right: 5px;
@@ -581,6 +597,28 @@ input {
     margin-right: 7px;
     width: 28px;
     height: 18px;
+}
+
+.badge.green.remote {
+    background: rgb(179, 255, 200);
+    color: #127C30;
+}
+
+.badge.green.remote > img {
+    vertical-align: middle;
+    margin-right: 7px;
+}
+
+.badge.has-tooltip::before {
+    content: '';
+    display: block;
+    height: 100%;
+    width: 51px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    background: #221d6f;
+    filter: blur(28px);
 }
 
 /*.badge.hybrid {*/

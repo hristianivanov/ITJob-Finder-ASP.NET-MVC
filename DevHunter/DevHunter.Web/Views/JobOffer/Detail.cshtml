@@ -5,9 +5,9 @@
 		<div class="company-logo-wrap">
 			<!--                    TODO: try to remove attributes-->
 			<img width="120" height="19"
-			     src="@Model.CompanyImageUrl"
-			     class="company-logo" decoding="async"
-			     sizes="(max-width: 120px) 100vw, 120px">
+				 src="@Model.CompanyImageUrl"
+				 class="company-logo" decoding="async"
+				 sizes="(max-width: 120px) 100vw, 120px">
 			<span class="company-name"></span>
 		</div>
 		<div class="listing-content-wrap">
@@ -20,25 +20,46 @@
 			</a>
 			<div class="component-footer">
 				<div class="tags-wrap">
-					<span class="badge hybrid has-tooltip">
-						<img class="tooltip-img" src="../../imgs/pin.png" width="12" height="20" alt="София" />
-						Sofia
-						<span class="suffix-hybrid">
-							<img src="~/svgs/icon-green-hybrid.svg" />
-							Hybrid
+					@if (Model.JobLocation != "Remote")
+					{
+						@if (Model.JobLocation.Contains("Hybrid"))
+						{
+							<span class="badge hybrid has-tooltip">
+								<img class="tooltip-img" src="~/imgs/pin.png" width="12" height="20" alt="@Model.JobLocation" />
+								@Model.JobLocation.Replace("Hybrid", "").Trim()
+								<span class="suffix-hybrid">
+									<img src="~/svgs/icon-green-hybrid.svg" />
+									Hybrid
+								</span>
+							</span>
+						}
+						else
+						{
+							<span class="badge has-tooltip">
+								<img class="tooltip-img" src="~/imgs/pin.png" width="12" height="20" alt="@Model.JobLocation" />
+								@Model.JobLocation
+							</span>
+						}
+					}
+					else
+					{
+						<span class="badge green remote">
+							<img src="~/svgs/remote-green.svg"
+								 alt="Fully Remote job icon" width="20" height="15"> Fully Remote
 						</span>
-					</span>
-					<div class="badge salary">
-						<img class="salary-icon" src="~/svgs/icon-neto.svg" />
-						6 500 - 10 000 lv.
-					</div>
+					}
+					@* <div class="badge salary">
+					<img class="salary-icon" src="~/svgs/icon-neto.svg" />
+					@* 6 500 - 10 000 lv.
+					Model.Salary
+					</div> *@
 				</div>
 			</div>
 		</div>
 	</div>
 	<div class="content-container left-side">
 		<section class="section-categories">
-			<h4 class="section-title">Обявата е публикувана в следните категории</h4>
+			<h4 class="section-title">The advertisement has been published in the following categories</h4>
 			<div class="categories-wrap">
 				@foreach (var tech in Model.TechStack)
 				{
@@ -49,24 +70,24 @@
 		<div class="job-box">
 			<ul class="job-listing-meta">
 				<li class="date-posted">
-					<time datetime="2024-03-01">Публикувана преди 3 дни</time>
+					<time datetime="2024-03-01">@Model.CreatedOn</time>
 				</li>
 				<li class="save-job">
 					<span class="save-job-container" data-job-id="311885">
 						<button class="save-cta">
-							<span class="label label-save">Запази</span>
+							<span class="label label-save">Save</span>
 							<span class="icon save-icon"></span>
 						</button>
 					</span>
 				</li>
 			</ul>
 			<div class="tech-stack">
-				<h6 class="tech-stack-title">Tech Stack / Изисквания</h6>
+				<h6 class="tech-stack-title">Tech Stack / <span>Requirements</span></h6>
 				<ul class="tech-stack-ul">
 					@foreach (var tech in Model.TechStack)
 					{
 						<li class="tech-stack-item">
-							<img src="@tech.ImageUrl" alt=""/>
+							<img src="@tech.ImageUrl" alt="" />
 						</li>
 					}
 				</ul>
@@ -83,17 +104,12 @@
 			<div class="logo-in-company-info">
 				<a href="#"><img class="company-logo" src="@Model.CompanyImageUrl" alt=""></a>
 			</div>
-			<h3 class="company-name-in-company-box">People and Places</h3>
-			<div class="company-name-small-heading">За агенцията</div>
-			<p>Изгради своето бъдеще с вдъхновяващи хора на правилното място!
-
-				People and Places Ltd. e основана преди няколко години от експерти по подбор и набиране на IT специалисти с
-				визия да създадат и приемстват общност от компании и кандидати, свързани помежду си от сходствата им в
-				културните и техническите предпочитания. Предоставяме възможности за работа в най-добрите софтуерни компании
-				в България. Фокусът ни е върху консултирането, развитието на хора, търсенето и набирането на професионалисти
-				в IT сферата. Създаваме значими връзки между талантите и организациите. Нашите ценности са професионализъм,
-				доверие и бързи резултати. Специализирани сме в управлението на процеси по наемане от край до край както за
-				кандидати, така и за работодатели.</p>
+			<h3 class="company-name-in-company-box">@Model.CompanyName</h3>
+			<div class="company-name-small-heading">About the company</div>
+			<p>
+				Build your future with inspiring people in the right place!
+				People and Places Ltd. was founded several years ago by experts in IT specialist recruitment and selection with a vision to create and embrace a community of companies and candidates linked by their similarities in cultural and technical preferences. We provide opportunities to work in the best software companies in Bulgaria. Our focus is on consulting, people development, and searching and recruiting professionals in the IT sphere. We create meaningful connections between talents and organizations. Our values are professionalism, trust, and fast results. We specialize in end-to-end hiring process management for both candidates and employers.
+			</p>
 			<a class="company-link-details more-btn" href="#">More about the company</a>
 			<a class="company-link-details" href="#">Look all company job offers</a>
 		</div>

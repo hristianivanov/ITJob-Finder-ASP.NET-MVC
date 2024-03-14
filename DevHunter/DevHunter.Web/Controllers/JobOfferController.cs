@@ -28,7 +28,8 @@
 			return View(queryModel);
 		}
 
-		public async Task<IActionResult> Detail(string id)
+        //TODO: XSS on Description HTMLSanitizer
+        public async Task<IActionResult> Detail(string id)
 		{
 			bool jobOfferExists = await this.jobOfferService
 				.ExistsByIdAsync(id);

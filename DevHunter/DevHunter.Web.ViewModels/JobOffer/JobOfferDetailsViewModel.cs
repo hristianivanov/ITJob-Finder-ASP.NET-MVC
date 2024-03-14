@@ -15,7 +15,13 @@
 
         public string CompanyImageUrl { get; set; } = null!;
 
+        public string CompanyName { get; set; } = null!;
+
         public string Description { get; set; } = null!;
+
+        public string CreatedOn { get; set; } = null!;
+
+        public string JobLocation { get; set; } = null!;
 
         public ICollection<TechnologyViewModel> TechStack { get; set; }
     }
