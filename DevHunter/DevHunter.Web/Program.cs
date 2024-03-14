@@ -12,6 +12,7 @@ namespace DevHunter.Web
 	using Infrastructure.ModelBinders;
 	using Services.Data;
 	using Services.Data.Interfaces;
+    using Microsoft.AspNetCore.Cors.Infrastructure;
 
 	public class Program
 	{
@@ -43,14 +44,11 @@ namespace DevHunter.Web
 				.AddEntityFrameworkStores<DevHunterDbContext>();
 
 			builder.Services.ConfigureApplicationCookie(cfg =>
-			{
-				cfg.LoginPath = "/User/Login";
-			});
+            {
+                cfg.LoginPath = "/User/Login";
+            });
 
-			builder.Services.AddScoped<IImageService, ImageService>();
-			builder.Services.AddScoped<IJobOfferService, JobOfferService>();
-			builder.Services.AddScoped<ITechnologyService, TechnologyService>();
-			builder.Services.AddScoped<ICompanyService, CompanyService>();
+            builder.Services.AddApplicationServices(typeof(IJobOfferService));
 
 			ConfigureCloudinaryService(builder.Services, builder.Configuration);
 
