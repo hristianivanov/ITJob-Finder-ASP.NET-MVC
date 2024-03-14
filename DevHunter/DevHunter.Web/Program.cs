@@ -10,9 +10,7 @@ namespace DevHunter.Web
 	using Data.Models;
 	using Infrastructure.Extensions;
 	using Infrastructure.ModelBinders;
-	using Services.Data;
-	using Services.Data.Interfaces;
-    using Microsoft.AspNetCore.Cors.Infrastructure;
+    using Services.Data.Interfaces;
 
 	public class Program
 	{

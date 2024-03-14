@@ -1,5 +1,7 @@
 ﻿namespace DevHunter.Web.Infrastructure.Extensions
 {
+    using System.Reflection;
+
 	using Microsoft.AspNetCore.Builder;
 	using Microsoft.AspNetCore.Identity;
 	using Microsoft.Extensions.DependencyInjection;
@@ -7,7 +9,6 @@
 	using Data.Models;
 
 	using static Common.GeneralApplicationConstants;
-    using System.Reflection;
 
 	public static class WebApplicationBuilderExtensions
 	{

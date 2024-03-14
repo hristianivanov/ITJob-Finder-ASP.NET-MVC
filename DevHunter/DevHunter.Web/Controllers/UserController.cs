@@ -6,7 +6,7 @@
 
 	using Data.Models;
 	using ViewModels.User;
-	using DevHunter.Services.Data.Interfaces;
+	using Services.Data.Interfaces;
 
 	using static Common.NotificationMessagesConstants;
 
