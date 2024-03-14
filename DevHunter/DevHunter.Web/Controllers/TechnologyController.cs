@@ -89,9 +89,9 @@
             {
                 ModelState.AddModelError(string.Empty,
                     "Unexpected error occurred while trying to add your new technology!");
-            }
 
-            return View(formModel);
+                return View(formModel);
+            }
         }
 
         public async Task<IActionResult> Edit(string id)
@@ -153,27 +153,27 @@
         [Route("/Technology/Delete/{id}")]
         public async Task<IActionResult> Delete([FromRoute] string id)
         {
-	        try
-	        {
-		        bool technologyExists = await this.technologyService.ExistsByIdAsync(id);
+            try
+            {
+                bool technologyExists = await this.technologyService.ExistsByIdAsync(id);
 
-		        if (!technologyExists)
-		        {
-			        TempData[ErrorMessage] = "Technology with the provided id does not exist!";
+                if (!technologyExists)
+                {
+                    TempData[ErrorMessage] = "Technology with the provided id does not exist!";
 
-			        return RedirectToAction("All");
-		        }
+                    return RedirectToAction("All");
+                }
 
-		        await technologyService.DeleteByIdAsync(id);
+                await technologyService.DeleteByIdAsync(id);
 
-		        TempData[WarningMessage] = "The technology successfully was deleted!";
+                TempData[WarningMessage] = "The technology successfully was deleted!";
 
-		        return RedirectToAction("All");
-			}
-	        catch (Exception)
-	        {
-		        return GeneralError();
-	        }
+                return RedirectToAction("All");
+            }
+            catch (Exception)
+            {
+                return GeneralError();
+            }
         }
 
 
