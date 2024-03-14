@@ -1,0 +1,82 @@
+﻿@model DevHunter.Web.ViewModels.JobOffer.JobOfferAllViewModel
+@using static DevHunter.Common.GeneralApplicationConstants.JobOffer;
+
+<div class="job-list-item">
+	<div class="company-logo-wrap">
+		<!--                    TODO: try to remove attributes-->
+		<img width="120" height="19"
+		     src="@Model.CompanyImageUrl"
+		     class="company-logo" decoding="async"
+		     sizes="(max-width: 120px) 100vw, 120px">
+		<span class="company-name">@Model.CompanyName</span>
+	</div>
+	
+	<div class="listing-content-wrap">
+		<span class="save-job-container">
+			<button class="save-cta">
+				<span class="label label-save">Save</span>
+				<span class="label label-saved"></span>
+				<span class="icon save-icon"></span>
+			</button>
+		</span>
+		<a class="overlay-link" asp-area="" asp-controller="JobOffer" asp-action="Detail" asp-route-id="@Model.Id"></a>
+		<div class="title-date-wrap">
+			<h6 class="job-title">@Model.JobPosition</h6>
+			<span class="date date-with-icon">@Model.CreatedOn</span>
+		</div>
+		<div class="component-footer">
+			<div class="tags-wrap">
+				@if (Model.JobLocation != "Remote")
+				{
+					@if (Model.JobLocation.Contains("Hybrid"))
+					{
+						<span class="badge hybrid has-tooltip">
+							<img class="tooltip-img" src="~/imgs/pin.png" width="12" height="20" alt="@Model.JobLocation" />
+							@Model.JobLocation.Replace("Hybrid", "").Trim()
+							<span class="suffix-hybrid">
+								<img src="~/svgs/icon-green-hybrid.svg" />
+								Hybrid
+							</span>
+						</span>
+					}
+					else
+					{
+						<span class="badge has-tooltip">
+							<img class="tooltip-img" src="~/imgs/pin.png" width="12" height="20" alt="@Model.JobLocation" />
+							@Model.JobLocation
+						</span>
+					}
+				}
+				else
+				{
+					<span class="badge green remote">
+						<img src="~/svgs/remote-green.svg"
+						     alt="Fully Remote job icon" width="20" height="15"> Fully Remote
+					</span>
+				}
+				<div class="badge salary">
+					<img class="salary-icon" src="~/svgs/icon-neto.svg" />
+					@* 6 500 - 10 000 lv. *@
+					@Model.Salary
+				</div>
+			</div>
+
+			<div class="tech-stack-wrap">
+				@foreach (var technology in Model.Technologies.Take(TechStackNumber))
+				{
+					<div class="tech-square-badge tech-stack-item">
+						<img width="50" height="56" src="@technology.ImageUrl"
+						     class="attachment-medium size-medium" alt="@technology.Name" decoding="async" loading="lazy"
+						     title="@technology.Name"
+						     sizes="(max-width: 50px) 100vw, 50px">
+					</div>
+				}
+				@if (Model.Technologies.Count() > 5)
+				{
+					<span class="more-count">+@(Model.Technologies.Count() - TechStackNumber) more</span>
+				}
+			</div>
+		</div>
+	</div>
+	
+</div>

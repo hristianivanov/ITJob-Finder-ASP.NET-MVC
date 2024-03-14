@@ -8,5 +8,10 @@
 		public const string AdminPass = "admin1234";
 
 		public const int AllImageMaxMegaBytesFileSize = 10;
+
+		public static class JobOffer
+		{
+			public const int TechStackNumber = 5;
+		}
 	}
 }

@@ -35,7 +35,7 @@
 		}
 
 		//TODO: XSS on Description HTMLSanitizer
-		[HttpPost]
+        [HttpPost]
 		[Route("company/postjob")]
 		public async Task<IActionResult> Add(JobOfferFormModel model)
 		{
