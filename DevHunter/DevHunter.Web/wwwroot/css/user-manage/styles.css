@@ -6,46 +6,70 @@
     display: flex;
     justify-content: flex-start;
     overflow: hidden;
+    flex: 1;
 }
+
+    .management-wrapper .site-main {
+        margin: 0;
+        flex: 1;
+        overflow-y: scroll;
+    }
 
     .management-wrapper .subscriber-sidebar {
         display: block;
-        background: #fff;
+        position: relative;
+        /* ReSharper disable once HexColorValueWithAlpha */
+        background: #00005857;
+        overflow: hidden;
         padding: 55px 0 0 45px;
         min-width: 375px;
+        /*box-shadow: 0 0 21px 5px #4056C0 inset;*/
     }
 
-    .management-wrapper .subscriber-management-content {
-        display: flex;
-        justify-content: center;
+.subscriber-sidebar::after {
+    content: '';
+    display: block;
+    background: blue;
+    position: absolute;
+    width: 50px;
+    height: 100%;
+    top: 0;
+    right: 0;
+    filter: blur(7em);
+    z-index: -1;
+}
+
+.management-wrapper .subscriber-management-content {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin: 46px 0;
+    min-height: 500px;
+}
+
+/*CONTENT STYLES*/
+.management-wrapper .subscriber-management-content {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin: 46px 0;
+    min-height: 500px;
+}
+
+    .management-wrapper .subscriber-management-content .subscriber-management-content-inner {
+        max-width: 946px;
         width: 100%;
-        margin: 46px 0;
-        min-height: 500px;
+        margin: 0 30px;
     }
 
-    /*CONTENT STYLES*/
-    .management-wrapper .subscriber-management-content {
-        position: relative;
-        display: flex;
-        justify-content: center;
-        width: 100%;
-        margin: 46px 0;
-        min-height: 500px;
+    .management-wrapper .subscriber-management-content .profile-heading {
+        margin-bottom: 25px;
     }
 
-        .management-wrapper .subscriber-management-content .subscriber-management-content-inner {
-            max-width: 946px;
-            width: 100%;
-            margin: 0 30px;
+        .management-wrapper .subscriber-management-content .profile-heading h1 {
+            font-size: 30px;
         }
-
-        .management-wrapper .subscriber-management-content .profile-heading {
-            margin-bottom: 25px;
-        }
-
-            .management-wrapper .subscriber-management-content .profile-heading h1 {
-                font-size: 30px;
-            }
 
 .user-management-container.two-col-container {
     display: grid;
@@ -123,7 +147,7 @@
     display: block;
     font-size: 15px;
     font-weight: 500;
-    color: #4f4f4f;
+    color: #fff;
     margin: 25px 0;
     padding-left: 25px;
 }
@@ -145,7 +169,7 @@
     }
 
         .management-wrapper .menu .menu-item:hover {
-            background: #f5f5f5;
+            background: #111A39;
             border-radius: 10px;
             padding-right: 30px;
         }
@@ -174,14 +198,18 @@
             background-image: url("../../svgs/my-profile-icon.svg");
         }
 
+        .management-wrapper .menu .menu-item.logout-link::before {
+            background-image: url("../../svgs/logout-link-icon.svg");
+        }
+
         .management-wrapper .menu .menu-item a {
-            color: rgb(89, 89, 89);
+            color: #fff;
         }
 
 .management-wrapper hr {
-    background: #f5f5f5;
+    background: #000614;
     border: none;
-    height: 1px;
+    height: 2px;
     margin-left: -45px;
 }
 
