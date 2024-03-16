@@ -9,6 +9,8 @@
 
 		public const int AllImageMaxMegaBytesFileSize = 10;
 
+		public const string CompanyRoleName = "Company";
+
 		public static class JobOffer
 		{
 			public const int TechStackNumber = 5;

@@ -1,17 +1,17 @@
 ﻿namespace DevHunter.Web.Areas.Company.Controllers
 {
-	using DevHunter.Web.Infrastructure.Extensions;
 	using Microsoft.AspNetCore.Authorization;
-	using Microsoft.AspNetCore.Cors.Infrastructure;
 	using Microsoft.AspNetCore.Mvc;
 
+	using Infrastructure.Extensions;
 	using Services.Data.Interfaces;
 	using ViewModels.JobOffer;
 
+	using static Common.GeneralApplicationConstants;
 	using static Common.NotificationMessagesConstants;
 
-	[Authorize]
 	[Area("Company")]
+	[Authorize(Roles = CompanyRoleName)]
 	public class JobOfferController : Controller
 	{
 		private readonly ITechnologyService technologyService;
@@ -21,6 +21,15 @@
 		{
 			this.technologyService = technologyService;
 			this.jobOfferService = jobOfferService;
+		}
+
+		[Route("company/job-offers")]
+		public async Task<IActionResult> All()
+		{
+			var model = await this.jobOfferService
+				.AllByCompanyIdAsync(this.User.GetId()!);
+
+			return View(model);
 		}
 
 		[Route("company/postjob")]

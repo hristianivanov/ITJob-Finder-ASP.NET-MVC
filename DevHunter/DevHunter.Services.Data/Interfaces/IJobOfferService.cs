@@ -10,5 +10,6 @@
 		Task<string> CreateAndReturnIdAsync(JobOfferFormModel model,string userId);
 		Task<bool> ExistsByIdAsync(string id);
 		Task<JobOfferDetailsViewModel> GetDetailsByIdAsync(string id);
+		Task<IEnumerable<JobOfferAllViewModel>> AllByCompanyIdAsync(string userId);
 	}
 }
