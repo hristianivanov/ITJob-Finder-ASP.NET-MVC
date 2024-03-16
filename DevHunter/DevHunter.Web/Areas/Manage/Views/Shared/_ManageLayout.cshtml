@@ -13,32 +13,42 @@
 
 	@await Html.PartialAsync("_ToastrScriptsPartial")
 	@await Html.PartialAsync("_Favicons")
-	
+
 </head>
 <body>
 	<div class="site-container">
-		<header class="site-header">
-			<div class="site-title">
-				<p><a class="site-full-name" asp-area="" asp-controller="Home" asp-action="Index"><span>DH</span> DevHunter</a></p>
-			</div>
-
-			<nav class="main-nav">
-				<ul>
-					<li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-					<li><a asp-area="" asp-controller="Home" asp-action="Privacy">About</a></li>
-					<li><a asp-area="Company" asp-controller="JobOffer" asp-action="All">My job offers</a></li>
-					<li><a asp-area="Company" asp-controller="JobOffer" asp-action="Add">Post a Job</a></li>
-					<li><a href="#">Candidates</a></li>
-					<li><a href="#">Contact us</a></li>
-				</ul>
-			</nav>
-
-			<partial name="_LoginPartial" />
-		</header>
-
-		<main class="site-main">
-			@RenderBody()
-		</main>
+		@* <header class="site-header">
+		<div class="site-title">
+		<p><a class="site-full-name" asp-area="" asp-controller="Home" asp-action="Index"><span>DH</span> DevHunter</a></p>
+		</div>
+		</header> *@
+		<div class="management-wrapper">
+			<aside class="subscriber-sidebar">
+				<a asp-area="" asp-controller="Home" asp-action="Index">
+				<span class="menu-section">DEVHUNTER.JOBS</span>
+				</a>
+				<div class="menu-user-profile-jobs-container">
+					<ul id="user-profile-jobs" class="menu">
+						<li class="menu-item application-icon"><a href="#">My applications</a></li>
+						<li class="menu-item saved-job-icon"><a href="#">Saved offers</a></li>
+					</ul>
+				</div>
+				<hr>
+				<div class="menu-user-profile-personal-container">
+					<ul id="user-profile-personal" class="menu">
+						<li class="menu-item my-profile-icon"><a class="icon-profile" href="">My profile</a></li>
+						<li class="menu-item logout-link">
+							<form asp-area="" asp-controller="User" asp-action="Logout" method="post">
+								<button style="all: unset;cursor: pointer;" type="submit">Logout</button>
+							</form>
+						</li>
+					</ul>
+				</div>
+			</aside>
+			<main class="site-main">
+				@RenderBody()
+			</main>
+		</div>
 
 		<footer class="site-footer">
 			<div class="container-wrap">

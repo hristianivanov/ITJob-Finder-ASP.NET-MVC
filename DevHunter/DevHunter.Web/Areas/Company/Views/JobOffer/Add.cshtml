@@ -1,4 +1,6 @@
 ﻿@using System.Text.Json;
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using System.Text.Encodings.Web
 @model DevHunter.Web.ViewModels.JobOffer.JobOfferFormModel
 
 <div class="jon-offer-container">
@@ -133,7 +135,13 @@
 }
 
 @section Scripts {
-	<script>var technologiesArray = @Html.Raw(JsonSerializer.Serialize(Model.Technologies.Select(t => t.Name)));</script>
+	<script>
+		var technologiesArray = @Html.Raw(JsonSerializer.Serialize(
+		Model.Technologies.Select(t => t.Name), new JsonSerializerOptions
+		{
+		Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+		}));
+	</script>
 	<script src="~/js/job-offer-add/script.js"></script>
 	<script src="~/js/job-offer-add/dropdown.js"></script>
 	<script src="~/js/job-offer-add/select-option.js"></script>

@@ -155,6 +155,36 @@ namespace DevHunter.Services.Data
 			};
 		}
 
+		public async Task<IEnumerable<JobOfferAllViewModel>> AllByCompanyIdAsync(string userId)
+		{
+			var company = await this.dbContext
+				.Companies
+				.Include(c => c.JobOffers)
+				.ThenInclude(j => j.TechnologyJobOffers)
+				.ThenInclude(j => j.Technology)
+				.FirstAsync(c => c.CreatorId.ToString() == userId);
+
+			var jobOffers = company.JobOffers.Select(j => new JobOfferAllViewModel()
+				{
+					Id = j.Id.ToString(),
+					CompanyName = company.Name,
+					CompanyImageUrl = company.ImageUrl!,
+					CreatedOn = j.CreatedOn.ToString("dd MMM."),
+					JobLocation = j.PlaceToWork,
+					JobPosition = j.JobPosition,
+					Salary = GetSalary(j.MinSalary, j.MaxSalary),
+					Technologies = j.TechnologyJobOffers.Select(tj => new TechnologyViewModel()
+					{
+						Id = tj.TechnologyId.ToString(),
+						ImageUrl = tj.Technology.ImageUrl!,
+						Name = tj.Technology.Name,
+					}),
+				})
+				.ToList();
+
+			return jobOffers;
+		}
+
 		public async Task<string> CreateAndReturnIdAsync(JobOfferFormModel model, string userId)
 		{
 			var company = await this.dbContext

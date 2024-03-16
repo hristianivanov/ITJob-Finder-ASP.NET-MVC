@@ -9,6 +9,7 @@
 		{
 			this.Id = Guid.NewGuid();
 			this.UsedTechnologies = new HashSet<CompanyTechnologies>();
+			this.JobOffers = new HashSet<JobOffer>();
 		}
 
 		[Key]
@@ -38,5 +39,7 @@
         public ApplicationUser Creator { get; set; } = null!;
 
         public ICollection<CompanyTechnologies> UsedTechnologies { get; set; }
-	}
+
+        public ICollection<JobOffer> JobOffers { get; set; }
+    }
 }
