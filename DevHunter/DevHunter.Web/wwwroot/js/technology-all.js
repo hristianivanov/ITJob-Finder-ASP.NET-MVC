@@ -83,7 +83,7 @@ document.querySelectorAll('.technology-card')
 
 function editTechnology(cardId) {
     const anchor = document.createElement('a');
-    anchor.href = `/Technology/Edit/${cardId}`;
+    anchor.href = `/technology/edit/${cardId.toLowerCase()}`;
     anchor.click();
 }
 
