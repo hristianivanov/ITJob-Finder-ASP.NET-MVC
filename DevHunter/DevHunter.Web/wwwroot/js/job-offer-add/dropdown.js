@@ -32,7 +32,6 @@ dropdowns.forEach(dropdown => {
 
             option.classList.add('active');
 
-            // change option here
             seniorityOptions();
         });
     });
