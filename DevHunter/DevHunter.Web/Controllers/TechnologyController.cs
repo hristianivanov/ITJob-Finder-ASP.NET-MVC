@@ -23,6 +23,7 @@
         }
 
         [HttpGet]
+        [Route("technology/all")]
         public async Task<IActionResult> All()
         {
             try
@@ -38,6 +39,7 @@
         }
 
         [HttpGet]
+        [Route("technology/add")]
         public IActionResult Add()
         {
             try
@@ -94,6 +96,8 @@
             }
         }
 
+        [HttpGet]
+        [Route("technology/edit/{id}")]
         public async Task<IActionResult> Edit(string id)
         {
             try
@@ -150,7 +154,7 @@
         }
 
         [HttpPost]
-        [Route("/Technology/Delete/{id}")]
+        [Route("technology/delete/{id}")]
         public async Task<IActionResult> Delete([FromRoute] string id)
         {
             try
