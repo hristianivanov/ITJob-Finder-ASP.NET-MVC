@@ -21,19 +21,23 @@
 
 		public int? WorkingHoursPerDay { get; set; }
 
-		public string? Location { get; set; } = null!;
+		public string? Location { get; set; }
 
 		public DateTime? FoundedYear { get; set; }
 
-		public string? Sector { get; set; } = null!;
+		public string? Sector { get; set; }
 
-		public string? Activity { get; set; } = null!;
+		public string? Activity { get; set; }
 
 		public string? ImageUrl { get; set; }
 
         public string? WebsiteUrl { get; set; }
 
-		[ForeignKey(nameof(Creator))]
+        public int? PaidVacationDays { get; set; }
+
+        public string? Description { get; set; }
+
+        [ForeignKey(nameof(Creator))]
         public Guid CreatorId { get; set; }
 
         public ApplicationUser Creator { get; set; } = null!;

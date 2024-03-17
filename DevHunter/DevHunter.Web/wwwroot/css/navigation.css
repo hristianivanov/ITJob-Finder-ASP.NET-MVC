@@ -89,3 +89,54 @@
 .login-register-cta > * {
     cursor: pointer;
 }
+
+
+
+.site-content {
+    display: flex;
+    justify-content: flex-start;
+    flex: 1;
+}
+
+.left-aside-nav {
+    display: block;
+    position: relative;
+    /* ReSharper disable once HexColorValueWithAlpha */
+    background: #00005857;
+    overflow: hidden;
+    padding: 55px 0 0 45px;
+    min-width: 375px;
+}
+
+    .left-aside-nav::after {
+        content: '';
+        display: block;
+        background: blue;
+        position: absolute;
+        width: 50px;
+        height: 100%;
+        top: 0;
+        right: 0;
+        filter: blur(7em);
+        z-index: -1;
+    }
+
+.left-aside-nav ul {
+    list-style-type: none;
+    padding-left: 0;
+    margin: 10px 0;
+}
+
+.left-aside-nav ul li {
+    display: flex;
+    align-items: center;
+    padding: 24px 25px 20px;
+    font-size: 16px;
+    width: fit-content;
+    border-radius: 10px;
+    transition: all 0.2s ease-in;
+}
+
+.left-aside-nav ul li a {
+    color: #fff;
+}

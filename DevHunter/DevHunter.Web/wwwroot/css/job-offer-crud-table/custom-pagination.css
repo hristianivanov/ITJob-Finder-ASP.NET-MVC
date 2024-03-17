@@ -1,0 +1,50 @@
+.custom-pagination {
+    margin-top: 3em;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    --main-href-size: 2em;
+}
+
+.custom-pagination a {
+    display: inline-block;
+    height: var(--main-href-size);
+    min-width: var(--main-href-size);
+    line-height: var(--main-href-size);
+    padding: 0 0.7em;
+    background-color: white;
+    color: #595959;
+}
+
+.custom-pagination a.current {
+    color: #374ffe;
+}
+
+.custom-pagination .direction {
+    border-radius: 50%;
+    width: var(--main-href-size);;
+    color: transparent;
+    background-repeat: no-repeat;
+    background-size: 0.5em;
+    background-position: center;
+}
+
+.custom-pagination .direction.prev {
+    margin-right: 1.2em;
+    background-image: url('0.finished-pages/company-job-offer-crud/pagination-arrow-left.svg');
+}
+
+.custom-pagination .direction.next {
+    margin-left: 1.2em;
+    background-image: url('0.finished-pages/company-job-offer-crud/pagination-arrow-right.svg');
+}
+
+.custom-pagination .first {
+    border-top-left-radius: 50%;
+    border-bottom-left-radius: 50%;
+}
+
+.custom-pagination .last {
+    border-top-right-radius: 50%;
+    border-bottom-right-radius: 50%;
+}

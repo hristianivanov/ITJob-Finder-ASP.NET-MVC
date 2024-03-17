@@ -1,0 +1,156 @@
+﻿.outside-wrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin: 46px 0;
+    min-height: 500px;
+}
+
+.table-container {
+    color: #595959;
+    max-width: 946px;
+    width: 100%;
+    margin: 0 30px;
+    font-family: Axiforma, sans-serif;
+}
+
+    .table-container .table-heading {
+        margin-bottom: 25px;
+        /* ReSharper disable once HexColorValueWithAlpha */
+        border-bottom: 3px solid #0000ff57;
+    }
+
+        .table-container .table-heading h1 {
+            color: #fff;
+            font-size: 30px;
+            line-height: 44px;
+            font-weight: 700;
+        }
+
+        .table-container .table-heading p {
+            color: #E5E4E6;
+        }
+
+    .table-container .table-content {
+        width: 100%;
+        max-width: 950px;
+        margin-top: 40px;
+        padding: 30px 30px;
+        background-color: white;
+        /* ReSharper disable once HexColorValueWithAlpha */
+        box-shadow: 0 0 50px #ADADAD1A;
+        border-radius: 5px;
+    }
+
+
+        .table-container .table-content .table-head {
+            display: flex;
+            font-size: 12px;
+            color: #ADADAD;
+            font-weight: bold;
+            padding: 0 0 10px 0;
+        }
+
+        .table-container .table-content .column-title {
+            flex-basis: 20%;
+        }
+
+        .table-container .table-content .title {
+            flex-basis: 45%;
+        }
+
+        .table-container .table-content .actions {
+            flex-basis: 15%;
+        }
+
+
+        .table-container .table-content .table-body .data-row.removed {
+            text-decoration: line-through;
+        }
+
+        .table-container .table-content .table-body .data-row {
+            display: flex;
+            padding: 25px 0;
+            border-bottom: 1px solid #DDD;
+        }
+
+        .table-container .table-content .data-row .date {
+            font-size: 14px;
+            color: #898989;
+            flex-basis: 20%;
+        }
+
+        .table-container .table-content .data-row .title {
+            font-size: 16px;
+            
+            font-weight: 400;
+            flex-basis: 45%;
+        }
+            .table-container .table-content .data-row .title a {
+                color: #231F20;
+            }
+
+            .table-container .table-content .data-row .location {
+                color: #ADADAD;
+                font-size: 12px;
+                flex-basis: 20%;
+            }
+
+        .table-container .table-content .data-row .actions .action {
+            display: inline-flex;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 400;
+            transition: all 0.2s ease-in-out;
+            text-align: right;
+            flex-basis: 15%;
+        }
+
+        .table-container .table-content .data-row .actions .remove-job {
+            background: unset;
+            border: unset;
+            display: flex;
+            color: #CA472E;
+            border-bottom: 1px solid #CA472E;
+        }
+
+        .table-container .table-content .data-row .actions .edit-job {
+            color: #2199e8;
+            border-bottom: 1px solid #2199e8;
+        }
+
+.data-row .actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+    .data-row .actions .remove-job::before {
+        content: '';
+        display: inline-block;
+        width: 1em;
+        height: 1.3em;
+        margin-right: 0.2em;
+        background-image: url(../../svgs/icon-forbidden.svg);
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position-x: left;
+        background-position-y: center;
+        vertical-align: sub;
+        position: relative;
+    }
+
+    .data-row .actions .edit-job::before {
+        content: '';
+        display: inline-block;
+        width: 16px;
+        height: 17px;
+        margin-right: 0.2em;
+        background-image: url(../../svgs/icon-edit.svg);
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position-x: left;
+        background-position-y: center;
+        position: relative;
+        transform: translateY(-2px);
+    }
