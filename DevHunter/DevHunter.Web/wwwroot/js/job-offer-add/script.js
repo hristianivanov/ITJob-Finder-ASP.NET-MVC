@@ -38,6 +38,10 @@ btnSubmit.addEventListener("click", (e) => {
 
     document.getElementById('selectedTechnologiesInput').value = JSON.stringify(selectedTechnologies);
 
+    if (selectedJobLocation === "On the road") {
+        locationInput.value += " Road";
+    }
+
     form.submit();
 })
 
@@ -51,14 +55,15 @@ descriptionEditor.addEventListener("input", function () {
 
 var locationDropdown = document.querySelector(".menu");
 var isRemoteInput = document.getElementById("IsRemote");
-
+let locationInput = document.getElementById("Location");
 locationDropdown.addEventListener("click", function (event) {
     var target = event.target;
 
     if (target.tagName === "LI") {
         var selectedLocation = target.dataset.location;
-        var isRemote = selectedLocation === "Remote" || selectedLocation === "Hybrid remote";
+        selectedJobLocation = selectedLocation;
 
+        var isRemote = selectedLocation === "Remote" || selectedLocation === "Hybrid remote";
         isRemoteInput.value = isRemote ? "true" : "false";
     }
 });

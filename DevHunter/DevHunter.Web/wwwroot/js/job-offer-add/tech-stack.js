@@ -29,7 +29,7 @@ techInput.addEventListener("keydown", (e) => {
             if (tags.length < maxTags) {
                 tag.split(',').forEach(tag => {
                     tags.push(tag);
-                    createTag();
+                    createTag(tag);
                     suggestionsDb.filter((data) => !tags.includes(data));
                 });
             }
@@ -84,7 +84,7 @@ function showSuggestions(list) {
     suggestContainer.innerHTML = listData;
 }
 
-function createTag() {
+function createTag(tag) {
     techUl.querySelectorAll("li").forEach((li) => li.remove());
     tags.slice().reverse().forEach((tag) => {
         let liTag = `<li>${tag} <svg class="remove-tag-icon" onclick="removeTag(this, '${tag}')" color="rgb(88, 166, 255)" width="24" height="24" fill="none" viewBox="0 0 24 24">
