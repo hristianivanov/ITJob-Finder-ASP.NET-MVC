@@ -80,7 +80,7 @@
 
 			return new TechnologyEditFormModel
 			{
-				Name = technology.Name,
+				Name = technology.Name,	
 				ImageUrl = technology.ImageUrl,
 			};
 		}

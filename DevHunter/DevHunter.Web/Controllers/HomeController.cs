@@ -6,7 +6,9 @@
 
 	using ViewModels.Home;
 
-    public class HomeController : Controller
+	using static Common.GeneralApplicationConstants;
+
+	public class HomeController : Controller
 	{
 		private readonly ILogger<HomeController> _logger;
 
@@ -17,6 +19,11 @@
 
 		public IActionResult Index()
 		{
+			if (this.User.IsInRole(CompanyRoleName))
+			{
+				return RedirectToAction("All", "JobOffer", new { area = "Company" });
+			}
+
 			return View();
 		}
 

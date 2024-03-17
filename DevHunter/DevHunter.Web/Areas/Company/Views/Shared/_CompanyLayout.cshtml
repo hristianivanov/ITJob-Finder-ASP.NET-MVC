@@ -13,32 +13,23 @@
 
 	@await Html.PartialAsync("_ToastrScriptsPartial")
 	@await Html.PartialAsync("_Favicons")
-	
+
 </head>
 <body>
 	<div class="site-container">
-		<header class="site-header">
-			<div class="site-title">
-				<p><a class="site-full-name" asp-area="" asp-controller="Home" asp-action="Index"><span>DH</span> DevHunter</a></p>
-			</div>
-
-			<nav class="main-nav">
+		<div class="site-content">
+			<nav class="left-aside-nav">
 				<ul>
-					<li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-					<li><a asp-area="" asp-controller="Home" asp-action="Privacy">About</a></li>
-					<li><a asp-area="Company" asp-controller="JobOffer" asp-action="All">My job offers</a></li>
+					<li><a asp-area="Company" asp-controller="JobOffer" asp-action="All">Home</a></li>
 					<li><a asp-area="Company" asp-controller="JobOffer" asp-action="Add">Post a Job</a></li>
 					<li><a href="#">Candidates</a></li>
-					<li><a href="#">Contact us</a></li>
+					<li><a asp-area="" asp-controller="User" asp-action="Manage">My profile</a></li>
 				</ul>
 			</nav>
-
-			<partial name="_LoginPartial" />
-		</header>
-
-		<main class="site-main">
-			@RenderBody()
-		</main>
+			<main class="site-main" style="flex:1">
+				@RenderBody()
+			</main>
+		</div>
 
 		<footer class="site-footer">
 			<div class="container-wrap">
@@ -90,6 +81,7 @@
 				</ul>
 			</div>
 		</footer>
+		
 		<partial name="_NotificationsPartial" />
 	</div>
 

@@ -1,4 +1,6 @@
 ﻿using System.Globalization;
+using System.Text.Encodings.Web;
+using System.Text.Json;
 using DevHunter.Web.ViewModels.Technology;
 
 namespace DevHunter.Services.Data
@@ -169,7 +171,7 @@ namespace DevHunter.Services.Data
 					Id = j.Id.ToString(),
 					CompanyName = company.Name,
 					CompanyImageUrl = company.ImageUrl!,
-					CreatedOn = j.CreatedOn.ToString("dd MMM."),
+					CreatedOn = j.CreatedOn.ToString("dd.MM.yyyy"),
 					JobLocation = j.PlaceToWork,
 					JobPosition = j.JobPosition,
 					Salary = GetSalary(j.MinSalary, j.MaxSalary),
@@ -183,6 +185,48 @@ namespace DevHunter.Services.Data
 				.ToList();
 
 			return jobOffers;
+		}
+
+		public async Task<JobOfferEditFormModel> GetForEditByIdAsync(string id)
+		{
+			var jobOffer = await this.dbContext
+				.JobOffers
+				.Include(j => j.TechnologyJobOffers)
+				.ThenInclude(j => j.Technology)
+				.FirstAsync(j => j.Id.ToString() == id);
+
+			var jobOfferTechnologies = jobOffer.TechnologyJobOffers
+				.Select(tj => new TechnologyViewModel()
+			{
+				Id = tj.Technology.Id.ToString(),
+				Name = tj.Technology.Name,
+				ImageUrl = tj.Technology.ImageUrl!,
+			}).ToList();
+
+			return new JobOfferEditFormModel()
+			{
+				Title = jobOffer.JobPosition,
+				Description = jobOffer.Description,
+				Location = jobOffer.PlaceToWork,
+				Salary = jobOffer.MaxSalary,
+				Seniority = jobOffer.Seniority,
+				WorkingHours = jobOffer.WorkingHours,
+				WorkingExperience = jobOffer.WorkingExperience,
+				JobOfferTechnologies = jobOfferTechnologies
+			};
+		}
+
+		public async Task DeleteByIdAsync(string id)
+		{
+			var jobOffer = await this.dbContext
+				.JobOffers
+				.FirstOrDefaultAsync(t => t.Id.ToString() == id);
+
+			if (jobOffer != null)
+			{
+				this.dbContext.JobOffers.Remove(jobOffer);
+				await this.dbContext.SaveChangesAsync();
+			}
 		}
 
 		public async Task<string> CreateAndReturnIdAsync(JobOfferFormModel model, string userId)
@@ -200,6 +244,7 @@ namespace DevHunter.Services.Data
 				PlaceToWork = model.IsRemote && string.IsNullOrWhiteSpace(model.Location) ? "Remote" :  
 					model.IsRemote ? $"{model.Location} Hybrid" : model.Location!,
 				MaxSalary = model.Salary!.Value,
+				WorkingExperience = model.WorkingExperience,
 				CompanyId = company.Id,
 			};
 

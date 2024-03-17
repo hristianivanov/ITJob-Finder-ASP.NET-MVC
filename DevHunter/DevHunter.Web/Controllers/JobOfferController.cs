@@ -28,6 +28,17 @@
 			return View(queryModel);
 		}
 
+		public async Task<IActionResult> AllSearch([FromQuery] AllJobOffersQueryModel queryModel, string search)
+		{
+			AllJobOffersFilteredAndPagedServiceModel serviceModel =
+				await jobOfferService.AllAsync(queryModel);
+
+			queryModel.JobOffers = serviceModel.JobOffers;
+			queryModel.TotalJobOffersCount = serviceModel.TotalJobOffersCount;
+
+			return View(queryModel);
+		}
+
         //TODO: XSS on Description HTMLSanitizer
         public async Task<IActionResult> Detail(string id)
 		{
