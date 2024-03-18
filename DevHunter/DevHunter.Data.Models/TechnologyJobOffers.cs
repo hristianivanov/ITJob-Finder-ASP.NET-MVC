@@ -7,10 +7,10 @@
         [ForeignKey(nameof(JobOffer))]
         public Guid JobOfferId { get; set; }
 
-        public JobOffer JobOffer { get; set; } = null!;
+        public virtual JobOffer JobOffer { get; set; } = null!;
 
         [ForeignKey(nameof(Technology))]
         public Guid TechnologyId { get; set; }
-        public Technology Technology { get; set; } = null!;
+        public virtual Technology Technology { get; set; } = null!;
 	}
 }

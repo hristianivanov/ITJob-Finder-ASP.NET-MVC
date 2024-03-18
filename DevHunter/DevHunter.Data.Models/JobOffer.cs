@@ -12,7 +12,7 @@
 		public JobOffer()
 		{
 			this.Id = Guid.NewGuid();
-			this.TechnologyJobOffers = new HashSet<TechnologyJobOffers>();
+			this.JobOfferTechnologies = new HashSet<TechnologyJobOffers>();
 			this.SavedJobOffers = new HashSet<SavedJobOffer>();
 		}
 
@@ -36,7 +36,7 @@
 		[ForeignKey(nameof(Company))]
 		public Guid CompanyId { get; set; }
 
-		public Company Company { get; set; } = null!;
+		public virtual Company Company { get; set; } = null!;
 
 		public string PlaceToWork { get; set; } = null!;
 
@@ -46,7 +46,7 @@
 
         public string? WorkingExperience { get; set; }
 
-        public ICollection<TechnologyJobOffers> TechnologyJobOffers { get; set; }
-		public ICollection<SavedJobOffer> SavedJobOffers { get; set; }
+        public virtual ICollection<TechnologyJobOffers> JobOfferTechnologies { get; set; }
+		public virtual ICollection<SavedJobOffer> SavedJobOffers { get; set; }
 	}
 }
