@@ -19,8 +19,8 @@
 
 		public string ImageUrl { get; set; } = null!;
 
-		public ICollection<TechnologyJobOffers> TechnologyJobOffers { get; set; }
-		public ICollection<CompanyTechnologies> CompanyTechnologies { get; set; }
-		public ICollection<TechnologyDevelopments> TechnologyDevelopments { get; set; }
+		public virtual ICollection<TechnologyJobOffers> TechnologyJobOffers { get; set; }
+		public virtual ICollection<CompanyTechnologies> CompanyTechnologies { get; set; }
+		public virtual ICollection<TechnologyDevelopments> TechnologyDevelopments { get; set; }
 	}
 }

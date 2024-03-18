@@ -20,7 +20,7 @@
         //[MaxLength(LastNameMaxLength)]
         //public string LastName { get; set; } = null!;
 
-        public ICollection<SavedJobOffer> SavedJobOffers { get; set; }
-        public ICollection<Company> Companies { get; set; }
+        public virtual ICollection<SavedJobOffer> SavedJobOffers { get; set; }
+        public virtual ICollection<Company> Companies { get; set; }
     }
 }

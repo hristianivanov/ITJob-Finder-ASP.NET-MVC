@@ -7,7 +7,7 @@
 		public Development()
 		{
 			this.Id = Guid.NewGuid();
-			this.TechnologyDevelopments = new HashSet<TechnologyDevelopments>();
+			this.DevelopmentTechnologies = new HashSet<TechnologyDevelopments>();
 		}
 
 		[Key]
@@ -17,6 +17,6 @@
 
 		public string ImageUrl { get; set; } = null!;
 
-		public ICollection<TechnologyDevelopments> TechnologyDevelopments { get; set; }
+		public virtual ICollection<TechnologyDevelopments> DevelopmentTechnologies { get; set; }
 	}
 }

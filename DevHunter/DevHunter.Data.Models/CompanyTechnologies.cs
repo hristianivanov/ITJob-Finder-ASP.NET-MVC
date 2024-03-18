@@ -6,10 +6,10 @@
 	{
 		[ForeignKey(nameof(Company))]
         public Guid CompanyId { get; set; }
-        public Company Company { get; set; } = null!;
+        public virtual Company Company { get; set; } = null!;
 
 		[ForeignKey(nameof(Technology))]	
         public Guid TechnologyId { get; set; }
-        public Technology Technology { get; set; } = null!;
+        public virtual Technology Technology { get; set; } = null!;
 	}
 }

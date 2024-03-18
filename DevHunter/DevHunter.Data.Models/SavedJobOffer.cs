@@ -7,11 +7,11 @@
 	{
 		[ForeignKey(nameof(User))]
 		public Guid UserId { get; set; }
-		public ApplicationUser User { get; set; } = null!;
+		public virtual ApplicationUser User { get; set; } = null!;
 
 		[ForeignKey(nameof(JobOffer))]
 		public Guid JobOfferId { get; set; }
-		public JobOffer JobOffer { get; set; } = null!;
+		public virtual JobOffer JobOffer { get; set; } = null!;
 
 		public DateTime Date { get; set; }
 	}
