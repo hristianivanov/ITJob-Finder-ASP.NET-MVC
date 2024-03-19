@@ -12,6 +12,7 @@
 	using Web.ViewModels.User;
 	using Web.ViewModels.JobOffer;
 	using Web.ViewModels.Technology;
+	using DevHunter.Web.ViewModels.Company;
 
 	public class CompanyService : ICompanyService
 	{
@@ -47,50 +48,149 @@
 		public async Task<bool> ExistsByIdAsync(string id)
 		=> await this.context.Companies.FirstOrDefaultAsync(c => c.Id.ToString() == id) != null;
 
+		public async Task<CompanyFormModel> GetForEditByIdAsync(string id)
+		{
+			var company = await this.context
+				.Companies
+				.FirstAsync(t => t.Id.ToString() == id);
+
+			return new CompanyFormModel
+			{
+				Name = company.Name,
+				ImageUrl = company.ImageUrl!,
+				Description = company.Description,
+				Activity = company.Activity,
+				WebsiteUrl = company.WebsiteUrl,
+				Sector = company.Sector,
+				Address = company.Location,
+				EmployeesCnt = company.EmployeeCount,
+				FoundedDate = company.FoundedDate,
+			};
+		}
+
+		public async Task EditAsync(string id, CompanyFormModel model)
+		{
+			var company = await this.context.Companies
+				.FirstAsync(c => c.Id.ToString() == id);
+
+			bool hasChanges = false;
+
+			if (company.Name != model.Name)
+			{
+				company.Name = model.Name;
+				hasChanges = true;
+			}
+			if (company.Description != model.Description)
+			{
+				company.Description = model.Description;
+				hasChanges = true;
+			}
+			if (company.Activity != model.Activity)
+			{
+				company.Activity = model.Activity;
+				hasChanges = true;
+			}
+			if (company.WebsiteUrl != model.WebsiteUrl)
+			{
+				company.WebsiteUrl = model.WebsiteUrl;
+				hasChanges = true;
+			}
+			if (company.Sector != model.Sector)
+			{
+				company.Sector = model.Sector;
+				hasChanges = true;
+			}
+			if (company.Location != model.Address)
+			{
+				company.Location = model.Address;
+				hasChanges = true;
+			}
+			if (company.EmployeeCount != model.EmployeesCnt)
+			{
+				company.EmployeeCount = model.EmployeesCnt;
+				hasChanges = true;
+			}
+			if (company.FoundedDate != model.FoundedDate)
+			{
+				company.FoundedDate = model.FoundedDate;
+				hasChanges = true;
+			}
+
+			if (hasChanges)
+				await this.context.SaveChangesAsync();
+		}
+
+		public async Task<string?> GetCompanyIdByCreatorIdAsync(string userId)
+		{
+			var company = await this.context
+				.Companies
+				.FirstOrDefaultAsync(c => c.CreatorId.ToString() == userId);
+
+			return company.Id.ToString();
+		}
+
 
 		public async Task<CompanyDetailViewModel> GetDetailsByIdAsync(string id)
 		{
 			var company = await this.context
 				.Companies
-				.Include(c => c.JobOffers)
-				.ThenInclude(j => j.TechnologyJobOffers)
-				.ThenInclude(j => j.Technology)
 				.FirstAsync(c => c.Id.ToString() == id);
 
-			var companyJobOffers = company.JobOffers
-				.Select(j => new JobOfferAllViewModel()
+			var jobOffers = company.JobOffers.Select(j => new JobOfferAllViewModel()
+			{
+				Id = j.Id.ToString(),
+				CompanyName = company.Name,
+				CompanyImageUrl = company.ImageUrl!,
+				CreatedOn = j.CreatedOn.ToString("dd.MM.yyyy"),
+				JobLocation = j.PlaceToWork,
+				JobPosition = j.JobPosition,
+				Salary = GetSalary(j.MinSalary, j.MaxSalary),
+				Technologies = j.JobOfferTechnologies.Select(tj => new TechnologyViewModel()
 				{
-					Id = j.Id.ToString(),
-					CompanyImageUrl = company.ImageUrl,
-					CompanyName = company.Name,
-					JobPosition = j.JobPosition,
-					CreatedOn = j.CreatedOn.ToString("dd MMM."),
-					JobLocation = j.PlaceToWork,
-					Technologies = j.TechnologyJobOffers
-					.Select(tj => new TechnologyViewModel()
-					{
-						Id = tj.Technology.Id.ToString(),
-						Name = tj.Technology.Name,
-						ImageUrl = tj.Technology.ImageUrl,
-					}).ToList(),
-					Salary = GetSalary(j.MinSalary!.Value, j.MaxSalary!.Value),
-				}).ToList();
+					Id = tj.TechnologyId.ToString(),
+					ImageUrl = tj.Technology.ImageUrl!,
+					Name = tj.Technology.Name,
+				}),
+			})
+				.ToList();
 
-			return new CompanyDetailViewModel()
+			var model = new CompanyDetailViewModel
 			{
 				Id = company.Id.ToString(),
-				WebsiteUrl = company.WebsiteUrl,
-				Sector = company.Sector,
-				Location = company.Location,
-				PaidVacationDays = company.PaidVacationDays.Value,
-				EmployeesCnt = company.EmployeeCount.Value,
-				FoundedYear = company.FoundedYear.Value.Year,
 				Name = company.Name,
-				Activity = company.Activity,
-				Description = company.Description,
-				JobOffers = companyJobOffers
+				ImageUrl = company.ImageUrl!,
+				WebsiteUrl = company.WebsiteUrl,
+				JobOffers = jobOffers,
 			};
+
+			if (!string.IsNullOrWhiteSpace(company.Sector))
+			{
+				model.Sector = company.Sector;
+			}
+			if (!string.IsNullOrWhiteSpace(company.Activity))
+			{
+				model.Activity = company.Activity;
+			}
+			if (!string.IsNullOrWhiteSpace(model.Location))
+			{
+				model.Location = company.Location;
+			}
+			if (!string.IsNullOrWhiteSpace(model.Description))
+			{
+				model.Description = company.Description;
+			}
+			if (company.FoundedDate.HasValue)
+			{
+				model.FoundedYear = company.FoundedDate.Value.Year;
+			}
+			if (company.EmployeeCount.HasValue)
+			{
+				model.EmployeesCnt = company.EmployeeCount.Value;
+			}
+
+			return model;
 		}
+
 
 
 		private static string GetSalary(decimal? minSalary, decimal? maxSalary)

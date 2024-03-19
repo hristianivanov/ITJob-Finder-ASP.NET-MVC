@@ -13,5 +13,6 @@
 		Task<IEnumerable<JobOfferAllViewModel>> AllByCompanyIdAsync(string userId);
 		Task<JobOfferEditFormModel> GetForEditByIdAsync(string id);
 		Task DeleteByIdAsync(string id);
+		Task<AllFilterViewModel> LoadFiltersAsync();
 	}
 }

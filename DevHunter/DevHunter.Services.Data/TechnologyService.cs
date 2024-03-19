@@ -124,6 +124,23 @@
 			}
 		}
 
+		public async Task<IEnumerable<TechnologyViewModel>> AllByDevelopmentAsync(string id)
+		{
+			var technologies = await this.dbContext
+				.TechnologiesDevelopments
+				.AsNoTracking()
+				.Where(t => t.DevelopmentId.ToString() == id)
+				.Select(t => new TechnologyViewModel()
+				{
+					Id = t.Technology.Id.ToString(),
+					Name = t.Technology.Name,
+					ImageUrl = t.Technology.ImageUrl.EnhanceCloudinaryUrl(50, "auto")
+				})
+				.ToListAsync();
+
+			return technologies;
+		}
+
 		private async Task<IFormFile> ConvertImageUrlToFormFileAsync(string imageUrl)
 		{
 			using (HttpClient client = new HttpClient())

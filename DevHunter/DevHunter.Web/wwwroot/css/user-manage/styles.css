@@ -5,14 +5,12 @@
 .management-wrapper {
     display: flex;
     justify-content: flex-start;
-    overflow: hidden;
     flex: 1;
 }
 
     .management-wrapper .site-main {
         margin: 0;
         flex: 1;
-        overflow-y: scroll;
     }
 
     .management-wrapper .subscriber-sidebar {

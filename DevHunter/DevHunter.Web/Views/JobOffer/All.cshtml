@@ -18,7 +18,7 @@
 	</header>
 	<main class="job-listing-category-main job-listing-container-with-sidebar left-sidebar">
 
-		<partial name="_AsidePartial"/>
+		<partial name="_AsidePartial" model="Model.Filters"/>
 
 		<div class="jobs jobs-container">
 			@foreach (var jobOffer in Model.JobOffers)

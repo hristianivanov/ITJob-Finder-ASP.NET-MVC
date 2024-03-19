@@ -1,3 +1,4 @@
+
 namespace DevHunter.Web
 {
 	using Microsoft.AspNetCore.Identity;

@@ -42,8 +42,6 @@
 
         public int WorkingHours { get; set; }
 
-        public int? Seniority { get; set; }
-
         public string? WorkingExperience { get; set; }
 
         public virtual ICollection<TechnologyJobOffers> JobOfferTechnologies { get; set; }

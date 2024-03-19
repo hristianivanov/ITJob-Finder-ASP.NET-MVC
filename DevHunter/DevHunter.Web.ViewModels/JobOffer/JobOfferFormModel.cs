@@ -20,7 +20,6 @@
 		public string? Location { get; set; }
 		public bool IsRemote { get; set; }
 		public string? WorkingExperience { get; set; }
-		public int? Seniority { get; set; }
 		public int? WorkingHours { get; set; }
 		public decimal? Salary { get; set; }
 

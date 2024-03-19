@@ -12,5 +12,7 @@
 		public Guid DevelopmentId { get; set; }
 
 		public virtual Development Development { get; set; } = null!;
-	}
+
+        public bool IsActive { get; set; }
+    }
 }

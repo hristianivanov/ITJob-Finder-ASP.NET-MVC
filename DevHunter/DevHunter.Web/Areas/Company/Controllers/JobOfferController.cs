@@ -71,7 +71,7 @@
 			}
 		}
 
-		[Route("jobpost/edit")]
+		[Route("jobpost/edit/{id}")]
 		public async Task<IActionResult> Edit(string id)
 		{
 			try
@@ -98,7 +98,7 @@
 		}
 
 		[HttpPost]
-		[Route("jobpost/edit")]
+		[Route("jobpost/edit/{id}")]
 		public async Task<IActionResult> Edit(string id, JobOfferEditFormModel model)
 		{
 			if (!ModelState.IsValid)

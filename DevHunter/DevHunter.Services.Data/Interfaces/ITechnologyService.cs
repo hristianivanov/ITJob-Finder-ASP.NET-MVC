@@ -14,5 +14,6 @@
 
 		//Task<Stream> GetThumbnail(string id);
 		//Task<Stream> GetOriginal(string id);
+		Task<IEnumerable<TechnologyViewModel>> AllByDevelopmentAsync(string id);
 	}
 }

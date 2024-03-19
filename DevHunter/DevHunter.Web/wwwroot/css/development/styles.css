@@ -1,0 +1,158 @@
+.development-all-container {
+    display: flex;
+    margin: 4em auto;
+    max-width: 1200px;
+    flex-wrap: wrap;
+    gap: 2.5em;
+}
+
+.development-all-container:hover .development-card:hover {
+    opacity: 1;
+}
+
+.development-all-container .development-card {
+    display: flex;
+    gap: 1em;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.development-all-container .development-card header {
+    position: relative;
+    gap: 2em;
+    display: flex;
+    justify-content: center;
+    padding: 6px;
+    border-radius: 5px;
+    box-shadow: 0 3px 20px #00001A;
+    line-height: 1;
+    background: linear-gradient(90deg, rgba(0, 0, 73, 1.00) 0%, rgba(255, 255, 255, 0) 100%);
+}
+
+.development-card .development-name {
+    font-size: 3.5em;
+    align-self: center;
+    font-family: 'Mona-Sans', sans-serif;
+    /* ReSharper disable once InvalidValue */
+    background: radial-gradient(1779.2% 193.77% at 21.33% -10.76%, #E5E4E6 22.6%, rgba(255, 255, 255, 0.00) 100%);
+    background-clip: border-box;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    word-spacing: 4px;
+}
+
+.development-all-container img {
+    transition: all 0.2s linear;
+    object-fit: contain;
+    width: 44px;
+    height: 44px;
+}
+
+.development-card .outer-circle {
+    position: relative;
+    display: block;
+    background: #152262;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    box-shadow: 0 0 35px 0 #02174c, 0 0 42px 0 #091970;
+}
+
+.development-card .inner-circle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    height: 80%;
+    border-radius: 50%;
+    background: white;
+}
+
+.development-card .inner-circle img {
+    /* ReSharper disable once CssNotResolved */
+    scale: 0.7;
+    width: 100%;
+    display: block;
+    height: auto;
+}
+
+.technology-all-container:hover .technology-card {
+    opacity: 0.3;
+    transition: all 0.3s ease-in-out;
+}
+
+.technology-all-container:hover .technology-card:hover {
+    opacity: 1;
+}
+
+.technology-card:hover img {
+    filter: grayscale(0) opacity(1);
+}
+
+.technology-all-container {
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5em;
+}
+
+.technology-all-container .technology-card {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+    border-radius: 5px;
+    box-shadow: 0 3px 20px #00001A;
+    line-height: 1;
+    background: #111A39;
+}
+
+.technology-all-container img {
+    filter: grayscale(1) opacity(0.5);
+    transition: all 0.2s linear;
+    object-fit: contain;
+    width: 44px;
+    height: 44px;
+}
+
+.development-heading .actions {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.development-heading .actions .action {
+    background: #304ffe;
+    color: #fff;
+    text-align: center;
+    padding: 0.6em 3em;
+    border-radius: 2em;
+    cursor: pointer;
+    filter: grayscale(1) opacity(0.1);
+    transition: all 0.3s ease-in-out;
+}
+
+.development-heading .actions .action:hover {
+    filter: grayscale(0) opacity(1);
+}
+
+.add-technology-btn {
+    width: 56px;
+    height: 56px;
+    padding: 6px;
+    border-radius: 5px;
+    box-shadow: 0 3px 20px #00001A;
+    background: #111A39;
+    filter: grayscale(0) opacity(0.5);
+}
+
+.add-technology-btn:hover {
+    filter: grayscale(0) opacity(1);
+}
+
+.add-technology-btn img {
+    /* ReSharper disable once CssNotResolved */
+    rotate: 135deg;
+}
