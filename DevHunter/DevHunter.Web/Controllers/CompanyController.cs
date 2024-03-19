@@ -18,10 +18,8 @@
 
 		public async Task<IActionResult> Detail(string id)
 		{
-			string? companyId = await this.companyService.GetCompanyIdByCreatorIdAsync(id);
-
 			bool companyExists = await this.companyService
-				.ExistsByIdAsync(companyId!);
+				.ExistsByIdAsync(id!);
 
 			if (!companyExists)
 			{
@@ -33,7 +31,7 @@
 			try
 			{
 				var model = await this.companyService
-					.GetDetailsByIdAsync(companyId!);
+					.GetDetailsByIdAsync(id!);
 
 				return View(model);
 			}

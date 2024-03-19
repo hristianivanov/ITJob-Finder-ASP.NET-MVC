@@ -5,7 +5,7 @@
 	public interface ITechnologyService
 	{
 		Task<bool> TechnologyExistsByNameAsync(string technologyName);
-		Task AddAsync(TechnologyFormModel formModel);
+		Task AddAsync(TechnologyFormModel formModel,string developmentId);
 		Task<IEnumerable<TechnologyViewModel>> AllAsync();
 		Task<bool> ExistsByIdAsync(string id);
 		Task<TechnologyEditFormModel> GetForEditByIdAsync(string id);

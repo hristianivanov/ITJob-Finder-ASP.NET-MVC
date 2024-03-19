@@ -10,6 +10,7 @@
 		public const int AllImageMaxMegaBytesFileSize = 10;
 
 		public const string CompanyRoleName = "Company";
+		public const string CompanyAreaName = "Company";
 
 		public static class JobOffer
 		{

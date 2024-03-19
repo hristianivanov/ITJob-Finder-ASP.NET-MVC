@@ -2,6 +2,8 @@
 {
 	using System.Security.Claims;
 
+	using static Common.GeneralApplicationConstants;
+
 	public static class ClaimsPrincipalExtensions
 	{
 		public static string? GetId(this ClaimsPrincipal user)
@@ -12,8 +14,12 @@
 
 		public static bool IsAdmin(this ClaimsPrincipal user)
 		{
-			throw new NotImplementedException();
-			//return user.IsInRole(AdminRoleName);
+			return user.IsInRole(AdminRoleName);
+		}
+
+		public static bool IsCompany(this ClaimsPrincipal user)
+		{
+			return user.IsInRole(CompanyRoleName);
 		}
 	}
 }
