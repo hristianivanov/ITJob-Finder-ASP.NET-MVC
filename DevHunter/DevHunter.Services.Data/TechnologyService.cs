@@ -34,7 +34,7 @@
 			return exists;
 		}
 
-		public async Task AddAsync(TechnologyFormModel formModel)
+		public async Task AddAsync(TechnologyFormModel formModel,string developmentId)
 		{
 			Technology technology = new Technology()
 			{
@@ -42,6 +42,24 @@
 				ImageUrl = await this.imageService
 					.UploadImage(formModel.Image, "DevHunter/technology", formModel.Name)
 			};
+
+			if (!string.IsNullOrWhiteSpace(developmentId))
+			{
+				var development = await this.dbContext.Developments
+					.FirstOrDefaultAsync(d => d.Id.ToString() == developmentId);
+
+				if (development != null)
+				{
+					TechnologyDevelopments technologyDevelopments = new TechnologyDevelopments()
+					{
+						DevelopmentId = development!.Id,
+						TechnologyId = technology.Id,
+						IsActive = true,
+					};
+
+					await this.dbContext.TechnologiesDevelopments.AddAsync(technologyDevelopments);
+				}
+			}
 
 			await this.dbContext.Technologies.AddAsync(technology);
 			await this.dbContext.SaveChangesAsync();
@@ -80,7 +98,7 @@
 
 			return new TechnologyEditFormModel
 			{
-				Name = technology.Name,	
+				Name = technology.Name,
 				ImageUrl = technology.ImageUrl,
 			};
 		}

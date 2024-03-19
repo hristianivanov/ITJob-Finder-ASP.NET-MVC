@@ -1,0 +1,67 @@
+﻿@{
+	ViewData["Title"] = "Home Page";
+}
+<h2 class="admin-heading" style="font-family:Arial">Hello, Admin!</h2>
+<div class="admin-wrapper">
+
+	<div class="admin-actions">
+		<a class="action" asp-area="Admin" asp-controller="Company" asp-action="All">All companies</a>
+		<a class="action" asp-area="Admin" asp-controller="Technology" asp-action="All">All technologies</a>
+		<span> | </span>
+		<a class="action" asp-area="Admin" asp-controller="User" asp-action="All">All users</a>
+		<span> | </span>
+		<a class="action" asp-area="Admin" asp-controller="Technology" asp-action="Add">Add technology</a>
+		<a class="action" asp-area="Admin" asp-controller="Development" asp-action="Add">Add development</a>
+	</div>
+</div>
+
+
+<style>
+	.admin-wrapper {
+		width: 1300px;
+		margin: 5em auto;
+	}
+
+	.admin-container {
+		font-family: Satoshi-Medium, sans-serif;
+		color: #E5E4E6;
+		font-size: 1.5em;
+		text-align: center;
+	}
+
+	.admin-actions {
+		display: flex;
+		justify-content: center;
+		gap: 1em;
+	}
+
+		.admin-actions span {
+			font-size: 35px;
+		}
+
+		.admin-actions .action:hover {
+			box-shadow: 0 0 0 3px #4056C0 inset, 0 0 26px -3px rgba(0, 102, 255, 0.25);
+		}
+
+		.admin-actions .action {
+			font-size: 22px;
+			font-weight: 500;
+			letter-spacing: 0.02em;
+			color: #fff;
+			line-height: 1;
+			background: #111A39;
+			font-family: 'Axiforma', sans-serif;
+			padding: 14px;
+			border-radius: 5px;
+		}
+
+
+	.admin-heading {
+		mix-blend-mode: soft-light;
+		font-size: 180px;
+		font-family: Satoshi;
+		font-weight: 900;
+		word-wrap: break-word;
+		text-align: center
+	}
+</style>

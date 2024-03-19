@@ -1,7 +1,12 @@
-﻿@{
-	if (this.User.IsInRole("Company"))
+﻿@using DevHunter.Web.Infrastructure.Extensions
+@{
+	if (this.User.IsCompany())
 	{
 		Layout = "~/Areas/Company/Views/Shared/_CompanyLayout.cshtml";
+	}
+	else if (this.User.IsAdmin())
+	{
+		Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 	}
 	else
 	{

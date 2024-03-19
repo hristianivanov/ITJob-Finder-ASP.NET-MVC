@@ -5,6 +5,7 @@
 	using Microsoft.AspNetCore.Mvc;
 
 	using ViewModels.Home;
+	using Infrastructure.Extensions;
 
 	using static Common.GeneralApplicationConstants;
 
@@ -19,15 +20,24 @@
 
 		public IActionResult Index()
 		{
-			if (this.User.IsInRole(CompanyRoleName))
+			if (this.User.IsCompany())
 			{
-				return RedirectToAction("All", "JobOffer", new { area = "Company" });
+				return RedirectToAction("All", "JobOffer", new { area = CompanyAreaName });
+			}
+			if (this.User.IsAdmin())
+			{
+				return this.RedirectToAction("Index", "Home", new { Area = AdminAreaName });
 			}
 
 			return View();
 		}
 
-		public IActionResult Privacy()
+		public IActionResult About()
+		{
+			return View();
+		}
+
+		public IActionResult Contact()
 		{
 			return View();
 		}

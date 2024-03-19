@@ -1,4 +1,4 @@
-﻿namespace DevHunter.Web.Controllers
+﻿namespace DevHunter.Web.Areas.Admin.Controllers
 {
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
@@ -13,7 +13,7 @@
     using static Common.EntityValidationConstants.Technology;
 
     [Authorize(Roles = AdminRoleName)]
-    public class TechnologyController : Controller
+    public class TechnologyController : BaseAdminController
     {
         private readonly ITechnologyService technologyService;
 
@@ -28,9 +28,9 @@
         {
             try
             {
-                var model = await this.technologyService.AllAsync();
+                var model = await technologyService.AllAsync();
 
-                return this.View(model);
+                return View(model);
             }
             catch (Exception)
             {
@@ -40,11 +40,14 @@
 
         [HttpGet]
         [Route("technology/add")]
-        public IActionResult Add()
+        public IActionResult Add(string id)
         {
             try
             {
-                TechnologyFormModel formModel = new TechnologyFormModel();
+                TechnologyFormModel formModel = new TechnologyFormModel()
+                {
+                    DevelopmentId = id
+                };
 
                 return View(formModel);
             }
@@ -56,12 +59,12 @@
 
         [HttpPost]
         [RequestSizeLimit(ImageMaxMegaBytesFileSize * 1024 * 1024)]
-        public async Task<IActionResult> Add(TechnologyFormModel formModel)
+        public async Task<IActionResult> Add(TechnologyFormModel formModel, string id)
         {
             try
             {
                 bool technologyExists =
-                    await this.technologyService.TechnologyExistsByNameAsync(formModel.Name);
+                    await technologyService.TechnologyExistsByNameAsync(formModel.Name);
 
                 if (technologyExists)
                 {
@@ -72,7 +75,7 @@
                 //TODO: think whether is it necessary to check it when I validate it with attribute ?!?!? 
                 if (formModel.Image.Length > ImageMaxMegaBytesFileSize * 1024 * 1024)
                 {
-                    this.ModelState.AddModelError(nameof(formModel.Image),
+                    ModelState.AddModelError(nameof(formModel.Image),
                         "You cannot upload image size more than 10 megabytes!");
                 }
 
@@ -81,7 +84,7 @@
                     return View(formModel);
                 }
 
-                await this.technologyService.AddAsync(formModel);
+                await technologyService.AddAsync(formModel, id);
 
                 TempData[SuccessMessage] = "Technology was created successfully!";
 
@@ -102,7 +105,7 @@
         {
             try
             {
-                bool technologyExists = await this.technologyService.ExistsByIdAsync(id);
+                bool technologyExists = await technologyService.ExistsByIdAsync(id);
 
                 if (!technologyExists)
                 {
@@ -111,7 +114,7 @@
                     return RedirectToAction("All");
                 }
 
-                var model = await this.technologyService.GetForEditByIdAsync(id);
+                var model = await technologyService.GetForEditByIdAsync(id);
 
                 return View(model);
             }
@@ -126,12 +129,12 @@
         {
             if (!ModelState.IsValid)
             {
-                return this.View();
+                return View();
             }
 
             try
             {
-                bool technologyExists = await this.technologyService.ExistsByIdAsync(id);
+                bool technologyExists = await technologyService.ExistsByIdAsync(id);
 
                 if (!technologyExists)
                 {
@@ -140,7 +143,7 @@
                     return RedirectToAction("All");
                 }
 
-                await this.technologyService.EditTechnologyAsync(id, model);
+                await technologyService.EditTechnologyAsync(id, model);
             }
             catch (Exception)
             {
@@ -159,7 +162,7 @@
         {
             try
             {
-                bool technologyExists = await this.technologyService.ExistsByIdAsync(id);
+                bool technologyExists = await technologyService.ExistsByIdAsync(id);
 
                 if (!technologyExists)
                 {
@@ -183,7 +186,7 @@
 
         private IActionResult ReturnImage(Stream image)
         {
-            var headers = this.Response.GetTypedHeaders();
+            var headers = Response.GetTypedHeaders();
 
             headers.CacheControl = new CacheControlHeaderValue
             {
@@ -193,7 +196,7 @@
 
             headers.Expires = new DateTimeOffset(DateTime.UtcNow.AddDays(30));
 
-            return this.File(image, "image/jpeg");
+            return File(image, "image/jpeg");
         }
         private IActionResult GeneralError()
         {

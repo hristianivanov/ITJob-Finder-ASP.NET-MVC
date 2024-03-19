@@ -162,10 +162,10 @@
 		{
 			await signInManager.SignOutAsync();
 
-			if (returnUrl != null)
-			{
-				return LocalRedirect(returnUrl);
-			}
+			//if (returnUrl != null)
+			//{
+			//	return LocalRedirect(returnUrl);
+			//}
 
 			return RedirectToAction("Index", "Home");
 		}

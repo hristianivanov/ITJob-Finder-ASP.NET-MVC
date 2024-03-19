@@ -6,6 +6,10 @@
     height: 100vh;
 }
 
+.site-container.admin {
+    font-size: 14px;
+}
+
 .container-wrap {
     max-width: 60em;
     margin: 0 auto;

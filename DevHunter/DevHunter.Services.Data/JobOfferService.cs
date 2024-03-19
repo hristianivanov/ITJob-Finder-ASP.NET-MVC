@@ -149,9 +149,13 @@ namespace DevHunter.Services.Data
 				Title = jobOffer.JobPosition,
 				Description = jobOffer.Description,
 				JobLocation = jobOffer.PlaceToWork,
-				CompanyImageUrl = jobOffer.Company.ImageUrl!,
-				CompanyName = jobOffer.Company.Name,
 				CreatedOn = jobOffer.CreatedOn.ToString("dd MMM."),
+				Company = new Web.ViewModels.Company.CompanyViewModel()
+				{
+					Id = jobOffer.Company.Id.ToString(),
+					Name = jobOffer.Company.Name,
+					ImageUrl = jobOffer.Company.ImageUrl!,
+				},
 				TechStack = techStack,
 			};
 		}
@@ -233,7 +237,7 @@ namespace DevHunter.Services.Data
 				.JobOffers
 				.Select(j => j.PlaceToWork)
 				.Distinct()
-				.Select(place => new LocationFilter 
+				.Select(place => new LocationFilter
 				{
 					Location = place,
 				})
