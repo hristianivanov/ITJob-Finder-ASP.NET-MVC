@@ -22,6 +22,8 @@
 			AllJobOffersFilteredAndPagedServiceModel serviceModel =
 				await jobOfferService.AllAsync(queryModel);
 
+			queryModel.Filters = await this.jobOfferService.LoadFiltersAsync();
+
 			queryModel.JobOffers = serviceModel.JobOffers;
 			queryModel.TotalJobOffersCount = serviceModel.TotalJobOffersCount;
 

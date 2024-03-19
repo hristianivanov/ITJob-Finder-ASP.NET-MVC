@@ -1,11 +1,9 @@
-﻿using DevHunter.Services.Data.Interfaces;
-
-namespace DevHunter.Web.Controllers
+﻿namespace DevHunter.Web.Controllers
 {
-	using DevHunter.Web.ViewModels.Technology;
 	using Microsoft.AspNetCore.Mvc;
 
 	using ViewModels.Development;
+	using Services.Data.Interfaces;
 
 	using static Common.NotificationMessagesConstants;
 	using static Common.EntityValidationConstants.Development;
@@ -17,6 +15,16 @@ namespace DevHunter.Web.Controllers
 		public DevelopmentController(IDevelopmentService developmentService)
 		{
 			this.developmentService = developmentService;
+		}
+
+		public async Task<IActionResult> All()
+		{
+			var model = new DevelopmentAllViewModel
+			{
+				Developments = await this.developmentService.AllAsync()
+		};
+				
+			return View(model);
 		}
 
 		[HttpGet]
@@ -40,10 +48,10 @@ namespace DevHunter.Web.Controllers
 		{
 			try
 			{
-				bool technologyExists =
+				bool developmentExists =
 					await this.developmentService.ExistsByNameAsync(formModel.Name);
 
-				if (technologyExists)
+				if (developmentExists)
 				{
 					ModelState.AddModelError(nameof(formModel.Name),
 						"Development with this name already exists!");
@@ -65,7 +73,7 @@ namespace DevHunter.Web.Controllers
 
 				TempData[SuccessMessage] = "Technology was created successfully!";
 
-				return RedirectToAction("Index","Home");
+				return RedirectToAction("Index", "Home");
 			}
 			catch (Exception)
 			{
@@ -73,6 +81,30 @@ namespace DevHunter.Web.Controllers
 					"Unexpected error occurred while trying to add your new technology!");
 
 				return View(formModel);
+			}
+		}
+
+		[HttpGet]
+		public async Task<IActionResult> Edit(string id)
+		{
+			try
+			{
+				bool technologyExists = await this.developmentService.ExistsByIdAsync(id);
+
+				if (!technologyExists)
+				{
+					TempData[ErrorMessage] = "Development with the provided id does not exist!";
+
+					return RedirectToAction("All");
+				}
+
+				var model = await this.developmentService.GetForEditByIdAsync(id);
+
+				return View(model);
+			}
+			catch (Exception)
+			{
+				return GeneralError();
 			}
 		}
 

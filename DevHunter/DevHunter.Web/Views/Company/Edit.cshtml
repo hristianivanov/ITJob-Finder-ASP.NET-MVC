@@ -1,0 +1,87 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model DevHunter.Web.ViewModels.Company.CompanyFormModel
+@{
+	Layout = "../../Areas/Manage/Views/Shared/_ManageLayout.cshtml";
+}
+
+
+<div class="company-edit-container">
+	<h1 class="heading">Company edit</h1>
+	<form asp-controller="Company" asp-action="Edit" class="company-edit-form" method="post">
+
+		<div class="input-row">
+			<div class="input-field first-item">
+				<input asp-for="Name" type="text" placeholder="Name" />
+			</div>
+			<div class="input-field second-item">
+				<input asp-for="Address" type="text" placeholder="Address" />
+			</div>
+		</div>
+		<div class="input-row">
+			<div class="input-field first-item">
+				<input asp-for="Activity" type="text" placeholder="Activity" />
+			</div>
+			<div class="input-field second-item">
+				<input asp-for="WebsiteUrl" type="text" placeholder="Website url" />
+			</div>
+		</div>
+		<div class="input-row">
+			<div class="input-field first-item">
+				<input asp-for="Sector" type="text" placeholder="Sector" />
+			</div>
+			<div class="input-field">
+				<input asp-for="EmployeesCnt" type="number" placeholder="Employees count">
+			</div>
+			@* TODO: *@
+			<div class="input-field" style="flex-basis:30%">
+				<input asp-for="FoundedDate" type="date" placeholder="Founded year">
+			</div>
+		</div>
+
+
+		<div class="rich-text-editor">
+			<div class="options">
+				<button id="bold" class="option-button format">
+					<i class="fa-solid fa-bold"></i>
+				</button>
+				<button id="italic" class="option-button format">
+					<i class="fa-solid fa-italic"></i>
+				</button>
+				<button id="underline" class="option-button format">
+					<i class="fa-solid fa-underline"></i>
+				</button>
+				<button id="strikethrough" class="option-button format">
+					<i class="fa-solid fa-strikethrough"></i>
+				</button>
+				<button id="insertOrderedList" class="option-button">
+					<i class="fa-solid fa-list-ol"></i>
+				</button>
+				<button id="insertUnorderedList" class="option-button">
+					<i class="fa-solid fa-list"></i>
+				</button>
+			</div>
+			<div class="rich-text-area" id="description-editor" contenteditable="true">@Html.Raw(Model.Description)</div>
+			<input type="hidden" asp-for="Description" id="description-input" />
+			<span asp-validation-for="Description"></span>
+		</div>
+		
+		<button type="submit">Submit</button>
+	</form>
+</div>
+
+@section Styles {
+	<link href="~/css/job-offer-add/rich-text-editor.css" rel="stylesheet" />
+	<link href="~/css/company/edit.css" rel="stylesheet" />
+}
+
+@section Scripts {
+	<script>
+		var descriptionEditor = document.getElementById("description-editor");
+		var descriptionInput = document.getElementById("description-input");
+
+		descriptionEditor.addEventListener("input", function () {
+			descriptionInput.value = descriptionEditor.innerHTML;
+		});
+	</script>
+	<script src="~/js/job-offer-add/rich-tech-editor.js"></script>
+}

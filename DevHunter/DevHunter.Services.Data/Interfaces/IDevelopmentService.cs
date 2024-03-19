@@ -6,5 +6,8 @@
 	{
 		Task<bool> ExistsByNameAsync(string name);
 		Task AddAsync(DevelopmentFormModel formModel);
+		Task<List<DevelopmentViewModel>> AllAsync();
+		Task<bool> ExistsByIdAsync(string id);	
+		Task<DevelopmentEditFormModel> GetForEditByIdAsync(string id);
 	}
 }

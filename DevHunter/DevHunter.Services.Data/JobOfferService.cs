@@ -32,11 +32,10 @@ namespace DevHunter.Services.Data
 				//.Where(j => j.IsActive)
 				.AsQueryable();
 
-			//TODO: filtering logic
 
 			IEnumerable<JobOfferAllViewModel> allJobOffers = await jobOffersQuery
 				//.Where(j => j.IsActive) TODO: is it necessary?
-				.Include(j => j.TechnologyJobOffers)
+				.Include(j => j.JobOfferTechnologies)
 				.ThenInclude(jt => jt.Technology)
 				.Include(j => j.Company)
 				.Skip((queryModel.CurrentPage - 1) * queryModel.JobOffersPerPage)
@@ -49,7 +48,7 @@ namespace DevHunter.Services.Data
 					CompanyName = j.Company.Name,
 					CreatedOn = j.CreatedOn.ToString("dd MMM."),
 					JobLocation = j.PlaceToWork,
-					Technologies = j.TechnologyJobOffers
+					Technologies = j.JobOfferTechnologies
 						.Select(tj => new TechnologyViewModel()
 						{
 							Id = tj.Technology.Id.ToString(),
@@ -130,13 +129,13 @@ namespace DevHunter.Services.Data
 		{
 			var jobOffer = await this.dbContext
 				.JobOffers
-				.Include(j => j.TechnologyJobOffers)
+				.Include(j => j.JobOfferTechnologies)
 				.ThenInclude(jt => jt.Technology)
 				.Include(j => j.Company)
 				.FirstOrDefaultAsync(j => j.Id.ToString() == id);
 
 			var techStack = jobOffer!
-				.TechnologyJobOffers
+				.JobOfferTechnologies
 				.Select(tj => new TechnologyViewModel()
 				{
 					Id = tj.Technology.Id.ToString(),
@@ -161,27 +160,27 @@ namespace DevHunter.Services.Data
 		{
 			var company = await this.dbContext
 				.Companies
-				.Include(c => c.JobOffers)
-				.ThenInclude(j => j.TechnologyJobOffers)
-				.ThenInclude(j => j.Technology)
+				//.Include(c => c.JobOffers)
+				//.ThenInclude(j => j.JobOfferTechnologies)
+				//.ThenInclude(j => j.Technology)
 				.FirstAsync(c => c.CreatorId.ToString() == userId);
 
 			var jobOffers = company.JobOffers.Select(j => new JobOfferAllViewModel()
+			{
+				Id = j.Id.ToString(),
+				CompanyName = company.Name,
+				CompanyImageUrl = company.ImageUrl!,
+				CreatedOn = j.CreatedOn.ToString("dd.MM.yyyy"),
+				JobLocation = j.PlaceToWork,
+				JobPosition = j.JobPosition,
+				Salary = GetSalary(j.MinSalary, j.MaxSalary),
+				Technologies = j.JobOfferTechnologies.Select(tj => new TechnologyViewModel()
 				{
-					Id = j.Id.ToString(),
-					CompanyName = company.Name,
-					CompanyImageUrl = company.ImageUrl!,
-					CreatedOn = j.CreatedOn.ToString("dd.MM.yyyy"),
-					JobLocation = j.PlaceToWork,
-					JobPosition = j.JobPosition,
-					Salary = GetSalary(j.MinSalary, j.MaxSalary),
-					Technologies = j.TechnologyJobOffers.Select(tj => new TechnologyViewModel()
-					{
-						Id = tj.TechnologyId.ToString(),
-						ImageUrl = tj.Technology.ImageUrl!,
-						Name = tj.Technology.Name,
-					}),
-				})
+					Id = tj.TechnologyId.ToString(),
+					ImageUrl = tj.Technology.ImageUrl!,
+					Name = tj.Technology.Name,
+				}),
+			})
 				.ToList();
 
 			return jobOffers;
@@ -191,17 +190,17 @@ namespace DevHunter.Services.Data
 		{
 			var jobOffer = await this.dbContext
 				.JobOffers
-				.Include(j => j.TechnologyJobOffers)
+				.Include(j => j.JobOfferTechnologies)
 				.ThenInclude(j => j.Technology)
 				.FirstAsync(j => j.Id.ToString() == id);
 
-			var jobOfferTechnologies = jobOffer.TechnologyJobOffers
+			var jobOfferTechnologies = jobOffer.JobOfferTechnologies
 				.Select(tj => new TechnologyViewModel()
-			{
-				Id = tj.Technology.Id.ToString(),
-				Name = tj.Technology.Name,
-				ImageUrl = tj.Technology.ImageUrl!,
-			}).ToList();
+				{
+					Id = tj.Technology.Id.ToString(),
+					Name = tj.Technology.Name,
+					ImageUrl = tj.Technology.ImageUrl!,
+				}).ToList();
 
 			return new JobOfferEditFormModel()
 			{
@@ -209,7 +208,6 @@ namespace DevHunter.Services.Data
 				Description = jobOffer.Description,
 				Location = jobOffer.PlaceToWork,
 				Salary = jobOffer.MaxSalary,
-				Seniority = jobOffer.Seniority,
 				WorkingHours = jobOffer.WorkingHours,
 				WorkingExperience = jobOffer.WorkingExperience,
 				JobOfferTechnologies = jobOfferTechnologies
@@ -229,6 +227,52 @@ namespace DevHunter.Services.Data
 			}
 		}
 
+		public async Task<AllFilterViewModel> LoadFiltersAsync()
+		{
+			var locations = await this.dbContext
+				.JobOffers
+				.Select(j => j.PlaceToWork)
+				.Distinct()
+				.Select(place => new LocationFilter 
+				{
+					Location = place,
+				})
+				.ToListAsync();
+
+			foreach (var location in locations)
+			{
+				location.Count = await this.dbContext
+					.JobOffers
+					.CountAsync(j => j.PlaceToWork == location.Location);
+			}
+
+			var experiences = await this.dbContext
+				.JobOffers
+				.Where(j => !string.IsNullOrWhiteSpace(j.WorkingExperience))
+				.Select(j => j.WorkingExperience)
+				.Distinct()
+				.Select(experience => new SeniorityFilter
+				{
+					Seniority = experience!
+				})
+				.ToListAsync();
+
+			//TODO: order	
+
+			foreach (var filter in experiences)
+			{
+				filter.Count = await this.dbContext
+					.JobOffers
+					.CountAsync(j => j.WorkingExperience == filter.Seniority);
+			}
+
+			return new AllFilterViewModel()
+			{
+				FilterLocations = locations,
+				FilterExperiences = experiences
+			};
+		}
+
 		public async Task<string> CreateAndReturnIdAsync(JobOfferFormModel model, string userId)
 		{
 			var company = await this.dbContext
@@ -241,7 +285,7 @@ namespace DevHunter.Services.Data
 				Description = model.Description,
 				WorkingHours = model.WorkingHours!.Value,
 				CreatedOn = DateTime.UtcNow,
-				PlaceToWork = model.IsRemote && string.IsNullOrWhiteSpace(model.Location) ? "Remote" :  
+				PlaceToWork = model.IsRemote && string.IsNullOrWhiteSpace(model.Location) ? "Remote" :
 					model.IsRemote ? $"{model.Location} Hybrid" : model.Location!,
 				MaxSalary = model.Salary!.Value,
 				WorkingExperience = model.WorkingExperience,

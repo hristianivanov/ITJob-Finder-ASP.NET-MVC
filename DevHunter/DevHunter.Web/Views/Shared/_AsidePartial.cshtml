@@ -1,11 +1,13 @@
-﻿<aside class="job-listing-aside aside-container">
+﻿@model DevHunter.Web.ViewModels.JobOffer.AllFilterViewModel
+
+<aside class="job-listing-aside aside-container">
 	<div id="job-listing-aside-container">
 		<div class="box miniboard-sidebar">
 			<div class="filters-wrap">
 				<div id="filter-job-location " class="component-filter">
 					<div class="filter-head">
 						<img src="https://dev.bg/wp-content/themes/jobsdevbg/images/icon-pin-hollow.svg"
-							 class="icon" alt="Icon for the 'Откъде ще работя'">
+							 class="icon" alt="Icon for the 'Job location'">
 						<h6 class="filter-name"> Job location </h6>
 						<a class="filter-collapse">
 							<img src="https://dev.bg/wp-content/themes/jobsdevbg/images/chevron.svg"
@@ -13,51 +15,50 @@
 						</a>
 					</div>
 					<div class="filter-checkboxes component-filter">
-						<div class="checkbox">
-							<input type="checkbox" />
-							<span class="display-value">Sofia</span>
-							<span class="counter">454</span>
-						</div>
-						<div class="checkbox" data-value="remote">
-							<input type="checkbox" />
-							<span class="display-value">Fully Remote</span>
-							<span class="counter">149</span>
-						</div>
-						<div class="checkbox">
-							<input type="checkbox" />
-							<span class="display-value">Varna</span>
-							<span class="counter">57</span>
-						</div>
-						<div class="checkbox">
-							<input type="checkbox" />
-							<span class="display-value">Ruse</span>
-							<span class="counter">10</span>
-						</div>
-						<div class="checkbox">
-							<input type="checkbox" />
-							<span class="display-value">Burgas</span>
-							<span class="counter">9</span>
-						</div>
-						<div class="filter-overflow-checkboxes component-filter">
-							<div class="filter-checkboxes">
+						@foreach (var location in Model.FilterLocations.Take(5))
+						{
+							@if (location.Location == "Remote")
+							{
+								<div class="checkbox" data-value="remote">
+									<input type="checkbox" />
+									<span class="display-value">Fully Remote</span>
+									<span class="counter">@location.Count</span>
+								</div>
+							}
+							else
+							{
 								<div class="checkbox">
 									<input type="checkbox" />
-									<span class="display-value">Kazanlak</span>
-									<span class="counter">5</span>
+									<span class="display-value">@location.Location</span>
+									<span class="counter">@location.Count</span>
 								</div>
-								<div class="checkbox">
-									<input type="checkbox" />
-									<span class="display-value">Veliko Turnovo</span>
-									<span class="counter">3</span>
-								</div>
-								<div class="checkbox">
-									<input type="checkbox" />
-									<span class="display-value">Gabrovo</span>
-									<span class="counter">2</span>
-								</div>
+							}
+						}
+						@if (Model.FilterLocations.Count() > 5)
+						{
+							<div class="filter-overflow-checkboxes component-filter">
+								@foreach (var location in Model.FilterLocations.Skip(5))
+								{
+									@if (location.Location == "Remote")
+									{
+										<div class="checkbox" data-value="remote">
+											<input type="checkbox" />
+											<span class="display-value">Fully Remote</span>
+											<span class="counter">@location.Count</span>
+										</div>
+									}
+									else
+									{
+										<div class="checkbox">
+											<input type="checkbox" />
+											<span class="display-value">@location.Location</span>
+											<span class="counter">@location.Count</span>
+										</div>
+									}
+								}
 							</div>
-						</div>
-						<a class="more-toggle">See more</a>
+							<a class="more-toggle">See more</a>
+						}
 					</div>
 				</div>
 				<div id="filter-seniority" class="component-filter">
@@ -71,31 +72,14 @@
 						</a>
 					</div>
 					<div class="filter-checkboxes component-filter">
-						<div class="checkbox">
-							<input type="checkbox" />
-							<span class="display-value">Junior / Intern</span>
-							<span class="counter">13</span>
-						</div>
-						<div class="checkbox">
-							<input type="checkbox" />
-							<span class="display-value">1-2 years experience</span>
-							<span class="counter">3</span>
-						</div>
-						<div class="checkbox">
-							<input type="checkbox" />
-							<span class="display-value">2-5 years experience</span>
-							<span class="counter">67</span>
-						</div>
-						<div class="checkbox">
-							<input type="checkbox" />
-							<span class="display-value">5+ years experience</span>
-							<span class="counter">10</span>
-						</div>
-						<div class="checkbox">
-							<input type="checkbox" />
-							<span class="display-value">Team Lead</span>
-							<span class="counter">9</span>
-						</div>
+						@foreach (var filter in Model.FilterExperiences)
+						{
+							<div class="checkbox">
+								<input type="checkbox" />
+								<span class="display-value">@filter.Seniority</span>
+								<span class="counter">@filter.Count</span>
+							</div>
+						}
 					</div>
 				</div>
 				<div id="filter-salary" class="component-filter-toggle">

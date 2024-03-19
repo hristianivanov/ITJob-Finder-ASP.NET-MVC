@@ -1,0 +1,37 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model DevHunter.Web.ViewModels.Development.DevelopmentAllViewModel
+
+<div class="development-all-container">
+	@foreach (var development in Model.Developments)
+	{
+		<div class="development-card">
+			<header class="development-heading">
+				<h3 class="development-name">@development.Name</h3>
+				<div class="outer-circle">
+					<div class="inner-circle">
+						<img width="180" height="180" src="@development.ImageUrl" loading="lazy">
+					</div>
+				</div>
+				<div class="actions">
+					<a asp-controller="Development" asp-action="Edit" asp-route-id="@development.Id" class="action edit-btn">Edit</a>
+					<a href="#" class="action delete-btn">Remove</a>
+				</div>
+			</header>
+			<div class="technology-all-container">
+				<div class="technology-card">
+					<img src="../../imgs/angular-logo.png" height="50" width="50" title="Javascript"/>
+				</div>
+				<div class="technology-card">
+					<img src="../../imgs/angular-logo.png" height="50" width="50" title="Javascript"/>
+				</div>
+				<a href="#" class="add-technology-btn">
+					<img src="~/svgs/add-technology-icon.svg" alt="+"/>
+				</a>
+			</div>
+		</div>	
+	}
+</div>
+
+@section Styles {
+	<link href="~/css/development/styles.css" rel="stylesheet" />
+}

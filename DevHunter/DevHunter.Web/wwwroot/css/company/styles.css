@@ -4,7 +4,7 @@
     display: flex;
     align-items: flex-start;
     width: 90%;
-    max-width: 1300px;
+    max-width: 1000px;
     margin: 0 auto;
 }
 
@@ -170,6 +170,7 @@
 }
 
 .company-info.icons .info-with-icon {
+    position: relative;
     padding: 10px;
     border-radius: 5px;
     background-color: white;
@@ -206,6 +207,7 @@
 
 
 .company-info {
+    margin-top: 3em;
     display: grid;
     grid-auto-columns: 1fr;
     grid-column-gap: 15px;

@@ -21,7 +21,7 @@
 
 		public string? Location { get; set; }
 
-		public DateTime? FoundedYear { get; set; }
+		public DateTime? FoundedDate { get; set; }
 
 		public string? Sector { get; set; }
 

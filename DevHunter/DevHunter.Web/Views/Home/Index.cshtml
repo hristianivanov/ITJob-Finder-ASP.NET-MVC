@@ -6,12 +6,11 @@
 		<div class="section-search-job">
 			<div class="input-container">
 				<i class="search-icon fa-solid fa-magnifying-glass"></i>
-				<form asp-controller="JobOffer" asp-action="AllSearch" method="get">
+				<form id="jobSearchForm" asp-controller="JobOffer" asp-action="AllSearch" method="get">
 					<input placeholder="Find Your Dream Job here..." type="search" name="search" />
-					<i class="enter-icon fa-solid fa-arrow-right"></i>
+					<i class="enter-icon fa-solid fa-arrow-right" onclick="submitForm()"></i>
 					<button type="submit" hidden></button>
 				</form>
-
 			</div>
 		</div>
 	</div>
@@ -81,3 +80,9 @@
 	</div>
 	<div class="glow-ellipse-background"></div>
 </div>
+
+<script>
+	function submitForm() {
+		document.getElementById("jobSearchForm").submit();
+	}
+</script>
