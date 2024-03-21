@@ -13,6 +13,7 @@
 	using Web.ViewModels.JobOffer;
 	using Web.ViewModels.Technology;
 	using DevHunter.Web.ViewModels.Company;
+	using Ganss.Xss;
 
 	public class CompanyService : ICompanyService
 	{
@@ -73,6 +74,8 @@
 			var company = await this.context.Companies
 				.FirstAsync(c => c.Id.ToString() == id);
 
+			var sanitizier = new HtmlSanitizer();
+
 			bool hasChanges = false;
 
 			if (company.Name != model.Name)
@@ -82,7 +85,9 @@
 			}
 			if (company.Description != model.Description)
 			{
-				company.Description = model.Description;
+				var sanitized = sanitizier.Sanitize(model.Description!);
+
+				company.Description = sanitized;
 				hasChanges = true;
 			}
 			if (company.Activity != model.Activity)
@@ -171,11 +176,11 @@
 			{
 				model.Activity = company.Activity;
 			}
-			if (!string.IsNullOrWhiteSpace(model.Location))
+			if (!string.IsNullOrWhiteSpace(company.Location))
 			{
 				model.Location = company.Location;
 			}
-			if (!string.IsNullOrWhiteSpace(model.Description))
+			if (!string.IsNullOrWhiteSpace(company.Description))
 			{
 				model.Description = company.Description;
 			}

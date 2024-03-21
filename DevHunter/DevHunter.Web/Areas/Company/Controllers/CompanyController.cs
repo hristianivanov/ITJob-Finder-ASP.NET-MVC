@@ -25,9 +25,7 @@
 		{
 			try
 			{
-				string? companyId = await this.companyService.GetCompanyIdByCreatorIdAsync(id);
-
-				bool companyExists = await this.companyService.ExistsByIdAsync(companyId!);
+				bool companyExists = await this.companyService.ExistsByIdAsync(id!);
 
 				if (!companyExists)
 				{
@@ -36,7 +34,7 @@
 					return RedirectToAction("Index", "Home");
 				}
 
-				var model = await this.companyService.GetForEditByIdAsync(companyId!);
+				var model = await this.companyService.GetForEditByIdAsync(id!);
 
 				return View(model);
 			}
@@ -56,7 +54,7 @@
 
 			try
 			{
-				bool companyExists = await this.companyService.ExistsByIdAsync(id);
+				bool companyExists = await this.companyService.ExistsByIdAsync(id!);
 
 				if (!companyExists)
 				{
@@ -65,7 +63,7 @@
 					return RedirectToAction("Index", "Home");
 				}
 
-				await this.companyService.EditAsync(id, model);
+				await this.companyService.EditAsync(id!, model);
 			}
 			catch (Exception)
 			{
