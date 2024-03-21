@@ -1,0 +1,189 @@
+.job-application-form {
+    display: block;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 640px;
+    height: 100%;
+    overflow-y: auto;
+    padding: 24px;
+    background-color: white;
+    z-index: 8;
+    color: #898989;
+    font-family: Axiforma, sans-serif;
+    transform: translateX(calc(100% + 300px));
+    transition: all 0.4s ease-in-out;
+}
+
+.job-application-form.open {
+    transform: translateX(0);
+}
+
+.job-application-form form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.job-application-form .contact-form-wrap {
+    height: 100%;
+}
+
+.job-application-form .form-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 16px;
+    margin-top: 20px;
+    border-radius: 5px;
+    border: 1px solid #EBF3FF;
+    background: linear-gradient(180deg, rgba(235, 243, 255, 0.00) 0%, #EBF3FF 58.85%);
+    box-shadow: 0 1px 3px -1px rgba(0, 0, 0, 0.6);
+}
+
+.job-application-form .form-footer {
+    margin-left: -24px;
+    padding: 24px;
+    width: calc(100% + 48px);
+}
+
+.job-application-form .form-inner .form-row {
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+.job-application-form .upload-container .upload-inner {
+    color: #898989;
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+
+.job-application-form .upload-handler {
+    cursor: pointer;
+    position: relative;
+    border-radius: 5px;
+    margin-bottom: 0;
+    border: 1px dashed #c5c5c5;
+}
+
+    .job-application-form .upload-handler:hover {
+        border-color: #3C4EF5;
+    }
+
+    .job-application-form .upload-handler .upload-container {
+        background-color: white;
+        border-radius: 5px;
+        padding: 15px 20px;
+    }
+
+.job-application-form .form-inner .post-title {
+    font-size: 20px;
+    color: #231F20;
+    font-weight: 600;
+    line-height: 1;
+    text-align: center;
+    margin: 10px 0;
+}
+
+.job-application-form .form-inner .form-title {
+    padding: 7px 24px;
+    margin-bottom: 24px;
+    background-color: #374FFE;
+    border-radius: 0 0 5px 5px;
+}
+
+.job-application-form .form-inner .form-title h5 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 500;
+    color: #fff;
+}
+
+.close-form {
+    display: block;
+    position: absolute;
+    right: 20px;
+    top: 0;
+    font-size: 40px;
+    transform: rotate(45deg);
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+}
+
+.close-form:hover {
+    transform: rotate(-45deg);
+    font-size: 45px;
+    color: #310000;
+}
+
+.job-application-form .form-inner .name-email-wrap .fields {
+    display: flex;
+    gap: 16px;
+}
+
+.job-application-form .form-inner .fields > span {
+    width: 100%;
+}
+
+.job-application-form .form-inner .fields input {
+    width: 100%;
+    height: 44px;
+    border: 1px solid #D5D5D5;
+    border-radius: 5px;
+    font-size: 16px;
+    padding: 3px 12px 0;
+    color: #898989;
+}
+
+.job-application-form .form-inner .fields textarea {
+    width: 100%;
+    border: 1px solid #D5D5D5;
+    border-radius: 5px;
+    font-size: 16px;
+    padding: 8px 12px;
+    resize: none;
+    color: #898989;
+    outline: unset;
+}
+
+.job-application-form .submit-btn {
+    border: unset;
+    width: 100%;
+}
+
+.job-application-form .footer-top {
+    min-height: 52px;
+    background: linear-gradient(360deg, #F5F5F5 0%, rgba(245, 245, 245, 0.00) 100%);
+    /* ReSharper disable once HexColorValueWithAlpha */
+    border-bottom: 1px solid #d5d5d56e;
+    padding: 0 24px;
+    width: 120%;
+    transform: translateX(-48px);
+    margin-bottom: 2em;
+}
+
+.job-application-form .upload-handler .text {
+    font-size: 16px;
+    color: #231F20;
+    font-weight: 400;
+    font-family: Axiforma, sans-serif;
+}
+
+    .job-application-form .upload-handler .text span {
+        color:rgb(0, 102, 204) ;
+    }
+
+.job-application-form .upload-handler .upload-file-counter {
+    position: absolute;
+    right: 5px;
+    bottom: 3px;
+    font-size: 12px;
+}
+
+.job-application-form .upload-container p {
+    font-size: 13px;
+}

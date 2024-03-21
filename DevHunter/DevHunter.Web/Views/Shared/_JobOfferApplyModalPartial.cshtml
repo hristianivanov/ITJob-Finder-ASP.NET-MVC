@@ -1,0 +1,55 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model DevHunter.Web.ViewModels.JobApplication.JobApplicationFormModel
+
+<div class="curtain"></div>
+<div class="job-application-form">
+	<div class="contact-form-wrap">
+		<span class="close-form">+</span>
+		<form asp-area="" asp-controller="JobOffer" asp-action="Apply" method="post" enctype="multipart/form-data">
+			<div class="form-inner">
+				<div class="form-title"><h5>Apply for a position</h5></div>
+				<h4 class="post-title">@ViewBag.JobPossition</h4>
+				<div class="name-email-wrap form-row">
+					<span class="form-label">Your personal info*</span>
+					<div class="fields">
+						<span class="your-name"><input asp-for="CandidateName" placeholder="First and Last name*" type="text"/></span>
+						<span class="your-email"><input asp-for="Email" placeholder="Email*" type="text"/></span>
+					</div>
+				</div>
+				<div class="motivational-letter-wrap form-row">
+					<span class="form-label">Your motivational letter to the company*</span>
+					<div class="fields">
+						<textarea asp-for="MotivationalLetter" placeholder="Start writting down here..."></textarea>
+					</div>
+				</div>
+				<div class="uploads-wrap form-row">
+					<span class="form-label">Files required for the position (max. 10MB)*</span>
+					<div class="fields">
+						<div class="upload-handler">
+							<div class="upload-container">
+								<div class="upload-inner">
+									<p class="text">Upload the <span>required files</span></p>
+									<input asp-for="Files" type="file" hidden
+									       accept=".jpg, .jpeg, .png, .pdf, .doc, .docx, .ppt, .pptx"
+									       id="upload-files" multiple />
+									<p>Allowed file formats: jpg, jpeg, png, pdf, doc, docx, ppt, pptx</p>
+								</div>
+							</div>
+							<span class="upload-file-counter"></span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="footer">
+				<div class="footer-top"></div>
+				<div class="form-footer">
+					<button asp-controller="JobOffer" asp-action="Apply" asp-route-id="@ViewBag.Id"
+					        class="apply-button submit-btn" type="submit">
+						<img class="btn-icon" src="icon-paper-plane.svg" alt="">
+						Apply for the job
+					</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>

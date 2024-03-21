@@ -1,5 +1,9 @@
 ﻿@model DevHunter.Web.ViewModels.JobOffer.JobOfferDetailsViewModel
 @using DevHunter.Web.Infrastructure.Extensions;
+@{
+	ViewBag.Id = Model.Id;
+	ViewBag.JobPossition = Model.Title;
+}
 <div class="container-single-job">
 	<div class="job-list-item single-job">
 		<div class="company-logo-wrap">
@@ -118,9 +122,17 @@
 				Look all company job offers
 			</a>
 		</div>
+
+		<partial name="_JobOfferApplyModalPartial" model="@Model.ApplyModel"/>
 	</aside>
 </div>
 
 @section Styles {
 	<link href="~/css/job-offer-detail/styles.css" rel="stylesheet" />
+	<link href="~/css/job-offer-detail/job-apply-modal.css" rel="stylesheet" />
+	<link href="~/css/job-offer-detail/curtain.css" rel="stylesheet" />
+}
+
+@section Scripts {
+	<script src="~/js/apply-job-offer/script.js"></script>
 }

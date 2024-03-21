@@ -14,6 +14,8 @@ namespace DevHunter.Data
 		public DbSet<Company> Companies { get; set; } = null!;
 		public DbSet<Technology> Technologies { get; set; } = null!;
 		public DbSet<Development> Developments { get; set; } = null!;
+		public DbSet<JobApplication> JobApplications { get; set; } = null!;
+		public DbSet<ApplicationDocument> ApplicationDocuments { get; set; } = null!;
 		public DbSet<SavedJobOffer> SavedJobOffers { get; set; } = null!;
 		public DbSet<TechnologyDevelopments> TechnologiesDevelopments { get; set; } = null!;
 		public DbSet<CompanyTechnologies> CompanyTechnologies { get; set; } = null!;
