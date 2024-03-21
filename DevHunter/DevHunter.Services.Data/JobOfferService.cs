@@ -15,6 +15,7 @@ namespace DevHunter.Services.Data
 	using Newtonsoft.Json;
 	using System.ComponentModel.DataAnnotations;
 	using static DevHunter.Common.EntityValidationConstants;
+	using Ganss.Xss;
 
 	public class JobOfferService : IJobOfferService
 	{

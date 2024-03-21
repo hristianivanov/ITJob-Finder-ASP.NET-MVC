@@ -135,6 +135,7 @@
 		}
 
 		[HttpPost]
+		[Route("user/login")]
 		public async Task<IActionResult> Login(LoginFormModel model)
 		{
 			await this.HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);

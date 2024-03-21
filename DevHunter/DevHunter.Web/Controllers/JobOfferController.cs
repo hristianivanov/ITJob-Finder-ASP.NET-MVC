@@ -46,7 +46,8 @@
 			return View(queryModel);
 		}
 
-		//TODO: XSS on Description HTMLSanitizer
+		[HttpGet]
+		[Route("job-offer/detail")]
 		public async Task<IActionResult> Detail(string id)
 		{
 			bool jobOfferExists = await this.jobOfferService
@@ -77,7 +78,7 @@
 		{
 			if (!ModelState.IsValid)
 			{
-				return RedirectToAction("Detail", new { id = id });
+				return RedirectToAction("Detail", new { id });
 			}
 
 			bool jobOfferExists = await this.jobOfferService

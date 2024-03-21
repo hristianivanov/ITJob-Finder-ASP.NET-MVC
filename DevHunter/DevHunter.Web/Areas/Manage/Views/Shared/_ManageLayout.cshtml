@@ -1,5 +1,6 @@
 ﻿@using DevHunter.Web.Infrastructure.Extensions
 @using Microsoft.AspNetCore.Mvc.TagHelpers
+@using DevHunter.Services.Data.Interfaces
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,9 +17,12 @@
 
 	@await Html.PartialAsync("_ToastrScriptsPartial")
 	@await Html.PartialAsync("_Favicons")
-
 </head>
 <body>
+	@inject ICompanyService companyService;
+	@{
+		string? companyId = await this.companyService.GetCompanyIdByCreatorIdAsync(this.User.GetId()!);
+	}
 	<div class="site-container">
 		@* <header class="site-header">
 		<div class="site-title">
@@ -40,12 +44,12 @@
 						@if (this.User.IsInRole("Company"))
 						{
 							<li class="menu-item application-icon">
-								<a asp-area="Company" asp-controller="Company" asp-action="Edit" asp-route-id="@this.User.GetId()">
+								<a asp-area="Company" asp-controller="Company" asp-action="Edit" asp-route-id="@companyId">
 									Edit company profile
 								</a>
 							</li>
 							<li class="menu-item saved-job-icon">
-								<a asp-area="" asp-controller="Company" asp-action="Detail" asp-route-id="@this.User.GetId()">Preview profile</a>
+								<a asp-area="" asp-controller="Company" asp-action="Detail" asp-route-id="@companyId">Preview profile</a>
 							</li>
 						}
 					</ul>
@@ -60,7 +64,7 @@
 						</li>
 						<li class="menu-item logout-link">
 							<form asp-area="" asp-controller="User" asp-action="Logout" method="post">
-								<button style="all: unset;cursor: pointer;" type="submit">Logout</button>
+								<button style="all: unset; cursor: pointer;" type="submit">Logout</button>
 							</form>
 						</li>
 					</ul>
