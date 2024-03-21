@@ -1,0 +1,24 @@
+.curtain {
+    position: fixed;
+    width: 0;
+    height: 0;
+    background: rgba(0, 0, 0, 0);
+    top: 0;
+    left: 0;
+    z-index: -1;
+    transition: background 0.5s ease-in-out;
+}
+
+.curtain.open {
+    width: 100%;
+    height: 100%;
+    /* ReSharper disable once HexColorValueWithAlpha */
+    background: #000000d9;
+    z-index: 6;
+}
+
+/*applied to body*/
+.form-is-open {
+    overflow-x: hidden;
+    overflow-y: hidden;
+}

@@ -55,6 +55,14 @@
             flex-basis: 20%;
         }
 
+            .table-container .table-content .column-title.name {
+                flex-basis: 20%;
+            }
+
+            .table-container .table-content .column-title.email {
+                flex-basis: 30%;
+            }
+
         .table-container .table-content .title {
             flex-basis: 45%;
         }
@@ -80,21 +88,33 @@
             flex-basis: 20%;
         }
 
+        .table-container .table-content .data-row .email {
+            font-size: 14px;
+            color: #898989;
+            flex-basis: 30%;
+        }
+
+        .table-container .table-content .data-row .name {
+            font-size: 14px;
+            color: #898989;
+            flex-basis: 20%;
+        }
+
         .table-container .table-content .data-row .title {
             font-size: 16px;
-            
             font-weight: 400;
             flex-basis: 45%;
         }
+
             .table-container .table-content .data-row .title a {
                 color: #231F20;
             }
 
-            .table-container .table-content .data-row .location {
-                color: #ADADAD;
-                font-size: 12px;
-                flex-basis: 20%;
-            }
+        .table-container .table-content .data-row .location {
+            color: #ADADAD;
+            font-size: 12px;
+            flex-basis: 20%;
+        }
 
         .table-container .table-content .data-row .actions .action {
             display: inline-flex;

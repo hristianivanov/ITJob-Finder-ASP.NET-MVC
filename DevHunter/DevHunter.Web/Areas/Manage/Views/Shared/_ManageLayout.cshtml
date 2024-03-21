@@ -40,7 +40,7 @@
 						@if (this.User.IsInRole("Company"))
 						{
 							<li class="menu-item application-icon">
-								<a asp-area="" asp-controller="Company" asp-action="Edit" asp-route-id="@this.User.GetId()">
+								<a asp-area="Company" asp-controller="Company" asp-action="Edit" asp-route-id="@this.User.GetId()">
 									Edit company profile
 								</a>
 							</li>

@@ -1,0 +1,60 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model ICollection<DevHunter.Web.ViewModels.JobApplication.AllJobApplicationViewModel>
+
+<div class="outside-wrapper">
+	<div class="table-container">
+		<header class="table-heading">
+			<h1>Your job candidates</h1>
+			<p>Look all of your candidates for your team.</p>
+		</header>
+		<main class="table-content">
+			<div class="table-head">
+				<div class="column-title name">Candidate name</div>
+				<div class="column-title email">Email</div>
+				<div class="column-title title">Job Offer</div>
+				<div class="column-title actions"></div>
+			</div>
+			<div class="table-body">
+				@foreach (var jobOffer in Model)
+				{
+					@foreach (var application in jobOffer.JobApplications)
+					{
+						<div class="data-row">
+							<div class="name">@application.CandidateName</div>
+							<div class="email">@application.Email</div>
+							<div class="title">
+								<a asp-area="" asp-controller="JobOffer" asp-action="Detail" asp-route-id="@jobOffer.JobOfferId">
+									@jobOffer.JobOfferTitle
+								</a>
+							</div>
+							<div class="actions">
+								<a asp-area="Company" asp-controller="JobOffer" asp-action="Edit" asp-route-id="" class="action edit-job">
+									Edit
+								</a>
+								<form method="post">
+									<button class="action remove-job"
+											type="submit"
+											asp-area="Company" asp-controller="JobOffer" asp-action="Delete" asp-route-id=""
+											onclick="return confirm('Are you sure you want to delete job post: .JobLocation')">
+										Remove
+									</button>
+								</form>
+							</div>
+						</div>
+					}
+				}
+			</div>
+		</main>
+		@* <footer class="custom-pagination">
+		<!--        <a href="#" class="direction prev"><</a>-->
+		<a href="#" class="current first">1</a>
+		<a href="#" class="last">2</a>
+		<a href="#" class="direction next">></a>
+		</footer> *@
+	</div>
+</div>
+
+@section Styles {
+	<link href="~/css/job-offer-crud-table/styles.css" rel="stylesheet" />
+	<link href="~/css/job-offer-crud-table/custom-pagination.css" rel="stylesheet" />
+}

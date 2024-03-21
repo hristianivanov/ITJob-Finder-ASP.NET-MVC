@@ -14,6 +14,7 @@
 			this.Id = Guid.NewGuid();
 			this.JobOfferTechnologies = new HashSet<TechnologyJobOffers>();
 			this.SavedJobOffers = new HashSet<SavedJobOffer>();
+			this.JobApplications = new HashSet<JobApplication>();
 		}
 
 		[Key]
@@ -46,5 +47,6 @@
 
         public virtual ICollection<TechnologyJobOffers> JobOfferTechnologies { get; set; }
 		public virtual ICollection<SavedJobOffer> SavedJobOffers { get; set; }
+		public virtual ICollection<JobApplication> JobApplications { get; set; }
 	}
 }
