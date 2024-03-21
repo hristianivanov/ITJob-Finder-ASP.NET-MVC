@@ -8,6 +8,7 @@
 	<div class="top-content">
 		<div class="register-container">
 			<form class="company-register-form" method="post" enctype="multipart/form-data">
+				<span class="error_messsage align-right" asp-validation-for="Image"></span>
 				<header>
 					<div class="profile-icon">
 						<svg class="user" width="24" height="25" viewBox="0 0 24 25" fill="none"
@@ -16,34 +17,37 @@
 								  fill="white" />
 						</svg>
 					</div>
-					<div class="upload-btn">
-						<input asp-for="Image" type="file" name="Image" accept="image/png, image/jpeg">
-						<span asp-validation-for="Image"></span>
-						<svg class="upload-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
-							 xmlns="http://www.w3.org/2000/svg">
-							<path d="M20.8125 14.25V19.5C20.8125 19.8481 20.6742 20.1819 20.4281 20.4281C20.1819 20.6742 19.8481 20.8125 19.5 20.8125H4.5C4.1519 20.8125 3.81806 20.6742 3.57192 20.4281C3.32578 20.1819 3.1875 19.8481 3.1875 19.5V14.25C3.1875 14.1008 3.24676 13.9577 3.35225 13.8522C3.45774 13.7468 3.60082 13.6875 3.75 13.6875C3.89918 13.6875 4.04226 13.7468 4.14775 13.8522C4.25324 13.9577 4.3125 14.1008 4.3125 14.25V19.5C4.3125 19.5497 4.33225 19.5974 4.36742 19.6326C4.40258 19.6677 4.45027 19.6875 4.5 19.6875H19.5C19.5497 19.6875 19.5974 19.6677 19.6326 19.6326C19.6677 19.5974 19.6875 19.5497 19.6875 19.5V14.25C19.6875 14.1008 19.7468 13.9577 19.8523 13.8522C19.9577 13.7468 20.1008 13.6875 20.25 13.6875C20.3992 13.6875 20.5423 13.7468 20.6477 13.8522C20.7532 13.9577 20.8125 14.1008 20.8125 14.25ZM8.6475 7.89749L11.4375 5.10843V14.25C11.4375 14.3992 11.4968 14.5423 11.6023 14.6477C11.7077 14.7532 11.8508 14.8125 12 14.8125C12.1492 14.8125 12.2923 14.7532 12.3977 14.6477C12.5032 14.5423 12.5625 14.3992 12.5625 14.25V5.10843L15.3525 7.89749C15.4591 7.99685 15.6002 8.05095 15.7459 8.04837C15.8916 8.0458 16.0307 7.98677 16.1337 7.88371C16.2368 7.78065 16.2958 7.64161 16.2984 7.49588C16.301 7.35016 16.2469 7.20912 16.1475 7.10249L12.3975 3.35249C12.292 3.24716 12.1491 3.18799 12 3.18799C11.8509 3.18799 11.708 3.24716 11.6025 3.35249L7.8525 7.10249C7.75314 7.20912 7.69905 7.35016 7.70162 7.49588C7.70419 7.64161 7.76322 7.78065 7.86628 7.88371C7.96934 7.98677 8.10838 8.0458 8.25411 8.04837C8.39983 8.05095 8.54087 7.99685 8.6475 7.89749Z"
-								  fill="white" />
-						</svg>
-						<p>Upload Photo</p>
+					<div class="upload-container">
+						<div class="company-image">
+						</div>
+						<div class="upload-btn">
+							<input asp-for="Image" type="file" name="Image" accept="image/png, image/jpeg">
+							<svg class="upload-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
+								 xmlns="http://www.w3.org/2000/svg">
+								<path d="M20.8125 14.25V19.5C20.8125 19.8481 20.6742 20.1819 20.4281 20.4281C20.1819 20.6742 19.8481 20.8125 19.5 20.8125H4.5C4.1519 20.8125 3.81806 20.6742 3.57192 20.4281C3.32578 20.1819 3.1875 19.8481 3.1875 19.5V14.25C3.1875 14.1008 3.24676 13.9577 3.35225 13.8522C3.45774 13.7468 3.60082 13.6875 3.75 13.6875C3.89918 13.6875 4.04226 13.7468 4.14775 13.8522C4.25324 13.9577 4.3125 14.1008 4.3125 14.25V19.5C4.3125 19.5497 4.33225 19.5974 4.36742 19.6326C4.40258 19.6677 4.45027 19.6875 4.5 19.6875H19.5C19.5497 19.6875 19.5974 19.6677 19.6326 19.6326C19.6677 19.5974 19.6875 19.5497 19.6875 19.5V14.25C19.6875 14.1008 19.7468 13.9577 19.8523 13.8522C19.9577 13.7468 20.1008 13.6875 20.25 13.6875C20.3992 13.6875 20.5423 13.7468 20.6477 13.8522C20.7532 13.9577 20.8125 14.1008 20.8125 14.25ZM8.6475 7.89749L11.4375 5.10843V14.25C11.4375 14.3992 11.4968 14.5423 11.6023 14.6477C11.7077 14.7532 11.8508 14.8125 12 14.8125C12.1492 14.8125 12.2923 14.7532 12.3977 14.6477C12.5032 14.5423 12.5625 14.3992 12.5625 14.25V5.10843L15.3525 7.89749C15.4591 7.99685 15.6002 8.05095 15.7459 8.04837C15.8916 8.0458 16.0307 7.98677 16.1337 7.88371C16.2368 7.78065 16.2958 7.64161 16.2984 7.49588C16.301 7.35016 16.2469 7.20912 16.1475 7.10249L12.3975 3.35249C12.292 3.24716 12.1491 3.18799 12 3.18799C11.8509 3.18799 11.708 3.24716 11.6025 3.35249L7.8525 7.10249C7.75314 7.20912 7.69905 7.35016 7.70162 7.49588C7.70419 7.64161 7.76322 7.78065 7.86628 7.88371C7.96934 7.98677 8.10838 8.0458 8.25411 8.04837C8.39983 8.05095 8.54087 7.99685 8.6475 7.89749Z"
+									  fill="white" />
+							</svg>
+							<p>Upload Photo</p>
+						</div>
 					</div>
 				</header>
 				<h2>Your account</h2>
 				<div class="input-field">
 					<input asp-for="Email" type="email" placeholder="Professional email" />
-					<span asp-validation-for="Email"></span>
+					<span class="error_messsage" asp-validation-for="Email"></span>
 				</div>
 				<div class="input-field">
 					<input asp-for="Password" type="password" placeholder="Password" />
-					<span asp-validation-for="Password"></span>
+					<span class="error_messsage" asp-validation-for="Password"></span>
 				</div>
 				<div class="input-field company-details">
 					<div style="flex: 1">
 						<input asp-for="Name" type="text" placeholder="Your company name" />
-						<span asp-validation-for="Name"></span>
+						<span class="error_messsage" asp-validation-for="Name"></span>
 					</div>
 					<div style="flex: 1">
 						<input asp-for="WebsiteUrl" type="text" placeholder="Your company website" />
-						<span asp-validation-for="WebsiteUrl"></span>
+						<span class="error_messsage" asp-validation-for="WebsiteUrl"></span>
 					</div>
 				</div>
 				<button type="submit" class="submit-register-btn">Register</button>
@@ -75,9 +79,71 @@
 		cursor: pointer;
 		opacity: 0;
 	}
+
+	.upload-container {
+		display: flex;
+		align-items: stretch;
+		gap: 1em;
+	}
+
+	.upload-container .company-image {
+		display: none;
+		background: white;
+		width: 110px;
+		height: 56px;
+		border-radius: 5px;
+		box-shadow: 0 0 10px 5px #4056C0 inset, 0 0 35px 0 #4056C0;
+		overflow: hidden;
+	}
+
+	.upload-container .company-image.active {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.upload-container .company-image img {
+		display: block;
+		width: 75px;
+		height: auto;
+	}
 </style>
 
 
 @section Scripts {
+
+	<script>
+		document.querySelector('.upload-btn').addEventListener('click', (e) => {
+			btnUpload.click();
+		});
+
+		const btnUpload = document.querySelector('.upload-btn input[type=file]');
+
+		const errorMsg = btnUpload.querySelector('p');
+
+		const allowedExtensions = ['png', 'jpg', 'jpeg'];
+
+		btnUpload.addEventListener("change", function (e) {
+			const extension = btnUpload.value.split('.').pop().toLowerCase();
+
+			if (allowedExtensions.indexOf(extension) === -1) {
+				errorMsg.textContent = "Not an Image...";
+			} else {
+
+				const uploadedFile = URL.createObjectURL(e.target.files[0]);
+
+
+				let uploadedView = document.querySelector(".upload-container .company-image");
+
+				uploadedView.innerHTML = '';
+				uploadedView.classList.add('active');
+				let previewImage = new Image();
+				previewImage.src = uploadedFile;
+				uploadedView.appendChild(previewImage);
+			}
+		});
+	</script>
+
+
 	<script src="~/js/login-register-bg-rm.js"></script>
 }

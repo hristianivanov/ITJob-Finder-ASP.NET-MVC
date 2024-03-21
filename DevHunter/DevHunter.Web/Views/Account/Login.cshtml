@@ -7,7 +7,7 @@
 <div class="login-container">
 	<div class="login-wrapper">
 
-		<form asp-controller="User" asp-action="Login" class="site-login-form" method="post">
+		<form asp-controller="Account" asp-action="Login" class="site-login-form" method="post">
 			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 			<h1 class="heading">@ViewData["Title"]</h1>
 			<div class="input-field">
@@ -22,7 +22,7 @@
 		</form>
 		<footer>
 			<div class="separator">Don't have an DevHunter account?</div>
-			<a asp-area="" asp-controller="User" asp-action="RegisterOption" class="cta">Sign Up</a>
+			<a asp-area="" asp-controller="Account" asp-action="RegisterOption" class="cta">Sign Up</a>
 		</footer>
 	</div>
 	<div class="background-elements">

@@ -7,15 +7,15 @@
 	@if (SignInManager.IsSignedIn(User))
 	{
 		//Hello @User.Identity?.Name!
-		<a class="user-manage-icon" asp-area="" asp-controller="User" asp-action="Manage">HI</a>
-		<form asp-area="" asp-controller="User" asp-action="Logout" asp-route-returnUrl="@(Context.Request.Path + Context.Request.QueryString)" method="post">
+		<a class="user-manage-icon" asp-area="" asp-controller="Account" asp-action="Manage">HI</a>
+		<form asp-area="" asp-controller="Account" asp-action="Logout" asp-route-returnUrl="@(Context.Request.Path + Context.Request.QueryString)" method="post">
 			<button type="submit" class="last-btn">Logout</button>
 		</form>
 	}
 	else
 	{
-		<a asp-area="" asp-controller="User" asp-action="Login" >Log In.</a>
-		<a class="last-btn" asp-area="" asp-controller="User" asp-action="RegisterOption">Register.</a>
+		<a asp-area="" asp-controller="Account" asp-action="Login" >Log In.</a>
+		<a class="last-btn" asp-area="" asp-controller="Account" asp-action="RegisterOption">Register.</a>
 	}
 
 </div>

@@ -5,8 +5,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5524ad82-825a-4eb9-9897-a94178bea7f6" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/DevHunter.Web/Areas/Company/Views/Company/Candidates.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/DevHunter.Web/Areas/Company/Views/Company/Candidates.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DevHunter.Web/wwwroot/css/job-offer-crud-table/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/DevHunter.Web/wwwroot/css/job-offer-crud-table/styles.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DevHunter.Services.Data/CompanyService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DevHunter.Services.Data/CompanyService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DevHunter.Services.Data/DevHunter.Services.Data.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/DevHunter.Services.Data/DevHunter.Services.Data.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DevHunter.Services.Data/JobOfferService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DevHunter.Services.Data/JobOfferService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DevHunter.Web/Areas/Admin/Views/Home/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/DevHunter.Web/Areas/Admin/Views/Home/Index.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DevHunter.Web/Areas/Admin/Views/Shared/_AdminLayout.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/DevHunter.Web/Areas/Admin/Views/Shared/_AdminLayout.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DevHunter.Web/Areas/Company/Controllers/CompanyController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DevHunter.Web/Areas/Company/Controllers/CompanyController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DevHunter.Web/Areas/Company/Views/Shared/_CompanyLayout.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/DevHunter.Web/Areas/Company/Views/Shared/_CompanyLayout.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DevHunter.Web/Areas/Manage/Views/Shared/_ManageLayout.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/DevHunter.Web/Areas/Manage/Views/Shared/_ManageLayout.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DevHunter.Web/Controllers/CompanyController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DevHunter.Web/Controllers/CompanyController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DevHunter.Web/Controllers/JobOfferController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DevHunter.Web/Controllers/JobOfferController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DevHunter.Web/Controllers/UserController.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DevHunter.Web/DevHunter.Web.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/DevHunter.Web/DevHunter.Web.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DevHunter.Web/Views/Company/Detail.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/DevHunter.Web/Views/Company/Detail.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DevHunter.Web/Views/Shared/_LoginPartial.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/DevHunter.Web/Views/Shared/_LoginPartial.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DevHunter.Web/Views/User/Login.cshtml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DevHunter.Web/Views/User/Manage.cshtml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DevHunter.Web/Views/User/Register.cshtml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DevHunter.Web/Views/User/RegisterCompany.cshtml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DevHunter.Web/Views/User/RegisterOption.cshtml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DevHunter.Web/wwwroot/js/register-option.js" beforeDir="false" afterPath="$PROJECT_DIR$/DevHunter.Web/wwwroot/js/register-option.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,6 +83,7 @@
       <workItem from="1709878037611" duration="17000" />
       <workItem from="1710956321733" duration="621000" />
       <workItem from="1711006158839" duration="126000" />
+      <workItem from="1711052575728" duration="34000" />
     </task>
     <servers />
   </component>
