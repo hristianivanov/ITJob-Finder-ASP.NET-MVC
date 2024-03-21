@@ -28,6 +28,7 @@
 			var uploadParams = new RawUploadParams()
 			{
 				Folder = folder,
+				PublicId = file.FileName,
 				File = new FileDescription(file.FileName, stream),
 			};
 
@@ -48,7 +49,6 @@
 				DocumentUrl = url,
 				JobApplicationId = Guid.Parse(applicationId),
 			};
-
 			await this.dbContext.ApplicationDocuments.AddAsync(document);
 			await this.dbContext.SaveChangesAsync();
 		}

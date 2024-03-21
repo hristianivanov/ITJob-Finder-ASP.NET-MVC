@@ -7,6 +7,7 @@
 	using Infrastructure.Extensions;
 
 	using static Common.NotificationMessagesConstants;
+	using DevHunter.Web.ViewModels.JobApplication;
 
 	public class CompanyController : BaseCompanyController
 	{
@@ -88,6 +89,17 @@
 
 			return View(model);
 		}
+
+		// Controller Action Method
+		[HttpGet]
+		public async Task<IActionResult> GetApplicationDetails(string applicationId)
+		{
+			
+			var application = await this.jobApplicationService.GetApplicationById(applicationId);
+
+			return PartialView("_JobApplicationModalPartial", application);
+		}
+
 
 		private IActionResult GeneralError()
 		{

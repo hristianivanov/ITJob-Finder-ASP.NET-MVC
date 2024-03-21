@@ -28,8 +28,8 @@
 								</a>
 							</div>
 							<div class="actions">
-								<a asp-area="Company" asp-controller="JobOffer" asp-action="Edit" asp-route-id="" class="action edit-job">
-									Edit
+								<a id ="@application.Id"class="action view">
+									View
 								</a>
 								<form method="post">
 									<button class="action remove-job"
@@ -45,6 +45,7 @@
 				}
 			</div>
 		</main>
+		<div id="application-detail"></div>
 		@* <footer class="custom-pagination">
 		<!--        <a href="#" class="direction prev"><</a>-->
 		<a href="#" class="current first">1</a>
@@ -57,4 +58,18 @@
 @section Styles {
 	<link href="~/css/job-offer-crud-table/styles.css" rel="stylesheet" />
 	<link href="~/css/job-offer-crud-table/custom-pagination.css" rel="stylesheet" />
+	<link href="~/css/job-offer-detail/job-apply-modal.css" rel="stylesheet" />
+	<style>
+		.job-application-form .form-inner .fields > span {
+			width: 100%;
+			background: white;
+			padding: 10px;
+			border-radius: 5px;
+		}
+	</style>
+}
+
+@section Scripts {
+	<script src="~/js/company/script.js"></script>
+	<script src="~/js/apply-job-offer/script.js"></script>
 }
