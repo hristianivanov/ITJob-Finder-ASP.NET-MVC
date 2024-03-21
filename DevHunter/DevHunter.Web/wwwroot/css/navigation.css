@@ -91,7 +91,7 @@
         box-shadow: unset;
     }
 
-.login-register-cta > * {
+.login-register-cta * {
     cursor: pointer;
 }
 

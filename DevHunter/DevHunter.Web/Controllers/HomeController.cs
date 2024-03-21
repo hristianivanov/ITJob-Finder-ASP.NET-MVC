@@ -18,6 +18,7 @@
 			_logger = logger;
 		}
 
+		[HttpGet]
 		public IActionResult Index()
 		{
 			if (this.User.IsCompany())

@@ -142,6 +142,11 @@
 
 		public IActionResult Login()
 		{
+			if (User?.Identity?.IsAuthenticated ?? false)
+			{
+				return RedirectToAction("Index", "Home");
+			}
+
 			return View();
 		}
 
@@ -181,10 +186,5 @@
 
 			return RedirectToAction("Index", "Home");
 		}
-
-        public IActionResult Manage()
-        {
-            return View();
-        }
 	}
 }
