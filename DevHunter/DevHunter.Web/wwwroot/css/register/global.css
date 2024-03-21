@@ -1,3 +1,13 @@
 ﻿@import url(register-option.css);
 
 @import url(company-register.css);
+
+.error_messsage.align-right {
+    text-align: right;
+}
+
+.error_messsage {
+    color: #c61414;
+    font-size: 14px;
+    font-family: Axiforma;
+}

@@ -3,7 +3,7 @@ const radioBtns = registerOptionContainer.querySelectorAll("input[type=radio]");
 const radioBtnsContainers = registerOptionContainer.querySelectorAll(".radio-btn");
 const createBtn = registerOptionContainer.querySelector(".section-footer > .create-btn");
 
-const btnHrefAttribute = createBtn.getAttribute("href");
+const btnHrefAttribute = createBtn.getAttribute("href").toLowerCase();
 
 radioBtnsContainers.forEach((container) =>
     container.addEventListener("click", () => {
@@ -15,10 +15,10 @@ radioBtnsContainers.forEach((container) =>
 
         if (container.classList.contains("option-company")) {
             createBtn.textContent = "Join us as a client";
-            createBtn.setAttribute("href", `${btnHrefAttribute}/RegisterCompany`);
+            createBtn.setAttribute("href", `${btnHrefAttribute}/register-company`);
         } else if (container.classList.contains("option-client")) {
             createBtn.textContent = "Apply as a freelancer";
-            createBtn.setAttribute("href", `${btnHrefAttribute}/Register`);
+            createBtn.setAttribute("href", `${btnHrefAttribute}/register-user`);
         }
 
     })

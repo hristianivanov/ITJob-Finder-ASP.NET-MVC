@@ -7,7 +7,7 @@
 <div class="outer-register-container-background">
 	<div class="top-content">
 		<div class="register-container">
-			<form asp-controller="User" asp-action="Register" class="company-register-form" method="post">
+			<form asp-controller="Account" asp-action="Register" class="company-register-form" method="post">
 				<header>
 					<div class="profile-icon">
 						<svg class="user" width="24" height="25" viewBox="0 0 24 25" fill="none"
@@ -24,11 +24,11 @@
 				</div> *@
 				<div class="input-field">
 					<input asp-for="Email" type="email" autocomplete="username" aria-required="true" placeholder="Professional email"/>
-					<span asp-validation-for="Email"></span>
+					<span class="error_messsage" asp-validation-for="Email"></span>
 				</div>
 				<div class="input-field">
 					<input asp-for="Password" type="password" autocomplete="new-password" aria-required="true" placeholder="Password"/>
-					<span asp-validation-for="Password"></span>
+					<span class="error_messsage" asp-validation-for="Password"></span>
 				</div>
 				<button type="submit" class="submit-register-btn">Register</button>
 			</form>

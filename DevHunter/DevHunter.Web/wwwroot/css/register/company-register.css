@@ -43,6 +43,7 @@
 }
 
 .register-container > .company-register-form {
+    font-family: Axiforma, sans-serif;
     display: flex;
     flex-direction: column;
     gap: 0.6em;
