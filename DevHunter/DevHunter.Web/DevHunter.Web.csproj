@@ -33,8 +33,4 @@
     <ProjectReference Include="..\DevHunter.Web.ViewModels\DevHunter.Web.ViewModels.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Areas\Manage\Controllers\" />
-  </ItemGroup>
-
 </Project>

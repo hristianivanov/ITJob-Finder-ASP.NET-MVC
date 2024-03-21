@@ -7,7 +7,6 @@
 	using Infrastructure.Extensions;
 
 	using static Common.NotificationMessagesConstants;
-	using DevHunter.Web.ViewModels.JobApplication;
 
 	public class CompanyController : BaseCompanyController
 	{

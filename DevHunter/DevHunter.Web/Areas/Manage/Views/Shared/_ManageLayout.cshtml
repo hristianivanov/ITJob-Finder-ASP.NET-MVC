@@ -19,11 +19,7 @@
 	@await Html.PartialAsync("_Favicons")
 </head>
 <body>
-	@inject ICompanyService companyService;
-	@{
-		string? companyId = await this.companyService.GetCompanyIdByCreatorIdAsync(this.User.GetId()!);
-	}
-	<div class="site-container">
+<div class="site-container">
 		@* <header class="site-header">
 		<div class="site-title">
 		<p><a class="site-full-name" asp-area="" asp-controller="Home" asp-action="Index"><span>DH</span> DevHunter</a></p>
@@ -36,20 +32,22 @@
 				</a>
 				<div class="menu-user-profile-jobs-container">
 					<ul id="user-profile-jobs" class="menu">
-						@if (!this.User.IsInRole("Company"))
+						@if (!this.User.IsCompany())
 						{
 							<li class="menu-item application-icon"><a href="#">My applications</a></li>
 							<li class="menu-item saved-job-icon"><a href="#">Saved offers</a></li>
 						}
-						@if (this.User.IsInRole("Company"))
+						@if (this.User.IsCompany())
 						{
 							<li class="menu-item application-icon">
-								<a asp-area="Company" asp-controller="Company" asp-action="Edit" asp-route-id="@companyId">
+								<a asp-area="Manage" asp-controller="Account" asp-action="ManageCompany" asp-route-userId="@User.GetId()">
 									Edit company profile
 								</a>
 							</li>
 							<li class="menu-item saved-job-icon">
-								<a asp-area="" asp-controller="Company" asp-action="Detail" asp-route-id="@companyId">Preview profile</a>
+								<a asp-area="Manage" asp-controller="Account" asp-action="DetailCompany" asp-route-userId="@User.GetId()">
+									Preview profile
+								</a>
 							</li>
 						}
 					</ul>
@@ -58,7 +56,7 @@
 				<div class="menu-user-profile-personal-container">
 					<ul id="user-profile-personal" class="menu">
 						<li class="menu-item my-profile-icon">
-							<a asp-area="" asp-controller="Account" asp-action="Manage" class="icon-profile">
+							<a asp-area="Manage" asp-controller="Account" asp-action="Manage" class="icon-profile">
 								My profile
 							</a>
 						</li>
