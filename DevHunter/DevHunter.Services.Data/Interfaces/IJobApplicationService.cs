@@ -6,5 +6,6 @@
 	{
 		Task<string> ApplyJobOfferAsync(JobApplicationFormModel model, string jobOfferId);
 		Task<ICollection<AllJobApplicationViewModel>> AllCandidatesByCompanyIdAsync(string? companyId);
+		Task<JobApplicationViewModel> GetApplicationById(string applicationId);
 	}
 }

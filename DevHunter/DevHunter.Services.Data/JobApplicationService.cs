@@ -37,7 +37,7 @@
 			var jobOffersApplications = await this.context
 				.JobOffers
 				.Where(j => j.CompanyId.ToString() == companyId &&
-				            j.JobApplications.Count() != 0)
+							j.JobApplications.Count() != 0)
 				.AsNoTracking()
 				.Select(j => new AllJobApplicationViewModel()
 				{
@@ -54,6 +54,36 @@
 				.ToListAsync();
 
 			return jobOffersApplications;
+		}
+
+		public async Task<JobApplicationViewModel> GetApplicationById(string applicationId)
+		{
+			var application = await this.context
+				.JobApplications
+				.FirstAsync(a => a.Id.ToString() == applicationId);
+
+			return new JobApplicationViewModel()
+			{
+				Id = application.Id.ToString(),
+				CandidateName = application.CandidateName,
+				Email = application.Email,
+				MotivationalLetter = application.MotivationalLetter,
+				JobPosition = application.JobOffer.JobPosition,
+				DocumentsUrl = application.Documents.Select(d => new DocumentViewModel()
+				{
+					DocumentName = ExtractDocumentName(d.DocumentUrl),
+					DocumentUrl = d.DocumentUrl,
+				}).ToList(),
+			};
+		}
+
+		private static string ExtractDocumentName(string url)
+		{
+			string[] parts = url.Split('/');
+		
+			string documentName = parts[parts.Length - 1];
+		
+			return documentName;
 		}
 	}
 }

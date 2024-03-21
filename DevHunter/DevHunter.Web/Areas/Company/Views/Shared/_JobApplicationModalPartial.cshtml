@@ -1,0 +1,55 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model DevHunter.Web.ViewModels.JobApplication.JobApplicationViewModel
+@{
+	int rowCnt = 1;
+}
+<div class="curtain"></div>
+<div class="job-application-form">
+	<div class="contact-form-wrap">
+		<span class="close-form">+</span>
+		<div class="form-inner">
+			<div class="form-title"><h5>Application info</h5></div>
+			<h4 class="post-title">@Model.JobPosition</h4>
+			<div class="name-email-wrap form-row">
+				<span class="form-label">Candidate personal info*</span>
+				<div class="fields">
+					<span class="your-name">@Model.CandidateName</span>
+					<span class="your-email">@Model.Email</span>
+				</div>
+			</div>
+			<div class="motivational-letter-wrap form-row">
+				<span class="form-label">Candidate motivational letter to the company*</span>
+				<div class="fields" style="background: white;padding: 10px;border-radius: 5px;">
+					@Model.MotivationalLetter
+				</div>
+			</div>
+			<div class="uploads-wrap form-row">
+				<span class="form-label">Provided files from the candidate</span>
+				<div class="fields">
+
+					<ul class="document-container">
+						@foreach (var document in Model.DocumentsUrl)
+						{
+							<li class="document-item">@(rowCnt++). <a href="@document.DocumentUrl">@document.DocumentName</a></li>
+						}
+					</ul>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<style>
+	.form-label {
+		color: #1e1e1e;
+	}
+	.fields .document-container {
+		list-style: none;
+		padding: 0.8em 1.5em 0.8em 0.8em;
+	}
+
+	.fields .document-container .document-item {
+		font-size: 14px;
+	}
+</style>

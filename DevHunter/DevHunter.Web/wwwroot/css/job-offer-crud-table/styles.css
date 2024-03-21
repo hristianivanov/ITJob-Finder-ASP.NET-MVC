@@ -134,6 +134,11 @@
             border-bottom: 1px solid #CA472E;
         }
 
+        .table-container .table-content .data-row .actions .view {
+            color: #2199e8;
+            border-bottom: 1px solid #2199e8;
+        }
+
         .table-container .table-content .data-row .actions .edit-job {
             color: #2199e8;
             border-bottom: 1px solid #2199e8;
@@ -167,6 +172,21 @@
         height: 17px;
         margin-right: 0.2em;
         background-image: url(../../svgs/icon-edit.svg);
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position-x: left;
+        background-position-y: center;
+        position: relative;
+        transform: translateY(-2px);
+    }
+
+    .data-row .actions .view::before {
+        content: '';
+        display: inline-block;
+        width: 16px;
+        height: 17px;
+        margin-right: 0.2em;
+        background-image: url(../../svgs/view-icon.svg);
         background-repeat: no-repeat;
         background-size: contain;
         background-position-x: left;

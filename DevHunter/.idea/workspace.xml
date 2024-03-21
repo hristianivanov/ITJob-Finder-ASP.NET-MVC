@@ -5,11 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5524ad82-825a-4eb9-9897-a94178bea7f6" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/DevHunter.Data.Models/JobOffer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DevHunter.Data.Models/JobOffer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DevHunter.Data/Migrations/DevHunterDbContextModelSnapshot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DevHunter.Data/Migrations/DevHunterDbContextModelSnapshot.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DevHunter.Web.ViewModels/DevHunter.Web.ViewModels.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/DevHunter.Web.ViewModels/DevHunter.Web.ViewModels.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DevHunter.Web/Controllers/JobOfferController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DevHunter.Web/Controllers/JobOfferController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DevHunter.Web/Views/JobOffer/Detail.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/DevHunter.Web/Views/JobOffer/Detail.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DevHunter.Web/Areas/Company/Views/Company/Candidates.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/DevHunter.Web/Areas/Company/Views/Company/Candidates.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DevHunter.Web/wwwroot/css/job-offer-crud-table/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/DevHunter.Web/wwwroot/css/job-offer-crud-table/styles.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,6 +64,7 @@
       <workItem from="1709840930504" duration="2552000" />
       <workItem from="1709878037611" duration="17000" />
       <workItem from="1710956321733" duration="621000" />
+      <workItem from="1711006158839" duration="126000" />
     </task>
     <servers />
   </component>
