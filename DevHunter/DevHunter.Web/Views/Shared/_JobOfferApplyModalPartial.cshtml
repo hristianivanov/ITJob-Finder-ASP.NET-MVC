@@ -42,6 +42,9 @@
 			</div>
 			<div class="footer">
 				<div class="footer-top"></div>
+				<div class="form-invalid">
+					<p class="response-output"></p>
+				</div>
 				<div class="form-footer">
 					<button asp-controller="JobOffer" asp-action="Apply" asp-route-id="@ViewBag.Id"
 					        class="apply-button submit-btn" type="submit">
@@ -53,3 +56,21 @@
 		</form>
 	</div>
 </div>
+
+<style>
+	.form-invalid.active {
+		display: block;
+	}
+
+	.form-invalid {
+		display: none;
+		background: #FFDED7;
+		color: #C53A1F;
+		border: none;
+		padding: 9px 12px 5px;
+		margin: 10px 0;
+		border-radius: 5px;
+		font-size: 12px;
+		font-weight: 400;
+	}
+</style>

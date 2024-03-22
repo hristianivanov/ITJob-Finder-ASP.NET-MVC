@@ -39,12 +39,12 @@
 		[Route("account/register-company")]
 		public IActionResult RegisterCompany()
 		{
-			var model = new CompanyRegisterFormModel();
-
 			if (User?.Identity?.IsAuthenticated ?? false)
 			{
 				return RedirectToAction("Index", "Home");
 			}
+
+			var model = new CompanyRegisterFormModel();
 
 			return View(model);
 		}
@@ -95,12 +95,12 @@
 		[Route("account/register-user")]
 		public IActionResult Register()
 		{
-			var model = new RegisterFormModel();
-
 			if (User?.Identity?.IsAuthenticated ?? false)
 			{
 				return RedirectToAction("Index", "Home");
 			}
+
+			var model = new RegisterFormModel();
 
 			return View(model);
 		}
