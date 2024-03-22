@@ -3,7 +3,7 @@
 	using Microsoft.AspNetCore.Mvc;
 
 	using Services.Data.Interfaces;
-	
+
 	using static Common.NotificationMessagesConstants;
 
 	public class CompanyController : Controller
@@ -19,18 +19,18 @@
 		[Route("company/detail")]
 		public async Task<IActionResult> Detail(string id)
 		{
-			bool companyExists = await this.companyService
-				.ExistsByIdAsync(id!);
-
-			if (!companyExists)
-			{
-				TempData[ErrorMessage] = "Company with the provided id does not exist!";
-
-				return RedirectToAction("Index","Home");
-			}
-
 			try
 			{
+				bool companyExists = await this.companyService
+					.ExistsByIdAsync(id!);
+
+				if (!companyExists)
+				{
+					TempData[ErrorMessage] = "Company does not exist!";
+
+					return RedirectToAction("Index", "Home");
+				}
+
 				var model = await this.companyService
 					.GetDetailsByIdAsync(id!);
 

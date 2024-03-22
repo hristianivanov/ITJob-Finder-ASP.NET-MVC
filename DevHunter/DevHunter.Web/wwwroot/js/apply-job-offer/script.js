@@ -51,3 +51,49 @@ function closeModal() {
     modal.classList.remove('open');
     document.body.classList.remove('form-is-open');
 }
+
+
+$('form').submit(function (e) {
+    e.preventDefault();
+
+    var form = $(this);
+    var formData = new FormData(form[0]);
+
+    var formaction = form.find('.apply-button').attr('formaction');
+    var id = formaction.split('/').pop();
+
+    formData.append('id', id);
+
+    let invalidDiv = document.querySelector('.form-invalid');
+
+    $.ajax({
+        url: form.attr('action'),
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: async function (response) {
+            if (response.success == false) {
+
+                invalidDiv.classList.add('active')
+
+                let responseOutput = document.querySelector('.form-invalid .response-output');
+                responseOutput.textContent = response.errorMsg;
+
+            } else if (response.success == true) {
+                invalidDiv.classList.remove('active')
+
+                form.trigger('reset');
+
+                closeModal();
+
+                customToastrSuccess(response.successMsg);
+            }
+        },
+        error: function () {
+            console.error(error.statusCode);
+            console.error('An error occurred while processing your request.');
+        }
+    });
+});
+

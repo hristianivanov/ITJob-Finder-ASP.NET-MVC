@@ -50,18 +50,18 @@
 		[Route("job-offer/detail")]
 		public async Task<IActionResult> Detail(string id)
 		{
-			bool jobOfferExists = await this.jobOfferService
-				.ExistsByIdAsync(id);
-
-			if (!jobOfferExists)
-			{
-				TempData[ErrorMessage] = "Job offer with the provided id does not exist!";
-
-				return RedirectToAction("All");
-			}
-
 			try
 			{
+				bool jobOfferExists = await this.jobOfferService
+					.ExistsByIdAsync(id);
+
+				if (!jobOfferExists)
+				{
+					TempData[ErrorMessage] = "Job offer does not exist!";
+
+					return RedirectToAction("All");
+				}
+
 				var model = await this.jobOfferService
 					.GetDetailsByIdAsync(id);
 
@@ -78,37 +78,33 @@
 		{
 			if (!ModelState.IsValid)
 			{
-				return RedirectToAction("Detail", new { id });
-			}
-
-			bool jobOfferExists = await this.jobOfferService
-				.ExistsByIdAsync(id);
-
-			if (!jobOfferExists)
-			{
-				TempData[ErrorMessage] = "Job offer with the provided id does not exist!";
-
-				return RedirectToAction("All");
+				return new JsonResult(new { success = false, errorMsg = "There is an error in one or more fields" });
 			}
 
 			try
 			{
+				bool jobOfferExists = await this.jobOfferService.ExistsByIdAsync(id);
+
+				if (!jobOfferExists)
+				{
+					TempData[ErrorMessage] = "Job offer with the provided id does not exist!";
+
+					return RedirectToAction("All");
+				}
+
 				string applicationId = await this.jobApplicationService.ApplyJobOfferAsync(model, id);
 
 				if (model.Files.Count > 0)
 				{
 					foreach (var file in model.Files)
 					{
-						string documentUrl = await this.documentService
-							.UploadDocumentAsync(file, "DevHunter/documents");
+						string documentUrl = await this.documentService.UploadDocumentAsync(file, "DevHunter/documents");
 
 						await this.documentService.AddAsync(documentUrl, applicationId);
 					}
 				}
 
-				TempData[SuccessMessage] = "Your application has been sent successfully!";
-
-				return RedirectToAction("Detail", new { id = id });
+				return new JsonResult(new { success = true, successMsg = "Your application has been sent successfully!" });
 			}
 			catch (Exception)
 			{
