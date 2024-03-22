@@ -19,7 +19,7 @@
 			</div>
 			<div class="motivational-letter-wrap form-row">
 				<span class="form-label">Candidate motivational letter to the company*</span>
-				<div class="fields" style="background: white;padding: 10px;border-radius: 5px;">
+				<div class="fields" style="background: white;padding: 10px;border-radius: 5px; max-height: 350px; overflow: scroll">
 					@Model.MotivationalLetter
 				</div>
 			</div>
@@ -30,7 +30,9 @@
 					<ul class="document-container">
 						@foreach (var document in Model.DocumentsUrl)
 						{
-							<li class="document-item">@(rowCnt++). <a href="@document.DocumentUrl">@document.DocumentName</a></li>
+							<li class="document-item">
+								@(rowCnt++). <a href="@document.DocumentUrl" target="_blank">@document.DocumentName</a>
+							</li>
 						}
 					</ul>
 

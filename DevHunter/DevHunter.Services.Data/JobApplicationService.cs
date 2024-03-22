@@ -5,6 +5,7 @@
 
 	using Interfaces;
 	using Microsoft.EntityFrameworkCore;
+	using System.Web;
 	using Web.ViewModels.JobApplication;
 
 	public class JobApplicationService : IJobApplicationService
@@ -62,6 +63,8 @@
 				.JobApplications
 				.FirstAsync(a => a.Id.ToString() == applicationId);
 
+			string googleDocsViewerBaseUrl = "https://docs.google.com/viewer?url=";
+
 			return new JobApplicationViewModel()
 			{
 				Id = application.Id.ToString(),
@@ -72,7 +75,7 @@
 				DocumentsUrl = application.Documents.Select(d => new DocumentViewModel()
 				{
 					DocumentName = ExtractDocumentName(d.DocumentUrl),
-					DocumentUrl = d.DocumentUrl,
+					DocumentUrl = $"{googleDocsViewerBaseUrl}{HttpUtility.UrlEncode(d.DocumentUrl)}",
 				}).ToList(),
 			};
 		}
