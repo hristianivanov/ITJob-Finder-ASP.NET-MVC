@@ -47,7 +47,7 @@ namespace DevHunter.Web
 
 			builder.Services.ConfigureApplicationCookie(cfg =>
             {
-                cfg.LoginPath = "/User/Login";
+                cfg.LoginPath = "/Account/Login";
             });
 
             builder.Services.AddApplicationServices(typeof(IJobOfferService));

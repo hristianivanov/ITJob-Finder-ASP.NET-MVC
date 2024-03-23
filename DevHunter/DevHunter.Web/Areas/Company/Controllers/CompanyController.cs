@@ -20,6 +20,7 @@
 		}
 
 		[HttpGet]
+		[Route("company/edit/{id}")]
 		public async Task<IActionResult> Edit(string id)
 		{
 			try
@@ -28,9 +29,9 @@
 
 				if (!companyExists)
 				{
-					TempData[ErrorMessage] = "Company with the provided id does not exist!";
+					TempData[ErrorMessage] = "Company does not exist!";
 
-					return RedirectToAction("Index", "Home");
+					return RedirectToAction("Index", "Home", new { area = "" });
 				}
 
 				var model = await this.companyService.GetForEditByIdAsync(id!);
@@ -44,7 +45,8 @@
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> Edit(string id, CompanyFormModel model)
+		[Route("company/edit/{id}")]
+		public async Task<IActionResult> Edit([FromRoute] string id, CompanyFormModel model)
 		{
 			if (!ModelState.IsValid)
 			{
@@ -57,7 +59,7 @@
 
 				if (!companyExists)
 				{
-					TempData[ErrorMessage] = "Company with the provided id does not exist!";
+					TempData[ErrorMessage] = "Company does not exist!";
 
 					return RedirectToAction("Index", "Home");
 				}
@@ -72,13 +74,14 @@
 				return View(model);
 			}
 
-			return RedirectToAction("Index", "Home");
+			return RedirectToAction("Index", "Home", new { area = "" });
 		}
 
 		[HttpGet]
+		[Route("company/candidates")]
 		public async Task<IActionResult> Candidates()
 		{
-			string? companyId = 
+			string? companyId =
 				await this.companyService.GetCompanyIdByCreatorIdAsync(this.User.GetId()!);
 
 			var model = await this.jobApplicationService
@@ -87,22 +90,20 @@
 			return View(model);
 		}
 
-		// Controller Action Method
 		[HttpGet]
 		public async Task<IActionResult> GetApplicationDetails(string applicationId)
 		{
-			
+
 			var application = await this.jobApplicationService.GetApplicationById(applicationId);
 
 			return PartialView("_JobApplicationModalPartial", application);
 		}
 
-
 		private IActionResult GeneralError()
 		{
 			TempData[ErrorMessage] = "Unexpected error occurred!";
 
-			return RedirectToAction("Index", "Home");
+			return RedirectToAction("Index", "Home", new { area = "" });
 		}
 	}
 }

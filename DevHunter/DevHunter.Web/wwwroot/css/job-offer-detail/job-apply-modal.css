@@ -1,6 +1,7 @@
 .job-application-form {
     display: block;
     position: fixed;
+    overflow-x: hidden;
     top: 0;
     right: 0;
     width: 640px;
@@ -142,6 +143,7 @@
 .job-application-form .form-inner .fields textarea {
     width: 100%;
     border: 1px solid #D5D5D5;
+    height: 260px;
     border-radius: 5px;
     font-size: 16px;
     padding: 8px 12px;
