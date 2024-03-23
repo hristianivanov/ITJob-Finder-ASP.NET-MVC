@@ -10,7 +10,7 @@
 	using static Common.GeneralApplicationConstants;
 	using static Common.NotificationMessagesConstants;
 
-	[Area("Company")]
+	[Area(CompanyAreaName)]
 	[Authorize(Roles = CompanyRoleName)]
 	public class JobOfferController : Controller
 	{
