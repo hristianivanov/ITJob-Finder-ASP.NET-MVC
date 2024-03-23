@@ -159,6 +159,45 @@
 			return technologies;
 		}
 
+		public async Task<IEnumerable<TechnologyViewModel>> AllByJobOfferIdAsync(string id)
+		{
+			var technologies = await this.dbContext
+				.TechnologyJobOffers
+				.Where(tj => tj.JobOfferId.ToString() == id)
+				.Select(tj => new TechnologyViewModel()
+				{
+					Id = tj.TechnologyId.ToString(),
+					Name = tj.Technology.Name,
+					ImageUrl = tj.Technology.ImageUrl
+				})
+				.ToListAsync();
+
+			return technologies;
+		}
+
+		public async Task<IEnumerable<TechnologyViewModel>> AllWithoutJobOfferOnesAsync(string id)
+		{
+			var jobOffer = await this.dbContext
+				.JobOffers
+				.FirstAsync(j => j.Id.ToString() == id);
+
+			var existingTechnologyIds = jobOffer.JobOfferTechnologies.Select(t => t.TechnologyId).ToList();
+
+			var technologies = await this.dbContext
+				.Technologies
+				.Where(t => !existingTechnologyIds.Any(et => t.Id == et))
+				.AsNoTracking()
+				.Select(t => new TechnologyViewModel()
+				{
+					Id = t.Id.ToString(),
+					Name = t.Name,
+					ImageUrl = t.ImageUrl.EnhanceCloudinaryUrl(50, "auto")
+				})
+				.ToListAsync();
+
+			return technologies;
+		}
+
 		private async Task<IFormFile> ConvertImageUrlToFormFileAsync(string imageUrl)
 		{
 			using (HttpClient client = new HttpClient())

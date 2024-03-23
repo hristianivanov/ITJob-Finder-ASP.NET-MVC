@@ -1,4 +1,6 @@
-﻿namespace DevHunter.Data.Models
+﻿using DevHunter.Data.Models.Enums;
+
+namespace DevHunter.Data.Models
 {
 	using System.ComponentModel.DataAnnotations;
 	using System.ComponentModel.DataAnnotations.Schema;
@@ -40,6 +42,8 @@
 		public virtual Company Company { get; set; } = null!;
 
 		public string PlaceToWork { get; set; } = null!;
+
+        public PlaceToWork JobPlace { get; set; }
 
         public int WorkingHours { get; set; }
 

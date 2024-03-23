@@ -4,8 +4,11 @@
 @model DevHunter.Web.ViewModels.JobOffer.JobOfferEditFormModel
 
 
-<div class="jon-offer-container">
-	<h1 class="heading">Job post</h1>
+<div class="job-offer-container">
+	<header class="heading">
+		<h1>Edit job post</h1>
+		<p>Edit your job offer from our website.</p>
+	</header>
 	<form asp-area="Company" asp-controller="JobOffer" asp-action="Edit" class="job-offer-add-form" method="post">
 		<!--    JOB TITLE-->
 		<div class="input-field">
@@ -20,16 +23,18 @@
 				<div class="caret"></div>
 			</div>
 			<ul class="menu">
-				<li data-location="In-person, precise location">In-person, precise location</li>
-				<li data-location="Remote">Remote</li>
-				<li data-location="Hybrid remote">Hybrid remote</li>
-				<li data-location="On the road">On the road</li>
+				@foreach (var locationType in Model.LocationTypeModels)
+				{
+					<li data-location="@locationType.LocationType">@locationType.DisplayName</li>
+				}
 			</ul>
 
 			<div class="input-field" style="display: none">
 				<input asp-for="Location" type="text" placeholder="Job location address" />
 			</div>
-			<input asp-for="IsRemote" type="hidden" id="IsRemote" />
+			
+			<input asp-for="LocationType" type="hidden" id="LocationType" />
+			<span class="error_messsage" asp-validation-for="LocationType"></span>
 		</div>
 
 		<!--    EXPERIENCE LEVEL-->
@@ -65,55 +70,63 @@
 
 		<!--PAY-->
 		<!--    maximum week hours 168-->
-		<div class="input-field">
-			<input asp-for="WorkingHours" type="number" placeholder="Working hours" />
-			<span asp-validation-for="WorkingHours"></span>
-			<!--        fixed hours-->
-			<!--        range-->
-			<!--        maximum -->
-			<!--        minimum-->
-		</div>
+		<div class="two-input-field">
+			<div class="input-field">
+				<input asp-for="WorkingHours" type="number" placeholder="Working hours" />
+				<span asp-validation-for="WorkingHours"></span>
+				<!--        fixed hours-->
+				<!--        range-->
+				<!--        maximum -->
+				<!--        minimum-->
+			</div>
 
-		<div class="input-field">
-			<!--        range-->
-			<!--        starting amount-->
-			<!--        exact amount-->
-			<!--        per year day month week hour-->
-			<input asp-for="Salary" type="number" placeholder="Salary">
-			<span asp-validation-for="Salary"></span>
+			<div class="input-field">
+				<!--        range-->
+				<!--        starting amount-->
+				<!--        exact amount-->
+				<!--        per year day month week hour-->
+				<input asp-for="Salary" type="number" placeholder="Salary">
+				<span asp-validation-for="Salary"></span>
+			</div>
 		</div>
 
 		<!--    JOB DESCRIPTION-->
 		<div class="rich-text-editor">
-			<div class="options">
-				<button id="bold" class="option-button format">
-					<i class="fa-solid fa-bold"></i>
-				</button>
-				<button id="italic" class="option-button format">
-					<i class="fa-solid fa-italic"></i>
-				</button>
-				<button id="underline" class="option-button format">
-					<i class="fa-solid fa-underline"></i>
-				</button>
-				<button id="strikethrough" class="option-button format">
-					<i class="fa-solid fa-strikethrough"></i>
-				</button>
-				<button id="insertOrderedList" class="option-button">
-					<i class="fa-solid fa-list-ol"></i>
-				</button>
-				<button id="insertUnorderedList" class="option-button">
-					<i class="fa-solid fa-list"></i>
-				</button>
-			</div>
+			<section>
+				<header class="option-title">Description</header>
+				<div class="options">
+					<button id="bold" class="option-button format">
+						<i class="fa-solid fa-bold"></i>
+					</button>
+					<button id="italic" class="option-button format">
+						<i class="fa-solid fa-italic"></i>
+					</button>
+					<button id="underline" class="option-button format">
+						<i class="fa-solid fa-underline"></i>
+					</button>
+					<button id="strikethrough" class="option-button format">
+						<i class="fa-solid fa-strikethrough"></i>
+					</button>
+					<button id="insertOrderedList" class="option-button">
+						<i class="fa-solid fa-list-ol"></i>
+					</button>
+					<button id="insertUnorderedList" class="option-button">
+						<i class="fa-solid fa-list"></i>
+					</button>
+				</div>
+			</section>
 			<div class="rich-text-area" id="description-editor" contenteditable="true">@Html.Raw(Model.Description)</div>
 			<input type="hidden" asp-for="Description" id="description-input" />
-			<span asp-validation-for="Description"></span>
+			<span class="error_messsage" asp-validation-for="Description"></span>
 		</div>
 
 		<!--    TECH STACK-->
 		<div class="multiselect-autocomplete-tech-stack">
 			<div class="job-offer-technology-tags">
-				<p class="title">Press enter or add a comma after each tag</p>
+				<header class="tech-stack-heading">
+					<h4>Tech stack</h4>
+					<p>Press enter or add a comma after each tag</p>
+				</header>
 				<ul class="job-tags">
 					<input class="search" type="text" spellcheck="false">
 				</ul>
@@ -121,9 +134,9 @@
 				</div>
 			</div>
 		</div>
-		<input type="hidden" asp-for="SelectedTechnologies" id="selectedTechnologiesInput" />
+		<input type="hidden" asp-for="Technologies" id="selectedTechnologiesInput" />
 
-		<button type="submit">Submit btn</button>
+		<button type="submit">Submit post</button>
 	</form>
 </div>
 
@@ -136,24 +149,10 @@
 }
 
 @section Scripts {
-	<script>
-		var technologiesArray = @Html.Raw(JsonSerializer.Serialize(
-		Model.Technologies.Select(t => t.Name), new JsonSerializerOptions
-		{
-			Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
-		}));
-
-		var selectedTechnologiesArray = @Html.Raw(JsonSerializer.Serialize(
-		Model.JobOfferTechnologies.Select(t => t.Name),
-		new JsonSerializerOptions
-		{
-			Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
-		}));
-	</script>
 	<script src="~/js/job-offer-add/script.js"></script>
 	<script src="~/js/job-offer-add/dropdown.js"></script>
 	<script src="~/js/job-offer-add/select-option.js"></script>
 	<script src="~/js/job-offer-add/rich-tech-editor.js"></script>
-	<script src="~/js/job-offer-add/tech-stack.js"></script>
+	<script src="~/js/job-offer-add/tech-stack-edit.js"></script>
 	<script src="~/js/job-offer-add/edit-job.js"></script>
 }

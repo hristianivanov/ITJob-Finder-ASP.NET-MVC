@@ -4,6 +4,7 @@ using DevHunter.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DevHunter.Data.Migrations
 {
     [DbContext(typeof(DevHunterDbContext))]
-    partial class DevHunterDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240322204832_AddEnumerationForPlaceToWork")]
+    partial class AddEnumerationForPlaceToWork
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -39,7 +41,7 @@ namespace DevHunter.Data.Migrations
 
                     b.HasIndex("JobApplicationId");
 
-                    b.ToTable("ApplicationDocuments", (string)null);
+                    b.ToTable("ApplicationDocuments");
                 });
 
             modelBuilder.Entity("DevHunter.Data.Models.ApplicationUser", b =>
@@ -149,7 +151,7 @@ namespace DevHunter.Data.Migrations
 
                     b.HasIndex("CreatorId");
 
-                    b.ToTable("Companies", (string)null);
+                    b.ToTable("Companies");
                 });
 
             modelBuilder.Entity("DevHunter.Data.Models.CompanyTechnologies", b =>
@@ -164,7 +166,7 @@ namespace DevHunter.Data.Migrations
 
                     b.HasIndex("TechnologyId");
 
-                    b.ToTable("CompanyTechnologies", (string)null);
+                    b.ToTable("CompanyTechnologies");
                 });
 
             modelBuilder.Entity("DevHunter.Data.Models.Development", b =>
@@ -183,7 +185,7 @@ namespace DevHunter.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Developments", (string)null);
+                    b.ToTable("Developments");
                 });
 
             modelBuilder.Entity("DevHunter.Data.Models.JobApplication", b =>
@@ -211,7 +213,7 @@ namespace DevHunter.Data.Migrations
 
                     b.HasIndex("JobOfferId");
 
-                    b.ToTable("JobApplications", (string)null);
+                    b.ToTable("JobApplications");
                 });
 
             modelBuilder.Entity("DevHunter.Data.Models.JobOffer", b =>
@@ -260,7 +262,7 @@ namespace DevHunter.Data.Migrations
 
                     b.HasIndex("CompanyId");
 
-                    b.ToTable("JobOffers", (string)null);
+                    b.ToTable("JobOffers");
                 });
 
             modelBuilder.Entity("DevHunter.Data.Models.SavedJobOffer", b =>
@@ -278,7 +280,7 @@ namespace DevHunter.Data.Migrations
 
                     b.HasIndex("JobOfferId");
 
-                    b.ToTable("SavedJobOffers", (string)null);
+                    b.ToTable("SavedJobOffers");
                 });
 
             modelBuilder.Entity("DevHunter.Data.Models.Technology", b =>
@@ -297,7 +299,7 @@ namespace DevHunter.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Technologies", (string)null);
+                    b.ToTable("Technologies");
 
                     b.HasData(
                         new
@@ -461,7 +463,7 @@ namespace DevHunter.Data.Migrations
 
                     b.HasIndex("DevelopmentId");
 
-                    b.ToTable("TechnologiesDevelopments", (string)null);
+                    b.ToTable("TechnologiesDevelopments");
                 });
 
             modelBuilder.Entity("DevHunter.Data.Models.TechnologyJobOffers", b =>
@@ -476,7 +478,7 @@ namespace DevHunter.Data.Migrations
 
                     b.HasIndex("TechnologyId");
 
-                    b.ToTable("TechnologyJobOffers", (string)null);
+                    b.ToTable("TechnologyJobOffers");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", b =>

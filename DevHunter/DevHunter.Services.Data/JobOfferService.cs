@@ -1,6 +1,7 @@
 ﻿using System.Globalization;
 using System.Text.Encodings.Web;
 using System.Text.Json;
+using DevHunter.Data.Models.Enums;
 using DevHunter.Web.ViewModels.Technology;
 
 namespace DevHunter.Services.Data
@@ -16,6 +17,7 @@ namespace DevHunter.Services.Data
 	using System.ComponentModel.DataAnnotations;
 	using static DevHunter.Common.EntityValidationConstants;
 	using Ganss.Xss;
+	using AngleSharp.Css;
 
 	public class JobOfferService : IJobOfferService
 	{
@@ -83,12 +85,12 @@ namespace DevHunter.Services.Data
 					Description = model.Description,
 					WorkingHours = model.WorkingHours!.Value,
 					CreatedOn = DateTime.UtcNow,
-					PlaceToWork = model.IsRemote && string.IsNullOrWhiteSpace(model.Location) ? "Remote" : model.Location!,
+					//PlaceToWork = model.IsRemote && string.IsNullOrWhiteSpace(model.Location) ? "Remote" : model.Location!,
 					MaxSalary = model.Salary!.Value,
 					CompanyId = company.Id,
 				};
 
-				string[] techStackNames = JsonConvert.DeserializeObject<string[]>(model.SelectedTechnologies)!;
+				string[] techStackNames = JsonConvert.DeserializeObject<string[]>(model.Technologies)!;
 				var techStack = new List<DevHunter.Data.Models.Technology>();
 
 				foreach (var techName in techStackNames)
@@ -199,23 +201,15 @@ namespace DevHunter.Services.Data
 				.ThenInclude(j => j.Technology)
 				.FirstAsync(j => j.Id.ToString() == id);
 
-			var jobOfferTechnologies = jobOffer.JobOfferTechnologies
-				.Select(tj => new TechnologyViewModel()
-				{
-					Id = tj.Technology.Id.ToString(),
-					Name = tj.Technology.Name,
-					ImageUrl = tj.Technology.ImageUrl!,
-				}).ToList();
-
 			return new JobOfferEditFormModel()
 			{
 				Title = jobOffer.JobPosition,
 				Description = jobOffer.Description,
 				Location = jobOffer.PlaceToWork,
 				Salary = jobOffer.MaxSalary,
+				LocationType = jobOffer.JobPlace,
 				WorkingHours = jobOffer.WorkingHours,
 				WorkingExperience = jobOffer.WorkingExperience,
-				JobOfferTechnologies = jobOfferTechnologies
 			};
 		}
 
@@ -278,52 +272,154 @@ namespace DevHunter.Services.Data
 			};
 		}
 
+		public async Task EditJobOfferAsync(string id, JobOfferEditFormModel model)
+		{
+			var jobOffer = await this.dbContext
+				.JobOffers
+				.FirstAsync(j => j.Id.ToString() == id);
+
+			bool isChanged = false;
+
+			if (model.Title != jobOffer.JobPosition)
+			{
+				jobOffer.JobPosition = model.Title;
+				isChanged = true;
+			}
+
+			if (model.Location != jobOffer.PlaceToWork)
+			{
+				jobOffer.PlaceToWork = model.Location!;
+				isChanged = true;
+			}
+
+			if (model.LocationType!.Value != jobOffer.JobPlace)
+			{
+				jobOffer.JobPlace = model.LocationType.Value;
+
+				if (jobOffer.JobPlace == PlaceToWork.Remote)
+				{
+					jobOffer.PlaceToWork = "Remote";
+				}
+
+				isChanged = true;
+			}
+
+
+			if (model.WorkingExperience != jobOffer.WorkingExperience)
+			{
+				jobOffer.WorkingExperience = model.WorkingExperience;
+				isChanged = true;
+			}
+
+			if (model.Salary != jobOffer.MaxSalary &&
+				model.Salary.HasValue)
+			{
+				jobOffer.MaxSalary = model.Salary;
+				isChanged = true;
+			}
+
+			if (model.WorkingHours != jobOffer.WorkingHours &&
+				model.WorkingHours.HasValue)
+			{
+				jobOffer.WorkingHours = model.WorkingHours.Value;
+				isChanged = true;
+			}
+
+			if (model.Description != jobOffer.Description)
+			{
+				var sanitizer = new HtmlSanitizer();
+
+				var sanitized = sanitizer.Sanitize(model.Description);
+
+				jobOffer.Description = sanitized;
+
+				isChanged = true;
+			}
+
+			if (model.Technologies != "[]")
+			{
+				string[] techStackNames = JsonConvert.DeserializeObject<string[]>(model.Technologies!)!;
+
+				var techStack = await dbContext.Technologies
+					.Where(t => techStackNames.Contains(t.Name))
+					.ToListAsync();
+
+				var existingTechnologyIds = await dbContext.TechnologyJobOffers
+					.Where(t => t.JobOfferId == jobOffer.Id)
+					.Select(t => t.TechnologyId)
+					.ToListAsync();
+
+				var jobOfferTechnologies = techStack
+					.Where(tech => !existingTechnologyIds.Contains(tech.Id))
+					.Select(tech => new TechnologyJobOffers
+					{
+						JobOfferId = jobOffer.Id,
+						TechnologyId = tech.Id
+					})
+					.ToList();
+
+				isChanged = true;
+
+				await dbContext.TechnologyJobOffers.AddRangeAsync(jobOfferTechnologies);
+			}
+
+			if (isChanged)
+			{
+				await this.dbContext.SaveChangesAsync();
+			}
+		}
+
 		public async Task<string> CreateAndReturnIdAsync(JobOfferFormModel model, string userId)
 		{
 			var company = await this.dbContext
 			.Companies
-				.FirstOrDefaultAsync(c => c.CreatorId.ToString() == userId);
+				.FirstAsync(c => c.CreatorId.ToString() == userId);
+
+			var sanitizer = new HtmlSanitizer();
 
 			var jobOffer = new DevHunter.Data.Models.JobOffer()
 			{
 				JobPosition = model.Title,
-				Description = model.Description,
-				WorkingHours = model.WorkingHours!.Value,
+				Description = sanitizer.Sanitize(model.Description),
 				CreatedOn = DateTime.UtcNow,
-				PlaceToWork = model.IsRemote && string.IsNullOrWhiteSpace(model.Location) ? "Remote" :
-					model.IsRemote ? $"{model.Location} Hybrid" : model.Location!,
-				MaxSalary = model.Salary!.Value,
+				JobPlace = model.LocationType!.Value,
+				PlaceToWork = model.LocationType.Value == PlaceToWork.Remote ? "Remote" : model.Location!,
 				WorkingExperience = model.WorkingExperience,
 				CompanyId = company.Id,
 			};
 
-			string[] techStackNames = JsonConvert.DeserializeObject<string[]>(model.SelectedTechnologies)!;
-			var techStack = new List<DevHunter.Data.Models.Technology>();
-
-			foreach (var techName in techStackNames)
+			if (model.WorkingHours.HasValue)
 			{
-				var tech = await this.dbContext.Technologies.FirstOrDefaultAsync(t => t.Name == techName);
-
-				if (tech != null)
-				{
-					techStack.Add(tech);
-				}
+				jobOffer.WorkingHours = model.WorkingHours!.Value;
 			}
 
-			foreach (var tech in techStack)
+			if (model.Salary.HasValue)
 			{
-				var jobOfferTechnology = new TechnologyJobOffers()
-				{
-					JobOfferId = jobOffer.Id,
-					TechnologyId = tech.Id,
-				};
-
-				await this.dbContext.TechnologyJobOffers.AddAsync(jobOfferTechnology);
+				jobOffer.MaxSalary = model.Salary!.Value;
 			}
+
+			if (model.Technologies != "[]")
+			{
+				string[] techStackNames = JsonConvert.DeserializeObject<string[]>(model.Technologies)!;
+
+				var techStack = await dbContext.Technologies
+					.Where(t => techStackNames.Contains(t.Name))
+					.ToListAsync();
+
+				var jobOfferTechnologies = techStack
+					.Select(tech => new TechnologyJobOffers
+					{
+						JobOfferId = jobOffer.Id,
+						TechnologyId = tech.Id
+					})
+					.ToList();
+
+				await dbContext.TechnologyJobOffers.AddRangeAsync(jobOfferTechnologies);
+			}
+
 
 			await this.dbContext.JobOffers.AddAsync(jobOffer);
 			await this.dbContext.SaveChangesAsync();
-
 
 			return jobOffer.Id!.ToString();
 		}
@@ -344,6 +440,9 @@ namespace DevHunter.Services.Data
 
 			return $"{formattedMaxSalary} lv.";
 		}
-
+		private static bool IsValidEnumValue<TEnum>(TEnum value)
+		{
+			return Enum.IsDefined(typeof(TEnum), value);
+		}
 	}
 }

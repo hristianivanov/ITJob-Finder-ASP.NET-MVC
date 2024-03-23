@@ -38,32 +38,68 @@ btnSubmit.addEventListener("click", (e) => {
 
     document.getElementById('selectedTechnologiesInput').value = JSON.stringify(selectedTechnologies);
 
-    if (selectedJobLocation === "On the road") {
-        locationInput.value += " Road";
-    }
-
     form.submit();
 })
 
 
 var descriptionEditor = document.getElementById("description-editor");
 var descriptionInput = document.getElementById("description-input");
+let locationType = document.getElementById('LocationType');
 
 descriptionEditor.addEventListener("input", function () {
     descriptionInput.value = descriptionEditor.innerHTML;
 });
 
 var locationDropdown = document.querySelector(".menu");
-var isRemoteInput = document.getElementById("IsRemote");
+
 let locationInput = document.getElementById("Location");
+
 locationDropdown.addEventListener("click", function (event) {
     var target = event.target;
 
     if (target.tagName === "LI") {
         var selectedLocation = target.dataset.location;
-        selectedJobLocation = selectedLocation;
 
-        var isRemote = selectedLocation === "Remote" || selectedLocation === "Hybrid remote";
-        isRemoteInput.value = isRemote ? "true" : "false";
+        locationType.value = selectedLocation;
     }
 });
+loadLocation();
+function loadLocation() {
+    if (locationType.value) {
+        let lis = document.querySelectorAll('.dropdown .menu li');
+        lis.forEach(li => {
+            if (li.dataset.location == locationType.value) {
+                const dropdown = li.closest('.dropdown');
+                const select = dropdown.querySelector('.select');
+                const caret = dropdown.querySelector('.caret');
+                const menu = dropdown.querySelector('.menu');
+                const selected = dropdown.querySelector('.selected');
+
+                // Call the handleOptionClick function with appropriate parameters
+                handleOptionClick(li, select, caret, menu, selected);
+            }
+        });
+    }
+}
+
+function handleOptionClick(option, select, caret, menu, selected) {
+    selected.innerText = option.innerText;
+    selected.classList.add('text-fade-in');
+
+    setTimeout(() => {
+        selected.classList.remove('text-fade-in');
+    }, 300);
+
+    select.classList.remove('select-clicked');
+    caret.classList.remove('caret-remove');
+    menu.classList.remove('menu-open');
+
+    const options = menu.querySelectorAll('.menu li');
+    options.forEach(opt => {
+        opt.classList.remove('active');
+    });
+
+    option.classList.add('active');
+
+    seniorityOptions();
+}

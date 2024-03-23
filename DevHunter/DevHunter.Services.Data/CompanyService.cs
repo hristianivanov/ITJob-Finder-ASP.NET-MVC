@@ -74,7 +74,7 @@
 			var company = await this.context.Companies
 				.FirstAsync(c => c.Id.ToString() == id);
 
-			var sanitizier = new HtmlSanitizer();
+			var sanitizer = new HtmlSanitizer();
 
 			bool hasChanges = false;
 
@@ -85,7 +85,7 @@
 			}
 			if (company.Description != model.Description)
 			{
-				var sanitized = sanitizier.Sanitize(model.Description!);
+				var sanitized = sanitizer.Sanitize(model.Description!);
 
 				company.Description = sanitized;
 				hasChanges = true;

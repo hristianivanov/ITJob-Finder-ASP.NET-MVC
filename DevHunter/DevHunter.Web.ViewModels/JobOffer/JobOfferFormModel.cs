@@ -2,7 +2,7 @@
 {
 	using System.ComponentModel.DataAnnotations;
 
-	using Technology;
+	using Data.Models.Enums;
 
 	using static Common.EntityValidationConstants.JobOffer;
 
@@ -10,7 +10,10 @@
 	{
 		public JobOfferFormModel()
 		{
-			this.Technologies = new HashSet<TechnologyViewModel>();
+			this.LocationTypeModels = Enum.GetValues(typeof(PlaceToWork))
+				.OfType<PlaceToWork>()
+				.Select(e => new LocationTypeFormModel(e))
+				.ToList();
 		}
 
 		[Required]
@@ -18,7 +21,11 @@
 		public string Title { get; set; } = null!;
 
 		public string? Location { get; set; }
-		public bool IsRemote { get; set; }
+
+		[Required]
+		[Display(Name = "Job location")]
+		public PlaceToWork? LocationType { get; set; }
+
 		public string? WorkingExperience { get; set; }
 		public int? WorkingHours { get; set; }
 		public decimal? Salary { get; set; }
@@ -26,7 +33,9 @@
 		[Required]
 		public string Description { get; set; } = null!;
 
-		public string SelectedTechnologies { get; set; }
-        public IEnumerable<TechnologyViewModel> Technologies { get; set; }
+		public string? Technologies { get; set; }
+
+		public ICollection<LocationTypeFormModel> LocationTypeModels { get; set; }
 	}
+	
 }
