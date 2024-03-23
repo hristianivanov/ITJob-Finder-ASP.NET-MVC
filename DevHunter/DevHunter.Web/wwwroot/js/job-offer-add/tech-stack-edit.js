@@ -1,11 +1,14 @@
-let techUl = document.querySelector(".multiselect-autocomplete-tech-stack .job-tags"),
+﻿let techUl = document.querySelector(".multiselect-autocomplete-tech-stack .job-tags"),
     techInput = document.querySelector(".multiselect-autocomplete-tech-stack input"),
     techContainer = document.querySelector(".job-offer-technology-tags");
 
 let suggestContainer = document.querySelector(".multiselect-autocomplete-tech-stack .suggester");
 
+const segmentsEdit = window.location.href.split('/');
+const jobIdEdit = segmentsEdit[segmentsEdit.length - 1];
+
 $.ajax({
-    url: '/Technology/GetTechnologies',
+    url: '/Technology/GetRemainingTechnologies?id=' + jobIdEdit,
     type: 'GET',
     dataType: 'json',
     success: function (data) {
@@ -15,7 +18,6 @@ $.ajax({
         console.error('Error fetching technology names:', error);
     }
 });
-
 
 let maxTags = 10,
     tags = [];

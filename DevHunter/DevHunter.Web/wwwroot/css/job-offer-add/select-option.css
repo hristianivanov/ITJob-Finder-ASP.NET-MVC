@@ -16,3 +16,7 @@
 .option.selected {
     box-shadow: 0 0 0 1px rgba(64, 86, 192, 1.00) inset, 0 0 26px -3px rgba(0, 102, 255, 0.25);
 }
+
+.select.seniority {
+    margin: 0.7em 0;
+}

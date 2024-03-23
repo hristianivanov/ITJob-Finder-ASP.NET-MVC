@@ -15,5 +15,7 @@
 		//Task<Stream> GetThumbnail(string id);
 		//Task<Stream> GetOriginal(string id);
 		Task<IEnumerable<TechnologyViewModel>> AllByDevelopmentAsync(string id);
+		Task<IEnumerable<TechnologyViewModel>> AllByJobOfferIdAsync(string id);
+		Task<IEnumerable<TechnologyViewModel>> AllWithoutJobOfferOnesAsync(string id);
 	}
 }

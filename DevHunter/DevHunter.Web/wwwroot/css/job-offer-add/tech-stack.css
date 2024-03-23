@@ -1,8 +1,5 @@
 .multiselect-autocomplete-tech-stack {
-    width: 600px;
     border-radius: 10px;
-    padding: 18px 25px 20px;
-    background: rgb(13, 17, 23);
     color: rgb(201, 209, 217);
 }
 
@@ -18,6 +15,7 @@
             padding: 7px;
             margin: 12px 0;
             border-radius: 5px;
+            background: #000614;
             border: 1px solid #30363d;
         }
 
@@ -118,5 +116,22 @@
 
     .multiselect-autocomplete-tech-stack .suggester .suggestion:not(:last-child) {
         border-bottom: 1px solid #30363d;
-        ;
     }
+
+.tech-stack-heading {
+    line-height: 5px;
+}
+
+.tech-stack-heading h4 {
+    font-size: 27px;
+    font-weight: 500;
+    text-align: left;
+    line-height: 28px;
+    padding-right: 12px;
+    margin: 11px 0;
+}
+
+.tech-stack-heading p {
+    font-style: italic;
+    opacity: 0.7;
+}

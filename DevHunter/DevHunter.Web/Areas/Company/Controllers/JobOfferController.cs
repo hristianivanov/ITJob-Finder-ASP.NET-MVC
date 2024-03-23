@@ -33,17 +33,13 @@
 		}
 
 		[Route("company/postjob")]
-		public async Task<IActionResult> Add()
+		public IActionResult Add()
 		{
-			var model = new JobOfferFormModel()
-			{
-				Technologies = await this.technologyService.AllAsync()
-			};
+			var model = new JobOfferFormModel();
 
 			return View(model);
 		}
 
-		//TODO: XSS on Description HTMLSanitizer
 		[HttpPost]
 		[Route("company/postjob")]
 		public async Task<IActionResult> Add(JobOfferFormModel model)
@@ -71,23 +67,23 @@
 			}
 		}
 
+		[HttpGet]
 		[Route("jobpost/edit/{id}")]
 		public async Task<IActionResult> Edit(string id)
 		{
 			try
 			{
-				bool technologyExists = await this.jobOfferService.ExistsByIdAsync(id);
+				bool jobOfferExists = await this.jobOfferService.ExistsByIdAsync(id);
 
-				if (!technologyExists)
+				if (!jobOfferExists)
 				{
-					TempData[ErrorMessage] = "Technology with the provided id does not exist!";
+					TempData[ErrorMessage] = "Job post does not exist!";
 
 					return RedirectToAction("All");
 				}
 
 				var model = await this.jobOfferService.GetForEditByIdAsync(id);
 
-				model.Technologies = await this.technologyService.AllAsync();
 
 				return View(model);
 			}
@@ -106,7 +102,30 @@
 				return this.View();
 			}
 
-			return Ok(model);
+			try
+			{
+				bool jobOfferExists = await jobOfferService.ExistsByIdAsync(id);
+
+				if (!jobOfferExists)
+				{
+					TempData[ErrorMessage] = "Job post does not exist!";
+
+					return RedirectToAction("All");
+				}
+
+				TempData[SuccessMessage] = "Job post was edited successfully!";
+
+				await jobOfferService.EditJobOfferAsync(id, model);
+			}
+			catch (Exception)
+			{
+				ModelState.AddModelError(string.Empty,
+					"Unexpected error occurred while trying to edit the technology!");
+
+				return View(model);
+			}
+
+			return RedirectToAction("All");
 		}
 
 		[HttpPost]

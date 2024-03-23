@@ -1,4 +1,20 @@
-﻿selectedTechnologiesArray.forEach(tech => createTag(tech));
+﻿const segments = window.location.href.split('/');
+const jobId = segments[segments.length - 1];
+
+$.ajax({
+    url: '/Technology/GetJobOfferTechnologies?id=' + jobId,
+    type: 'GET',
+    dataType: 'json',
+    success: function (data) {
+        let selectedTechnologiesArray = data;
+
+        selectedTechnologiesArray.forEach(tech => createTag(tech));
+    },
+    error: function (xhr, status, error) {
+        console.error('Error fetching technology names:', error);
+    }
+});
+
 function createTag(tag) {
     let liTag = `<li>${tag} <svg class="remove-tag-icon" onclick="removeTag(this, '${tag}')" color="rgb(88, 166, 255)" width="24" height="24" fill="none" viewBox="0 0 24 24">
 					<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
@@ -26,9 +42,9 @@ if (selectedLi) {
 
 let dropDownLis = document.querySelectorAll('.dropdown .menu li');
 
-func(document.getElementById('Location').value);
+assignJobLocation(document.getElementById('LocationType').value);
 
-function func(location) {
+function assignJobLocation(location) {
     if (location) {
         let menuLi = getLi(location);
 
@@ -38,19 +54,8 @@ function func(location) {
 
 function getLi(location) {
     for (let i = 0; i < dropDownLis.length; i++) {
-        if (dropDownLis[i].textContent === location) {
-            return dropDownLis[i];
-        } else if (dropDownLis[i].textContent.includes("Hybrid") &&
-            location.includes("Hybrid")) {
+        if (dropDownLis[i].dataset.location === location) {
             return dropDownLis[i];
         }
     }
-    return dropDownLis[0];
 }
-
-document.querySelector('.dropdown .select').addEventListener('click', () => {
-    let a = document.getElementById('Location');
-    if (a.value === "Remote") {
-        a.value = null;
-    }
-})
