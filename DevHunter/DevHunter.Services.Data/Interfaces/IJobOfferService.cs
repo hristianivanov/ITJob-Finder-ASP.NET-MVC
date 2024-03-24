@@ -15,5 +15,6 @@
 		Task DeleteByIdAsync(string id);
 		Task<AllFilterViewModel> LoadFiltersAsync();
 		Task EditJobOfferAsync(string id, JobOfferEditFormModel model);
+		Task<IEnumerable<JobOfferAllViewModel>> FilterAllAsync(JofOfferFilterFormData filters);
 	}
 }

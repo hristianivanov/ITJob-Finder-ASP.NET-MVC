@@ -27,12 +27,19 @@
 			AllJobOffersFilteredAndPagedServiceModel serviceModel =
 				await jobOfferService.AllAsync(queryModel);
 
-			queryModel.Filters = await this.jobOfferService.LoadFiltersAsync();
-
 			queryModel.JobOffers = serviceModel.JobOffers;
 			queryModel.TotalJobOffersCount = serviceModel.TotalJobOffersCount;
 
+			queryModel.Filters = await this.jobOfferService.LoadFiltersAsync();
+
 			return View(queryModel);
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> FilterAll([FromBody] JofOfferFilterFormData data)
+		{
+			var model = await this.jobOfferService.FilterAllAsync(data);
+			return PartialView("_JobOfferAllPartial", model);
 		}
 
 		public async Task<IActionResult> AllSearch([FromQuery] AllJobOffersQueryModel queryModel, string search)

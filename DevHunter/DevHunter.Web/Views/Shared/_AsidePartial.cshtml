@@ -1,4 +1,10 @@
-﻿@model DevHunter.Web.ViewModels.JobOffer.AllFilterViewModel
+﻿@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Antiforgery
+@model DevHunter.Web.ViewModels.JobOffer.AllFilterViewModel
+
+@{
+	//TODO:
+	var requestToken = Antiforgery.GetAndStoreTokens(Context).RequestToken;
+}
 
 <aside class="job-listing-aside aside-container">
 	<div id="job-listing-aside-container">
@@ -7,11 +13,11 @@
 				<div id="filter-job-location " class="component-filter">
 					<div class="filter-head">
 						<img src="~/svgs/icon-pin-hollow.svg"
-						     class="icon" alt="Icon for the 'Job location'"/>
+							 class="icon" alt="Icon for the 'Job location'" />
 						<h6 class="filter-name"> Job location </h6>
 						<a class="filter-collapse">
 							<img src="~/svgs/chevron.svg"
-							     class="collapse-icon" alt="Collapse icon"/>
+								 class="collapse-icon" alt="Collapse icon" />
 						</a>
 					</div>
 					<div class="filter-checkboxes component-filter">
@@ -20,7 +26,7 @@
 							@if (location.Location == "Remote")
 							{
 								<div class="checkbox" data-value="remote">
-									<input type="checkbox" />
+									<input type="checkbox" value="@location.Location" name="location" />
 									<span class="display-value">Fully Remote</span>
 									<span class="counter">@location.Count</span>
 								</div>
@@ -28,7 +34,7 @@
 							else
 							{
 								<div class="checkbox">
-									<input type="checkbox" />
+									<input type="checkbox" value="@location.Location" name="location" />
 									<span class="display-value">@location.Location</span>
 									<span class="counter">@location.Count</span>
 								</div>
@@ -36,13 +42,13 @@
 						}
 						@if (Model.FilterLocations.Count() > 5)
 						{
-							<div class="filter-overflow-checkboxes component-filter">
+							<div class="filter-overflow-checkboxes component-filter hidden">
 								@foreach (var location in Model.FilterLocations.Skip(5))
 								{
 									@if (location.Location == "Remote")
 									{
 										<div class="checkbox" data-value="remote">
-											<input type="checkbox" />
+											<input type="checkbox" value="@location.Location" name="location" />
 											<span class="display-value">Fully Remote</span>
 											<span class="counter">@location.Count</span>
 										</div>
@@ -50,14 +56,14 @@
 									else
 									{
 										<div class="checkbox">
-											<input type="checkbox" />
+											<input type="checkbox" value="@location.Location" name="location" />
 											<span class="display-value">@location.Location</span>
 											<span class="counter">@location.Count</span>
 										</div>
 									}
 								}
 							</div>
-							<a class="more-toggle">See more</a>
+							<a class="more-toggle" onclick="seeMore(this)">See more @(Model.FilterLocations.Count() - 5)</a>
 						}
 					</div>
 				</div>
@@ -75,7 +81,7 @@
 						@foreach (var filter in Model.FilterExperiences)
 						{
 							<div class="checkbox">
-								<input type="checkbox" />
+								<input type="checkbox" value="@filter.Seniority" name="experience"/>
 								<span class="display-value">@filter.Seniority</span>
 								<span class="counter">@filter.Count</span>
 							</div>
@@ -160,3 +166,7 @@
 		</div>
 	</div>
 </aside>
+
+<input id="RequestVerificationToken" type="hidden" value="@requestToken" />
+@section Scripts {
+}

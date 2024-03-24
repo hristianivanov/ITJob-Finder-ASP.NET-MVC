@@ -175,6 +175,7 @@ input {
 
     .component-filter .filter-head .filter-collapse .collapse-icon {
         width: 15px;
+        cursor: pointer;
         /*stroke: #83adff;*/
     }
 
@@ -279,6 +280,7 @@ input {
 }
 
 .component-filter .filter-checkboxes .more-toggle {
+    cursor: pointer;
     display: block;
     text-align: center;
     color: #2d3db3;
@@ -291,9 +293,16 @@ input {
     padding-bottom: 20px;
 }
 
+/*filter-overflow-styles*/
+.filter-checkboxes .filter-overflow-checkboxes {
+    display: block;
+}
+    .filter-checkboxes .filter-overflow-checkboxes.hidden {
+        display: none;
+    }
 
 /*salary toggle styles*/
-.component-filter-toggle {
+    .component-filter-toggle {
     display: flex;
     align-items: center;
     gap: 10px;
@@ -347,6 +356,7 @@ input {
     }
 
 #salary-filter-slide_checkbox {
+    cursor: pointer;
     appearance: revert;
     position: absolute;
     top: 50%;
