@@ -42,7 +42,7 @@
 			}
 			<div class="company-info">
 				<div class="box-info">
-					<p class="info-type">Sector:</p>
+					<p class="info-type">Sector :</p>
 					@if (!string.IsNullOrWhiteSpace(Model.Sector))
 					{
 						<p class="info-value">@Model.Sector</p>
@@ -53,7 +53,7 @@
 					}
 				</div>
 				<div class="box-info">
-					<p class="info-type">Activities:</p>
+					<p class="info-type">Activities :</p>
 					@if (!string.IsNullOrWhiteSpace(Model.Activity))
 					{
 						<p class="info-value">@Model.Activity</p>
@@ -64,7 +64,7 @@
 					}
 				</div>
 				<div class="box-info">
-					<p class="info-type">Year of establishment:</p>
+					<p class="info-type">Year of establishment :</p>
 					@if (Model.FoundedYear.HasValue)
 					{
 						<p class="info-value">@Model.FoundedYear.Value</p>
@@ -75,7 +75,7 @@
 					}
 				</div>
 				<div class="box-info">
-					<p class="info-type">Global workforce:</p>
+					<p class="info-type">Global workforce :</p>
 					@if (Model.EmployeesCnt.HasValue)
 					{
 						<p class="info-value">@Model.EmployeesCnt.Value</p>
@@ -94,12 +94,12 @@
 			<div class="company-info icons">
 				<div class="info-with-icon">
 					<div class="icon">
-						<img src="https://dev.bg/wp-content/themes/jobsdevbg/images/icons-22.svg" alt="" class="icon-s">
+						<img src="~/svgs/company-address.svg" alt="" class="icon-s">
 					</div>
 					<h3 class="info-title">Address</h3>
 					@if (!string.IsNullOrWhiteSpace(Model.Location))
 					{
-						<p class="info">Офис София, ул. Кукуш 1</p>
+						<p class="info">@Model.Location</p>
 					}
 					else
 					{
@@ -108,7 +108,7 @@
 				</div>
 				<div class="info-with-icon">
 					<div class="icon">
-						<img src="https://dev.bg/wp-content/themes/jobsdevbg/images/icons-58.svg" alt="" class="icon-s">
+						<img src="~/svgs/website-icon.svg" alt="" class="icon-s">
 					</div>
 					<h3 class="info-title">Website</h3>
 					@if (!string.IsNullOrWhiteSpace(Model.WebsiteUrl))
@@ -135,29 +135,6 @@
 </div>
 
 @section Styles {
-	<style>
-		.no-info {
-			font-size: 10em;
-			font-weight: bold;
-			text-align: center;
-			opacity: 0.5;
-		}
-
-		.question-mark-no-info.right-20 {
-			right: 20%;
-		}
-
-		.question-mark-no-info {
-			font-size: 10em;
-			font-weight: bold;
-			color: #304ffe;
-			opacity: 0.5;
-			position: absolute;
-			right: 30%;
-			top: -10%;
-		}
-	</style>
-
 	<link href="~/css/company/styles.css" rel="stylesheet" />
 }
 

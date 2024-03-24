@@ -2,18 +2,17 @@
 {
 	using System.Globalization;
 
+	using Ganss.Xss;
 	using Microsoft.EntityFrameworkCore;
 
 	using DevHunter.Data;
 	using DevHunter.Data.Models;
 
 	using Interfaces;
-	using Web.ViewModels;
 	using Web.ViewModels.User;
 	using Web.ViewModels.JobOffer;
 	using Web.ViewModels.Technology;
-	using DevHunter.Web.ViewModels.Company;
-	using Ganss.Xss;
+	using Web.ViewModels.Company;
 
 	public class CompanyService : ICompanyService
 	{
@@ -146,7 +145,7 @@
 				Id = j.Id.ToString(),
 				CompanyName = company.Name,
 				CompanyImageUrl = company.ImageUrl!,
-				CreatedOn = j.CreatedOn.ToString("dd.MM.yyyy"),
+				CreatedOn = j.CreatedOn.ToString("dd MMM."),
 				JobLocation = j.PlaceToWork,
 				JobPosition = j.JobPosition,
 				Salary = GetSalary(j.MinSalary, j.MaxSalary),

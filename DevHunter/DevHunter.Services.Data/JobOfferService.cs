@@ -1,23 +1,18 @@
-﻿using System.Globalization;
-using System.Text.Encodings.Web;
-using System.Text.Json;
-using DevHunter.Data.Models.Enums;
-using DevHunter.Web.ViewModels.Technology;
-
-namespace DevHunter.Services.Data
+﻿namespace DevHunter.Services.Data
 {
+	using System.Globalization;
+
 	using Microsoft.EntityFrameworkCore;
+	using Newtonsoft.Json;
+	using Ganss.Xss;
 
 	using DevHunter.Data;
 	using DevHunter.Data.Models;
-	using Interfaces;
+	using DevHunter.Data.Models.Enums;
 	using Models.JobOffer;
+	using Interfaces;
 	using Web.ViewModels.JobOffer;
-	using Newtonsoft.Json;
-	using System.ComponentModel.DataAnnotations;
-	using static DevHunter.Common.EntityValidationConstants;
-	using Ganss.Xss;
-	using AngleSharp.Css;
+	using Web.ViewModels.Technology;
 
 	public class JobOfferService : IJobOfferService
 	{
@@ -35,7 +30,6 @@ namespace DevHunter.Services.Data
 				//.Where(j => j.IsActive)
 				.AsQueryable();
 
-
 			IEnumerable<JobOfferAllViewModel> allJobOffers = await jobOffersQuery
 				//.Where(j => j.IsActive) TODO: is it necessary?
 				.Include(j => j.JobOfferTechnologies)
@@ -50,6 +44,7 @@ namespace DevHunter.Services.Data
 					CompanyImageUrl = j.Company.ImageUrl!,
 					CompanyName = j.Company.Name,
 					CreatedOn = j.CreatedOn.ToString("dd MMM."),
+					PlaceToWorkType = j.JobPlace.ToString(),
 					JobLocation = j.PlaceToWork,
 					Technologies = j.JobOfferTechnologies
 						.Select(tj => new TechnologyViewModel()
@@ -69,6 +64,50 @@ namespace DevHunter.Services.Data
 				TotalJobOffersCount = totalJobOffers,
 				JobOffers = allJobOffers
 			};
+		}
+
+		public async Task<IEnumerable<JobOfferAllViewModel>> FilterAllAsync(JofOfferFilterFormData filters)
+		{
+			IQueryable<DevHunter.Data.Models.JobOffer> jobOffersQuery = this.dbContext
+				.JobOffers
+				//.Where(j => j.IsActive)
+				.AsQueryable();
+
+			if (filters.Locations.Any())
+			{
+				jobOffersQuery = jobOffersQuery
+					.Where(j => filters.Locations.Any(location => location == j.PlaceToWork));
+			}
+
+			if (filters.Experiences.Any())
+			{
+				jobOffersQuery = jobOffersQuery
+					.Where(j => filters.Experiences.Any(experience => experience == j.WorkingExperience));
+			}
+
+			IEnumerable<JobOfferAllViewModel> allJobOffers = await jobOffersQuery
+				//.Where(j => j.IsActive) TODO: is it necessary?
+				.Select(j => new JobOfferAllViewModel
+				{
+					Id = j.Id.ToString(),
+					JobPosition = j.JobPosition,
+					CompanyImageUrl = j.Company.ImageUrl!,
+					CompanyName = j.Company.Name,
+					CreatedOn = j.CreatedOn.ToString("dd MMM."),
+					PlaceToWorkType = j.JobPlace.ToString(),
+					JobLocation = j.PlaceToWork,
+					Technologies = j.JobOfferTechnologies
+						.Select(tj => new TechnologyViewModel()
+						{
+							Id = tj.Technology.Id.ToString(),
+							Name = tj.Technology.Name,
+							ImageUrl = tj.Technology.ImageUrl,
+						}).ToList(),
+					Salary = GetSalary(j.MinSalary!.Value, j.MaxSalary!.Value),
+				})
+				.ToArrayAsync();
+
+			return allJobOffers;
 		}
 
 		public async Task AddAsync(JobOfferFormModel model, string userId)
@@ -245,6 +284,8 @@ namespace DevHunter.Services.Data
 					.CountAsync(j => j.PlaceToWork == location.Location);
 			}
 
+			locations = locations.OrderByDescending(l => l.Count).ToList();
+
 			var experiences = await this.dbContext
 				.JobOffers
 				.Where(j => !string.IsNullOrWhiteSpace(j.WorkingExperience))
@@ -256,7 +297,9 @@ namespace DevHunter.Services.Data
 				})
 				.ToListAsync();
 
-			//TODO: order	
+			var juniorExperience = experiences.First(e => e.Seniority == "Junior");
+			experiences.Remove(juniorExperience);
+			experiences.Insert(0, juniorExperience);
 
 			foreach (var filter in experiences)
 			{
@@ -368,6 +411,8 @@ namespace DevHunter.Services.Data
 				await this.dbContext.SaveChangesAsync();
 			}
 		}
+
+
 
 		public async Task<string> CreateAndReturnIdAsync(JobOfferFormModel model, string userId)
 		{

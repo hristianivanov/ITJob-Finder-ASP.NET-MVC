@@ -7,8 +7,17 @@
     <list default="true" id="5524ad82-825a-4eb9-9897-a94178bea7f6" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DevHunter.Web/Views/JobOffer/Detail.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/DevHunter.Web/Views/JobOffer/Detail.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DevHunter.Services.Data/CompanyService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DevHunter.Services.Data/CompanyService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DevHunter.Services.Data/Interfaces/IJobOfferService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DevHunter.Services.Data/Interfaces/IJobOfferService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DevHunter.Services.Data/JobOfferService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DevHunter.Services.Data/JobOfferService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DevHunter.Web.ViewModels/JobOffer/AllJobOffersQueryModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DevHunter.Web.ViewModels/JobOffer/AllJobOffersQueryModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DevHunter.Web.ViewModels/JobOffer/JobOfferAllViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DevHunter.Web.ViewModels/JobOffer/JobOfferAllViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DevHunter.Web/Controllers/JobOfferController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DevHunter.Web/Controllers/JobOfferController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DevHunter.Web/Views/Company/Detail.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/DevHunter.Web/Views/Company/Detail.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DevHunter.Web/Views/JobOffer/All.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/DevHunter.Web/Views/JobOffer/All.cshtml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DevHunter.Web/Views/Shared/_AsidePartial.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/DevHunter.Web/Views/Shared/_AsidePartial.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DevHunter.Web/Views/Shared/_JobOfferPartial.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/DevHunter.Web/Views/Shared/_JobOfferPartial.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DevHunter.Web/wwwroot/css/company/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/DevHunter.Web/wwwroot/css/company/styles.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,6 +80,8 @@
       <workItem from="1711135913144" duration="87000" />
       <workItem from="1711136118611" duration="143000" />
       <workItem from="1711136357418" duration="9000" />
+      <workItem from="1711215904243" duration="82000" />
+      <workItem from="1711284501805" duration="602000" />
     </task>
     <servers />
   </component>

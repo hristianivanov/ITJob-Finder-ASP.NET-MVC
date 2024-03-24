@@ -5,12 +5,12 @@
 	<div class="company-logo-wrap">
 		<!--                    TODO: try to remove attributes-->
 		<img width="120" height="19"
-		     src="@Model.CompanyImageUrl"
-		     class="company-logo" decoding="async"
-		     sizes="(max-width: 120px) 100vw, 120px">
+			 src="@Model.CompanyImageUrl"
+			 class="company-logo" decoding="async"
+			 sizes="(max-width: 120px) 100vw, 120px">
 		<span class="company-name">@Model.CompanyName</span>
 	</div>
-	
+
 	<div class="listing-content-wrap">
 		<span class="save-job-container">
 			<button class="save-cta">
@@ -26,13 +26,13 @@
 		</div>
 		<div class="component-footer">
 			<div class="tags-wrap">
-				@if (Model.JobLocation != "Remote")
+				@if (Model.PlaceToWorkType != "Remote")
 				{
-					@if (Model.JobLocation.Contains("Hybrid"))
+					@if (Model.PlaceToWorkType == "Hybrid")
 					{
 						<span class="badge hybrid has-tooltip">
 							<img class="tooltip-img" src="~/imgs/pin.png" width="12" height="20" alt="@Model.JobLocation" />
-							@Model.JobLocation.Replace("Hybrid", "").Trim()
+							@Model.JobLocation
 							<span class="suffix-hybrid">
 								<img src="~/svgs/icon-green-hybrid.svg" />
 								Hybrid
@@ -51,14 +51,18 @@
 				{
 					<span class="badge green remote">
 						<img src="~/svgs/remote-green.svg"
-						     alt="Fully Remote job icon" width="20" height="15"> Fully Remote
+							 alt="Fully Remote job icon" width="20" height="15"> Fully Remote
 					</span>
 				}
+				@* TODO:
+				@* @if (!string.IsNullOrWhiteSpace(Model.Salary))
+				{
 				<div class="badge salary">
-					<img class="salary-icon" src="~/svgs/icon-neto.svg" />
-					@* 6 500 - 10 000 lv. *@
-					@Model.Salary
+				<img class="salary-icon" src="~/svgs/icon-neto.svg" />
+				@* 6 500 - 10 000 lv.
+				@Model.Salary
 				</div>
+				} *@
 			</div>
 
 			<div class="tech-stack-wrap">
@@ -66,9 +70,9 @@
 				{
 					<div class="tech-square-badge tech-stack-item">
 						<img width="50" height="56" src="@technology.ImageUrl"
-						     class="attachment-medium size-medium" alt="@technology.Name" decoding="async" loading="lazy"
-						     title="@technology.Name"
-						     sizes="(max-width: 50px) 100vw, 50px">
+							 alt="@technology.Name" decoding="async" loading="lazy"
+							 title="@technology.Name"
+							 sizes="(max-width: 50px) 100vw, 50px">
 					</div>
 				}
 				@if (Model.Technologies.Count() > 5)
@@ -78,5 +82,5 @@
 			</div>
 		</div>
 	</div>
-	
+
 </div>

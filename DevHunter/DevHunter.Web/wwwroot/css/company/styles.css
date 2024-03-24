@@ -288,3 +288,24 @@
     border-radius: 50%;
     line-height: 1.4;
 }
+
+.no-info {
+    font-size: 10em;
+    font-weight: bold;
+    text-align: center;
+    opacity: 0.5;
+}
+
+.question-mark-no-info.right-20 {
+    right: 20%;
+}
+
+.question-mark-no-info {
+    font-size: 10em;
+    font-weight: bold;
+    color: #304ffe;
+    opacity: 0.5;
+    position: absolute;
+    right: 30%;
+    top: -10%;
+}

@@ -16,6 +16,7 @@
         public string CompanyImageUrl { get; set; } = null!;
 		public string CompanyName { get; set; } = null!;
         public string CreatedOn { get; set; } = null!;
+        public string PlaceToWorkType { get; set; } = null!;
         public IEnumerable<TechnologyViewModel> Technologies { get; set; }
 	}
 }
