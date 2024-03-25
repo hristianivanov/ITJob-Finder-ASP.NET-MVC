@@ -1,5 +1,9 @@
-﻿namespace DevHunter.Web.ViewModels.JobOffer
+﻿using Microsoft.AspNetCore.Mvc;
+
+namespace DevHunter.Web.ViewModels.JobOffer
 {
+	using System.ComponentModel.DataAnnotations;
+
 	public class AllJobOffersQueryModel
 	{
 		public AllJobOffersQueryModel()
@@ -8,7 +12,15 @@
 			this.JobOffersPerPage = 10;
 			this.JobOffers = new HashSet<JobOfferAllViewModel>();
 		}
-		public int CurrentPage { get; set; }
+
+		[FromQuery(Name = "job_location")]
+		public string JobLocation { get; set; }
+		[FromQuery(Name = "seniority")]
+		public string Experience { get; set; }
+		[FromQuery(Name = "filter_type")]
+        public string FilterType { get; set; }
+
+        public int CurrentPage { get; set; }
 		public int TotalJobOffersCount { get; set; }
 		public int JobOffersPerPage { get; set; }
 		public AllFilterViewModel Filters { get; set; }
@@ -19,12 +31,12 @@
 	{
 		public AllFilterViewModel()
 		{
-			this.FilterLocations = new HashSet<LocationFilter>();
-			this.FilterExperiences = new HashSet<SeniorityFilter>();
+			this.Locations = new HashSet<LocationFilter>();
+			this.Experiences = new HashSet<SeniorityFilter>();
 		}
 
-		public IEnumerable<SeniorityFilter> FilterExperiences { get; set; }
-		public IEnumerable<LocationFilter> FilterLocations { get; set; }
+		public IEnumerable<SeniorityFilter> Experiences { get; set; }
+		public IEnumerable<LocationFilter> Locations { get; set; }
 	}
 
 	public class SeniorityFilter
@@ -32,6 +44,8 @@
 		public string Seniority { get; set; } = null!;
 
 		public int Count { get; set; }
+
+		public bool IsChecked { get; set; }
 	}
 
 
@@ -40,5 +54,7 @@
 		public string Location { get; set; } = null!;
 
 		public int Count { get; set; }
+
+		public bool IsChecked { get; set; }
 	}
 }

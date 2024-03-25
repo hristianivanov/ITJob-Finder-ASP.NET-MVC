@@ -20,7 +20,12 @@
 
 		<partial name="_AsidePartial" model="Model.Filters" />
 
-		<partial name="_JobOfferAllPartial" model="Model.JobOffers"/>
+		<div id="job-offer-container" class="jobs jobs-container">
+			@foreach (var jobOffer in Model.JobOffers)
+			{
+				<partial name="_JobOfferPartial" model="@jobOffer" />
+			}
+		</div>
 	</main>
 </div>
 @section Scripts {

@@ -25,10 +25,78 @@
 
 		public async Task<AllJobOffersFilteredAndPagedServiceModel> AllAsync(AllJobOffersQueryModel queryModel)
 		{
-			IQueryable<DevHunter.Data.Models.JobOffer> jobOffersQuery = this.dbContext
+			IQueryable<JobOffer> jobOffersQuery = this.dbContext
 				.JobOffers
 				//.Where(j => j.IsActive)
 				.AsQueryable();
+
+			if (!string.IsNullOrWhiteSpace(queryModel.JobLocation))
+			{
+				var locationSet = new HashSet<string>(queryModel.JobLocation.Split(','));
+
+				jobOffersQuery = jobOffersQuery
+					.Where(j => locationSet.Any(location => location == j.PlaceToWork));
+
+				foreach (var filter in queryModel.Filters.Locations)
+				{
+					if (locationSet.Contains(filter.Location))
+						filter.IsChecked = true;
+				}
+			}
+
+			if (!string.IsNullOrWhiteSpace(queryModel.Experience))
+			{
+				var experienceSet = new HashSet<string>(queryModel.Experience.Split(","));
+
+				jobOffersQuery = jobOffersQuery
+					.Where(j => experienceSet.Any(experience => experience == j.WorkingExperience));
+
+				foreach (var filter in queryModel.Filters.Experiences)
+				{
+					if (experienceSet.Contains(filter.Seniority))
+						filter.IsChecked = true;
+				}
+			}
+
+			if (queryModel.FilterType != "location")
+			{
+				foreach (var location in queryModel.Filters.Locations)
+				{
+					location.Count = await jobOffersQuery
+						.CountAsync(j => j.PlaceToWork == location.Location);
+				}
+			}
+			else
+			{
+				foreach (var location in queryModel.Filters.Locations)
+				{
+					location.Count = await this.dbContext
+						.JobOffers
+						.CountAsync(j => j.PlaceToWork == location.Location);
+				}
+			}
+
+			if (queryModel.FilterType != "experience")
+			{
+				foreach (var filter in queryModel.Filters.Experiences)
+				{
+					filter.Count = await jobOffersQuery
+						.CountAsync(j => j.WorkingExperience == filter.Seniority);
+				}
+			}
+			else
+			{
+				foreach (var filter in queryModel.Filters.Experiences)
+				{
+					filter.Count = await this
+						.dbContext
+						.JobOffers
+						.CountAsync(j => j.WorkingExperience == filter.Seniority);
+				}
+			}
+
+			queryModel.Filters.Locations = queryModel.Filters.Locations.OrderByDescending(l => l.Count).ToList();
+			queryModel.Filters.Experiences = queryModel.Filters.Experiences.OrderByDescending(l => l.Count).ToList();
 
 			IEnumerable<JobOfferAllViewModel> allJobOffers = await jobOffersQuery
 				//.Where(j => j.IsActive) TODO: is it necessary?
@@ -63,6 +131,52 @@
 			{
 				TotalJobOffersCount = totalJobOffers,
 				JobOffers = allJobOffers
+			};
+		}
+
+		private async Task<AllFilterViewModel> LoadFiltersAsync(IQueryable<JobOffer> jobOffersQuery)
+		{
+			var locations = await this.dbContext
+				.JobOffers
+				.Select(j => j.PlaceToWork)
+				.Distinct()
+				.Select(place => new LocationFilter
+				{
+					Location = place,
+				})
+				.ToListAsync();
+
+			foreach (var location in locations)
+			{
+				location.Count = await jobOffersQuery
+					.CountAsync(j => j.PlaceToWork == location.Location);
+			}
+
+			var experiences = await this.dbContext
+				.JobOffers
+				.Where(j => !string.IsNullOrWhiteSpace(j.WorkingExperience))
+				.Select(j => j.WorkingExperience)
+				.Distinct()
+				.Select(experience => new SeniorityFilter
+				{
+					Seniority = experience!
+				})
+				.ToListAsync();
+
+			var juniorExperience = experiences.First(e => e.Seniority == "Junior");
+			experiences.Remove(juniorExperience);
+			experiences.Insert(0, juniorExperience);
+
+			foreach (var filter in experiences)
+			{
+				filter.Count = await jobOffersQuery
+					.CountAsync(j => j.WorkingExperience == filter.Seniority);
+			}
+
+			return new AllFilterViewModel()
+			{
+				Locations = locations,
+				Experiences = experiences
 			};
 		}
 
@@ -277,15 +391,6 @@
 				})
 				.ToListAsync();
 
-			foreach (var location in locations)
-			{
-				location.Count = await this.dbContext
-					.JobOffers
-					.CountAsync(j => j.PlaceToWork == location.Location);
-			}
-
-			locations = locations.OrderByDescending(l => l.Count).ToList();
-
 			var experiences = await this.dbContext
 				.JobOffers
 				.Where(j => !string.IsNullOrWhiteSpace(j.WorkingExperience))
@@ -297,21 +402,10 @@
 				})
 				.ToListAsync();
 
-			var juniorExperience = experiences.First(e => e.Seniority == "Junior");
-			experiences.Remove(juniorExperience);
-			experiences.Insert(0, juniorExperience);
-
-			foreach (var filter in experiences)
-			{
-				filter.Count = await this.dbContext
-					.JobOffers
-					.CountAsync(j => j.WorkingExperience == filter.Seniority);
-			}
-
 			return new AllFilterViewModel()
 			{
-				FilterLocations = locations,
-				FilterExperiences = experiences
+				Locations = locations,
+				Experiences = experiences
 			};
 		}
 
