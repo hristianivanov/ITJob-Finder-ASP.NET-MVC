@@ -14,7 +14,7 @@
 		private readonly IDocumentService documentService;
 		private readonly IJobOfferService jobOfferService;
 		private readonly IJobApplicationService jobApplicationService;
-
+			
 		public JobOfferController(IJobOfferService jobOfferService, IJobApplicationService jobApplicationService, IDocumentService documentService)
 		{
 			this.jobOfferService = jobOfferService;
@@ -22,15 +22,17 @@
 			this.documentService = documentService;
 		}
 
+		[HttpGet]
+		[Route("joboffer/all")]
 		public async Task<IActionResult> All([FromQuery] AllJobOffersQueryModel queryModel)
 		{
+			queryModel.Filters = await this.jobOfferService.LoadFiltersAsync();
+
 			AllJobOffersFilteredAndPagedServiceModel serviceModel =
 				await jobOfferService.AllAsync(queryModel);
 
 			queryModel.JobOffers = serviceModel.JobOffers;
 			queryModel.TotalJobOffersCount = serviceModel.TotalJobOffersCount;
-
-			queryModel.Filters = await this.jobOfferService.LoadFiltersAsync();
 
 			return View(queryModel);
 		}
