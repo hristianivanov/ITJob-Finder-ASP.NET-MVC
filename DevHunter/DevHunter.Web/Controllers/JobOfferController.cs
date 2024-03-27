@@ -8,13 +8,15 @@
 	using ViewModels.JobApplication;
 
 	using static Common.NotificationMessagesConstants;
+	using DevHunter.Web.Infrastructure.Extensions;
+	using Microsoft.AspNetCore.Authorization;
 
 	public class JobOfferController : Controller
 	{
 		private readonly IDocumentService documentService;
 		private readonly IJobOfferService jobOfferService;
 		private readonly IJobApplicationService jobApplicationService;
-			
+
 		public JobOfferController(IJobOfferService jobOfferService, IJobApplicationService jobApplicationService, IDocumentService documentService)
 		{
 			this.jobOfferService = jobOfferService;
@@ -37,22 +39,42 @@
 			return View(queryModel);
 		}
 
-		[HttpPost]
-		public async Task<IActionResult> FilterAll([FromBody] JofOfferFilterFormData data)
-		{
-			var model = await this.jobOfferService.FilterAllAsync(data);
-			return PartialView("_JobOfferAllPartial", model);
-		}
-
-		public async Task<IActionResult> AllSearch([FromQuery] AllJobOffersQueryModel queryModel, string search)
+		[HttpGet]
+		[Route("joboffer/jobs")]
+		public async Task<IActionResult> AllSearch([FromQuery] AllJobOffersQueryModel queryModel)
 		{
 			AllJobOffersFilteredAndPagedServiceModel serviceModel =
-				await jobOfferService.AllAsync(queryModel);
+				await jobOfferService.AllBySearchAsync(queryModel);
 
 			queryModel.JobOffers = serviceModel.JobOffers;
 			queryModel.TotalJobOffersCount = serviceModel.TotalJobOffersCount;
 
 			return View(queryModel);
+		}
+
+		[Authorize]
+		public async Task<IActionResult> Save(string id)
+		{
+			bool jobOfferExists = await this.jobOfferService
+				.ExistsByIdAsync(id);
+
+			if (!jobOfferExists)
+			{
+				return new JsonResult(new { success = false, errorMsg = "Job offer does not exist!" });
+			}
+
+			bool isJobOfferSaved = await this.jobOfferService.IsJobOfferSaved(id, this.User.GetId()!);
+
+			if (isJobOfferSaved)
+			{
+				await this.jobOfferService.RemoveSaveJobAsync(id, this.User.GetId()!);
+
+				return new JsonResult(new { success = true, saved = true });
+			}
+
+			await this.jobOfferService.SaveJobAsync(id, this.User.GetId());
+
+			return new JsonResult(new { success = true });
 		}
 
 		[HttpGet]

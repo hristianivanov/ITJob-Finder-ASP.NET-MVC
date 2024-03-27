@@ -19,17 +19,25 @@ filterInputs.forEach(input => {
             name: 'seniority',
             values: experienceInputs.map(input => input.value)
         };
-        
+
         const filters = [locationFilter, experienceFilter];
 
         const url = generateURL(filters, input.name);
 
         window.location.href = url;
+
+        window.onscroll = function (e) {
+            localStorage.setItem("scrollpos", window.scrollY);
+        };
     });
 });
 
+document.addEventListener("DOMContentLoaded", function (event) {
+    var scrollpos = localStorage.getItem("scrollpos");
+    if (scrollpos) window.scrollTo(0, scrollpos);
+});
 
-function generateURL(filters,filterType) {
+function generateURL(filters) {
     const baseUrl = '/joboffer/all';
     const params = new URLSearchParams();
 
@@ -39,13 +47,8 @@ function generateURL(filters,filterType) {
         }
     });
 
-    params.append('filter_type', filterType);
-
     return `${baseUrl}?${params.toString()}`;
 }
-
-
-
 
 //filterInputs.forEach(input => {
 //    input.addEventListener('change', () => {

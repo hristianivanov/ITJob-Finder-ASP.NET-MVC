@@ -1,25 +1,16 @@
 ﻿@model DevHunter.Web.ViewModels.JobOffer.AllJobOffersQueryModel
 
+<header class="search-heading">
+	<h1>Found <span class="search-cnt">@Model.JobOffers.Count()</span> with keyword <span class="search-text">@Model.SearchString</span> </h1>
+	<div class="header-search">
+		<form asp-area="" asp-controller="JobOffer" asp-action="AllSearch" class="search" method="get">
+			<input placeholder="Find Your Dream Job here..." type="search" name="search" />
+			<input type="submit" value="search" />
+		</form>
+	</div>
+</header>
 <div class="job-listing-category-container">
-	<header class="job-listing-category-header">
-		<div class="outer-circle">
-			<div class="inner-circle">
-				<img width="180" height="180" src="~/imgs/fullstack.png" loading="lazy" />
-			</div>
-		</div>
-		<div class="miniboard">
-			<h1 class="title"><span>Fullstack Development</span> job openings</h1>
-			<p class="description">
-				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci cumque
-				laboriosam modi perspiciatis quae quam quasi quia ratione, tempora? Ad aliquid at autem beatae commodi
-				cumque dicta dolor dolore ducimus esse expedita facilis hic id inventore magni minima molestiae
-			</p>
-		</div>
-	</header>
-	<main class="job-listing-category-main job-listing-container-with-sidebar left-sidebar">
-
-		<partial name="_AsidePartial" />
-
+	<main class="job-listing-category-main">
 		<div class="jobs jobs-container">
 			@foreach (var jobOffer in Model.JobOffers)
 			{
@@ -28,3 +19,7 @@
 		</div>
 	</main>
 </div>
+
+@section Styles {
+	<link href="~/css/search-job-offer.css" rel="stylesheet" />
+}

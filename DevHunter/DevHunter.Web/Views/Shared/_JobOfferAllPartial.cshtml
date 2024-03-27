@@ -1,8 +1,0 @@
-﻿@model IEnumerable<DevHunter.Web.ViewModels.JobOffer.JobOfferAllViewModel>
-
-<div id="job-offer-container" class="jobs jobs-container">
-	@foreach (var jobOffer in Model)
-	{
-		<partial name="_JobOfferPartial" model="@jobOffer" />
-	}
-</div>
