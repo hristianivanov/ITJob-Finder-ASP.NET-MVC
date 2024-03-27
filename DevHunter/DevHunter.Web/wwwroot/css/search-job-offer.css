@@ -1,0 +1,71 @@
+﻿.search-heading {
+    display: flex;
+    align-items: center;
+    padding: 50px 0;
+    margin-bottom: 30px;
+    flex-direction: column;
+}
+
+.search-heading .header-search {
+    width: 32%;
+}
+
+.search {
+    position: relative;
+}
+
+    .search::after {
+        content: url('../svgs/icon-search-blue.svg');
+        position: absolute;
+        right: 0px;
+        top: 0px;
+        padding: 16px;
+    }
+
+    .search input[type=search] {
+        padding: 15px 90px 15px 15px;
+        border: 1px solid #e3e3e3;
+        box-shadow: none;
+        outline: none;
+        font-size: 16px;
+        border-radius: 5px;
+        width: 100%;
+    }
+
+    .search input[type=submit] {
+        padding: 10px 23px;
+        position: absolute;
+        right: 0;
+        font-weight: 600;
+        height: 100%;
+        border: none;
+        outline: none;
+        color: #fff;
+        cursor: pointer;
+        background-color: transparent;
+        text-indent: -9999px;
+        z-index: 1;
+    }
+
+.search-heading .search-cnt {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-size: 30px;
+    line-height: 140%;
+    font-weight: 700;
+    text-align: center;
+}
+
+.search-heading .search-text {
+    margin-right: 3px;
+    margin-left: 3px;
+    color: #304ffe;
+    font-size: 30px;
+    font-weight: 700;
+}
+
+.job-listing-category-main {
+    display: flex;
+    align-items: flex-start;
+    margin-top: 3em;
+}

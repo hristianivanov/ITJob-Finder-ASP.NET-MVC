@@ -14,11 +14,12 @@ namespace DevHunter.Web.ViewModels.JobOffer
 		}
 
 		[FromQuery(Name = "job_location")]
-		public string JobLocation { get; set; }
+		public string? JobLocation { get; set; }
 		[FromQuery(Name = "seniority")]
-		public string Experience { get; set; }
-		[FromQuery(Name = "filter_type")]
-        public string FilterType { get; set; }
+		public string? Experience { get; set; }
+
+		[FromQuery(Name = "search")]
+        public string? SearchString { get; set; }
 
         public int CurrentPage { get; set; }
 		public int TotalJobOffersCount { get; set; }

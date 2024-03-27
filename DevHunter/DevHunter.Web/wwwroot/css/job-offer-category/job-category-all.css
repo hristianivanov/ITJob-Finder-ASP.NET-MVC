@@ -207,6 +207,15 @@ input {
         transition: all 0.2s ease-in-out;
     }
 
+        .component-filter .filter-checkboxes .checkbox.disabled {
+            opacity: 0.4;
+        }
+
+            .component-filter .filter-checkboxes .checkbox.disabled input[type=checkbox] {
+                cursor: default;
+                pointer-events: none;
+            }
+
         .component-filter .filter-checkboxes .checkbox:hover {
             background: rgba(15, 15, 106, 0.1);
         }
@@ -297,12 +306,13 @@ input {
 .filter-checkboxes .filter-overflow-checkboxes {
     display: block;
 }
+
     .filter-checkboxes .filter-overflow-checkboxes.hidden {
         display: none;
     }
 
 /*salary toggle styles*/
-    .component-filter-toggle {
+.component-filter-toggle {
     display: flex;
     align-items: center;
     gap: 10px;
@@ -467,6 +477,10 @@ input {
             background-size: contain;
         }
 
+            .job-list-item .save-job-container .save-cta.saved .icon {
+                background-image: url("../../svgs/bookmark-ribbon-outline.svg") !important;
+            }
+
 .save-job-container .save-cta:hover .icon {
     background-image: url("../../svgs/bookmark-ribbon-outline.svg") !important;
     transition: background-image 0.2s ease-in-out;
@@ -476,6 +490,11 @@ input {
     width: auto;
     opacity: 1;
     transition: all 2s;
+}
+
+.job-list-item .save-job-container .save-cta.saved .label {
+    width: auto;
+    opacity: 1;
 }
 
 .job-list-item .save-job-container .label {
@@ -614,10 +633,10 @@ input {
     color: #127C30;
 }
 
-.badge.green.remote > img {
-    vertical-align: middle;
-    margin-right: 7px;
-}
+    .badge.green.remote > img {
+        vertical-align: middle;
+        margin-right: 7px;
+    }
 
 .badge.has-tooltip::before {
     content: '';

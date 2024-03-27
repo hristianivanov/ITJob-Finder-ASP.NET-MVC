@@ -58,41 +58,16 @@
 				}
 			}
 
-			if (queryModel.FilterType != "location")
+			foreach (var location in queryModel.Filters.Locations)
 			{
-				foreach (var location in queryModel.Filters.Locations)
-				{
-					location.Count = await jobOffersQuery
-						.CountAsync(j => j.PlaceToWork == location.Location);
-				}
-			}
-			else
-			{
-				foreach (var location in queryModel.Filters.Locations)
-				{
-					location.Count = await this.dbContext
-						.JobOffers
-						.CountAsync(j => j.PlaceToWork == location.Location);
-				}
+				location.Count = await jobOffersQuery
+					.CountAsync(j => j.PlaceToWork == location.Location);
 			}
 
-			if (queryModel.FilterType != "experience")
+			foreach (var filter in queryModel.Filters.Experiences)
 			{
-				foreach (var filter in queryModel.Filters.Experiences)
-				{
-					filter.Count = await jobOffersQuery
-						.CountAsync(j => j.WorkingExperience == filter.Seniority);
-				}
-			}
-			else
-			{
-				foreach (var filter in queryModel.Filters.Experiences)
-				{
-					filter.Count = await this
-						.dbContext
-						.JobOffers
-						.CountAsync(j => j.WorkingExperience == filter.Seniority);
-				}
+				filter.Count = await jobOffersQuery
+					.CountAsync(j => j.WorkingExperience == filter.Seniority);
 			}
 
 			queryModel.Filters.Locations = queryModel.Filters.Locations.OrderByDescending(l => l.Count).ToList();
@@ -222,6 +197,96 @@
 				.ToArrayAsync();
 
 			return allJobOffers;
+		}
+
+		public async Task<AllJobOffersFilteredAndPagedServiceModel> AllBySearchAsync(AllJobOffersQueryModel queryModel)
+		{
+			IQueryable<JobOffer> jobOffersQuery = this.dbContext
+				.JobOffers
+				//.Where(j => j.IsActive)
+				.AsQueryable();
+
+			if (!string.IsNullOrWhiteSpace(queryModel.SearchString))
+			{
+				string wildCard = $"%{queryModel.SearchString.ToLower()}%";
+
+				jobOffersQuery = jobOffersQuery
+					.Where(j => EF.Functions.Like(j.JobPosition, wildCard) ||
+								EF.Functions.Like(j.Company.Name, wildCard) ||
+								EF.Functions.Like(j.PlaceToWork, wildCard));
+			}
+
+			IEnumerable<JobOfferAllViewModel> allJobOffers = await jobOffersQuery
+				//.Where(j => j.IsActive) TODO: is it necessary?
+				.Include(j => j.JobOfferTechnologies)
+				.ThenInclude(jt => jt.Technology)
+				.Include(j => j.Company)
+				.Skip((queryModel.CurrentPage - 1) * queryModel.JobOffersPerPage)
+				.Take(queryModel.JobOffersPerPage)
+				.Select(j => new JobOfferAllViewModel
+				{
+					Id = j.Id.ToString(),
+					JobPosition = j.JobPosition,
+					CompanyImageUrl = j.Company.ImageUrl!,
+					CompanyName = j.Company.Name,
+					CreatedOn = j.CreatedOn.ToString("dd MMM."),
+					PlaceToWorkType = j.JobPlace.ToString(),
+					JobLocation = j.PlaceToWork,
+					Technologies = j.JobOfferTechnologies
+						.Select(tj => new TechnologyViewModel()
+						{
+							Id = tj.Technology.Id.ToString(),
+							Name = tj.Technology.Name,
+							ImageUrl = tj.Technology.ImageUrl,
+						}).ToList(),
+					Salary = GetSalary(j.MinSalary!.Value, j.MaxSalary!.Value),
+				})
+				.ToArrayAsync();
+
+			int totalJobOffers = jobOffersQuery.Count();
+
+			return new AllJobOffersFilteredAndPagedServiceModel()
+			{
+				TotalJobOffersCount = totalJobOffers,
+				JobOffers = allJobOffers
+			};
+		}
+
+		public async Task SaveJobAsync(string jobOfferId, string userId)
+		{
+			var jobOffer = await this.dbContext
+				.JobOffers
+				.FirstAsync(j => j.Id.ToString() == jobOfferId);
+
+			var model = new SavedJobOffer()
+			{
+				Date = DateTime.UtcNow,
+				JobOfferId = jobOffer.Id,
+				UserId = Guid.Parse(userId)
+			};
+
+			await this.dbContext.SavedJobOffers.AddAsync(model);
+			await this.dbContext.SaveChangesAsync();
+		}
+
+		public async Task<bool> IsJobOfferSaved(string jobOfferId, string userId)
+		{
+			var result = await this.dbContext
+				.SavedJobOffers.FirstOrDefaultAsync(j => j.JobOfferId.ToString() == jobOfferId &&
+				                                         j.UserId.ToString() == userId);
+
+			return result != null;
+		}
+
+		public async Task RemoveSaveJobAsync(string jobOfferId, string userId)
+		{
+			var model = await this.dbContext
+				.SavedJobOffers
+				.FirstAsync(j => j.JobOfferId.ToString() == jobOfferId &&
+				                 j.UserId.ToString() == userId);
+
+			this.dbContext.SavedJobOffers.Remove(model);
+			await this.dbContext.SaveChangesAsync();
 		}
 
 		public async Task AddAsync(JobOfferFormModel model, string userId)

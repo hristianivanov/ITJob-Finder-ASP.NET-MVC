@@ -31,3 +31,13 @@ function seeMore(target) {
         overflowContaienr.classList.add('hidden');
     }
 }
+
+let checkboxes = document.querySelectorAll('.component-filter .checkbox');
+
+checkboxes.forEach(checkbox => {
+    const count = checkbox.querySelector('.counter');
+
+    if (count.textContent === "0") {
+        checkbox.classList.add('disabled');
+    }
+})
