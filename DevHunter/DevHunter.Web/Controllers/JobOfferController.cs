@@ -52,11 +52,16 @@
 			return View(queryModel);
 		}
 
-		[Authorize]
 		public async Task<IActionResult> Save(string id)
 		{
-			bool jobOfferExists = await this.jobOfferService
-				.ExistsByIdAsync(id);
+			if (!User!.Identity!.IsAuthenticated)
+			{
+				return new JsonResult(new { success = false, errorMsg = "Please log in or register to save a job!" });
+			}
+
+			string userId = this.User.GetId()!;
+
+			bool jobOfferExists = await this.jobOfferService.ExistsByIdAsync(id);
 
 			if (!jobOfferExists)
 			{
@@ -67,12 +72,12 @@
 
 			if (isJobOfferSaved)
 			{
-				await this.jobOfferService.RemoveSaveJobAsync(id, this.User.GetId()!);
+				await this.jobOfferService.RemoveSaveJobAsync(id, userId);
 
 				return new JsonResult(new { success = true, saved = true });
 			}
 
-			await this.jobOfferService.SaveJobAsync(id, this.User.GetId());
+			await this.jobOfferService.SaveJobAsync(id, userId);
 
 			return new JsonResult(new { success = true });
 		}
