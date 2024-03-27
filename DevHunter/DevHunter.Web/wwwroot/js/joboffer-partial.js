@@ -1,7 +1,7 @@
 ﻿function saveJob(buttonElement, jobOfferId) {
     $.ajax({
         url: '/JobOffer/Save',
-        type: 'GET', // Should it be POST instead of GET?
+        type: 'GET',
         data: { id: jobOfferId },
         success: function (response) {
             if (response.success) {
@@ -19,7 +19,7 @@
             }
         },
         error: function (xhr, status, error) {
-            console.error(status);
+            console.error(error);
         }
     });
 }
