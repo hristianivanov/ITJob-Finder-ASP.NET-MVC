@@ -11,12 +11,14 @@
 	public class AccountController : BaseManageController
 	{
 		private readonly ICompanyService companyService;
+		private readonly IJobOfferService jobOfferService;
 		private readonly IJobApplicationService jobApplicationService;
 
-		public AccountController(ICompanyService companyService, IJobApplicationService jobApplicationService)
+		public AccountController(ICompanyService companyService, IJobApplicationService jobApplicationService, IJobOfferService jobOfferService)
 		{
 			this.companyService = companyService;
 			this.jobApplicationService = jobApplicationService;
+			this.jobOfferService = jobOfferService;
 		}
 
 		[HttpGet]
@@ -47,6 +49,15 @@
 		{
 			var model = await this.jobApplicationService
 				.AllUserApplicationsAsync(User.GetId()!);
+
+			return View(model);
+		}
+
+		[HttpGet]
+		[Route("account/saved-joboffers")]
+		public async Task<IActionResult> SavedJobOffers()
+		{
+			var model = await this.jobOfferService.AllSavedJobOffersByUserIdAsync(User.GetId()!);	
 
 			return View(model);
 		}

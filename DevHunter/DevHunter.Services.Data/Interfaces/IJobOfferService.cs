@@ -2,11 +2,9 @@
 {
 	using Models.JobOffer;
 	using Web.ViewModels.JobOffer;
-
 	public interface IJobOfferService
 	{
 		Task<AllJobOffersFilteredAndPagedServiceModel> AllAsync(AllJobOffersQueryModel queryModel);
-		Task AddAsync(JobOfferFormModel model, string userId);
 		Task<string> CreateAndReturnIdAsync(JobOfferFormModel model,string userId);
 		Task<bool> ExistsByIdAsync(string id);
 		Task<JobOfferDetailsViewModel> GetDetailsByIdAsync(string id);
@@ -20,5 +18,6 @@
 		Task SaveJobAsync(string jobOfferId, string userId);
 		Task<bool> IsJobOfferSaved(string jobOfferId, string userId);
 		Task RemoveSaveJobAsync(string jobOfferId, string userId);
+		Task<IEnumerable<JobOfferSavedViewModel>> AllSavedJobOffersByUserIdAsync(string userId);
 	}
 }

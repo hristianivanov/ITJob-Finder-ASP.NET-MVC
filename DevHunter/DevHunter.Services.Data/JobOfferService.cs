@@ -289,52 +289,21 @@
 			await this.dbContext.SaveChangesAsync();
 		}
 
-		public async Task AddAsync(JobOfferFormModel model, string userId)
+		public async Task<IEnumerable<JobOfferSavedViewModel>> AllSavedJobOffersByUserIdAsync(string userId)
 		{
-			var company = await this.dbContext
-				.Companies
-				.FirstOrDefaultAsync(c => c.CreatorId.ToString() == userId);
-
-			if (company != null)
-			{
-				var jobOffer = new DevHunter.Data.Models.JobOffer()
+			var savedJobOffers = await this.dbContext
+				.SavedJobOffers
+				.Where(j => j.UserId.ToString() == userId)
+				.Select(j => new JobOfferSavedViewModel()
 				{
-					JobPosition = model.Title,
-					Description = model.Description,
-					WorkingHours = model.WorkingHours!.Value,
-					CreatedOn = DateTime.UtcNow,
-					//PlaceToWork = model.IsRemote && string.IsNullOrWhiteSpace(model.Location) ? "Remote" : model.Location!,
-					MaxSalary = model.Salary!.Value,
-					CompanyId = company.Id,
-				};
+					JobOfferId = j.JobOfferId.ToString(),
+					JobTitle = j.JobOffer.JobPosition,
+					CompanyName = j.JobOffer.Company.Name,
+					CompanyId = j.JobOffer.CompanyId.ToString(),
+					SavedDate = j.Date.ToString("dd.MM.yyyy"),
+				}).ToListAsync();
 
-				string[] techStackNames = JsonConvert.DeserializeObject<string[]>(model.Technologies)!;
-				var techStack = new List<DevHunter.Data.Models.Technology>();
-
-				foreach (var techName in techStackNames)
-				{
-					var tech = await this.dbContext.Technologies.FirstOrDefaultAsync(t => t.Name == techName);
-
-					if (tech != null)
-					{
-						techStack.Add(tech);
-					}
-				}
-
-				foreach (var tech in techStack)
-				{
-					var jobOfferTechnology = new TechnologyJobOffers()
-					{
-						JobOfferId = jobOffer.Id,
-						TechnologyId = tech.Id,
-					};
-
-					await this.dbContext.TechnologyJobOffers.AddAsync(jobOfferTechnology);
-				}
-
-				await this.dbContext.JobOffers.AddAsync(jobOffer);
-				await this.dbContext.SaveChangesAsync();
-			}
+			return savedJobOffers;
 		}
 
 		public async Task<bool> ExistsByIdAsync(string id)
