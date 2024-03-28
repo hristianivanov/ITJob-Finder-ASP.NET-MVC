@@ -30,9 +30,15 @@
 						@if (!this.User.IsCompany())
 						{
 							<li class="menu-item application-icon">
-								<a asp-area="Manage" asp-controller="Account" asp-action="MyApplications">My applications</a>
+								<a asp-area="Manage" asp-controller="Account" asp-action="MyApplications">
+									My applications
+								</a>
 							</li>
-							<li class="menu-item saved-job-icon"><a href="#">Saved offers</a></li>
+							<li class="menu-item saved-job-icon">
+								<a asp-area="Manage" asp-controller="Account" asp-action="SavedJobOffers">
+									Saved offers
+								</a>
+							</li>
 						}
 						@if (this.User.IsCompany())
 						{
