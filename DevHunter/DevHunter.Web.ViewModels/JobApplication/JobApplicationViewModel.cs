@@ -17,6 +17,8 @@
 
 		public string JobPosition { get; set; } = null!;
 
+		public string? Status { get; set; } = null!;
+
         public ICollection<DocumentViewModel> DocumentsUrl { get; set; }
     }
 

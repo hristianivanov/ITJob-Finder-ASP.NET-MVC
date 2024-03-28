@@ -1,0 +1,64 @@
+﻿@model IEnumerable<DevHunter.Web.ViewModels.JobApplication.MyApplicationViewModel>
+
+<div class="outside-wrapper">
+	<div class="table-container">
+		<header class="table-heading">
+			<h1>Your job candidates</h1>
+			<p>Look all of your candidates for your team.</p>
+		</header>
+		<main class="table-content">
+			<div class="table-head">
+				<div class="column-title date">Date of application</div>
+				<div class="column-title title">Job application</div>
+				<div class="column-title email">Company/Intermediary</div>
+				<div class="column-title status">Status</div>
+			</div>
+			<div class="table-body">
+				@foreach (var application in Model)
+				{
+					<div class="data-row">
+						<div class="date">@application.SavedDate</div>
+						<div class="title">@application.JobTitle</div>
+						<div class="email">@application.CompanyName</div>
+						<div class="status @(application.Status == "Approved" ? "approved" : !string.IsNullOrWhiteSpace(application.Status) ? "rejected" : "")">
+							@if (!string.IsNullOrWhiteSpace(application.Status))
+							{
+								@application.Status
+							}
+							else
+							{
+								@:In review
+							}
+						</div>
+					</div>
+				}
+			</div>
+		</main>
+		@* <footer class="custom-pagination">
+		<!--        <a href="#" class="direction prev"><</a>-->
+		<a href="#" class="current first">1</a>
+		<a href="#" class="last">2</a>
+		<a href="#" class="direction next">></a>
+		</footer> *@
+	</div>
+</div>
+
+@section Styles {
+	<link href="~/css/job-offer-crud-table/styles.css" rel="stylesheet" />
+	<link href="~/css/job-offer-crud-table/custom-pagination.css" rel="stylesheet" />
+	<link href="~/css/job-offer-detail/job-apply-modal.css" rel="stylesheet" />
+	<link href="~/css/job-offer-detail/curtain.css" rel="stylesheet" />
+	<style>
+		.job-application-form .form-inner .fields > span {
+			width: 100%;
+			background: white;
+			padding: 10px;
+			border-radius: 5px;
+		}
+	</style>
+}
+
+@section Scripts {
+	<script src="~/js/company/script.js"></script>
+	<script src="~/js/apply-job-offer/script.js"></script>
+}

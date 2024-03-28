@@ -11,6 +11,7 @@
 			base.Id = Guid.NewGuid();
 			this.SavedJobOffers = new HashSet<SavedJobOffer>();
 			this.Companies = new HashSet<Company>();
+			this.JobApplications = new HashSet<UserJobApplications>();
 		}
 		//[Required]
         //[MaxLength(FirstNameMaxLength)]
@@ -22,5 +23,6 @@
 
         public virtual ICollection<SavedJobOffer> SavedJobOffers { get; set; }
         public virtual ICollection<Company> Companies { get; set; }
+        public virtual ICollection<UserJobApplications> JobApplications { get; set; }
     }
 }

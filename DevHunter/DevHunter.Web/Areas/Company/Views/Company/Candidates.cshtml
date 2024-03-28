@@ -12,6 +12,7 @@
 				<div class="column-title name">Candidate name</div>
 				<div class="column-title email">Email</div>
 				<div class="column-title title">Job Offer</div>
+				<div class="column-title status">Status</div>
 				<div class="column-title actions"></div>
 			</div>
 			<div class="table-body">
@@ -27,18 +28,20 @@
 									@jobOffer.JobOfferTitle
 								</a>
 							</div>
+							<div class="status @(application.Status == "Approved" ? "approved" :  !string.IsNullOrWhiteSpace(application.Status) ? "rejected" : "")">
+								@if (!string.IsNullOrWhiteSpace(application.Status))
+								{
+									@application.Status
+								}
+								else
+								{
+									@:In reveiew
+								}
+							</div>
 							<div class="actions">
-								<a id ="@application.Id" class="action view">
+								<a id="@application.Id" class="action view">
 									View
 								</a>
-								<form method="post">
-									<button class="action remove-job"
-											type="submit"
-											asp-area="Company" asp-controller="JobOffer" asp-action="Delete" asp-route-id=""
-											onclick="return confirm('Are you sure you want to delete job post: .JobLocation')">
-										Remove
-									</button>
-								</form>
 							</div>
 						</div>
 					}

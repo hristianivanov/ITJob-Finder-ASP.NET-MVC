@@ -21,6 +21,7 @@
         overflow: hidden;
         padding: 55px 0 0 45px;
         min-width: 375px;
+        font-family: Axiforma,sans-serif;
         /*box-shadow: 0 0 21px 5px #4056C0 inset;*/
     }
 
@@ -148,6 +149,7 @@
     color: #fff;
     margin: 25px 0;
     padding-left: 25px;
+    font-size: 24px;
 }
 
 .management-wrapper .menu {
@@ -190,6 +192,14 @@
 
         .management-wrapper .menu .menu-item.saved-job-icon::before {
             background-image: url("../../svgs/saved-job-icon.svg");
+        }
+
+        .management-wrapper .menu .menu-item.preview-company-icon::before {
+            background-image: url("../../svgs/view-icon.svg")
+        }
+
+        .management-wrapper .menu .menu-item.edit-company-icon::before {
+            background-image: url("../../svgs/logo-icon-tech-writer.svg")
         }
 
         .management-wrapper .menu .menu-item.my-profile-icon::before {

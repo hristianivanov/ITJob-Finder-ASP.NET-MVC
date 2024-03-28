@@ -3,8 +3,10 @@
 	using Microsoft.AspNetCore.Authorization;
 	using Microsoft.AspNetCore.Mvc;
 
+	using static Common.GeneralApplicationConstants;
+
 	[Authorize]
-	[Area("Manage")]
+	[Area(ManageAreaName)]
 	public class BaseManageController : Controller
 	{
 	}
