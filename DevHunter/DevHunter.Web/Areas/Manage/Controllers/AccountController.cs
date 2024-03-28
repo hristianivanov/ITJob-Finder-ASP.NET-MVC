@@ -1,7 +1,9 @@
 ﻿namespace DevHunter.Web.Areas.Manage.Controllers
 {
-	using DevHunter.Services.Data.Interfaces;
 	using Microsoft.AspNetCore.Mvc;
+
+	using DevHunter.Services.Data.Interfaces;
+	using Infrastructure.Extensions;
 
 	using static Common.GeneralApplicationConstants;
 	using static Common.NotificationMessagesConstants;
@@ -9,10 +11,12 @@
 	public class AccountController : BaseManageController
 	{
 		private readonly ICompanyService companyService;
+		private readonly IJobApplicationService jobApplicationService;
 
-		public AccountController(ICompanyService companyService)
+		public AccountController(ICompanyService companyService, IJobApplicationService jobApplicationService)
 		{
 			this.companyService = companyService;
+			this.jobApplicationService = jobApplicationService;
 		}
 
 		[HttpGet]
@@ -35,6 +39,16 @@
 			}
 
 			return RedirectToAction("Edit", "Company", new { area = CompanyAreaName, id = companyId });
+		}
+
+		[HttpGet]
+		[Route("account/my-applications")]
+		public async Task<IActionResult> MyApplications()
+		{
+			var model = await this.jobApplicationService
+				.AllUserApplicationsAsync(User.GetId()!);
+
+			return View(model);
 		}
 
 		[HttpGet]

@@ -2,14 +2,13 @@
 {
 	using Microsoft.AspNetCore.Mvc;
 
+	using Infrastructure.Extensions;
 	using Services.Data.Interfaces;
 	using Services.Data.Models.JobOffer;
 	using ViewModels.JobOffer;
 	using ViewModels.JobApplication;
 
 	using static Common.NotificationMessagesConstants;
-	using DevHunter.Web.Infrastructure.Extensions;
-	using Microsoft.AspNetCore.Authorization;
 
 	public class JobOfferController : Controller
 	{
@@ -59,27 +58,34 @@
 				return new JsonResult(new { success = false, errorMsg = "Please log in or register to save a job!" });
 			}
 
-			string userId = this.User.GetId()!;
-
-			bool jobOfferExists = await this.jobOfferService.ExistsByIdAsync(id);
-
-			if (!jobOfferExists)
+			try
 			{
-				return new JsonResult(new { success = false, errorMsg = "Job offer does not exist!" });
+				string userId = this.User.GetId()!;
+
+				bool jobOfferExists = await this.jobOfferService.ExistsByIdAsync(id);
+
+				if (!jobOfferExists)
+				{
+					return new JsonResult(new { success = false, errorMsg = "Job offer does not exist!" });
+				}
+
+				bool isJobOfferSaved = await this.jobOfferService.IsJobOfferSaved(id, this.User.GetId()!);
+
+				if (isJobOfferSaved)
+				{
+					await this.jobOfferService.RemoveSaveJobAsync(id, userId);
+
+					return new JsonResult(new { success = true, saved = true });
+				}
+
+				await this.jobOfferService.SaveJobAsync(id, userId);
+
+				return new JsonResult(new { success = true });
 			}
-
-			bool isJobOfferSaved = await this.jobOfferService.IsJobOfferSaved(id, this.User.GetId()!);
-
-			if (isJobOfferSaved)
+			catch (Exception )
 			{
-				await this.jobOfferService.RemoveSaveJobAsync(id, userId);
-
-				return new JsonResult(new { success = true, saved = true });
+				return GeneralError();
 			}
-
-			await this.jobOfferService.SaveJobAsync(id, userId);
-
-			return new JsonResult(new { success = true });
 		}
 
 		[HttpGet]
@@ -100,6 +106,14 @@
 
 				var model = await this.jobOfferService
 					.GetDetailsByIdAsync(id);
+
+				if (this.User.Identity!.IsAuthenticated)
+				{
+					model.ApplyModel = new JobApplicationFormModel()
+					{
+						Email = this.User.Identity.Name!,
+					};
+				}
 
 				return View(model);
 			}
@@ -128,7 +142,14 @@
 					return RedirectToAction("All");
 				}
 
-				string applicationId = await this.jobApplicationService.ApplyJobOfferAsync(model, id);
+				string? userId = "";
+
+				if (this.User.Identity!.IsAuthenticated)
+				{
+					userId = this.User.GetId()!;
+				}
+
+				string applicationId = await this.jobApplicationService.ApplyJobOfferAsync(model, id,userId);
 
 				if (model.Files.Count > 0)
 				{

@@ -60,30 +60,30 @@
     gap: 0.6em;
 }
 
-.login-register-cta div,
-.login-register-cta a,
-.login-register-cta form button {
-    font-family: Satoshi-Bold, sans-serif;
-    display: inline-block;
-    padding: 0.6em 0.9em;
-    border-radius: 4em;
-    font-size: 20px;
-}
+    .login-register-cta div,
+    .login-register-cta a,
+    .login-register-cta form button {
+        font-family: Satoshi-Bold, sans-serif;
+        display: inline-block;
+        padding: 0.6em 0.9em;
+        border-radius: 4em;
+        font-size: 20px;
+    }
 
-.login-register-cta form button {
-    font-size: 19px;
-}
+    .login-register-cta form button {
+        font-size: 19px;
+    }
 
-.login-register-cta a {
-    color: #E5E4E6;
-    border: 2px solid #000058;
-    box-shadow: 0 0 0 3px #4056C0 inset, 0 0 26px -3px rgba(0, 102, 255, 0.25);
-    backdrop-filter: blur(12px);
-}
+    .login-register-cta a {
+        color: #E5E4E6;
+        border: 2px solid #000058;
+        box-shadow: 0 0 0 3px #4056C0 inset, 0 0 26px -3px rgba(0, 102, 255, 0.25);
+        backdrop-filter: blur(12px);
+    }
 
-.login-register-cta form button {
-    color: #0C0C0E;
-}
+    .login-register-cta form button {
+        color: #0C0C0E;
+    }
 
     .login-register-cta .last-btn {
         color: #0C0C0E;
@@ -91,9 +91,9 @@
         box-shadow: unset;
     }
 
-.login-register-cta * {
-    cursor: pointer;
-}
+    .login-register-cta * {
+        cursor: pointer;
+    }
 
 
 
@@ -111,6 +111,7 @@
     overflow: hidden;
     padding: 55px 0 0 45px;
     min-width: 375px;
+    font-family: Axiforma, sans-serif;
 }
 
     .left-aside-nav::after {
@@ -126,22 +127,50 @@
         z-index: -1;
     }
 
-.left-aside-nav ul {
-    list-style-type: none;
-    padding-left: 0;
-    margin: 10px 0;
-}
+    .left-aside-nav ul {
+        list-style-type: none;
+        padding-left: 0;
+        margin: 10px 0;
+    }
 
-.left-aside-nav ul li {
-    display: flex;
-    align-items: center;
-    padding: 24px 25px 20px;
-    font-size: 16px;
-    width: fit-content;
-    border-radius: 10px;
-    transition: all 0.2s ease-in;
-}
+        .left-aside-nav ul li {
+            display: flex;
+            align-items: center;
+            padding: 24px 25px 20px;
+            font-size: 16px;
+            width: fit-content;
+            border-radius: 10px;
+            transition: all 0.2s ease-in;
+        }
 
-.left-aside-nav ul li a {
-    color: #fff;
-}
+            .left-aside-nav ul li::before {
+                content: '';
+                width: 20px;
+                height: 20px;
+                display: inline-block;
+                background-repeat: no-repeat;
+                background-position: center center;
+                background-size: contain;
+                margin-right: 10px;
+                margin-top: -5px;
+            }
+
+            .left-aside-nav ul li.home-icon::before {
+                background-image: url("../svgs/icon-green-hybrid.svg");
+            }
+
+            .left-aside-nav ul li.post-job-icon::before {
+                background-image: url("../svgs/icon-briefcase.svg");
+            }
+
+            .left-aside-nav ul li.canidates-icon::before {
+                background-image: url("../svgs/job-application-icon.svg");
+            }
+
+            .left-aside-nav ul li.my-profile-icon::before {
+                background-image: url("../svgs/my-profile-icon.svg");
+            }
+
+            .left-aside-nav ul li a {
+                color: #fff;
+            }

@@ -20,6 +20,8 @@ namespace DevHunter.Data
 		public DbSet<TechnologyDevelopments> TechnologiesDevelopments { get; set; } = null!;
 		public DbSet<CompanyTechnologies> CompanyTechnologies { get; set; } = null!;
 		public DbSet<TechnologyJobOffers> TechnologyJobOffers { get; set; } = null!;
+		public DbSet<UserJobApplications> UsersJobApplications { get; set; } = null!;
+
 
 		public DevHunterDbContext(DbContextOptions<DevHunterDbContext> options)
 			: base(options)
@@ -41,6 +43,9 @@ namespace DevHunter.Data
 
 			builder.Entity<SavedJobOffer>()
 				.HasKey(sj => new { sj.UserId, sj.JobOfferId });
+
+			builder.Entity<UserJobApplications>()
+				.HasKey(uja => new { uja.UserId, uja.JobApplicationId });
 
 			Assembly configAssembly = Assembly.GetAssembly(typeof(DevHunterDbContext)) ??
 									  Assembly.GetExecutingAssembly();

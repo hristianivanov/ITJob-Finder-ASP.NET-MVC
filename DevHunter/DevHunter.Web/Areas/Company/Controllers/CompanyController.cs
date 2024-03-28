@@ -74,7 +74,49 @@
 				return View(model);
 			}
 
-			return RedirectToAction("Index", "Home", new { area = "" });
+			return RedirectToAction("Detail", "Company", new { area = "", id });
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> ApproveApplication(string id)
+		{
+			bool applicationExists = await this.jobApplicationService.ExistsByIdAsync(id);
+
+			if (!applicationExists)
+			{
+				TempData[ErrorMessage] = "Application does not exist!";
+
+				return RedirectToAction("Candidates");
+			}
+
+			await this.jobApplicationService.ApproveApplicationAsync(id);
+
+			TempData[SuccessMessage] = "You successfully approved one candidate!";
+
+			//TODO: delete now jobOffer ?!?!?
+
+			return RedirectToAction("Candidates");
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> RejectApplication(string id)
+		{
+			bool applicationExists = await this.jobApplicationService.ExistsByIdAsync(id);
+
+			if (!applicationExists)
+			{
+				TempData[ErrorMessage] = "Application does not exist!";
+
+				return RedirectToAction("Candidates");
+			}
+
+			await this.jobApplicationService.RejectApplicationAsync(id);
+
+			TempData[InformationMessage] = "You successfully rejected one candidate!";
+
+			//TODO: delete now jobOffer ?!?!?
+
+			return RedirectToAction("Candidates");
 		}
 
 		[HttpGet]

@@ -64,13 +64,17 @@
             }
 
         .table-container .table-content .title {
-            flex-basis: 45%;
+            flex-basis: 40%;
         }
 
-        .table-container .table-content .actions {
+        .table-container .table-content .column-title.status {
             flex-basis: 15%;
         }
 
+        .table-container .table-content .actions {
+            flex-basis: 10%;
+            justify-content: center;
+        }
 
         .table-container .table-content .table-body .data-row.removed {
             text-decoration: line-through;
@@ -100,10 +104,24 @@
             flex-basis: 20%;
         }
 
+        .table-container .table-content .data-row .status {
+            font-size: 14px;
+            color: #898989;
+            flex-basis: 15%;
+        }
+
+            .table-container .table-content .data-row .status.approved {
+                color: #159b0a;
+            }
+
+            .table-container .table-content .data-row .status.rejected {
+                color: #911212;
+            }
+
         .table-container .table-content .data-row .title {
             font-size: 16px;
             font-weight: 400;
-            flex-basis: 45%;
+            flex-basis: 40%;
         }
 
             .table-container .table-content .data-row .title a {

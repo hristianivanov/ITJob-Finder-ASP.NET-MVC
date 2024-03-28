@@ -39,19 +39,83 @@
 				</div>
 			</div>
 		</div>
+		<div class="footer">
+			<div class="footer-top"></div>
+			<div class="form-invalid">
+				<p class="response-output"></p>
+			</div>
+			<div class="form-footer">
+				<form method="post">
+					<button asp-area="Company" asp-controller="Company" asp-action="ApproveApplication" asp-route-id="@Model.Id"
+					        class="apply-button approve-btn" type="submit">
+						<img class="btn-icon" src="icon-paper-plane.svg" alt="">
+						Approve application
+					</button>
+				</form>
+				<form method="post">
+					<button asp-area="Company" asp-controller="Company" asp-action="RejectApplication" asp-route-id="@Model.Id"
+							class="apply-button reject-btn" type="submit">
+						<img class="btn-icon" src="icon-paper-plane.svg" alt="">
+						Reject application
+					</button>
+				</form>
+			</div>
+		</div>
 	</div>
 </div>
 
 <style>
+	.approve-btn {
+		display: flex;
+		cursor: pointer;
+		justify-content: center;
+		align-items: center;
+		font-weight: 500;
+		font-size: 16px;
+		background-color: #22970a;
+		padding: 14px 25px 12px;
+		color: #fff;
+		border-radius: 5px;
+		text-align: center;
+		column-gap: 10px;
+		width: 100%;
+		border: unset;
+	}
+
+	.reject-btn {
+		display: flex;
+		cursor: pointer;
+		justify-content: center;
+		align-items: center;
+		font-weight: 500;
+		font-size: 16px;
+		background-color: #97110a;
+		padding: 14px 25px 12px;
+		color: #fff;
+		border-radius: 5px;
+		text-align: center;
+		column-gap: 10px;
+		width: 100%;
+		border: unset;
+	}
+
+	.contact-form-wrap {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		height: 100%;
+	}
+
 	.form-label {
 		color: #1e1e1e;
 	}
+
 	.fields .document-container {
 		list-style: none;
 		padding: 0.8em 1.5em 0.8em 0.8em;
 	}
 
-	.fields .document-container .document-item {
-		font-size: 14px;
-	}
+		.fields .document-container .document-item {
+			font-size: 14px;
+		}
 </style>

@@ -12,6 +12,8 @@
 		public const string CompanyRoleName = "Company";
 		public const string CompanyAreaName = "Company";
 
+		public const string ManageAreaName = "Manage";
+
 		public static class JobOffer
 		{
 			public const int TechStackNumber = 5;

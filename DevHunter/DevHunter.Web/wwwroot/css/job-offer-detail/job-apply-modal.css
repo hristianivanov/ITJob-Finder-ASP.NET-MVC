@@ -25,6 +25,7 @@
     flex-direction: column;
     justify-content: space-between;
     height: 100%;
+    flex: 1;
 }
 
 .job-application-form .contact-form-wrap.h-100 {
@@ -44,6 +45,8 @@
 }
 
 .job-application-form .form-footer {
+    display: flex;
+    gap: 0.5em;
     margin-left: -24px;
     padding: 24px;
     width: calc(100% + 48px);
