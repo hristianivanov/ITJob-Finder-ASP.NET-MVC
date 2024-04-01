@@ -8,18 +8,21 @@
 	using Infrastructure.Extensions;
 
 	using static Common.GeneralApplicationConstants;
+	using DevHunter.Services.Data.Interfaces;
 
 	public class HomeController : Controller
 	{
+		private readonly IDevelopmentService developmentService;
 		private readonly ILogger<HomeController> _logger;
 
-		public HomeController(ILogger<HomeController> logger)
+		public HomeController(ILogger<HomeController> logger, IDevelopmentService developmentService)
 		{
 			_logger = logger;
+			this.developmentService = developmentService;
 		}
 
 		[HttpGet]
-		public IActionResult Index()
+		public async Task<IActionResult> Index()
 		{
 			if (this.User.IsCompany())
 			{
@@ -30,7 +33,12 @@
 				return this.RedirectToAction("Index", "Home", new { Area = AdminAreaName });
 			}
 
-			return View();
+			var model = new HomeViewModel()
+			{
+				Developments = await this.developmentService.AllAsync()
+			};
+
+			return View(model);
 		}
 
 		public IActionResult About()

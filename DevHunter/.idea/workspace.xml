@@ -4,18 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5524ad82-825a-4eb9-9897-a94178bea7f6" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DevHunter.Services.Data/Interfaces/IJobOfferService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DevHunter.Services.Data/Interfaces/IJobOfferService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DevHunter.Services.Data/JobOfferService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DevHunter.Services.Data/JobOfferService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DevHunter.Web.ViewModels/JobOffer/AllJobOffersQueryModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DevHunter.Web.ViewModels/JobOffer/AllJobOffersQueryModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DevHunter.Web/Controllers/JobOfferController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DevHunter.Web/Controllers/JobOfferController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DevHunter.Web/Views/JobOffer/AllSearch.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/DevHunter.Web/Views/JobOffer/AllSearch.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DevHunter.Web/Views/Shared/_AsidePartial.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/DevHunter.Web/Views/Shared/_AsidePartial.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DevHunter.Web/wwwroot/css/job-offer-category/job-category-all.css" beforeDir="false" afterPath="$PROJECT_DIR$/DevHunter.Web/wwwroot/css/job-offer-category/job-category-all.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DevHunter.Web/wwwroot/js/filter-job-offers.js" beforeDir="false" afterPath="$PROJECT_DIR$/DevHunter.Web/wwwroot/js/filter-job-offers.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DevHunter.Web/wwwroot/js/job-offer-all-aside.js" beforeDir="false" afterPath="$PROJECT_DIR$/DevHunter.Web/wwwroot/js/job-offer-all-aside.js" afterDir="false" />
-    </list>
+    <list default="true" id="5524ad82-825a-4eb9-9897-a94178bea7f6" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -81,6 +70,7 @@
       <workItem from="1711284501805" duration="603000" />
       <workItem from="1711533152343" duration="41000" />
       <workItem from="1711533748655" duration="10000" />
+      <workItem from="1711883169735" duration="1000" />
     </task>
     <servers />
   </component>

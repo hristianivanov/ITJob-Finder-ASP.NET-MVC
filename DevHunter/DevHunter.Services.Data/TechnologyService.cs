@@ -156,6 +156,13 @@
 				})
 				.ToListAsync();
 
+			foreach (var technology in technologies)
+			{
+				technology.Count = await this.dbContext
+					.TechnologyJobOffers
+					.CountAsync(t => t.TechnologyId.ToString() == technology.Id);
+			}
+
 			return technologies;
 		}
 

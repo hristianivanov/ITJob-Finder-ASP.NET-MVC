@@ -1,4 +1,6 @@
-﻿namespace DevHunter.Services.Data.Interfaces
+﻿using DevHunter.Web.ViewModels.Home;
+
+namespace DevHunter.Services.Data.Interfaces
 {
 	using Web.ViewModels.Development;
 
@@ -9,5 +11,6 @@
 		Task<List<DevelopmentViewModel>> AllAsync();
 		Task<bool> ExistsByIdAsync(string id);	
 		Task<DevelopmentEditFormModel> GetForEditByIdAsync(string id);
+		Task EditDevelopmentAsync(string id, DevelopmentEditFormModel model);
 	}
 }

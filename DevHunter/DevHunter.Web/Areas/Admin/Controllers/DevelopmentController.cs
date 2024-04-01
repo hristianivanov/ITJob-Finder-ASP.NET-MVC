@@ -89,9 +89,9 @@
         {
             try
             {
-                bool technologyExists = await developmentService.ExistsByIdAsync(id);
+                bool developmentExists = await developmentService.ExistsByIdAsync(id);
 
-                if (!technologyExists)
+                if (!developmentExists)
                 {
                     TempData[ErrorMessage] = "Development with the provided id does not exist!";
 
@@ -108,6 +108,38 @@
             }
         }
 
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(string id, DevelopmentEditFormModel model)
+        {
+	        if (!ModelState.IsValid)
+	        {
+		        return View();
+	        }
+
+	        try
+	        {
+		        bool developmentExists = await developmentService.ExistsByIdAsync(id);
+
+		        if (!developmentExists)
+		        {
+			        TempData[ErrorMessage] = "Development with the provided id does not exist!";
+
+			        return RedirectToAction("All");
+		        }
+
+		        await developmentService.EditDevelopmentAsync(id, model);
+	        }
+	        catch (Exception)
+	        {
+		        ModelState.AddModelError(string.Empty,
+			        "Unexpected error occurred while trying to edit the technology!");
+
+		        return View(model);
+	        }
+
+	        return RedirectToAction("All");
+		}
 
         private IActionResult GeneralError()
         {

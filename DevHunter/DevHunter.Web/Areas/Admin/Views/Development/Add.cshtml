@@ -3,7 +3,7 @@
 
 <div class="technology-upload-container">
 	<h1>Development Create</h1>
-	<form asp-area="" asp-controller="Development" asp-action="Add" method="post" enctype="multipart/form-data">
+	<form asp-area="Admin" asp-controller="Development" asp-action="Add" method="post" enctype="multipart/form-data">
 		<section>
 			<div class="input-info">
 				<div class="technology-name">
@@ -11,7 +11,7 @@
 						<label asp-for="Name">Name</label>
 						<span class="error_msg" asp-validation-for="Name"></span>
 					</div>
-					<input asp-for="Name" type="text" name="name" placeholder="Type technology name..." />
+					<input asp-for="Name" type="text" name="name" placeholder="Type development name..." />
 				</div>
 				<div class="technology-image">
 					<div class="upload-image-input panel">
