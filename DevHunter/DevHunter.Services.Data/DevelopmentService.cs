@@ -3,10 +3,11 @@
 	using Microsoft.EntityFrameworkCore;
 
 	using DevHunter.Data;
+
 	using Interfaces;
 	using Web.ViewModels.Development;
-	using DevHunter.Data.Models;
-	using DevHunter.Web.ViewModels.Technology;
+
+	using Development = DevHunter.Data.Models.Development;
 
 	public class DevelopmentService : IDevelopmentService
 	{
@@ -58,6 +59,8 @@
 			foreach (var development in developments)
 			{
 				development.Technologies = await this.technologyService.AllByDevelopmentAsync(development.Id);
+
+				development.Count = development.Technologies.Sum(t => t.Count);
 			}
 
 			return developments;
@@ -83,6 +86,32 @@
 				Name = development.Name,
 				ImageUrl = development.ImageUrl,
 			};
+		}
+
+		public async Task EditDevelopmentAsync(string id, DevelopmentEditFormModel model)
+		{
+			var development = await this.dbContext
+				.Developments
+				.FirstAsync(t => t.Id.ToString() == id);
+
+			bool isChanged = false;
+
+			if (development.Name != model.Name)
+			{
+				development.Name = model.Name;
+				isChanged = true;
+			}
+
+			if (model.Image != null)
+			{
+				development.ImageUrl = await this.imageService.EditImage(model.Image, development.ImageUrl, development.Name, "DevHunter/development");
+				isChanged = true;
+			}
+
+			if (isChanged)
+			{
+				await this.dbContext.SaveChangesAsync();
+			}
 		}
 	}
 }

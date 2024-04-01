@@ -1,4 +1,7 @@
-﻿<section class="site-homepage">
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model DevHunter.Web.ViewModels.Home.HomeViewModel
+
+<section class="site-homepage">
 	<div class="container-wrap">
 		<h2>Explore Opportunities</h2>
 		<h2>DevHunter Awaits You.</h2>
@@ -21,31 +24,39 @@
 		<div class="container">
 			<div id="section-category-block" class="section-category-block">
 				@* Repeatable *@
-
-				<div class="category-block">
-					<a class="section-collapse collapsed">
-						<img src="~/svgs/arrow-right-blue.svg" alt="Collapse section">
-					</a>
-					<div class="category-block-title-holder">
-						<a class="category-name" href="#">
-							Backend Development
-							<span class="job-qty">826</span>
+				@foreach (var development in Model.Developments)
+				{
+					<div class="category-block">
+						<a class="section-collapse collapsed">
+							<img src="~/svgs/arrow-right-blue.svg" alt="Collapse section">
 						</a>
+						<div class="category-block-title-holder">
+							<a class="category-name" href="#">
+								@development.Name
+								<span class="job-qty">@development.Count</span>
+							</a>
+						</div>
+						@foreach (var technology in development.Technologies)
+						{
+							@* Repeatable *@
+							<div class="child-term">
+								<a href="#">
+									<div class="term-icon">
+										@* ReSharper disable once CssNotResolved *@
+										<img style="display: block; scale: 0.9;
+										            height: auto;" src="@technology.ImageUrl"/>
+									</div>
+									@technology.Name
+									<span class="child-qty">@technology.Count</span>
+								</a>
+							</div>
+							@* ---- *@
+						}
+						<div class="mt-25 w-100">
+							<a class="show-all-jobs-cat" href="#">See all</a>
+						</div>
 					</div>
-					@* Repeatable *@
-					<div class="child-term">
-						<a href="#">
-							<div class="term-icon icon-java"></div>
-							Java
-							<span class="child-qty">237</span>
-						</a>
-					</div>
-					@* ---- *@
-					<div class="mt-25 w-100">
-						<a class="show-all-jobs-cat" href="#">See all</a>
-					</div>
-				</div>
-
+				}
 				@* ---- *@
 			</div>
 

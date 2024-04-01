@@ -12,7 +12,9 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DevHunter.Data.Migrations
 {
     [DbContext(typeof(DevHunterDbContext))]
-    [Migration("20231230155831_AddSaveJobOfferTable")]
+    [Migration("20231230155831_Add" +
+               "SaveJob" +
+               "OfferTable")]
     partial class AddSaveJobOfferTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
