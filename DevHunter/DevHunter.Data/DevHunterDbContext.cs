@@ -1,7 +1,7 @@
-﻿using System.Reflection;
-
-namespace DevHunter.Data
+﻿namespace DevHunter.Data
 {
+	using System.Reflection;
+
 	using Microsoft.AspNetCore.Identity;
 	using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 	using Microsoft.EntityFrameworkCore;
@@ -56,7 +56,7 @@ namespace DevHunter.Data
 			builder.Entity<Company>()
 				.HasOne(c => c.Creator)
 				.WithMany(u => u.Companies)
-				.HasForeignKey(c => c.CreatorId )
+				.HasForeignKey(c => c.CreatorId)
 				.OnDelete(DeleteBehavior.Restrict);
 		}
 	}

@@ -1,0 +1,86 @@
+﻿@using DevHunter.Web.Infrastructure.Middlewares
+@using DevHunter.Web.Infrastructure.Extensions;
+@model IEnumerable<DevHunter.Web.ViewModels.User.UserViewModel>
+
+<div class="outside-wrapper">
+	<div class="table-container">
+		<header class="table-heading">
+			<h1>Users</h1>
+			<p>Look all of registered users.</p>
+		</header>
+		<main class="table-content">
+			<div class="table-head">
+				<div class="column-title title">User Email</div>
+				<div class="column-title title">Fullname</div>
+				<div class="column-title status">User is online</div>
+				<div class="column-title status">Company profile</div>
+			</div>
+			<div class="table-body">
+				@foreach (var user in Model)
+				{
+					<div class="data-row">
+						<div class="title">@user.Email</div>
+						<div class="title">@user.FullName</div>
+						<div class="column-title status">
+							@if (OnlineUsersMiddleware.CheckIfUserIsOnline(user.Id) || this.User.GetId()!.ToLower() == user.Id.ToLower())
+							{
+								<i class="fa-solid icon-check fa-circle-check"></i>
+							}
+							else
+							{
+								<i class="fa-solid icon-check fa-circle-xmark"></i>
+							}
+						</div>
+						<div class="column-title status">
+							@if (user.IsCompany)
+							{
+								<i class="fa-solid icon-check fa-circle-check"></i>
+							}
+							else
+							{
+								<i class="fa-solid icon-check fa-circle-xmark"></i>
+							}
+						</div>
+					</div>
+				}
+			</div>
+		</main>
+		@* <footer class="custom-pagination">
+		<!--        <a href="#" class="direction prev"><</a>-->
+		<a href="#" class="current first">1</a>
+		<a href="#" class="last">2</a>
+		<a href="#" class="direction next">></a>
+		</footer> *@
+	</div>
+</div>
+
+@section Styles {
+	<link href="~/css/job-offer-crud-table/styles.css" rel="stylesheet" />
+	<link href="~/css/job-offer-crud-table/custom-pagination.css" rel="stylesheet" />
+	<link href="~/css/job-offer-detail/job-apply-modal.css" rel="stylesheet" />
+	<link href="~/css/job-offer-detail/curtain.css" rel="stylesheet" />
+	<style>
+		.job-application-form .form-inner .fields > span {
+			width: 100%;
+			background: white;
+			padding: 10px;
+			border-radius: 5px;
+		}
+
+		.icon-check {
+			font-size: 19px;
+			margin-left: 1.5em;
+		}
+
+		.fa-circle-check {
+			color: #80ff80;
+		}
+
+		.fa-circle-xmark {
+			color: #ff0000;
+		}
+	</style>
+}
+
+@section Scripts {
+}

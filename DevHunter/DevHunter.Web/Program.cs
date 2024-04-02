@@ -82,6 +82,8 @@ namespace DevHunter.Web
 			app.UseAuthentication();
 			app.UseAuthorization();
 
+			app.EnableOnlineUsersCheck();
+
 			//TODO: in development state
 			app.SeedCompany();
 			app.SeedAdministrator();
