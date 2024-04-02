@@ -133,6 +133,22 @@
 			return company.Id.ToString();
 		}
 
+		public async Task<IEnumerable<CompanyAdminViewModel>> AllAsync()
+		{
+			var companies = await this.context
+				.Companies
+				.Select(c => new CompanyAdminViewModel()
+				{
+					Id = c.Id.ToString(),
+					Name = c.Name,
+					CEO = c.Creator.UserName, // TODO: email
+					OffersCnt = c.JobOffers.Count()
+				})
+				.ToListAsync();
+
+			return companies;
+		}
+
 
 		public async Task<CompanyDetailViewModel> GetDetailsByIdAsync(string id)
 		{

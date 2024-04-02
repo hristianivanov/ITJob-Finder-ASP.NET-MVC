@@ -14,6 +14,9 @@
 
 		public const string ManageAreaName = "Manage";
 
+		public const string OnlineUsersCookieName = "IsOnline";
+		public const int LastActivityBeforeOfflineMinutes = 10;
+
 		public static class JobOffer
 		{
 			public const int TechStackNumber = 5;
