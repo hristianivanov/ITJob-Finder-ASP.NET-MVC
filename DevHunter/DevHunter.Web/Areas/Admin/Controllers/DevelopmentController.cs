@@ -57,7 +57,6 @@
                         "Development with this name already exists!");
                 }
 
-                //TODO: think whether is it necessary to check it when I validate it with attribute ?!?!? 
                 if (formModel.Image.Length > ImageMaxMegaBytesFileSize * 1024 * 1024)
                 {
                     ModelState.AddModelError(nameof(formModel.Image),

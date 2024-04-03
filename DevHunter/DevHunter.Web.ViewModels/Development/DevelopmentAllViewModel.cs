@@ -1,7 +1,5 @@
 ﻿namespace DevHunter.Web.ViewModels.Development
 {
-	using Technology;
-
 	public class DevelopmentAllViewModel
 	{
 		public DevelopmentAllViewModel()

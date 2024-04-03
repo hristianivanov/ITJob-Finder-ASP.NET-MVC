@@ -32,104 +32,13 @@
 				//.Where(j => j.IsActive)
 				.AsQueryable();
 
-			if (!string.IsNullOrWhiteSpace(queryModel.JobLocation))
-			{
-				var locationSet = new HashSet<string>(queryModel.JobLocation.Split(','));
+			jobOffersQuery = FilterJobOffers(queryModel, jobOffersQuery);
 
-				jobOffersQuery = jobOffersQuery
-					.Where(j => locationSet.Any(location => location == j.PlaceToWork));
+			await CountFilters(queryModel, jobOffersQuery);
 
-				foreach (var filter in queryModel.Filters.Locations)
-				{
-					if (locationSet.Contains(filter.Location))
-						filter.IsChecked = true;
-				}
-			}
-
-			if (!string.IsNullOrWhiteSpace(queryModel.Experience))
-			{
-				var experienceSet = new HashSet<string>(queryModel.Experience.Split(","));
-
-				jobOffersQuery = jobOffersQuery
-					.Where(j => experienceSet.Any(experience => experience == j.WorkingExperience));
-
-				foreach (var filter in queryModel.Filters.Experiences)
-				{
-					if (experienceSet.Contains(filter.Seniority))
-						filter.IsChecked = true;
-				}
-			}
-
-			if (queryModel.Salary)
-			{
-				jobOffersQuery = jobOffersQuery.Where(j => j.MaxSalary.HasValue);
-			}
-
-			if (!string.IsNullOrWhiteSpace(queryModel.EmployeesCnt))
-			{
-				var staffCountSet = new HashSet<string>(queryModel.EmployeesCnt.Split(","));
-
-				foreach (var range in staffCountSet)
-				{
-					var digits = ExtractDigits(range);
-
-					if (digits.Item2 == -1)
-					{
-						jobOffersQuery = jobOffersQuery
-							.Where(j => j.Company.EmployeeCount > digits.Item1);
-					}
-					else
-					{
-						jobOffersQuery = jobOffersQuery
-							.Where(j => j.Company.EmployeeCount >= digits.Item1 &&
-											 j.Company.EmployeeCount <= digits.Item2);
-					}
-				}
-
-				foreach (var filter in queryModel.Filters.Staffs)
-				{
-					if (staffCountSet.Contains(filter.Staff))
-						filter.IsChecked = true;
-				}
-			}
-
-			foreach (var location in queryModel.Filters.Locations)
-			{
-				location.Count = await jobOffersQuery
-					.CountAsync(j => j.PlaceToWork == location.Location);
-			}
-
-			foreach (var filter in queryModel.Filters.Experiences)
-			{
-				filter.Count = await jobOffersQuery
-					.CountAsync(j => j.WorkingExperience == filter.Seniority);
-			}
-
-			foreach (var filter in queryModel.Filters.Staffs)
-			{
-				var digits = ExtractDigits(filter.Staff);
-
-				if (digits.Item2 == -1)
-				{
-					filter.Count = await jobOffersQuery
-						.CountAsync(j => j.Company.EmployeeCount > digits.Item1);
-				}
-				else
-				{
-					filter.Count = await jobOffersQuery
-						.CountAsync(j => j.Company.EmployeeCount >= digits.Item1 &&
-										 j.Company.EmployeeCount <= digits.Item2);
-				}
-			}
-
-			queryModel.Filters.Locations = queryModel.Filters.Locations.OrderByDescending(l => l.Count).ToList();
-			queryModel.Filters.Experiences = queryModel.Filters.Experiences.OrderByDescending(l => l.Count).ToList();
+			OrderFilters(queryModel);
 
 			IEnumerable<JobOfferAllViewModel> allJobOffers = await jobOffersQuery
-				//.Where(j => j.IsActive) TODO: is it necessary?
-				.Include(j => j.JobOfferTechnologies)
-				.ThenInclude(jt => jt.Technology)
-				.Include(j => j.Company)
 				.Skip((queryModel.CurrentPage - 1) * queryModel.JobOffersPerPage)
 				.Take(queryModel.JobOffersPerPage)
 				.Select(j => new JobOfferAllViewModel
@@ -161,52 +70,6 @@
 			};
 		}
 
-		private async Task<AllFilterViewModel> LoadFiltersAsync(IQueryable<JobOffer> jobOffersQuery)
-		{
-			var locations = await this.dbContext
-				.JobOffers
-				.Select(j => j.PlaceToWork)
-				.Distinct()
-				.Select(place => new LocationFilter
-				{
-					Location = place,
-				})
-				.ToListAsync();
-
-			foreach (var location in locations)
-			{
-				location.Count = await jobOffersQuery
-					.CountAsync(j => j.PlaceToWork == location.Location);
-			}
-
-			var experiences = await this.dbContext
-				.JobOffers
-				.Where(j => !string.IsNullOrWhiteSpace(j.WorkingExperience))
-				.Select(j => j.WorkingExperience)
-				.Distinct()
-				.Select(experience => new SeniorityFilter
-				{
-					Seniority = experience!
-				})
-				.ToListAsync();
-
-			var juniorExperience = experiences.First(e => e.Seniority == "Junior");
-			experiences.Remove(juniorExperience);
-			experiences.Insert(0, juniorExperience);
-
-			foreach (var filter in experiences)
-			{
-				filter.Count = await jobOffersQuery
-					.CountAsync(j => j.WorkingExperience == filter.Seniority);
-			}
-
-			return new AllFilterViewModel()
-			{
-				Locations = locations,
-				Experiences = experiences
-			};
-		}
-
 		public async Task<IEnumerable<JobOfferAllViewModel>> FilterAllAsync(JofOfferFilterFormData filters)
 		{
 			IQueryable<DevHunter.Data.Models.JobOffer> jobOffersQuery = this.dbContext
@@ -227,7 +90,6 @@
 			}
 
 			IEnumerable<JobOfferAllViewModel> allJobOffers = await jobOffersQuery
-				//.Where(j => j.IsActive) TODO: is it necessary?
 				.Select(j => new JobOfferAllViewModel
 				{
 					Id = j.Id.ToString(),
@@ -269,10 +131,6 @@
 			}
 
 			IEnumerable<JobOfferAllViewModel> allJobOffers = await jobOffersQuery
-				//.Where(j => j.IsActive) TODO: is it necessary?
-				.Include(j => j.JobOfferTechnologies)
-				.ThenInclude(jt => jt.Technology)
-				.Include(j => j.Company)
 				.Skip((queryModel.CurrentPage - 1) * queryModel.JobOffersPerPage)
 				.Take(queryModel.JobOffersPerPage)
 				.Select(j => new JobOfferAllViewModel
@@ -371,9 +229,6 @@
 		{
 			var jobOffer = await this.dbContext
 				.JobOffers
-				.Include(j => j.JobOfferTechnologies)
-				.ThenInclude(jt => jt.Technology)
-				.Include(j => j.Company)
 				.FirstOrDefaultAsync(j => j.Id.ToString() == id);
 
 			var techStack = jobOffer!
@@ -418,9 +273,6 @@
 		{
 			var company = await this.dbContext
 				.Companies
-				//.Include(c => c.JobOffers)
-				//.ThenInclude(j => j.JobOfferTechnologies)
-				//.ThenInclude(j => j.Technology)
 				.FirstAsync(c => c.CreatorId.ToString() == userId);
 
 			var jobOffers = company.JobOffers.Select(j => new JobOfferAllViewModel()
@@ -680,6 +532,117 @@
 			await this.dbContext.SaveChangesAsync();
 
 			return jobOffer.Id!.ToString();
+		}
+
+		private static void OrderFilters(AllJobOffersQueryModel queryModel)
+		{
+			queryModel.Filters.Locations = queryModel.Filters.Locations.OrderByDescending(l => l.Count).ToList();
+			queryModel.Filters.Experiences = queryModel.Filters.Experiences.OrderByDescending(l => l.Count).ToList();
+
+			var experiences = queryModel.Filters.Experiences.ToList();
+			var juniorExperience = experiences.First(e => e.Seniority == "Junior");
+			experiences.Remove(juniorExperience);
+			experiences.Insert(0, juniorExperience);
+
+			queryModel.Filters.Experiences = experiences;
+		}
+
+		private static async Task CountFilters(AllJobOffersQueryModel queryModel, IQueryable<JobOffer> jobOffersQuery)
+		{
+			foreach (var location in queryModel.Filters.Locations)
+			{
+				location.Count = await jobOffersQuery
+					.CountAsync(j => j.PlaceToWork == location.Location);
+			}
+
+			foreach (var filter in queryModel.Filters.Experiences)
+			{
+				filter.Count = await jobOffersQuery
+					.CountAsync(j => j.WorkingExperience == filter.Seniority);
+			}
+
+			foreach (var filter in queryModel.Filters.Staffs)
+			{
+				var digits = ExtractDigits(filter.Staff);
+
+				if (digits.Item2 == -1)
+				{
+					filter.Count = await jobOffersQuery
+						.CountAsync(j => j.Company.EmployeeCount > digits.Item1);
+				}
+				else
+				{
+					filter.Count = await jobOffersQuery
+						.CountAsync(j => j.Company.EmployeeCount >= digits.Item1 &&
+										 j.Company.EmployeeCount <= digits.Item2);
+				}
+			}
+		}
+
+		private static IQueryable<JobOffer> FilterJobOffers(AllJobOffersQueryModel queryModel, IQueryable<JobOffer> jobOffersQuery)
+		{
+			if (!string.IsNullOrWhiteSpace(queryModel.JobLocation))
+			{
+				var locationSet = new HashSet<string>(queryModel.JobLocation.Split(','));
+
+				jobOffersQuery = jobOffersQuery
+					.Where(j => locationSet.Any(location => location == j.PlaceToWork));
+
+				foreach (var filter in queryModel.Filters.Locations)
+				{
+					if (locationSet.Contains(filter.Location))
+						filter.IsChecked = true;
+				}
+			}
+
+			if (!string.IsNullOrWhiteSpace(queryModel.Experience))
+			{
+				var experienceSet = new HashSet<string>(queryModel.Experience.Split(","));
+
+				jobOffersQuery = jobOffersQuery
+					.Where(j => experienceSet.Any(experience => experience == j.WorkingExperience));
+
+				foreach (var filter in queryModel.Filters.Experiences)
+				{
+					if (experienceSet.Contains(filter.Seniority))
+						filter.IsChecked = true;
+				}
+			}
+
+			if (queryModel.Salary)
+			{
+				jobOffersQuery = jobOffersQuery.Where(j => j.MaxSalary.HasValue);
+			}
+
+			if (!string.IsNullOrWhiteSpace(queryModel.EmployeesCnt))
+			{
+				var staffCountSet = new HashSet<string>(queryModel.EmployeesCnt.Split(","));
+
+				foreach (var range in staffCountSet)
+				{
+					var digits = ExtractDigits(range);
+
+					if (digits.Item2 == -1)
+					{
+						jobOffersQuery = jobOffersQuery
+							.Where(j => j.Company.EmployeeCount > digits.Item1);
+					}
+					else
+					{
+						jobOffersQuery = jobOffersQuery
+							.Where(j => j.Company.EmployeeCount >= digits.Item1 &&
+										j.Company.EmployeeCount <= digits.Item2);
+					}
+				}
+
+				foreach (var filter in queryModel.Filters.Staffs)
+				{
+					if (staffCountSet.Contains(filter.Staff))
+						filter.IsChecked = true;
+				}
+			}
+
+			return jobOffersQuery;
 		}
 
 		private static string GetSalary(decimal? minSalary, decimal? maxSalary)

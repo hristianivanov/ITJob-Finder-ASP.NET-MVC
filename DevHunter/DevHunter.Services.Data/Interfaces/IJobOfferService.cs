@@ -2,6 +2,7 @@
 {
 	using Models.JobOffer;
 	using Web.ViewModels.JobOffer;
+
 	public interface IJobOfferService
 	{
 		Task<AllJobOffersFilteredAndPagedServiceModel> AllAsync(AllJobOffersQueryModel queryModel);

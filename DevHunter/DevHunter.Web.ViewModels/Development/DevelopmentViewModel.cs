@@ -1,6 +1,6 @@
 ﻿namespace DevHunter.Web.ViewModels.Development
 {
-	using DevHunter.Web.ViewModels.Technology;
+	using Technology;
 
 	public class DevelopmentViewModel
 	{

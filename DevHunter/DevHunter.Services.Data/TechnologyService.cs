@@ -1,5 +1,7 @@
 ﻿namespace DevHunter.Services.Data
 {
+	using Microsoft.AspNetCore.Http;
+	using Microsoft.AspNetCore.Http.Internal;
 	using Microsoft.EntityFrameworkCore;
 
 	using DevHunter.Data;
@@ -8,10 +10,6 @@
 	using Interfaces;
 	using Web.ViewModels.Technology;
 	using Web.Infrastructure.Extensions;
-
-	using static Common.EntityValidationConstants.Technology;
-	using Microsoft.AspNetCore.Http.Internal;
-	using Microsoft.AspNetCore.Http;
 
 	public class TechnologyService : ITechnologyService
 	{

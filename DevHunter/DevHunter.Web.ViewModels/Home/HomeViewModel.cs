@@ -1,6 +1,6 @@
 ﻿namespace DevHunter.Web.ViewModels.Home
 {
-	using DevHunter.Web.ViewModels.Development;
+	using Development;
 
 	public class HomeViewModel
 	{
