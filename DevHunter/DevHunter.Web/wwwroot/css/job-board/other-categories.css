@@ -62,8 +62,22 @@
     width: 7px;
 }
 
-/* Small */
+.junior-intern .job-qty:after {
+    background-color: #B3F7D6;
+}
+.junior-intern .job-qty {
+    color: #127C30;
+}
 
+.it-management .job-qty:after {
+    background-color: #F5CECE;
+}
+.it-management .job-qty {
+    color: #750808;
+}
+
+
+/* Small */
 @media screen and (max-width: 950px) {
     .homepage-other-categories {
         flex-direction: column;

@@ -1,8 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-namespace DevHunter.Web.ViewModels.JobOffer
+﻿namespace DevHunter.Web.ViewModels.JobOffer
 {
-	using System.ComponentModel.DataAnnotations;
+	using Microsoft.AspNetCore.Mvc;
 
 	public class AllJobOffersQueryModel
 	{
@@ -17,9 +15,13 @@ namespace DevHunter.Web.ViewModels.JobOffer
 		public string? JobLocation { get; set; }
 		[FromQuery(Name = "seniority")]
 		public string? Experience { get; set; }
-
 		[FromQuery(Name = "search")]
-        public string? SearchString { get; set; }
+		public string? SearchString { get; set; }
+		[FromQuery(Name = "salary")]
+		public bool Salary { get; set; }
+		[FromQuery(Name = "it_employees_count")]
+        public string? EmployeesCnt { get; set; }
+
 
         public int CurrentPage { get; set; }
 		public int TotalJobOffersCount { get; set; }
@@ -34,10 +36,21 @@ namespace DevHunter.Web.ViewModels.JobOffer
 		{
 			this.Locations = new HashSet<LocationFilter>();
 			this.Experiences = new HashSet<SeniorityFilter>();
+			this.Staffs = new HashSet<StaffFilter>();
 		}
 
 		public IEnumerable<SeniorityFilter> Experiences { get; set; }
 		public IEnumerable<LocationFilter> Locations { get; set; }
+        public IEnumerable<StaffFilter> Staffs { get; set; }
+    }
+
+	public class StaffFilter
+	{
+		public string Staff { get; set; } = null!;
+
+		public int Count { get; set; }
+
+		public bool IsChecked { get; set; }
 	}
 
 	public class SeniorityFilter

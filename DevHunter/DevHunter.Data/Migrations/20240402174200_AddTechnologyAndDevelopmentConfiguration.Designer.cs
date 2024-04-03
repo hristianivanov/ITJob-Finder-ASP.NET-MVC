@@ -4,6 +4,7 @@ using DevHunter.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DevHunter.Data.Migrations
 {
     [DbContext(typeof(DevHunterDbContext))]
-    partial class DevHunterDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240402174200_AddTechnologyAndDevelopmentConfiguration")]
+    partial class AddTechnologyAndDevelopmentConfiguration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -224,6 +226,12 @@ namespace DevHunter.Data.Migrations
                         },
                         new
                         {
+                            Id = new Guid("35f8777e-b96b-49ee-b8d0-44598863c068"),
+                            ImageUrl = "https://res.cloudinary.com/dlffxtrek/image/upload/v1712052843/DevHunter/development/ERP%20-%20CRM%20development.png",
+                            Name = "ERP / CRM Development"
+                        },
+                        new
+                        {
                             Id = new Guid("5f4e14ae-b693-4f22-8167-4c808c436391"),
                             ImageUrl = "https://res.cloudinary.com/dlffxtrek/image/upload/v1712052844/DevHunter/development/IT%20Management.png",
                             Name = "IT Management"
@@ -398,7 +406,7 @@ namespace DevHunter.Data.Migrations
                         new
                         {
                             Id = new Guid("bb8aafc8-0ac4-4694-9dda-a10ddfdd31ce"),
-                            ImageUrl = "https://res.cloudinary.com/dlffxtrek/image/upload/v1712071533/DevHunter/technology/Go.png",
+                            ImageUrl = "http://res.cloudinary.com/dlffxtrek/image/upload/v1709491632/DevHunter/technology/Go.png",
                             Name = "Go"
                         },
                         new
@@ -1053,7 +1061,7 @@ namespace DevHunter.Data.Migrations
                     b.HasData(
                         new
                         {
-                            TechnologyId = new Guid("7397e5d6-527e-47f9-8f23-20dd62692500"),
+                            TechnologyId = new Guid("48ba2840-ceb6-4546-9d03-9b9163b131d5"),
                             DevelopmentId = new Guid("4423b2a0-4b46-49fd-b6cd-92eadfcbcfd0"),
                             IsActive = true
                         },
@@ -1065,7 +1073,7 @@ namespace DevHunter.Data.Migrations
                         },
                         new
                         {
-                            TechnologyId = new Guid("85eb8c55-d4ac-4408-8167-8887f9b3dc78"),
+                            TechnologyId = new Guid("0c07e73e-21de-4d34-acf8-15f1ed993ee9"),
                             DevelopmentId = new Guid("4423b2a0-4b46-49fd-b6cd-92eadfcbcfd0"),
                             IsActive = true
                         },
@@ -1143,7 +1151,7 @@ namespace DevHunter.Data.Migrations
                         },
                         new
                         {
-                            TechnologyId = new Guid("e1fdc176-5f0e-44a2-8b02-84f757fe5118"),
+                            TechnologyId = new Guid("b06f66e5-1531-4343-8a88-2ffa4b981bcc"),
                             DevelopmentId = new Guid("134cb2eb-71a2-430f-ae7d-b01895cbefb8"),
                             IsActive = true
                         },
@@ -1209,7 +1217,7 @@ namespace DevHunter.Data.Migrations
                         },
                         new
                         {
-                            TechnologyId = new Guid("1835a5be-934c-4149-a7bf-72e4d22589b0"),
+                            TechnologyId = new Guid("09bead07-5680-4204-a837-2bf34509b3af"),
                             DevelopmentId = new Guid("f86ea64b-6602-48e6-a951-c4eed172decd"),
                             IsActive = true
                         },

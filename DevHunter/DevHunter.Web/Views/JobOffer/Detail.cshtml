@@ -111,10 +111,9 @@
 			<h3 class="company-name-in-company-box">@Model.Company.Name</h3>
 			<div class="company-name-small-heading">About the company</div>
 			@* TODO: *@
-			<p>
-				Build your future with inspiring people in the right place!
-				People and Places Ltd. was founded several years ago by experts in IT specialist recruitment and selection with a vision to create and embrace a community of companies and candidates linked by their similarities in cultural and technical preferences. We provide opportunities to work in the best software companies in Bulgaria. Our focus is on consulting, people development, and searching and recruiting professionals in the IT sphere. We create meaningful connections between talents and organizations. Our values are professionalism, trust, and fast results. We specialize in end-to-end hiring process management for both candidates and employers.
-			</p>
+			<div class="company-card">
+				@Html.Raw(Model.Company.Info)
+			</div>
 			<a class="company-link-details more-btn" asp-area="" asp-controller="Company" asp-action="Detail" asp-route-id="@Model.Company.Id">
 				More about the company
 			</a>
@@ -123,7 +122,7 @@
 			</a>
 		</div>
 
-		<partial name="_JobOfferApplyModalPartial" model="@Model.ApplyModel"/>
+		<partial name="_JobOfferApplyModalPartial" model="@Model.ApplyModel" />
 	</aside>
 </div>
 

@@ -141,6 +141,31 @@
 	        return RedirectToAction("All");
 		}
 
+        [HttpPost]
+        public async Task<IActionResult> Delete(string id)
+        {
+	        try
+	        {
+		        bool developmentExists = await developmentService.ExistsByIdAsync(id);
+
+		        if (!developmentExists)
+		        {
+			        TempData[ErrorMessage] = "Development with the provided id does not exist!";
+
+			        return RedirectToAction("All");
+		        }
+
+		        await developmentService.DeleteByIdAsync(id);
+
+		        TempData[WarningMessage] = "The development successfully was deleted!";
+
+		        return RedirectToAction("All");
+	        }
+	        catch (Exception)
+	        {
+		        return GeneralError();
+	        }
+		}
         private IActionResult GeneralError()
         {
             TempData[ErrorMessage] = "Unexpected error occurred!";

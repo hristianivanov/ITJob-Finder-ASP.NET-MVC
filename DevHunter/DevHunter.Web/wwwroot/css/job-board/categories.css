@@ -127,7 +127,7 @@
 .child-term .term-icon {
     background-repeat: no-repeat;
     height: 28px;
-    width: 38px;
+    width: 53px;
     background-position: 0 0;
     background-size: 235px;
     /*filter: gray;*/
@@ -415,6 +415,18 @@
 
 .color-data-science .category-name:before, .color-data-science .job-qty:after {
     background: #D9C2FF;
+}
+
+.color-hardware-and-engineering .job-qty {
+  color: #0E4D62;
+  top: 13px;
+}
+.color-hardware-and-engineering .category-name {
+  max-width: 175px;
+}
+.color-hardware-and-engineering .category-name:before,
+.color-hardware-and-engineering .job-qty:after {
+  background: #DBFAF2;
 }
 
 /* end from custom.css */

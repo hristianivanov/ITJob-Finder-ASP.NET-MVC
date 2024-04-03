@@ -59,9 +59,24 @@
 			foreach (var development in developments)
 			{
 				development.Technologies = await this.technologyService.AllByDevelopmentAsync(development.Id);
-
+				development.Technologies = development.Technologies.Where(t => t.Count > 0);
 				development.Count = development.Technologies.Sum(t => t.Count);
 			}
+
+			developments = developments
+				.OrderByDescending(d => d.Name.StartsWith("backend", StringComparison.OrdinalIgnoreCase))
+				.ThenByDescending(d => d.Name.StartsWith("infrastructure", StringComparison.OrdinalIgnoreCase))
+				.ThenByDescending(d => d.Name.StartsWith("mobile", StringComparison.OrdinalIgnoreCase))
+				.ThenByDescending(d => d.Name.StartsWith("frontend", StringComparison.OrdinalIgnoreCase))
+				.ThenByDescending(d => d.Name.StartsWith("quality", StringComparison.OrdinalIgnoreCase))
+				.ThenByDescending(d => d.Name.StartsWith("data", StringComparison.OrdinalIgnoreCase))
+				.ThenByDescending(d => d.Name.StartsWith("customer", StringComparison.OrdinalIgnoreCase))
+				.ThenByDescending(d => d.Name.StartsWith("fullstack", StringComparison.OrdinalIgnoreCase))
+				.ThenByDescending(d => d.Name.StartsWith("technical", StringComparison.OrdinalIgnoreCase))
+				.ThenByDescending(d => d.Name.StartsWith("pm/ba", StringComparison.OrdinalIgnoreCase))
+				.ThenByDescending(d => d.Name.StartsWith("erp / crm", StringComparison.OrdinalIgnoreCase))
+				.ThenByDescending(d => d.Name, StringComparer.OrdinalIgnoreCase)
+				.ToList();
 
 			return developments;
 		}
@@ -112,6 +127,24 @@
 			{
 				await this.dbContext.SaveChangesAsync();
 			}
+		}
+
+		public async Task DeleteByIdAsync(string id)
+		{
+			var development = await this.dbContext
+				.Developments
+				.FirstAsync(d => d.Id.ToString() == id);
+
+			if (development.DevelopmentTechnologies.Any())
+			{
+                foreach (var item in development.DevelopmentTechnologies)
+                {
+                    item.IsActive = false;
+                }
+            }
+
+			this.dbContext.Developments.Remove(development);
+			await this.dbContext.SaveChangesAsync();
 		}
 	}
 }
