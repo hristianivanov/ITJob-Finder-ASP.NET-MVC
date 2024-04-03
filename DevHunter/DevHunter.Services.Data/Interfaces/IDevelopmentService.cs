@@ -12,5 +12,6 @@ namespace DevHunter.Services.Data.Interfaces
 		Task<bool> ExistsByIdAsync(string id);	
 		Task<DevelopmentEditFormModel> GetForEditByIdAsync(string id);
 		Task EditDevelopmentAsync(string id, DevelopmentEditFormModel model);
+		Task DeleteByIdAsync(string id);
 	}
 }

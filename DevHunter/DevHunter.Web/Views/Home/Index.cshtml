@@ -1,6 +1,14 @@
 ﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
 @model DevHunter.Web.ViewModels.Home.HomeViewModel
 
+@{
+	var otherCategories = Model.Developments
+		.Where(d => d.Name.Contains("Management") || d.Name.Contains("Junior"));
+
+	var primaryCategories = Model.Developments
+		.Where(d => !d.Name.Contains("Management") && !d.Name.Contains("Junior"));
+}
+
 <section class="site-homepage">
 	<div class="container-wrap">
 		<h2>Explore Opportunities</h2>
@@ -24,7 +32,7 @@
 		<div class="container">
 			<div id="section-category-block" class="section-category-block">
 				@* Repeatable *@
-				@foreach (var development in Model.Developments)
+				@foreach (var development in primaryCategories)
 				{
 					<div class="category-block">
 						<a class="section-collapse collapsed">
@@ -44,7 +52,7 @@
 									<div class="term-icon">
 										@* ReSharper disable once CssNotResolved *@
 										<img style="display: block; scale: 0.9;
-										            height: auto;" src="@technology.ImageUrl"/>
+										            height: auto;" src="@technology.ImageUrl" />
 									</div>
 									@technology.Name
 									<span class="child-qty">@technology.Count</span>
@@ -61,22 +69,25 @@
 			</div>
 
 			<div class="homepage-other-categories">
-				@* Repeatable *@
-				<div class="homepage-other-category">
-					<a href="#" class="title-count-wrap">
-						<h6 class="cat-title">
-							Junior/Intern <br> <span class="underlined underline-bright-green">offers</span>
-						</h6>
-						<span class="badge-count badge-bright-green job-qty">111</span>
-					</a>
-					<p class="content">
-						The first job in the IT sector. Special miniboard with all Junior and Intern
-						announced. In addition to the profession/technology miniboards, you can also find them here, on
-						one place.
-					</p>
-					<a href="#" class="see-all">See all </a>
-				</div>
-				@* ---- *@
+				@foreach (var category in otherCategories)
+				{
+					@* Repeatable *@
+					<div class="homepage-other-category">
+						<a href="#" class="title-count-wrap">
+							<h6 class="cat-title">
+								@category.Name <br> <span class="underlined underline-bright-green">offers</span>
+							</h6>
+							<span class="badge-count job-qty">@category.Count</span>
+						</a>
+						<p class="content">
+							The first job in the IT sector. Special miniboard with all Junior and Intern
+							announced. In addition to the profession/technology miniboards, you can also find them here, on
+							one place.
+						</p>
+						<a href="#" class="see-all">See all </a>
+					</div>
+					@* ---- *@
+				}
 			</div>
 		</div>
 	</div>
@@ -96,4 +107,51 @@
 	function submitForm() {
 		document.getElementById("jobSearchForm").submit();
 	}
+
+	let categories = document.querySelectorAll('#section-category-block .category-block');
+
+	categories.forEach(category => {
+		const name = category.querySelector('.category-name').textContent.trim();
+
+		if (name.toLowerCase().includes('backend')) {
+			category.classList.add('color-back-end-development', 'border-bottom');
+		} else if (name.toLowerCase().includes('infrastructure')) {
+			category.classList.add('color-infrastructure', 'border-bottom');
+		} else if (name.toLowerCase().includes('mobile')) {
+			category.classList.add('color-mobile-development');
+		} else if (name.toLowerCase().includes('frontend')) {
+			category.classList.add('color-front-end-development', 'border-right', 'border-bottom', 'border-left');
+		} else if (name.toLowerCase().includes('quality')) {
+			category.classList.add('color-quality-assurance', 'border-right', 'border-left', 'border-bottom');
+		} else if (name.toLowerCase().includes('data')) {
+			category.classList.add('color-data-science', 'border-right', 'border-left', 'border-bottom');
+		} else if (name.toLowerCase().includes('customer')) {
+			category.classList.add('color-customer-support', 'border-right', 'border-left');
+		} else if (name.toLowerCase().includes('fullstack')) {
+			category.classList.add('color-full-stack-development', 'border-bottom');
+		} else if (name.toLowerCase().includes('pm/ba')) {
+			category.classList.add('color-pm-ba-and-more', 'border-bottom');
+		} else if (name.toLowerCase().includes('erp / crm')) {
+			category.classList.add('color-erp-crm-development', 'border-bottom');
+		} else if (name.toLowerCase().includes('arts')) {
+			category.classList.add('color-ui-ux-and-arts');
+		} else if (name.toLowerCase().includes('technical')) {
+			category.classList.add('color-technical-support', 'border-bottom');
+		} else if (name.toLowerCase().includes('hardware')) {
+			category.classList.add('color-hardware-and-engineering');
+		}
+	});
+
+	let otherCategories = document.querySelectorAll('.homepage-other-categories .homepage-other-category');
+
+	otherCategories.forEach(category => {
+		const name = category.querySelector('.cat-title').textContent.trim();
+		
+		if (name.toLowerCase().includes('junior')) {
+			category.classList.add('junior-intern')
+		} else if (name.toLowerCase().includes('management')) {
+			category.classList.add('it-management');
+		}
+	});
+
 </script>

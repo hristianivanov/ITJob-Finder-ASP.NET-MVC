@@ -1,14 +1,16 @@
 ﻿namespace DevHunter.Services.Data
 {
 	using System.Globalization;
+	using System.Text.RegularExpressions;
 
-	using Microsoft.EntityFrameworkCore;
-	using Newtonsoft.Json;
 	using Ganss.Xss;
+	using Newtonsoft.Json;
+	using Microsoft.EntityFrameworkCore;
 
 	using DevHunter.Data;
 	using DevHunter.Data.Models;
 	using DevHunter.Data.Models.Enums;
+
 	using Models.JobOffer;
 	using Interfaces;
 	using Web.ViewModels.JobOffer;
@@ -58,6 +60,39 @@
 				}
 			}
 
+			if (queryModel.Salary)
+			{
+				jobOffersQuery = jobOffersQuery.Where(j => j.MaxSalary.HasValue);
+			}
+
+			if (!string.IsNullOrWhiteSpace(queryModel.EmployeesCnt))
+			{
+				var staffCountSet = new HashSet<string>(queryModel.EmployeesCnt.Split(","));
+
+				foreach (var range in staffCountSet)
+				{
+					var digits = ExtractDigits(range);
+
+					if (digits.Item2 == -1)
+					{
+						jobOffersQuery = jobOffersQuery
+							.Where(j => j.Company.EmployeeCount > digits.Item1);
+					}
+					else
+					{
+						jobOffersQuery = jobOffersQuery
+							.Where(j => j.Company.EmployeeCount >= digits.Item1 &&
+											 j.Company.EmployeeCount <= digits.Item2);
+					}
+				}
+
+				foreach (var filter in queryModel.Filters.Staffs)
+				{
+					if (staffCountSet.Contains(filter.Staff))
+						filter.IsChecked = true;
+				}
+			}
+
 			foreach (var location in queryModel.Filters.Locations)
 			{
 				location.Count = await jobOffersQuery
@@ -68,6 +103,23 @@
 			{
 				filter.Count = await jobOffersQuery
 					.CountAsync(j => j.WorkingExperience == filter.Seniority);
+			}
+
+			foreach (var filter in queryModel.Filters.Staffs)
+			{
+				var digits = ExtractDigits(filter.Staff);
+
+				if (digits.Item2 == -1)
+				{
+					filter.Count = await jobOffersQuery
+						.CountAsync(j => j.Company.EmployeeCount > digits.Item1);
+				}
+				else
+				{
+					filter.Count = await jobOffersQuery
+						.CountAsync(j => j.Company.EmployeeCount >= digits.Item1 &&
+										 j.Company.EmployeeCount <= digits.Item2);
+				}
 			}
 
 			queryModel.Filters.Locations = queryModel.Filters.Locations.OrderByDescending(l => l.Count).ToList();
@@ -273,7 +325,7 @@
 		{
 			var result = await this.dbContext
 				.SavedJobOffers.FirstOrDefaultAsync(j => j.JobOfferId.ToString() == jobOfferId &&
-				                                         j.UserId.ToString() == userId);
+														 j.UserId.ToString() == userId);
 
 			return result != null;
 		}
@@ -283,7 +335,7 @@
 			var model = await this.dbContext
 				.SavedJobOffers
 				.FirstAsync(j => j.JobOfferId.ToString() == jobOfferId &&
-				                 j.UserId.ToString() == userId);
+								 j.UserId.ToString() == userId);
 
 			this.dbContext.SavedJobOffers.Remove(model);
 			await this.dbContext.SaveChangesAsync();
@@ -333,7 +385,7 @@
 					ImageUrl = tj.Technology.ImageUrl,
 				}).ToList();
 
-			return new JobOfferDetailsViewModel()
+			var model = new JobOfferDetailsViewModel()
 			{
 				Id = jobOffer!.Id.ToString(),
 				Title = jobOffer.JobPosition,
@@ -348,6 +400,18 @@
 				},
 				TechStack = techStack,
 			};
+
+			if (!string.IsNullOrWhiteSpace(jobOffer.Company.Description))
+			{
+				string[] words = jobOffer.Company.Description.Split(' ');
+
+				string truncatedDescription = words.Length <= 69 ? jobOffer.Company.Description : string.Join(" ", words.Take(69)) + "...";
+
+				model.Company.Info = truncatedDescription;
+			}
+
+
+			return model;
 		}
 
 		public async Task<IEnumerable<JobOfferAllViewModel>> AllByCompanyIdAsync(string userId)
@@ -436,10 +500,31 @@
 				})
 				.ToListAsync();
 
+			var staffs = new List<StaffFilter>()
+			{
+				new StaffFilter
+				{
+					Staff = "1-9"
+				},
+				new StaffFilter
+				{
+					Staff = "10-30"
+				},
+				new StaffFilter
+				{
+					Staff = "31-70"
+				},
+				new StaffFilter
+				{
+					Staff = "70+"
+				},
+			};
+
 			return new AllFilterViewModel()
 			{
 				Locations = locations,
-				Experiences = experiences
+				Experiences = experiences,
+				Staffs = staffs
 			};
 		}
 
@@ -616,6 +701,23 @@
 		private static bool IsValidEnumValue<TEnum>(TEnum value)
 		{
 			return Enum.IsDefined(typeof(TEnum), value);
+		}
+
+		private static (int, int) ExtractDigits(string input)
+		{
+			Regex regex = new Regex(@"(\d+)(?:-(\d+))?");
+
+			Match match = regex.Match(input);
+			if (match.Success)
+			{
+				int firstNumber = int.Parse(match.Groups[1].Value);
+				int secondNumber = -1;
+				if (match.Groups[2].Success)
+					secondNumber = int.Parse(match.Groups[2].Value);
+				return (firstNumber, secondNumber);
+			}
+
+			return (-1, -1);
 		}
 	}
 }

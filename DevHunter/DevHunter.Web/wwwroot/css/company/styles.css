@@ -223,8 +223,8 @@
     background-color: white;
     color: rgb(89, 89, 89);
     box-shadow: 3px 3px 15px 0 rgba(0, 0, 0, 0.08);
-    justify-content: space-between;
-    align-items: flex-end;
+    align-items: center;
+    gap: 1em;
 }
 
 .company-info .box-info .info-type {
@@ -233,11 +233,13 @@
     line-height: 140%;
 }
 
-.company-info .box-info .info-value {
-    font-size: 16px;
-    line-height: 140%;
-    font-weight: 700;
-}
+    .company-info .box-info .info-value {
+        font-size: 16px;
+        line-height: 140%;
+        font-weight: 700;
+        flex: 1;
+        text-align: end;
+    }
 
 .jobs-holder {
     padding-top: 40px;

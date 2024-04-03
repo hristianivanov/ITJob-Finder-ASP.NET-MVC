@@ -1,14 +1,19 @@
 ﻿let filterInputs = document.querySelectorAll('input[type=checkbox]');
 let experienceFilterInputs = document.querySelectorAll('input[type=checkbox][name=experience]');
 let locationFilterInputs = document.querySelectorAll('input[type=checkbox][name=location]');
+let teamSizeFilterInputs = document.querySelectorAll('input[type=checkbox][name=staff]');
+
+const salaryCheckBox = document.getElementById('salary-filter-slide_checkbox');
 
 const experienceInputsArray = Array.from(experienceFilterInputs);
 const locationInputsArray = Array.from(locationFilterInputs);
+const teamSizeInputsArray = Array.from(teamSizeFilterInputs);
 
 filterInputs.forEach(input => {
     input.addEventListener('change', () => {
         const locationInputs = locationInputsArray.filter(input => input.checked);
         const experienceInputs = experienceInputsArray.filter(input => input.checked);
+        const teamSizeInputs = teamSizeInputsArray.filter(input => input.checked);
 
         const locationFilter = {
             name: 'job_location',
@@ -20,7 +25,12 @@ filterInputs.forEach(input => {
             values: experienceInputs.map(input => input.value)
         };
 
-        const filters = [locationFilter, experienceFilter];
+        const teamSizeFilter = {
+            name: 'it_employees_count',
+            values: teamSizeInputs.map(input => input.value)
+        }
+
+        const filters = [locationFilter, experienceFilter, teamSizeFilter];
 
         const url = generateURL(filters, input.name);
 
@@ -37,6 +47,14 @@ document.addEventListener("DOMContentLoaded", function (event) {
     if (scrollpos) window.scrollTo(0, scrollpos);
 });
 
+const urlParams = new URLSearchParams(window.location.search);
+const salaryParam = urlParams.get('salary');
+
+if (salaryParam === 'true') {
+    salaryCheckBox.checked = true;
+    salaryCheckBox.parentElement.classList.add("checked");
+}
+
 function generateURL(filters) {
     const baseUrl = '/joboffer/all';
     const params = new URLSearchParams();
@@ -46,6 +64,10 @@ function generateURL(filters) {
             params.append(filter.name, filter.values.join(','));
         }
     });
+
+    if (salaryCheckBox.checked) {
+        params.append("salary", true);
+    }
 
     return `${baseUrl}?${params.toString()}`;
 }

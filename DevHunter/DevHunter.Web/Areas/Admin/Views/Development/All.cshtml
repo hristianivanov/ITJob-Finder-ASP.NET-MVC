@@ -14,7 +14,13 @@
 				</div>
 				<div class="actions">
 					<a asp-controller="Development" asp-action="Edit" asp-route-id="@development.Id" class="action edit-btn">Edit</a>
-					<a href="#" class="action delete-btn">Remove</a>
+					<form method="post">
+						<button asp-controller="Development" asp-action="Delete" asp-route-id="@development.Id"
+						        type="submit"
+						        style="all:unset">
+							<a class="action delete-btn">Remove</a>
+						</button>
+					</form>
 				</div>
 			</header>
 			<div class="technology-all-container">
