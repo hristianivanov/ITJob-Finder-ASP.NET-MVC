@@ -137,14 +137,27 @@
 
 			if (development.DevelopmentTechnologies.Any())
 			{
-                foreach (var item in development.DevelopmentTechnologies)
-                {
-                    item.IsActive = false;
-                }
-            }
+				foreach (var item in development.DevelopmentTechnologies)
+				{
+					item.IsActive = false;
+				}
+			}
 
 			this.dbContext.Developments.Remove(development);
 			await this.dbContext.SaveChangesAsync();
+		}
+
+		public async Task<DevelopmentOfferViewModel> GetByIdAsync(string id)
+		{
+			var development = await this.dbContext
+				.Developments
+				.FirstAsync(d => d.Id.ToString() == id);
+
+			return new DevelopmentOfferViewModel()
+			{
+				Name = development.Name,
+				ImageUrl = development.ImageUrl
+			};
 		}
 	}
 }

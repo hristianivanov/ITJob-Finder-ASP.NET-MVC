@@ -93,8 +93,6 @@
 
 			TempData[SuccessMessage] = "You successfully approved one candidate!";
 
-			//TODO: delete now jobOffer ?!?!?
-
 			return RedirectToAction("Candidates");
 		}
 
@@ -113,8 +111,6 @@
 			await this.jobApplicationService.RejectApplicationAsync(id);
 
 			TempData[InformationMessage] = "You successfully rejected one candidate!";
-
-			//TODO: delete now jobOffer ?!?!?
 
 			return RedirectToAction("Candidates");
 		}

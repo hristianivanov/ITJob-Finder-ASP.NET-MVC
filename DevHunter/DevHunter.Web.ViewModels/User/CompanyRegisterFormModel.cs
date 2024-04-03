@@ -22,6 +22,5 @@
 		[MaxFileSize(ImageMaxMegaBytesFileSize * 1024 * 1024)]
 		[AllowedExtensions(new string[] { ".jpg", ".png" })]
 		public IFormFile Image { get; set; } = null!;
-
 	}
 }

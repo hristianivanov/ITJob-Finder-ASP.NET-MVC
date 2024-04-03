@@ -1,12 +1,14 @@
-﻿@model DevHunter.Web.ViewModels.JobOffer.JobOfferAllViewModel
-@inject IJobOfferService jobOfferService
+﻿@using DevHunter.Services.Data.Interfaces
 @using static DevHunter.Common.GeneralApplicationConstants.JobOffer;
-@using DevHunter.Services.Data.Interfaces
-@using DevHunter.Web.Infrastructure.Extensions
-@using Microsoft.AspNetCore.Mvc.TagHelpers
+
+@model JobOfferAllViewModel
+
+@inject IJobOfferService jobOfferService
+
 @{
 	bool isSaved = await this.jobOfferService.IsJobOfferSaved(Model.Id, this.User.GetId()!);
 }
+
 <div class="job-list-item">
 	<div class="company-logo-wrap">
 		<!--                    TODO: try to remove attributes-->

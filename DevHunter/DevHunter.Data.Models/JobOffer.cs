@@ -1,11 +1,11 @@
-﻿using DevHunter.Data.Models.Enums;
-
-namespace DevHunter.Data.Models
+﻿namespace DevHunter.Data.Models
 {
 	using System.ComponentModel.DataAnnotations;
 	using System.ComponentModel.DataAnnotations.Schema;
 
 	using Microsoft.EntityFrameworkCore;
+
+	using Enums;
 
 	using static Common.EntityValidationConstants.JobOffer;
 
@@ -22,16 +22,16 @@ namespace DevHunter.Data.Models
 		[Key]
 		public Guid Id { get; set; }
 
-        public string JobPosition { get; set; } = null!;
+		public string JobPosition { get; set; } = null!;
 
-		[Precision(18,2)]
+		[Precision(18, 2)]
 		public decimal? MinSalary { get; set; }
 
 		[Precision(18, 2)]
 		public decimal? MaxSalary { get; set; }
 
 		[Required]
-		[MaxLength(int.MaxValue)] 
+		[MaxLength(int.MaxValue)]
 		public string Description { get; set; } = null!;
 
 		public DateTime CreatedOn { get; set; }
@@ -43,13 +43,13 @@ namespace DevHunter.Data.Models
 
 		public string PlaceToWork { get; set; } = null!;
 
-        public PlaceToWork JobPlace { get; set; }
+		public PlaceToWork JobPlace { get; set; }
 
-        public int WorkingHours { get; set; }
+		public int WorkingHours { get; set; }
 
-        public string? WorkingExperience { get; set; }
+		public string? WorkingExperience { get; set; }
 
-        public virtual ICollection<TechnologyJobOffers> JobOfferTechnologies { get; set; }
+		public virtual ICollection<TechnologyJobOffers> JobOfferTechnologies { get; set; }
 		public virtual ICollection<SavedJobOffer> SavedJobOffers { get; set; }
 		public virtual ICollection<JobApplication> JobApplications { get; set; }
 	}

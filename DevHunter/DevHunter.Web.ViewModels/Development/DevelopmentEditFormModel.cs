@@ -1,6 +1,7 @@
 ﻿namespace DevHunter.Web.ViewModels.Development
 {
 	using System.ComponentModel.DataAnnotations;
+
 	using Microsoft.AspNetCore.Http;
 
 	using Infrastructure.Extensions;

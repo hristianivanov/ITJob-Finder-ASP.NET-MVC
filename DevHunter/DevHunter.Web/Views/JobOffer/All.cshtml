@@ -1,14 +1,14 @@
-﻿@model DevHunter.Web.ViewModels.JobOffer.AllJobOffersQueryModel
+﻿@model AllJobOffersQueryModel
 
 <div class="job-listing-category-container">
 	<header class="job-listing-category-header">
 		<div class="outer-circle">
 			<div class="inner-circle">
-				<img width="180" height="180" src="~/imgs/fullstack.png" loading="lazy" />
+				<img width="180" height="180" src="@Model.Development.ImageUrl" loading="lazy" />
 			</div>
 		</div>
 		<div class="miniboard">
-			<h1 class="title"><span>Fullstack Development</span> job openings</h1>
+			<h1 class="title"><span>@Model.Development.Name</span> job openings</h1>
 			<p class="description">
 				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci cumque
 				laboriosam modi perspiciatis quae quam quasi quia ratione, tempora? Ad aliquid at autem beatae commodi
@@ -28,6 +28,7 @@
 		</div>
 	</main>
 </div>
+
 @section Scripts {
 	<script src="~/js/joboffer-partial.js"></script>
 	<script src="~/js/job-offer-all-aside.js"></script>

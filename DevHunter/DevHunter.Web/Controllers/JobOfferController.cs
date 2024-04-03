@@ -14,19 +14,32 @@
 	{
 		private readonly IDocumentService documentService;
 		private readonly IJobOfferService jobOfferService;
+		private readonly IDevelopmentService devDevelopmentService;
 		private readonly IJobApplicationService jobApplicationService;
 
-		public JobOfferController(IJobOfferService jobOfferService, IJobApplicationService jobApplicationService, IDocumentService documentService)
+		public JobOfferController(IJobOfferService jobOfferService, IJobApplicationService jobApplicationService, IDocumentService documentService, IDevelopmentService devDevelopmentService)
 		{
 			this.jobOfferService = jobOfferService;
 			this.jobApplicationService = jobApplicationService;
 			this.documentService = documentService;
+			this.devDevelopmentService = devDevelopmentService;
 		}
 
 		[HttpGet]
 		[Route("joboffer/all")]
-		public async Task<IActionResult> All([FromQuery] AllJobOffersQueryModel queryModel)
+		public async Task<IActionResult> All([FromQuery] AllJobOffersQueryModel queryModel, string id)
 		{
+			var developmentsExists = await this.devDevelopmentService.ExistsByIdAsync(id);
+
+			if (!developmentsExists)
+			{
+				TempData[ErrorMessage] = "Development does not exist!";
+
+				return RedirectToAction("Index","Home");
+			}
+
+			queryModel.Development = await this.devDevelopmentService.GetByIdAsync(id);
+
 			queryModel.Filters = await this.jobOfferService.LoadFiltersAsync();
 
 			AllJobOffersFilteredAndPagedServiceModel serviceModel =
@@ -82,7 +95,7 @@
 
 				return new JsonResult(new { success = true });
 			}
-			catch (Exception )
+			catch (Exception)
 			{
 				return GeneralError();
 			}
@@ -149,7 +162,7 @@
 					userId = this.User.GetId()!;
 				}
 
-				string applicationId = await this.jobApplicationService.ApplyJobOfferAsync(model, id,userId);
+				string applicationId = await this.jobApplicationService.ApplyJobOfferAsync(model, id, userId);
 
 				if (model.Files.Count > 0)
 				{
