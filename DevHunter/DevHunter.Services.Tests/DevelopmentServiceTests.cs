@@ -1,8 +1,7 @@
-using Moq;
-
-namespace DevHunter.Services.Tests
+  namespace DevHunter.Services.Tests
 {
 	using Microsoft.EntityFrameworkCore;
+	using Moq;
 
 	using Data;
 	using DevHunter.Data;
