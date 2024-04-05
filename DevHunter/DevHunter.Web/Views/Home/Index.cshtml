@@ -37,7 +37,7 @@
 							<img src="~/svgs/arrow-right-blue.svg" alt="Collapse section">
 						</a>
 						<div class="category-block-title-holder">
-							<a class="category-name" asp-area="" asp-controller="JobOffer" asp-action="All" asp-route-id="@development.Id">
+							<a class="category-name" asp-area="" asp-controller="JobOffer" asp-action="All" asp-route-development="@development.Id">
 								@development.Name
 								<span class="job-qty">@development.Count</span>
 							</a>
@@ -57,7 +57,7 @@
 							</div>
 						}
 						<div class="mt-25 w-100">
-							<a class="show-all-jobs-cat" asp-area="" asp-controller="JobOffer" asp-action="All" asp-route-id="@development.Id">See all</a>
+							<a class="show-all-jobs-cat" asp-area="" asp-controller="JobOffer" asp-action="All" asp-route-development="@development.Id">See all</a>
 						</div>
 					</div>
 				}
@@ -68,7 +68,7 @@
 				{
 					@* Repeatable *@
 					<div class="homepage-other-category">
-						<a asp-area="" asp-controller="JobOffer" asp-action="All" asp-route-id="@category.Id" class="title-count-wrap">
+						<a asp-area="" asp-controller="JobOffer" asp-action="All" asp-route-development="@category.Id" class="title-count-wrap">
 							<h6 class="cat-title">
 								@category.Name <br> <span class="underlined underline-bright-green">offers</span>
 							</h6>
@@ -79,7 +79,7 @@
 							announced. In addition to the profession/technology miniboards, you can also find them here, on
 							one place.
 						</p>
-						<a asp-area="" asp-controller="JobOffer" asp-action="All" asp-route-id="@category.Id" class="see-all">See all </a>
+						<a asp-area="" asp-controller="JobOffer" asp-action="All" asp-route-development="@category.Id" class="see-all">See all </a>
 					</div>
 					@* ---- *@
 				}
@@ -127,7 +127,7 @@
 		} else if (name.toLowerCase().includes('pm/ba')) {
 			category.classList.add('color-pm-ba-and-more', 'border-bottom');
 		} else if (name.toLowerCase().includes('erp / crm')) {
-			category.classList.add('color-erp-crm-development', 'border-bottom');
+			category.classList.add('color-erp-crm-development');
 		} else if (name.toLowerCase().includes('arts')) {
 			category.classList.add('color-ui-ux-and-arts');
 		} else if (name.toLowerCase().includes('technical')) {

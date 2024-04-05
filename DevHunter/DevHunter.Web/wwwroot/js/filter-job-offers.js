@@ -1,4 +1,4 @@
-﻿let filterInputs = document.querySelectorAll('input[type=checkbox]');
+﻿let checkboxInputs = document.querySelectorAll('input[type=checkbox]');
 let experienceFilterInputs = document.querySelectorAll('input[type=checkbox][name=experience]');
 let locationFilterInputs = document.querySelectorAll('input[type=checkbox][name=location]');
 let teamSizeFilterInputs = document.querySelectorAll('input[type=checkbox][name=staff]');
@@ -9,7 +9,7 @@ const experienceInputsArray = Array.from(experienceFilterInputs);
 const locationInputsArray = Array.from(locationFilterInputs);
 const teamSizeInputsArray = Array.from(teamSizeFilterInputs);
 
-filterInputs.forEach(input => {
+checkboxInputs.forEach(input => {
     input.addEventListener('change', () => {
         const locationInputs = locationInputsArray.filter(input => input.checked);
         const experienceInputs = experienceInputsArray.filter(input => input.checked);
@@ -67,6 +67,12 @@ function generateURL(filters) {
 
     if (salaryCheckBox.checked) {
         params.append("salary", true);
+    }
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const developmentParam = urlParams.get('development');
+    if (developmentParam) {
+        params.append("development", developmentParam);
     }
 
     return `${baseUrl}?${params.toString()}`;
