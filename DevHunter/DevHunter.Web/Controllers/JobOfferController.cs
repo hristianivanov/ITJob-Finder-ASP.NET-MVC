@@ -27,9 +27,9 @@
 
 		[HttpGet]
 		[Route("joboffer/all")]
-		public async Task<IActionResult> All([FromQuery] AllJobOffersQueryModel queryModel, string id)
+		public async Task<IActionResult> All([FromQuery] AllJobOffersQueryModel queryModel, string development)
 		{
-			var developmentsExists = await this.devDevelopmentService.ExistsByIdAsync(id);
+			var developmentsExists = await this.devDevelopmentService.ExistsByIdAsync(development);
 
 			if (!developmentsExists)
 			{
@@ -38,7 +38,7 @@
 				return RedirectToAction("Index","Home");
 			}
 
-			queryModel.Development = await this.devDevelopmentService.GetByIdAsync(id);
+			queryModel.Development = await this.devDevelopmentService.GetByIdAsync(development);
 
 			queryModel.Filters = await this.jobOfferService.LoadFiltersAsync();
 
