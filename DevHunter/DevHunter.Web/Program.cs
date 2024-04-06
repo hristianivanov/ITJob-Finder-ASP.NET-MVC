@@ -4,13 +4,12 @@ namespace DevHunter.Web
 	using Microsoft.AspNetCore.Mvc;
 	using Microsoft.EntityFrameworkCore;
 
-	using CloudinaryDotNet;
-
 	using Data;
 	using Data.Models;
+	using Data.Seeding;
 	using Infrastructure.Extensions;
 	using Infrastructure.ModelBinders;
-    using Services.Data.Interfaces;
+	using Services.Data.Interfaces;
 
 	public class Program
 	{
@@ -18,7 +17,8 @@ namespace DevHunter.Web
 		{
 			var builder = WebApplication.CreateBuilder(args);
 
-			var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+			var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
+								   ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
 			builder.Services.AddDbContext<DevHunterDbContext>(options =>
 			{
@@ -30,28 +30,27 @@ namespace DevHunter.Web
 
 			builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
 				{
-                    options.SignIn.RequireConfirmedAccount =
-                        builder.Configuration.GetValue<bool>("Identity:SignIn:RequireConfirmedAccount");
-                    options.Password.RequireLowercase =
-                        builder.Configuration.GetValue<bool>("Identity:Password:RequireLowercase");
-                    options.Password.RequireUppercase =
-                        builder.Configuration.GetValue<bool>("Identity:Password:RequireUppercase");
-                    options.Password.RequireNonAlphanumeric =
-                        builder.Configuration.GetValue<bool>("Identity:Password:RequireNonAlphanumeric");
-                    options.Password.RequiredLength =
-                        builder.Configuration.GetValue<int>("Identity:Password:RequiredLength");
-                })
+					options.SignIn.RequireConfirmedAccount =
+						builder.Configuration.GetValue<bool>("Identity:SignIn:RequireConfirmedAccount");
+					options.Password.RequireLowercase =
+						builder.Configuration.GetValue<bool>("Identity:Password:RequireLowercase");
+					options.Password.RequireUppercase =
+						builder.Configuration.GetValue<bool>("Identity:Password:RequireUppercase");
+					options.Password.RequireNonAlphanumeric =
+						builder.Configuration.GetValue<bool>("Identity:Password:RequireNonAlphanumeric");
+					options.Password.RequiredLength =
+						builder.Configuration.GetValue<int>("Identity:Password:RequiredLength");
+				})
 				.AddRoles<IdentityRole<Guid>>()
-				.AddEntityFrameworkStores<DevHunterDbContext>();
+				.AddEntityFrameworkStores<DevHunterDbContext>()
+				.AddDefaultTokenProviders();
 
 			builder.Services.ConfigureApplicationCookie(cfg =>
-            {
-                cfg.LoginPath = "/Account/Login";
-            });
+			{
+				cfg.LoginPath = "/Account/Login";
+			});
 
-            builder.Services.AddApplicationServices(typeof(IJobOfferService));
-
-			ConfigureCloudinaryService(builder.Services, builder.Configuration);
+			builder.Services.AddApplicationServices(typeof(IJobOfferService), builder.Configuration);
 
 			builder.Services.AddControllersWithViews()
 				.AddMvcOptions(options =>
@@ -62,15 +61,13 @@ namespace DevHunter.Web
 
 			var app = builder.Build();
 
-			if (app.Environment.IsDevelopment())
+			using (var serviceScope = app.Services.CreateScope())
 			{
-				app.UseDeveloperExceptionPage();
-				app.UseMigrationsEndPoint();
-			}
-			else
-			{
-				app.UseExceptionHandler("/Home/Error");
-				app.UseHsts();
+				var dbContext = serviceScope.ServiceProvider.GetRequiredService<DevHunterDbContext>();
+
+				dbContext.Database.Migrate();
+
+				DevHunterDbContextSeeder.SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter().GetResult();
 			}
 
 			app.UseHttpsRedirection();
@@ -83,9 +80,18 @@ namespace DevHunter.Web
 
 			app.EnableOnlineUsersCheck();
 
-			//TODO: in development state
-			app.SeedCompany();
-			app.SeedAdministrator();
+			if (app.Environment.IsDevelopment())
+			{
+				app.UseMigrationsEndPoint();
+				app.UseDeveloperExceptionPage();
+			}
+			else
+			{
+				app.UseExceptionHandler("/Home/Error/500");
+				app.UseStatusCodePagesWithRedirects("/Home/Error?statusCode={0}");
+
+				app.UseHsts();
+			}
 
 			app.UseEndpoints(config =>
 			{
@@ -99,22 +105,7 @@ namespace DevHunter.Web
 				config.MapRazorPages();
 			});
 
-
 			app.Run();
-		}
-
-		private static void ConfigureCloudinaryService(IServiceCollection services, IConfiguration configuration)
-		{
-			var cloudName = configuration.GetValue<string>("AccountSettings:CloudName");
-			var apiKey = configuration.GetValue<string>("AccountSettings:ApiKey");
-			var apiSecret = configuration.GetValue<string>("AccountSettings:ApiSecret");
-
-			if (new[] { cloudName, apiKey, apiSecret }.Any(string.IsNullOrWhiteSpace))
-			{
-				throw new ArgumentException("Please specify your Cloudinary account Information");
-			}
-
-			services.AddSingleton(new Cloudinary(new Account(cloudName, apiKey, apiSecret)));
 		}
 	}
 }

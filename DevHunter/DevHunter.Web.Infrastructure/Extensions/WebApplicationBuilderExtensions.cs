@@ -1,9 +1,12 @@
 ﻿namespace DevHunter.Web.Infrastructure.Extensions
 {
-    using System.Reflection;
+	using System.Linq;
+	using System.Reflection;
 
+	using CloudinaryDotNet;
 	using Microsoft.AspNetCore.Builder;
 	using Microsoft.AspNetCore.Identity;
+	using Microsoft.Extensions.Configuration;
 	using Microsoft.Extensions.DependencyInjection;
 
 	using Data.Models;
@@ -13,46 +16,63 @@
 
 	public static class WebApplicationBuilderExtensions
 	{
-        /// <summary>
-        /// This method registers all services with their interfaces and implementations of given assembly.
-        /// The assembly is taken from the type of any service implementation provided.
-        /// </summary>
-        /// <param name="serviceType"></param>
-        /// <exception cref="InvalidOperationException"></exception>
-        public static void AddApplicationServices(this IServiceCollection services, Type serviceType)
-        {
-            Assembly? serviceAssembly = Assembly.GetAssembly(serviceType);
-            if (serviceAssembly == null)
-            {
-                throw new InvalidOperationException("Invalid service type provided!");
-            }
+		/// <summary>
+		/// This method registers all services with their interfaces and implementations of given assembly.
+		/// The assembly is taken from the type of any service implementation provided.
+		/// </summary>
+		/// <param name="serviceType"></param>
+		/// <exception cref="InvalidOperationException"></exception>
+		public static IServiceCollection AddApplicationServices(this IServiceCollection services, Type serviceType, IConfiguration configuration)
+		{
+			ConfigureCloudinaryService(services, configuration);
 
-            Type[] serviceTypes = serviceAssembly
-                .GetTypes()
-                .Where(t => t.Name.EndsWith("Service") && !t.IsInterface)
-                .ToArray();
+			Assembly? serviceAssembly = Assembly.GetAssembly(serviceType);
+			if (serviceAssembly == null)
+			{
+				throw new InvalidOperationException("Invalid service type provided!");
+			}
 
-            foreach (Type implementationType in serviceTypes)
-            {
-                Type? interfaceType = implementationType.GetInterface($"I{implementationType.Name}");
+			Type[] serviceTypes = serviceAssembly
+				.GetTypes()
+				.Where(t => t.Name.EndsWith("Service") && !t.IsInterface)
+				.ToArray();
 
-                if (interfaceType == null)
-                {
-                    throw new InvalidOperationException($"No interface is provided for the service with name: {implementationType.Name}");
-                }
+			foreach (Type implementationType in serviceTypes)
+			{
+				Type? interfaceType = implementationType.GetInterface($"I{implementationType.Name}");
 
-                services.AddScoped(interfaceType, implementationType);
-            }
+				if (interfaceType == null)
+				{
+					throw new InvalidOperationException($"No interface is provided for the service with name: {implementationType.Name}");
+				}
 
-        }
+				services.AddScoped(interfaceType, implementationType);
+			}
 
-        /// <summary>
-        /// This method seeds company role if it does not exist.
-        /// Passed email should be valid email of existing user in the application.
-        /// </summary>
-        /// <param name="app"></param>
-        /// <returns></returns>
-        public static IApplicationBuilder SeedCompany(this IApplicationBuilder app)
+			return services;
+		}
+
+		private static void ConfigureCloudinaryService(IServiceCollection services, IConfiguration configuration)
+		{
+			var cloudName = configuration.GetValue<string>("AccountSettings:CloudName");
+			var apiKey = configuration.GetValue<string>("AccountSettings:ApiKey");
+			var apiSecret = configuration.GetValue<string>("AccountSettings:ApiSecret");
+
+			if (new[] { cloudName, apiKey, apiSecret }.Any(string.IsNullOrWhiteSpace))
+			{
+				throw new ArgumentException("Please specify your Cloudinary account Information");
+			}
+
+			services.AddSingleton(new Cloudinary(new Account(cloudName, apiKey, apiSecret)));
+		}
+
+		/// <summary>
+		/// This method seeds company role if it does not exist.
+		/// Passed email should be valid email of existing user in the application.
+		/// </summary>
+		/// <param name="app"></param>
+		/// <returns></returns>
+		public static IApplicationBuilder SeedCompany(this IApplicationBuilder app)
 		{
 			using IServiceScope scopedServices = app.ApplicationServices.CreateScope();
 
