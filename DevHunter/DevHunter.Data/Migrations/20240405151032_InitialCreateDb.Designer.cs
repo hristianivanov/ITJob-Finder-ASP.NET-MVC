@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DevHunter.Data.Migrations
 {
     [DbContext(typeof(DevHunterDbContext))]
-    [Migration("20240320171536_AddJobApplicationAndDocumentTables")]
-    partial class AddJobApplicationAndDocumentTables
+    [Migration("20240405151032_InitialCreateDb")]
+    partial class InitialCreateDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -41,7 +41,7 @@ namespace DevHunter.Data.Migrations
 
                     b.HasIndex("JobApplicationId");
 
-                    b.ToTable("ApplicationDocument");
+                    b.ToTable("ApplicationDocuments");
                 });
 
             modelBuilder.Entity("DevHunter.Data.Models.ApplicationUser", b =>
@@ -209,11 +209,14 @@ namespace DevHunter.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("Status")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("JobOfferId");
 
-                    b.ToTable("JobApplication");
+                    b.ToTable("JobApplications");
                 });
 
             modelBuilder.Entity("DevHunter.Data.Models.JobOffer", b =>
@@ -232,6 +235,9 @@ namespace DevHunter.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(2147483647)
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("JobPlace")
+                        .HasColumnType("int");
 
                     b.Property<string>("JobPosition")
                         .IsRequired()
@@ -297,152 +303,6 @@ namespace DevHunter.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Technologies");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("7bde8d8c-311c-4aa9-bef8-e7e0b7ced04b"),
-                            ImageUrl = "http://res.cloudinary.com/dlffxtrek/image/upload/v1709491632/DevHunter/technology/Go.png",
-                            Name = "Go"
-                        },
-                        new
-                        {
-                            Id = new Guid("7ea06be9-cd6a-4c32-a263-1b431a7a4285"),
-                            ImageUrl = "http://res.cloudinary.com/dlffxtrek/image/upload/v1709496382/DevHunter/technology/HTML5.png",
-                            Name = "Html5"
-                        },
-                        new
-                        {
-                            Id = new Guid("fa3d670f-f35c-4456-8c3b-1c134cf29408"),
-                            ImageUrl = "http://res.cloudinary.com/dlffxtrek/image/upload/v1709495915/DevHunter/technology/Kubernetes.png",
-                            Name = "Kubernetes"
-                        },
-                        new
-                        {
-                            Id = new Guid("14d2c3b6-bae3-40bb-9dbc-982809e312ad"),
-                            ImageUrl = "http://res.cloudinary.com/dlffxtrek/image/upload/v1709496039/DevHunter/technology/Apache.png",
-                            Name = "Apache"
-                        },
-                        new
-                        {
-                            Id = new Guid("81526243-b33b-4bb1-9a37-b16a5bec3efb"),
-                            ImageUrl = "http://res.cloudinary.com/dlffxtrek/image/upload/v1709496307/DevHunter/technology/Angular.png",
-                            Name = "Angular"
-                        },
-                        new
-                        {
-                            Id = new Guid("a04e0bd4-04c6-4a27-91c5-72b8cb787262"),
-                            ImageUrl = "http://res.cloudinary.com/dlffxtrek/image/upload/v1709495970/DevHunter/technology/Javascript.png",
-                            Name = "Javascript"
-                        },
-                        new
-                        {
-                            Id = new Guid("b766c0da-a97e-4ee2-bc69-005250e40c32"),
-                            ImageUrl = "http://res.cloudinary.com/dlffxtrek/image/upload/v1709491632/DevHunter/technology/Go.png",
-                            Name = "Go"
-                        },
-                        new
-                        {
-                            Id = new Guid("08614235-fe4d-40b1-b9c2-94137783181d"),
-                            ImageUrl = "http://res.cloudinary.com/dlffxtrek/image/upload/v1709496353/DevHunter/technology/Gitlab.jpg",
-                            Name = "Gitlab"
-                        },
-                        new
-                        {
-                            Id = new Guid("a9c761bc-ad43-4f6c-bf24-93cf63dd4c2c"),
-                            ImageUrl = "http://res.cloudinary.com/dlffxtrek/image/upload/v1709495888/DevHunter/technology/CSS.png",
-                            Name = "CSS"
-                        },
-                        new
-                        {
-                            Id = new Guid("e2dd0955-cc4f-4ad1-93fa-14aa2a34a1d6"),
-                            ImageUrl = "http://res.cloudinary.com/dlffxtrek/image/upload/v1709495873/DevHunter/technology/Bootstrap.png",
-                            Name = "Bootstrap"
-                        },
-                        new
-                        {
-                            Id = new Guid("62f64eae-30aa-4e1e-9ac1-4e30a4969d6a"),
-                            ImageUrl = "http://res.cloudinary.com/dlffxtrek/image/upload/v1709495988/DevHunter/technology/React.png",
-                            Name = "React"
-                        },
-                        new
-                        {
-                            Id = new Guid("f7335b63-7df4-4a6a-89fc-e648b1a1ab10"),
-                            ImageUrl = "http://res.cloudinary.com/dlffxtrek/image/upload/v1709496410/DevHunter/technology/Python.png",
-                            Name = "Python"
-                        },
-                        new
-                        {
-                            Id = new Guid("b389d54b-d112-4d0d-b2bb-4c9e90b702f0"),
-                            ImageUrl = "http://res.cloudinary.com/dlffxtrek/image/upload/v1709495978/DevHunter/technology/Django.png",
-                            Name = "Django"
-                        },
-                        new
-                        {
-                            Id = new Guid("e0be3772-9b6e-47ec-941f-1c5e40ab26bd"),
-                            ImageUrl = "http://res.cloudinary.com/dlffxtrek/image/upload/v1709496008/DevHunter/technology/MongoDb.png",
-                            Name = "MongoDb"
-                        },
-                        new
-                        {
-                            Id = new Guid("383d2137-388b-4651-b689-e08b84c0771e"),
-                            ImageUrl = "http://res.cloudinary.com/dlffxtrek/image/upload/v1709496318/DevHunter/technology/Ansible.png",
-                            Name = "Ansible"
-                        },
-                        new
-                        {
-                            Id = new Guid("5f036eee-eadf-4ccb-a06a-d7ffa3d89f6f"),
-                            ImageUrl = "http://res.cloudinary.com/dlffxtrek/image/upload/v1709495978/DevHunter/technology/Django.png",
-                            Name = "Django"
-                        },
-                        new
-                        {
-                            Id = new Guid("05ad6a20-1f23-4b55-be2d-7dd19fd8a3f1"),
-                            ImageUrl = "http://res.cloudinary.com/dlffxtrek/image/upload/v1709496362/DevHunter/technology/Flink.png",
-                            Name = "Flink"
-                        },
-                        new
-                        {
-                            Id = new Guid("b63c7830-5ba6-483b-becc-2dc0606f6fb9"),
-                            ImageUrl = "http://res.cloudinary.com/dlffxtrek/image/upload/v1709496341/DevHunter/technology/Ecma.png",
-                            Name = "Ecma"
-                        },
-                        new
-                        {
-                            Id = new Guid("9ddd7009-1620-48fe-91ee-7909d0a702f8"),
-                            ImageUrl = "http://res.cloudinary.com/dlffxtrek/image/upload/v1709495925/DevHunter/technology/Linux.png",
-                            Name = "Linux"
-                        },
-                        new
-                        {
-                            Id = new Guid("b9e0524f-f414-470d-ac3a-c795e5eab006"),
-                            ImageUrl = "http://res.cloudinary.com/dlffxtrek/image/upload/v1709496395/DevHunter/technology/Typescript.png",
-                            Name = "Typescript"
-                        },
-                        new
-                        {
-                            Id = new Guid("19ce736e-0280-47ab-9b10-60ed6a0a6cda"),
-                            ImageUrl = "http://res.cloudinary.com/dlffxtrek/image/upload/v1709495940/DevHunter/technology/MariaDb.png",
-                            Name = "MariaDb"
-                        },
-                        new
-                        {
-                            Id = new Guid("3745ac4b-1f6a-4b18-974a-fd32030a740f"),
-                            ImageUrl = "http://res.cloudinary.com/dlffxtrek/image/upload/v1709495957/DevHunter/technology/Nodejs.png",
-                            Name = "Nodejs"
-                        },
-                        new
-                        {
-                            Id = new Guid("dfa8cacb-0b5b-494f-aea2-92c80cc06d58"),
-                            ImageUrl = "http://res.cloudinary.com/dlffxtrek/image/upload/v1709495897/DevHunter/technology/Docker.jpg",
-                            Name = "Docker"
-                        },
-                        new
-                        {
-                            Id = new Guid("da8eb774-2338-487d-b064-3dd071ab5913"),
-                            ImageUrl = "http://res.cloudinary.com/dlffxtrek/image/upload/v1709496838/DevHunter/technology/Vue.png",
-                            Name = "Vue"
-                        });
                 });
 
             modelBuilder.Entity("DevHunter.Data.Models.TechnologyDevelopments", b =>
@@ -476,6 +336,24 @@ namespace DevHunter.Data.Migrations
                     b.HasIndex("TechnologyId");
 
                     b.ToTable("TechnologyJobOffers");
+                });
+
+            modelBuilder.Entity("DevHunter.Data.Models.UserJobApplications", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("JobApplicationId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("UserId", "JobApplicationId");
+
+                    b.HasIndex("JobApplicationId");
+
+                    b.ToTable("UsersJobApplications");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", b =>
@@ -733,6 +611,25 @@ namespace DevHunter.Data.Migrations
                     b.Navigation("Technology");
                 });
 
+            modelBuilder.Entity("DevHunter.Data.Models.UserJobApplications", b =>
+                {
+                    b.HasOne("DevHunter.Data.Models.JobApplication", "JobApplication")
+                        .WithMany("UserJobApplications")
+                        .HasForeignKey("JobApplicationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DevHunter.Data.Models.ApplicationUser", "User")
+                        .WithMany("JobApplications")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("JobApplication");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", null)
@@ -788,6 +685,8 @@ namespace DevHunter.Data.Migrations
                 {
                     b.Navigation("Companies");
 
+                    b.Navigation("JobApplications");
+
                     b.Navigation("SavedJobOffers");
                 });
 
@@ -806,6 +705,8 @@ namespace DevHunter.Data.Migrations
             modelBuilder.Entity("DevHunter.Data.Models.JobApplication", b =>
                 {
                     b.Navigation("Documents");
+
+                    b.Navigation("UserJobApplications");
                 });
 
             modelBuilder.Entity("DevHunter.Data.Models.JobOffer", b =>

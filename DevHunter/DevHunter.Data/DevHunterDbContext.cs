@@ -1,14 +1,14 @@
 ﻿namespace DevHunter.Data
 {
-	using System.Reflection;
+    using System.Reflection;
 
-	using Microsoft.AspNetCore.Identity;
-	using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-	using Microsoft.EntityFrameworkCore;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore;
 
-	using Models;
+    using Models;
 
-	public class DevHunterDbContext : IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>
+    public class DevHunterDbContext : IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>
 	{
 		public DbSet<JobOffer> JobOffers { get; set; } = null!;
 		public DbSet<Company> Companies { get; set; } = null!;
@@ -51,13 +51,6 @@
 									  Assembly.GetExecutingAssembly();
 
 			builder.ApplyConfigurationsFromAssembly(configAssembly);
-
-
-			builder.Entity<Company>()
-				.HasOne(c => c.Creator)
-				.WithMany(u => u.Companies)
-				.HasForeignKey(c => c.CreatorId)
-				.OnDelete(DeleteBehavior.Restrict);
 		}
 	}
 }
