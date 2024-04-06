@@ -32,21 +32,6 @@
 		{
 			base.OnModelCreating(builder);
 
-			builder.Entity<TechnologyDevelopments>()
-				.HasKey(td => new { td.TechnologyId, td.DevelopmentId });
-
-			builder.Entity<CompanyTechnologies>()
-				.HasKey(ct => new { ct.CompanyId, ct.TechnologyId });
-
-			builder.Entity<TechnologyJobOffers>()
-				.HasKey(tj => new { tj.JobOfferId, tj.TechnologyId });
-
-			builder.Entity<SavedJobOffer>()
-				.HasKey(sj => new { sj.UserId, sj.JobOfferId });
-
-			builder.Entity<UserJobApplications>()
-				.HasKey(uja => new { uja.UserId, uja.JobApplicationId });
-
 			Assembly configAssembly = Assembly.GetAssembly(typeof(DevHunterDbContext)) ??
 									  Assembly.GetExecutingAssembly();
 

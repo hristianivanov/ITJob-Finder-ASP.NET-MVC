@@ -14,8 +14,6 @@
 				.WithMany(u => u.Companies)
 				.HasForeignKey(c => c.CreatorId)
 				.OnDelete(DeleteBehavior.Restrict);
-
-			//builder.HasData(this.GenerateCompanies());
 		}
 	}
 }
