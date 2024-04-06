@@ -12,6 +12,7 @@
 	using Data.Models;
 	using Middlewares;
 
+	using Common;
 	using static Common.GeneralApplicationConstants;
 
 	public static class WebApplicationBuilderExtensions
@@ -25,6 +26,8 @@
 		public static IServiceCollection AddApplicationServices(this IServiceCollection services, Type serviceType, IConfiguration configuration)
 		{
 			ConfigureCloudinaryService(services, configuration);
+
+			ConfigureEmailService(services, configuration);
 
 			Assembly? serviceAssembly = Assembly.GetAssembly(serviceType);
 			if (serviceAssembly == null)
@@ -50,6 +53,15 @@
 			}
 
 			return services;
+		}
+
+		private static void ConfigureEmailService(IServiceCollection services, IConfiguration configuration)
+		{
+			var emailConfig = configuration
+				.GetSection("EmailConfiguration")
+				.Get<EmailConfig>();
+
+			services.AddSingleton(emailConfig);
 		}
 
 		private static void ConfigureCloudinaryService(IServiceCollection services, IConfiguration configuration)

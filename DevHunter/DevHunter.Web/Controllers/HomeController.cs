@@ -4,21 +4,24 @@
 
 	using Microsoft.AspNetCore.Mvc;
 
+	using DevHunter.Services.Data.Interfaces; 
 	using ViewModels.Home;
 	using Infrastructure.Extensions;
 
 	using static Common.GeneralApplicationConstants;
-	using DevHunter.Services.Data.Interfaces;
+	using static Common.NotificationMessagesConstants;
 
 	public class HomeController : Controller
 	{
 		private readonly IDevelopmentService developmentService;
+		private readonly IEmailService emailService;
 		private readonly ILogger<HomeController> _logger;
 
-		public HomeController(ILogger<HomeController> logger, IDevelopmentService developmentService)
+		public HomeController(ILogger<HomeController> logger, IDevelopmentService developmentService, IEmailService emailService)
 		{
 			_logger = logger;
 			this.developmentService = developmentService;
+			this.emailService = emailService;
 		}
 
 		[HttpGet]
@@ -46,9 +49,38 @@
 			return View();
 		}
 
+		[HttpGet]
+		[Route("/contact")]
 		public IActionResult Contact()
 		{
-			return View();
+			var model = new FormMessageModel();
+
+			return View(model);
+		}
+
+		[HttpPost]
+		[Route("/contact")]
+		public async Task<IActionResult> Contact(FormMessageModel model)
+		{
+			if (!ModelState.IsValid)
+			{
+				return View(model);
+			}
+
+			try
+			{
+				await emailService.SendEmailAsync(model);
+			}
+			catch (Exception e)
+			{
+				TempData[ErrorMessage] = e.Message;
+
+				return View(model);
+			}
+
+			TempData[SuccessMessage] = "Successfully sent email!";
+
+			return RedirectToAction("Contact");
 		}
 
 		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

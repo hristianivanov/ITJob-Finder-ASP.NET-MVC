@@ -1,7 +1,25 @@
-﻿@{
+﻿@model FormMessageModel
+
+@{
     ViewData["Title"] = "Privacy Policy";
 }
 
 <h1>@ViewData["Title"]</h1>
 
-<p>Use this page to detail your site's privacy policy.</p>
+<form method="post">
+	<div class="row">
+		<div class="col-md-6 form-group">
+			<input asp-for="@Model.Name" type="text" class="form-control" id="name" placeholder="Име" required>
+		</div>
+		<div class="col-md-6 form-group mt-3 mt-md-0">
+			<input asp-for="@Model.From" type="email" class="form-control" id="email" placeholder="Имейл" required>
+		</div>
+	</div>
+	<div class="form-group mt-3">
+		<input asp-for="@Model.Subject" type="text" class="form-control" id="subject" placeholder="Тема" required>
+	</div>
+	<div class="form-group mt-3">
+		<textarea asp-for="@Model.Content" type="text" class="form-control" rows="5" placeholder="Съобщение" required></textarea>
+	</div>
+	<div class="text-center"><button type="submit">Изпрати съобщение</button></div>
+</form>
