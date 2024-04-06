@@ -4,22 +4,33 @@
     ViewData["Title"] = "Privacy Policy";
 }
 
-<h1>@ViewData["Title"]</h1>
+<div class="contact-container">
+	<div class="img-container">
+		<img src="~/imgs/getin-touch-green.png">
+	</div>
+	<div class="contact-form-container">
+		<header>
+			<h2>We are here to help! Tell us more.</h2>
+		</header>
+		<form asp-controller="Home" asp-action="Contact" class="contact-form" method="post">
+			<div class="input-field two-columns">
+				<input asp-for="Name" type="text" placeholder="Name"/>
+				<input asp-for="From" type="email"  placeholder="Email"/>
+			</div>
+			<div class="input-field">
+				<input asp-for="Subject" type="text" placeholder="Theme"/>
+			</div>
+			<div class="input-field">
+				<textarea asp-for="Content" placeholder="Message"></textarea>
+			</div>
+			<div class="actions">
+				<button class="action submit-btn" type="submit">Submit</button>
+				<button class="action" type="reset">Cancel</button>
+			</div>
+		</form>
+	</div>
+</div>
 
-<form method="post">
-	<div class="row">
-		<div class="col-md-6 form-group">
-			<input asp-for="@Model.Name" type="text" class="form-control" id="name" placeholder="Име" required>
-		</div>
-		<div class="col-md-6 form-group mt-3 mt-md-0">
-			<input asp-for="@Model.From" type="email" class="form-control" id="email" placeholder="Имейл" required>
-		</div>
-	</div>
-	<div class="form-group mt-3">
-		<input asp-for="@Model.Subject" type="text" class="form-control" id="subject" placeholder="Тема" required>
-	</div>
-	<div class="form-group mt-3">
-		<textarea asp-for="@Model.Content" type="text" class="form-control" rows="5" placeholder="Съобщение" required></textarea>
-	</div>
-	<div class="text-center"><button type="submit">Изпрати съобщение</button></div>
-</form>
+@section Styles {
+	<link href="~/css/contact/styles.css" rel="stylesheet" />
+}
