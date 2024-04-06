@@ -16,4 +16,10 @@
     <ProjectReference Include="..\DevHunter.Services.Data\DevHunter.Services.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="Microsoft.Extensions.Configuration.Binder">
+      <HintPath>C:\Program Files\dotnet\packs\Microsoft.AspNetCore.App.Ref\6.0.28\ref\net6.0\Microsoft.Extensions.Configuration.Binder.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>
