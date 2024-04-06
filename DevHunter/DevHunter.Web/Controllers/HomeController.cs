@@ -4,7 +4,7 @@
 
 	using Microsoft.AspNetCore.Mvc;
 
-	using DevHunter.Services.Data.Interfaces; 
+	using Services.Data.Interfaces;
 	using ViewModels.Home;
 	using Infrastructure.Extensions;
 
@@ -13,13 +13,13 @@
 
 	public class HomeController : Controller
 	{
+		private readonly ILogger<HomeController> logger;
 		private readonly IDevelopmentService developmentService;
 		private readonly IEmailService emailService;
-		private readonly ILogger<HomeController> _logger;
 
 		public HomeController(ILogger<HomeController> logger, IDevelopmentService developmentService, IEmailService emailService)
 		{
-			_logger = logger;
+			this.logger = logger;
 			this.developmentService = developmentService;
 			this.emailService = emailService;
 		}
@@ -64,6 +64,8 @@
 		{
 			if (!ModelState.IsValid)
 			{
+				TempData[ErrorMessage] = "Unexpected error occurred!";
+
 				return View(model);
 			}
 
