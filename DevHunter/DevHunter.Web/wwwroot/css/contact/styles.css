@@ -1,0 +1,113 @@
+﻿.img-container {
+    width: 348px;
+    /* ReSharper disable once HexColorValueWithAlpha */
+    box-shadow: 0 0 50px #374ffe52;
+    border-radius: 20px;
+}
+
+    .img-container img {
+        vertical-align: middle;
+        display: block;
+        width: 100%;
+    }
+
+.actions {
+    display: flex;
+    justify-content: center;
+    transform: translateY(4em);
+    gap: 6px;
+}
+
+    .actions .action {
+        border: none;
+        font-family: Axiforma, sans-serif;
+        padding: 10px 32px;
+        border-radius: 4px;
+        cursor: pointer;
+        max-width: 140px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+.input-field.two-columns {
+    column-count: 2;
+}
+
+.actions .submit-btn {
+    background: #374EF5;
+    color: #fff;
+}
+
+.actions .reset-btn {
+    background: #e9e9ed;
+    color: #000;
+}
+
+.input-field input,
+.input-field textarea {
+    border: unset;
+    resize: none;
+    font-family: Axiforma, sans-serif;
+    color: rgb(129, 138, 145);
+    ;
+    width: 100%;
+    border-radius: 4px;
+    padding: 8px 16px;
+    font-size: 18px;
+    box-shadow: inset 0 0 0 1px rgb(192, 193, 193);
+}
+
+    .input-field input:focus {
+        box-shadow: inset 0 0 0 2px #0060df;
+    }
+
+.contact-container {
+    display: flex;
+    align-items: center;
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+    padding-inline: 0;
+    height: 100%;
+    padding: 80px 0;
+}
+
+.contact-form-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 100px 100px 100px 60px;
+}
+
+    .contact-form-container::before {
+        width: 123%;
+        content: '';
+        height: 100%;
+        background-color: #fff;
+        right: 0;
+        position: absolute;
+        left: unset;
+        z-index: -1;
+        /* ReSharper disable once HexColorValueWithAlpha */
+        box-shadow: 0 0 50px #374FFE1A;
+        border-radius: 20px;
+    }
+
+    .contact-form-container header h2 {
+        color: #595859;
+        font-family: "Axiforma", sans-serif;
+        font-size: 50px;
+        font-weight: 800;
+    }
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    background-color: white;
+    color: black;
+    margin: 2em auto;
+    max-width: 600px;
+}
