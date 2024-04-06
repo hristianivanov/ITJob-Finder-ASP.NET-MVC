@@ -9,7 +9,7 @@
 	{
 		public void Configure(EntityTypeBuilder<Development> builder)
 		{
-			//builder.HasData(this.GenerateDevelopments());
+
 		}
 	}
 }

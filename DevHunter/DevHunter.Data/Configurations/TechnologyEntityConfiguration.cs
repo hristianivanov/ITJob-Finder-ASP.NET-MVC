@@ -16,9 +16,6 @@
 			//		i.Property(i => i.ThumbnailContent).HasColumnName("ImageThumbnailContent");
 			//		i.Property(i => i.OriginalType).HasColumnName("ImageOriginalType");
 			//	});
-
-			//builder.HasData(this.GenerateTechnologies());
 		}
-
 	}
 }

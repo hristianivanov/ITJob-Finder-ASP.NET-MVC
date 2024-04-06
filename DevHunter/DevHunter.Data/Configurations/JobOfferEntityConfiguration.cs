@@ -9,8 +9,7 @@
 	{
 		public void Configure(EntityTypeBuilder<JobOffer> builder)
 		{
-			//builder.HasData(this.GenerateJobOffers());
-		}
 
+		}
 	}
 }
