@@ -494,6 +494,7 @@
 @media screen and (max-width: 779px) {
     .section-category-block {
         column-count: 1;
+        overflow: visible;
     }
 
     .section-category-block .category-block {

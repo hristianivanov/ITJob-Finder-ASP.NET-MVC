@@ -4,11 +4,15 @@
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
+@{
+	var nickname = User.Identity.IsAuthenticated ? User.Identity.Name.Substring(0, 2).ToUpper() : null;
+}
+
 <div class="login-register-cta">
 	@if (SignInManager.IsSignedIn(User))
 	{
 		//Hello @User.Identity?.Name!
-		<a class="user-manage-icon" asp-area="Manage" asp-controller="Account" asp-action="Manage">HI</a>
+		<a class="user-manage-icon" asp-area="Manage" asp-controller="Account" asp-action="Manage">@nickname</a>
 		<form asp-area="" asp-controller="Account" asp-action="Logout" asp-route-returnUrl="@(Context.Request.Path + Context.Request.QueryString)" method="post">
 			<button type="submit" class="last-btn">Logout</button>
 		</form>

@@ -42,7 +42,8 @@
 			this.Staffs = new HashSet<StaffFilter>();
 		}
 
-		public ICollection<SeniorityFilter> Experiences { get; set; }
+        public bool IsSalaryAvailable { get; set; }
+        public ICollection<SeniorityFilter> Experiences { get; set; }
 		public IEnumerable<LocationFilter> Locations { get; set; }
 		public IEnumerable<StaffFilter> Staffs { get; set; }
 	}
