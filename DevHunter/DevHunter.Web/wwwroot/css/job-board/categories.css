@@ -25,6 +25,8 @@
 .section-category-block {
     column-count: 3;
     column-gap: 0;
+    column-rule: 1px solid rgb(0, 0, 73);
+    overflow: hidden;
 }
 
 .section-category-block .section-collapse {
@@ -48,6 +50,11 @@
     display: flex;
     flex-flow: wrap;
     overflow: visible;
+}
+
+.section-category-block .category-block {
+    border-top: 1px solid rgb(0, 0, 73);
+    top: calc(-1px - 1rem);
 }
 
 .border-left {
