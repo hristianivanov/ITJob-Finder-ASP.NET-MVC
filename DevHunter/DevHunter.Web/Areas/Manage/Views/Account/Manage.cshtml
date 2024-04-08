@@ -1,4 +1,6 @@
-﻿<div class="management-wrapper">
+﻿@model UserManageFormModel
+
+<div class="management-wrapper">
 	<div class="subscriber-management-content">
 		<div class="subscriber-management-content-inner">
 			<div class="profile-heading">
@@ -23,7 +25,7 @@
 						</div>
 						<div class="subscriber-names-wrap field-wrap">
 							<label>E-mail</label>
-							<input type="email" class="input-field">
+							<input asp-for="Email" type="email" class="input-field">
 						</div>
 						<button class="subscriber-submit" type="submit">Save changes</button>
 					</form>

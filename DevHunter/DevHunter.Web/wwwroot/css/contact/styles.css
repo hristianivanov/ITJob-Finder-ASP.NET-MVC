@@ -46,11 +46,11 @@
 
 .input-field input,
 .input-field textarea {
+    display: block;
     border: unset;
     resize: none;
     font-family: Axiforma, sans-serif;
     color: rgb(129, 138, 145);
-    ;
     width: 100%;
     border-radius: 4px;
     padding: 8px 16px;

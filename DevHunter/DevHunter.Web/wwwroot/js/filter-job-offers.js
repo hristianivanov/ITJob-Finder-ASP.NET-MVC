@@ -35,16 +35,7 @@ checkboxInputs.forEach(input => {
         const url = generateURL(filters, input.name);
 
         window.location.href = url;
-
-        window.onscroll = function (e) {
-            localStorage.setItem("scrollpos", window.scrollY);
-        };
     });
-});
-
-document.addEventListener("DOMContentLoaded", function (event) {
-    var scrollpos = localStorage.getItem("scrollpos");
-    if (scrollpos) window.scrollTo(0, scrollpos);
 });
 
 const urlParams = new URLSearchParams(window.location.search);

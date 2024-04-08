@@ -3,8 +3,8 @@
 <div class="outside-wrapper">
 	<div class="table-container">
 		<header class="table-heading">
-			<h1>Your job candidates</h1>
-			<p>Look all of your candidates for your team.</p>
+			<h1>Saved job offers</h1>
+			<p>See all listings that have been saved for viewing later.</p>
 		</header>
 		<main class="table-content">
 			<div class="table-head">
@@ -18,8 +18,16 @@
 				{
 					<div class="data-row">
 						<div class="date">@viewModel.SavedDate</div>
-						<div class="title">@viewModel.JobTitle</div>
-						<div class="email">@viewModel.CompanyName</div>
+						<div class="title">
+							<a asp-area="" asp-controller="JobOffer" asp-action="Detail" asp-route-id="@viewModel.JobOfferId">
+								@viewModel.JobTitle
+							</a>
+						</div>
+						<div class="email">
+							<a asp-area="" asp-controller="Company" asp-action="Detail" asp-route-id="@viewModel.CompanyId">
+								@viewModel.CompanyName
+							</a>
+						</div>
 						<div class="actions"></div>
 					</div>
 				}

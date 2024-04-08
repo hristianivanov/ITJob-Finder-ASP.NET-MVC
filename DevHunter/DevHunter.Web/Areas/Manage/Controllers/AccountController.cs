@@ -13,19 +13,23 @@
 		private readonly ICompanyService companyService;
 		private readonly IJobOfferService jobOfferService;
 		private readonly IJobApplicationService jobApplicationService;
+		private readonly IUserService userService;
 
-		public AccountController(ICompanyService companyService, IJobApplicationService jobApplicationService, IJobOfferService jobOfferService)
+		public AccountController(ICompanyService companyService, IJobApplicationService jobApplicationService, IJobOfferService jobOfferService, IUserService userService)
 		{
 			this.companyService = companyService;
 			this.jobApplicationService = jobApplicationService;
 			this.jobOfferService = jobOfferService;
+			this.userService = userService;
 		}
 
 		[HttpGet]
 		[Route("account/manage")]
-		public IActionResult Manage()
+		public async Task<IActionResult> Manage()
 		{
-			return View();
+			var model = await this.userService.GetUserByIdAsync(this.User.GetId()!);
+			
+			return View(model);
 		}
 
 		[HttpGet]
