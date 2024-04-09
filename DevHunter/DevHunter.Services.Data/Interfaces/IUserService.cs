@@ -6,6 +6,6 @@
 	public interface IUserService
 	{
 		Task<IEnumerable<UserViewModel>> AllAsync();
-		Task<UserManageFormModel> GetUserByIdAsync(string userId);
+		Task<ApplicationUser> GetUserByIdAsync(string userId);
 	}
 }

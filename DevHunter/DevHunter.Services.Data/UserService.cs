@@ -41,16 +41,11 @@
 			return allUsers;
 		}
 
-		public async Task<UserManageFormModel> GetUserByIdAsync(string userId)
+		public async Task<ApplicationUser> GetUserByIdAsync(string userId)
 		{
-			var user = await this.context.Users.FirstAsync(u => u.Id.ToString() ==  userId);
+			var user = await this.context.Users.FirstAsync(u => u.Id.ToString() == userId);
 
-			return new UserManageFormModel
-			{
-				Email = user.Email,
-				//FirstName = user.FirstName,
-				//LastName = user.LastName,
-			};
+			return user;
 		}
 	}
 }

@@ -30,20 +30,7 @@
 						<button class="subscriber-submit" type="submit">Save changes</button>
 					</form>
 				</div>
-				<div class="my-profile-column">
-					<h2 class="column-title">User details</h2>
-					<form id="edit-password-form" class="user-details-form change-password-form " method="post">
-						<div class="subscriber-names-wrap field-wrap">
-							<label>Type new password</label>
-							<input type="password" class="input-field">
-						</div>
-						<div class="subscriber-names-wrap field-wrap">
-							<label>Confirm new password</label>
-							<input type="password" class="input-field">
-						</div>
-						<button class="subscriber-submit" type="submit">Save changes</button>
-					</form>
-				</div>
+				<partial name="_ChangePasswordPartial" model="Model.ChangePasswordModel" />
 			</div>
 		</div>
 	</div>
