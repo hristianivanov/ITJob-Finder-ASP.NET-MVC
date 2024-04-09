@@ -104,7 +104,9 @@
 				.Select(a => new MyApplicationViewModel()
 				{
 					SavedDate = a.Date.ToString("dd.MM.yyyy"),
+					CompanyId = a.JobApplication.JobOffer.Company.Id.ToString(),
 					CompanyName = a.JobApplication.JobOffer.Company.Name,
+					JobOfferId = a.JobApplication.JobOfferId.ToString(),
 					JobTitle = a.JobApplication.JobOffer.JobPosition,
 					Status = a.JobApplication.Status.ToString()!
 				})

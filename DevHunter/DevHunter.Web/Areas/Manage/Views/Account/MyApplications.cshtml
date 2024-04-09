@@ -18,8 +18,16 @@
 				{
 					<div class="data-row">
 						<div class="date">@application.SavedDate</div>
-						<div class="title">@application.JobTitle</div>
-						<div class="email">@application.CompanyName</div>
+						<div class="title">
+							<a asp-area="" asp-controller="JobOffer" asp-action="Detail" asp-route-id="@application.JobOfferId">
+								@application.JobTitle
+							</a>
+						</div>
+						<div class="email">
+							<a asp-area="" asp-controller="Company" asp-action="Detail" asp-route-id="@application.CompanyId">
+								@application.CompanyName
+							</a>
+						</div>
 						<div class="status @(application.Status == "Approved" ? "approved" : !string.IsNullOrWhiteSpace(application.Status) ? "rejected" : "")">
 							@if (!string.IsNullOrWhiteSpace(application.Status))
 							{
