@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="CloudinaryDotNet" Version="1.26.0" />
     <PackageReference Include="HtmlSanitizer" Version="8.0.843" />
     <PackageReference Include="MailKit" Version="4.4.0" />
     <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.0" />
@@ -19,13 +18,8 @@
     <ProjectReference Include="..\DevHunter.Data.Models\DevHunter.Data.Models.csproj" />
     <ProjectReference Include="..\DevHunter.Data\DevHunter.Data.csproj" />
     <ProjectReference Include="..\DevHunter.Services.Data.Models\DevHunter.Services.Data.Models.csproj" />
+    <ProjectReference Include="..\DevHunter.Web.Infrastructure\DevHunter.Web.Infrastructure.csproj" />
     <ProjectReference Include="..\DevHunter.Web.ViewModels\DevHunter.Web.ViewModels.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="DevHunter.Web.Infrastructure">
-      <HintPath>..\DevHunter.Web.Infrastructure\bin\Debug\net6.0\DevHunter.Web.Infrastructure.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
 </Project>
