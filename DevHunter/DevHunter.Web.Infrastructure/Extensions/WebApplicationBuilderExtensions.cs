@@ -9,10 +9,10 @@
 	using Microsoft.Extensions.Configuration;
 	using Microsoft.Extensions.DependencyInjection;
 
-	using Data.Models;
-	using Middlewares;
-
 	using Common;
+	using Middlewares;
+	using Data.Models;
+
 	using static Common.GeneralApplicationConstants;
 
 	public static class WebApplicationBuilderExtensions
