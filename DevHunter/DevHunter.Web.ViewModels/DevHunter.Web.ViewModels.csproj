@@ -1,25 +1,20 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="2.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="2.2.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\DevHunter.Common\DevHunter.Common.csproj" />
-    <ProjectReference Include="..\DevHunter.Data.Models\DevHunter.Data.Models.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="DevHunter.Web.Infrastructure">
-      <HintPath>..\DevHunter.Web.Infrastructure\bin\Debug\net6.0\DevHunter.Web.Infrastructure.dll</HintPath>
-    </Reference>
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\DevHunter.Common\DevHunter.Common.csproj" />
+		<ProjectReference Include="..\DevHunter.Data.Models\DevHunter.Data.Models.csproj" />
+		<ProjectReference Include="..\DevHunter.Web.Infrastructure\DevHunter.Web.Infrastructure.csproj" />
+	</ItemGroup>
 
 </Project>
