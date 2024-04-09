@@ -115,6 +115,7 @@
     }
 
     .management-wrapper .my-profile-column .user-details-form input {
+        font-family: Axiforma, sans-serif;
         display: block;
         height: 50px;
         padding: 8px 12px;
@@ -122,7 +123,7 @@
         margin-bottom: 10px;
         font-size: 14px;
         line-height: 1.4;
-        color: #333333;
+        color: #000;
         background: white;
         border: 1px solid #ccc;
     }
