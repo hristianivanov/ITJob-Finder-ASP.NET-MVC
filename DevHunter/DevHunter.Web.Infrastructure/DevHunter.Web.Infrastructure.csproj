@@ -7,13 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="CloudinaryDotNet" Version="1.26.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.25" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\DevHunter.Common\DevHunter.Common.csproj" />
-    <ProjectReference Include="..\DevHunter.Services.Data\DevHunter.Services.Data.csproj" />
+    <ProjectReference Include="..\DevHunter.Data.Models\DevHunter.Data.Models.csproj" />
   </ItemGroup>
 
   <ItemGroup>
