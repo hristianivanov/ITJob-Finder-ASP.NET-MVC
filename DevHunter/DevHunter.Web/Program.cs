@@ -13,7 +13,7 @@ namespace DevHunter.Web
 
 	public class Program
 	{
-		public static void Main(string[] args)
+		public static async Task Main(string[] args)
 		{
 			var builder = WebApplication.CreateBuilder(args);
 
@@ -65,9 +65,9 @@ namespace DevHunter.Web
 			{
 				var dbContext = serviceScope.ServiceProvider.GetRequiredService<DevHunterDbContext>();
 
-				dbContext.Database.Migrate();
+				await dbContext.Database.MigrateAsync();
 
-				DevHunterDbContextSeeder.SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter().GetResult();
+				await DevHunterDbContextSeeder.SeedAsync(dbContext, serviceScope.ServiceProvider);
 			}
 
 			app.UseHttpsRedirection();
@@ -105,7 +105,7 @@ namespace DevHunter.Web
 				config.MapRazorPages();
 			});
 
-			app.Run();
+			await app.RunAsync();
 		}
 	}
 }
