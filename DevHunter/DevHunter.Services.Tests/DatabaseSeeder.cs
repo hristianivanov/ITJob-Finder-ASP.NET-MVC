@@ -1,10 +1,6 @@
-﻿using CloudinaryDotNet.Actions;
-using Microsoft.Extensions.DependencyInjection;
-
-namespace DevHunter.Services.Tests
+﻿namespace DevHunter.Services.Tests
 {
 	using Microsoft.AspNetCore.Identity;
-	using Microsoft.EntityFrameworkCore;
 
 	using DevHunter.Data;
 	using DevHunter.Data.Models;
@@ -27,19 +23,18 @@ namespace DevHunter.Services.Tests
 			{
 				new()
 				{
-					Name = "valid1",
+					Name = "development_1",
 					ImageUrl = "testImageUrl",
 				},
 				new()
 				{
-					Name = "valid2",
+					Name = "development_2",
 					ImageUrl = "testImageUrl",
 				}
 			};
 
 			await dbContext.Developments.AddRangeAsync(developments);
 		}
-
 
 		private static async Task SeedUsers(DevHunterDbContext dbContext)
 		{
