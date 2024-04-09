@@ -54,5 +54,15 @@
 
 			Assert.IsFalse(result);
 		}
+
+		[Test]
+		public async Task ExistByNameAsync_ShouldReturnTrueForExistingDevelopment()
+		{
+			string existingDevelopmentName = "valid1";
+
+			bool result = await developmentService.ExistsByNameAsync(existingDevelopmentName);
+
+			Assert.IsTrue(result);
+		}
 	}
 }
