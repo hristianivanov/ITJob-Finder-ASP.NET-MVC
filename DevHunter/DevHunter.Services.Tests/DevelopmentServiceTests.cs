@@ -58,7 +58,7 @@
 		[Test]
 		public async Task ExistByNameAsync_ShouldReturnTrueForExistingDevelopment()
 		{
-			string existingDevelopmentName = "valid1";
+			string existingDevelopmentName = "development_1";
 
 			bool result = await developmentService.ExistsByNameAsync(existingDevelopmentName);
 
