@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DevHunter.Common\DevHunter.Common.csproj" />
+    <ProjectReference Include="..\DevHunter.Data.Models\DevHunter.Data.Models.csproj" />
+    <ProjectReference Include="..\DevHunter.Data\DevHunter.Data.csproj" />
+  </ItemGroup>
+
+</Project>
