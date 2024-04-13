@@ -18,14 +18,11 @@
 	{
 		private readonly DevHunterDbContext context;
 		private readonly IImageService imageService;
-		private readonly IJobOfferService jobOfferService;
 
-
-		public CompanyService(DevHunterDbContext context, IImageService imageService, IJobOfferService jobOfferService)
+		public CompanyService(DevHunterDbContext context, IImageService imageService)
 		{
 			this.context = context;
 			this.imageService = imageService;
-			this.jobOfferService = jobOfferService;
 		}
 
 		public async Task AddAsync(CompanyRegisterFormModel model, Guid userId)
@@ -46,7 +43,7 @@
 			=> await this.context.Companies.FirstOrDefaultAsync(c => c.Name == name) != null;
 
 		public async Task<bool> ExistsByIdAsync(string id)
-		=> await this.context.Companies.FirstOrDefaultAsync(c => c.Id.ToString() == id) != null;
+			=> await this.context.Companies.FirstOrDefaultAsync(c => c.Id.ToString() == id) != null;
 
 		public async Task<CompanyFormModel> GetForEditByIdAsync(string id)
 		{

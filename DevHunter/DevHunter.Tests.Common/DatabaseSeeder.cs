@@ -20,7 +20,27 @@
 			await SeedDevelopments(dbContext);
 			await SeedCompanies(dbContext);
 			await SeedJobOffers(dbContext);
+			await SeedApplications(dbContext);
 
+			await dbContext.SaveChangesAsync();
+		}
+
+		private static async Task SeedApplications(DevHunterDbContext dbContext)
+		{
+			var jobOffer = await dbContext.JobOffers.FirstAsync();
+
+			var applicatons = new JobApplication[]
+			{
+				new()
+				{
+					Email = "test@gmail.com",
+					CandidateName = "candidate_name",
+					JobOfferId = jobOffer.Id,
+					MotivationalLetter = "...",
+				}
+			};
+
+			await dbContext.JobApplications.AddRangeAsync(applicatons);
 			await dbContext.SaveChangesAsync();
 		}
 
