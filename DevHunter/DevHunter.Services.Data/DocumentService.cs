@@ -12,13 +12,13 @@
 
 	public class DocumentService : IDocumentService
 	{
-		private readonly Cloudinary cloudinary;
 		private readonly DevHunterDbContext dbContext;
+		private readonly ICloudinaryService cloudinaryService;
 
-		public DocumentService(Cloudinary cloudinary, DevHunterDbContext dbContext)
+		public DocumentService(DevHunterDbContext dbContext, ICloudinaryService cloudinaryService)
 		{
-			this.cloudinary = cloudinary;
 			this.dbContext = dbContext;
+			this.cloudinaryService = cloudinaryService;
 		}
 
 		public async Task<string> UploadDocumentAsync(IFormFile file, string folder)
@@ -32,7 +32,7 @@
 				File = new FileDescription(file.FileName, stream),
 			};
 
-			var uploadResult = await cloudinary.UploadAsync(uploadParams);
+			var uploadResult = await cloudinaryService.UploadAsync(uploadParams);
 
 			if (uploadResult.Error != null)
 			{

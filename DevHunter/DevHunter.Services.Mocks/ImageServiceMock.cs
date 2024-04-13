@@ -5,7 +5,7 @@
 
 	using Data.Interfaces;
 
-	using static Common.TestEntityConstants.ImageService;
+	using static Common.TestEntityConstants;
 
 	public class ImageServiceMock
 	{

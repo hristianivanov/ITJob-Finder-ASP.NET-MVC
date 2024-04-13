@@ -1,7 +1,6 @@
 namespace DevHunter.Services.Tests
 {
-
-    using FluentAssertions;
+	using FluentAssertions;
     using Microsoft.AspNetCore.Http.Internal;
     using Microsoft.EntityFrameworkCore;
     using Moq;
@@ -14,7 +13,7 @@ namespace DevHunter.Services.Tests
     using Web.ViewModels.Development;
 
     using static DevHunter.Tests.Common.DatabaseSeeder;
-    using static Common.TestEntityConstants.ImageService;
+    using static Common.TestEntityConstants;
 
     [TestFixture]
     public class DevelopmentServiceTests
@@ -23,8 +22,6 @@ namespace DevHunter.Services.Tests
         private DevHunterDbContext dbContext;
 
         private IDevelopmentService developmentService;
-
-        private Mock<ITechnologyService> technologyServiceMock;
 
         [SetUp]
         public void Setup()
@@ -39,10 +36,8 @@ namespace DevHunter.Services.Tests
 
             SeedDatabase(dbContext);
 
-            technologyServiceMock = new Mock<ITechnologyService>();
-
             developmentService =
-                new DevelopmentService(dbContext, ImageServiceMock.Instance, technologyServiceMock.Object);
+                new DevelopmentService(dbContext, ImageServiceMock.Instance, TechnologyServiceMock.Instance);
         }
 
         [TearDown]
