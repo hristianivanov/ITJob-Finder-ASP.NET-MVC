@@ -58,7 +58,7 @@
     color: white;
     font-family: sans-serif;
     font-size: 18px;
-    overflow: scroll;
+    overflow-y: scroll;
 }
 
 .rich-text-editor .rich-text-area:focus {
