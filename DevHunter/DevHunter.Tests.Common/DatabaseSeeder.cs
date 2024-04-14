@@ -21,7 +21,28 @@
 			await SeedCompanies(dbContext);
 			await SeedJobOffers(dbContext);
 			await SeedApplications(dbContext);
+			await SeedSavedJobOffers(dbContext);
 
+			await dbContext.SaveChangesAsync();
+		}
+
+		private static async Task SeedSavedJobOffers(DevHunterDbContext dbContext)
+		{
+			var jobOffer = await dbContext.JobOffers.FirstAsync();
+
+			var user = await dbContext.Users.FirstAsync();
+
+			var savedJobOffers = new SavedJobOffer[]
+			{
+				new()
+				{
+					JobOfferId = jobOffer.Id,
+					UserId = user.Id,
+					Date = DateTime.UtcNow,
+				}
+			};
+
+			await dbContext.SavedJobOffers.AddRangeAsync(savedJobOffers);
 			await dbContext.SaveChangesAsync();
 		}
 
@@ -60,6 +81,8 @@
 					JobPlace = PlaceToWork.Location,
 					Description = "description",
 					WorkingHours = 24,
+					MaxSalary = 50,
+					MinSalary = 50,
 					WorkingExperience = "5+ years work experience",
 					JobOfferTechnologies = new HashSet<TechnologyJobOffers>()
 					{
@@ -101,7 +124,7 @@
 
 			var company = new Company
 			{
-				Name = "name",
+				Name = "company_name",
 				EmployeeCount = 15,
 				Location = "location",
 				FoundedDate = new DateTime(2005, 5, 7),

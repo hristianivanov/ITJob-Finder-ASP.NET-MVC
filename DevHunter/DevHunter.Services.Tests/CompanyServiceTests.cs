@@ -1,5 +1,6 @@
 ﻿namespace DevHunter.Services.Tests
 {
+	using FluentAssertions;
 	using Microsoft.EntityFrameworkCore;
 
 	using Data;
@@ -8,10 +9,11 @@
 
 	using DevHunter.Data;
 	
+	using Web.ViewModels.User;
+	using Web.ViewModels.Company;
+	using Web.ViewModels.JobOffer;
+
 	using static DevHunter.Tests.Common.DatabaseSeeder;
-	using DevHunter.Web.ViewModels.User;
-	using FluentAssertions;
-	using DevHunter.Web.ViewModels.Company;
 
 	[TestFixture]
 	public class CompanyServiceTests
@@ -142,6 +144,16 @@
 		}
 
 		[Test]
+		public async Task GetCompanyIdByCreatorIdAsync_ShouldThrowExceptionForNonExistingCompanyProfile()
+		{
+			var nonExistingUserCompanyId = "invalid";
+
+			var act = async () => await companyService.GetCompanyIdByCreatorIdAsync(nonExistingUserCompanyId);
+
+			await act.Should().ThrowAsync<NullReferenceException>();
+		}
+
+		[Test]
 		public async Task AllAsync_ShouldReturnAllCompanies()
 		{
 			var companies = await dbContext.Companies.ToListAsync();
@@ -155,6 +167,61 @@
 				.Equal(companies, (c1,c2) => c1.Id == c2.Id.ToString())
 				.And
 				.AllBeOfType<CompanyAdminViewModel>();
+		}
+
+		[Test]
+		public async Task GetDetailsByIdAsync_ShouldReturnCompanyDetails()
+		{
+			var company = await dbContext.Companies.FirstAsync();
+
+			var result = await companyService.GetDetailsByIdAsync(company.Id.ToString());
+
+			result.Should()
+				.NotBeNull()
+				.And
+				.BeOfType<CompanyDetailViewModel>();
+
+			result.Id.Should().Be(company.Id.ToString());
+
+			result.JobOffers.Should()
+				.NotBeNull()
+				.And
+				.BeOfType<List<JobOfferAllViewModel>>()
+				.And
+				.Equal(company.JobOffers, (j1,j2) => j1.Id == j2.Id.ToString())
+				.And
+				.HaveCount(company.JobOffers.Count);
+		}
+
+		[Test]
+		public async Task EditAsync_ShouldEditCompany()
+		{
+			var company = await dbContext.Companies.FirstAsync();
+
+			var model = new CompanyFormModel()
+			{
+				Name = "new_name",
+				Description = "new_description",
+				FoundedDate = new DateTime(2022, 2, 20),
+				Activity = "new_activity",
+				Address = "new_address",
+				EmployeesCnt = 1,
+				ImageUrl = "new_image_url",
+				Sector = "new_sector",
+				WebsiteUrl = "new_website_url"
+			};
+
+			await companyService.EditAsync(company.Id.ToString(),model);
+
+			var editedCompany = await dbContext.Companies.FindAsync(company.Id);
+
+			editedCompany.Should()
+				.NotBeNull()
+				.And
+				.BeEquivalentTo(model, options => 
+					options
+						.Including(x => x.Name)
+						.Including(x => x.Description));
 		}
 	}
 }

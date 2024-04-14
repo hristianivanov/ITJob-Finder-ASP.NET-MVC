@@ -70,49 +70,6 @@
 			};
 		}
 
-		public async Task<IEnumerable<JobOfferAllViewModel>> FilterAllAsync(JofOfferFilterFormData filters)
-		{
-			IQueryable<DevHunter.Data.Models.JobOffer> jobOffersQuery = this.dbContext
-				.JobOffers
-				//.Where(j => j.IsActive)
-				.AsQueryable();
-
-			if (filters.Locations.Any())
-			{
-				jobOffersQuery = jobOffersQuery
-					.Where(j => filters.Locations.Any(location => location == j.PlaceToWork));
-			}
-
-			if (filters.Experiences.Any())
-			{
-				jobOffersQuery = jobOffersQuery
-					.Where(j => filters.Experiences.Any(experience => experience == j.WorkingExperience));
-			}
-
-			IEnumerable<JobOfferAllViewModel> allJobOffers = await jobOffersQuery
-				.Select(j => new JobOfferAllViewModel
-				{
-					Id = j.Id.ToString(),
-					JobPosition = j.JobPosition,
-					CompanyImageUrl = j.Company.ImageUrl!,
-					CompanyName = j.Company.Name,
-					CreatedOn = j.CreatedOn.ToString("dd MMM."),
-					PlaceToWorkType = j.JobPlace.ToString(),
-					JobLocation = j.PlaceToWork,
-					Technologies = j.JobOfferTechnologies
-						.Select(tj => new TechnologyViewModel()
-						{
-							Id = tj.Technology.Id.ToString(),
-							Name = tj.Technology.Name,
-							ImageUrl = tj.Technology.ImageUrl,
-						}).ToList(),
-					Salary = GetSalary(j.MinSalary!.Value, j.MaxSalary!.Value),
-				})
-				.ToArrayAsync();
-
-			return allJobOffers;
-		}
-
 		public async Task<AllJobOffersFilteredAndPagedServiceModel> AllBySearchAsync(AllJobOffersQueryModel queryModel)
 		{
 			IQueryable<JobOffer> jobOffersQuery = this.dbContext
@@ -487,7 +444,7 @@
 
 			var sanitizer = new HtmlSanitizer();
 
-			var jobOffer = new DevHunter.Data.Models.JobOffer()
+			var jobOffer = new JobOffer()
 			{
 				JobPosition = model.Title,
 				Description = sanitizer.Sanitize(model.Description),
@@ -540,9 +497,13 @@
 			queryModel.Filters.Experiences = queryModel.Filters.Experiences.OrderByDescending(l => l.Count).ToList();
 
 			var experiences = queryModel.Filters.Experiences.ToList();
-			var juniorExperience = experiences.First(e => e.Seniority == "Junior");
-			experiences.Remove(juniorExperience);
-			experiences.Insert(0, juniorExperience);
+			var juniorExperience = experiences.FirstOrDefault(e => e.Seniority == "Junior");
+
+			if (juniorExperience != null)
+			{
+				experiences.Remove(juniorExperience);
+				experiences.Insert(0, juniorExperience);
+			}
 
 			queryModel.Filters.Experiences = experiences;
 		}

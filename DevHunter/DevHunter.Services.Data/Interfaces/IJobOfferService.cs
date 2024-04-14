@@ -14,7 +14,6 @@
 		Task DeleteByIdAsync(string id);
 		Task<AllFilterViewModel> LoadFiltersAsync();
 		Task EditJobOfferAsync(string id, JobOfferEditFormModel model);
-		Task<IEnumerable<JobOfferAllViewModel>> FilterAllAsync(JofOfferFilterFormData filters);
 		Task<AllJobOffersFilteredAndPagedServiceModel> AllBySearchAsync(AllJobOffersQueryModel queryModel);
 		Task SaveJobAsync(string jobOfferId, string userId);
 		Task<bool> IsJobOfferSaved(string jobOfferId, string userId);

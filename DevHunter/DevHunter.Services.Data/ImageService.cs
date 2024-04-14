@@ -9,11 +9,11 @@
 
 	public class ImageService : IImageService
 	{
-		private readonly Cloudinary cloudinary;
+		private readonly ICloudinaryService cloudinaryService;
 
-		public ImageService(Cloudinary cloudinary)
+		public ImageService(ICloudinaryService cloudinaryService)
 		{
-			this.cloudinary = cloudinary;
+			this.cloudinaryService = cloudinaryService;
 		}
 
 		public async Task<string> UploadImage(IFormFile file, string folder, string fileName)
@@ -27,7 +27,7 @@
 				File = new FileDescription(fileName, stream),
 			};
 
-			var uploadResult = await cloudinary.UploadAsync(uploadParams);
+			var uploadResult = await cloudinaryService.UploadAsync(uploadParams);
 
 			if (uploadResult.Error != null)
 			{
@@ -55,7 +55,7 @@
 				throw new InvalidOperationException(deletionResult.Error.Message);
 			}
 
-			var uploadResult = await cloudinary.UploadAsync(uploadParams);
+			var uploadResult = await cloudinaryService.UploadAsync(uploadParams);
 
 			if (uploadResult.Error != null)
 			{
@@ -69,7 +69,7 @@
 		{
 			var deleteParams = new DeletionParams(id);
 
-			var result = await this.cloudinary.DestroyAsync(deleteParams);
+			var result = await this.cloudinaryService.DestroyAsync(deleteParams);
 
 			return result;
 		}
