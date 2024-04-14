@@ -302,6 +302,33 @@
 						}
 					}
 				},
+				new JobOffer
+				{
+					Id = Guid.Parse("3D1AAE8B-26AC-4921-BCC4-FCBDA8B1475B"),
+					JobPosition = "Senior Go Developer",
+					CreatedOn = new DateTime(2024,4,14),
+					CompanyId = Guid.Parse("2D41345B-3B00-4403-976B-73EE769CA17C"),
+					PlaceToWork = "Remote",
+					JobPlace = PlaceToWork.Remote,
+					Description = "<div>\r\n\t\t\t\t<p>We invite a Senior Backend Developer to join an AdTech project \r\nand be responsible for turning our product vision and roadmap into \r\nbest-in-class code that delivers an awesome customer experience. We need\r\n a person who can provide solutions that optimally balance development \r\nefforts, deployment costs, and time–to market while ensuring product \r\nrequirements are met.</p>\r\n<p>This role requires a specialist with fully up-to-date knowledge of the latest software coding practices, tools, and languages.</p>\r\n<p>Ready to dive into this exciting project?</p>\r\n<p>&nbsp;</p>\r\n<p><strong>PROJECT</strong></p>\r\n<p>With the deprecation of cookies and mobile IDs, addressability at \r\nscale has become an industry-wide challenge. Working with partners with a\r\n future-proofed audience strategy and ID-less solution has become \r\nparamount, as has leveraging highly engaging and impactful creative to \r\ncapture customers’ attention.</p>\r\n<p>While the client has traditionally focused on AI-powered audiences \r\nand geo-location, we are evolving with the industry to refocus on what \r\ntruly matters in advertising and creativity. We leverage our powerful \r\nmachine-learning engine to deliver high-scale, dynamic creatives that \r\nshine in a native environment. Contextually relevant ads show greater \r\nresults.</p>\r\n<p>The software engineering team is the engine that drives our ambition to build the world’s best mobile advertising platform.</p>\r\n<p>Join us as we build future-proofed, AI-powered dynamic experiences for our customers.</p>\r\n<p>&nbsp;</p>\r\n<p><strong>Requirements</strong></p>\r\n<ul><li>Expert-level skills in Go</li><li>Experience in container-based architectures (esp. Kubernetes/AWS)</li><li>Hands-on experience in high performance, high scalability, high availability systems</li><li>Ability to design and implement a main system capable of effectively\r\n multiplexing incoming requests into multiple outward connections \r\n(http/s, http2), while ensuring the maintenance of state until all \r\noutgoing requests receive replies</li><li>Ability to organize software internally for optimal teamwork, \r\nincluding defining best development practices, environment setup, unit \r\ntest definition, and test runtime setup and build automation</li><li>Has experience in low-level socket management, timeouts, TCP keep \r\nalive, HTTP keep alive, timeouts, time wait states, and similar is \r\nhighly valued</li><li>Ability to diagnose Go language issues: internal metrics monitoring,\r\n defining the ideal metrics to monitor externally, debugging in \r\nisolation, profiling locally and in production</li><li>Experience with CI/CD</li></ul>\r\n<p>&nbsp;</p>\r\n<p><strong>WOULD BE A PLUS</strong></p>\r\n<ul><li>Experience with Node.js</li></ul>\r\n<p>&nbsp;</p>\r\n<p><strong style=\"color: var(--color-text); text-align: var(--bs-body-text-align); background-color: var(--color-white)\">&nbsp;</strong></p>\r\n<p>Personal profile</p>\r\n<ul><li>Strong analytical, problem-solving, and documentation skills</li><li>Comfortable with working in Agile frameworks</li><li>Experience working in distributed international teams</li><li>Highly personable, with good communication skills</li></ul>\r\n<p>&nbsp;</p>\r\n<p><strong>Responsibilities</strong></p>\r\n<ul><li>Design and implement large-scale software solutions and components using Golang</li><li>Do everything needed to keep a high level of quality</li><li>Be a great communicator to be able to actively collaborate and get context for complex tasks</li><li>Follow best engineering practices and company/client guidelines</li><li>Play supervisory, advisory, and coaching roles for less-senior engineers in the team</li><li>Be an active contributor to all team-related meetings, events, and ceremonies</li><li>Contribute to creating architectural and technical documentation</li><li>Promote clean code and design patterns/principles</li><li>Actively and permanently work on self-development and \r\nself-education, making lessons learned for further advancement to the \r\nPrincipal position</li></ul>\r\n\t\t\t</div>",
+					WorkingHours = 0,
+					WorkingExperience = "1-2 years work experience",
+					JobOfferTechnologies = new HashSet<TechnologyJobOffers>()
+					{
+						new TechnologyJobOffers
+						{
+							TechnologyId = Guid.Parse("bb8aafc8-0ac4-4694-9dda-a10ddfdd31ce")
+						},
+						new TechnologyJobOffers
+						{
+							TechnologyId = Guid.Parse("5c55f4b2-7f9b-434b-9478-fae3c846f900")
+						},
+						new TechnologyJobOffers
+						{
+							TechnologyId = Guid.Parse("1194737c-bef9-4091-a36c-6dc1c8f574e9")
+						},
+					}
+				},
 			};
 		}
 	}

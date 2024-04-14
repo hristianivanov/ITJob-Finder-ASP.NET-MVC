@@ -83,7 +83,7 @@
 				{
 					Id= Guid.Parse("8b8d6dc4-5abe-46fe-b7f9-dbe2c5d2fac9"),
 					Name = "React",
-					ImageUrl = "http://res.cloudinary.com/dlffxtrek/image/upload/v1709495988/DevHunter/technology/React.png"
+					ImageUrl = "https://res.cloudinary.com/dlffxtrek/image/upload/v1713079358/DevHunter/technology/React.png"
 				},
 				new Technology
 				{
@@ -437,7 +437,7 @@
 				{
 					Id = Guid.Parse("85d93d19-68e5-4baa-8d91-72cd70a6fcea") ,
 					Name = "Java",
-					ImageUrl = "https://res.cloudinary.com/dlffxtrek/image/upload/v1712071536/DevHunter/technology/Java.png"
+					ImageUrl = "https://res.cloudinary.com/dlffxtrek/image/upload/v1713079408/DevHunter/technology/Java.png"
 				},
 				new Technology
 				{
@@ -449,7 +449,7 @@
 				{
 					Id = Guid.Parse("2961db2f-88a5-4831-b721-ebf69eff0e2b") ,
 					Name = "Jira",
-					ImageUrl = "https://res.cloudinary.com/dlffxtrek/image/upload/v1712071537/DevHunter/technology/Jira.png"
+					ImageUrl = "https://res.cloudinary.com/dlffxtrek/image/upload/v1713081774/DevHunter/technology/Jira.png"
 				},
 				new Technology
 				{
@@ -557,7 +557,7 @@
 				{
 					Id = Guid.Parse("1e27c97f-ffdb-4d3a-afc6-6d4d75532711") ,
 					Name = "Salesforce",
-					ImageUrl = "https://res.cloudinary.com/dlffxtrek/image/upload/v1712071547/DevHunter/technology/Salesforce.png"
+					ImageUrl = "https://res.cloudinary.com/dlffxtrek/image/upload/v1713079359/DevHunter/technology/Salesforce.png"
 				},
 				new Technology
 				{
@@ -653,13 +653,13 @@
 				{
 					Id = Guid.Parse("8c8373a3-a9bf-4b31-96d8-e9a8ec6a5f13"),
 					Name = "SAP",
-					ImageUrl = "https://res.cloudinary.com/dlffxtrek/image/upload/v1712078787/DevHunter/technology/SAP.png"
+					ImageUrl = "https://res.cloudinary.com/dlffxtrek/image/upload/v1713079358/DevHunter/technology/Sap.png"
 				},
 				new Technology
 				{
 					Id = Guid.Parse("6208abee-b855-4281-beaa-aa94673784a0"),
 					Name = "Android",
-					ImageUrl = "https://res.cloudinary.com/dlffxtrek/image/upload/v1712078890/DevHunter/technology/Android.png"
+					ImageUrl = "https://res.cloudinary.com/dlffxtrek/image/upload/v1713079948/DevHunter/technology/Android.png"
 				}
 			};
 		}
