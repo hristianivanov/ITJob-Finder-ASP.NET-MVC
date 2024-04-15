@@ -203,6 +203,7 @@
 				Title = jobOffer.JobPosition,
 				Description = jobOffer.Description,
 				JobLocation = jobOffer.PlaceToWork,
+				Salary = GetSalary(jobOffer.MinSalary,jobOffer.MaxSalary),
 				CreatedOn = jobOffer.CreatedOn.ToString("dd MMM."),
 				Company = new Web.ViewModels.Company.CompanyViewModel()
 				{
@@ -266,7 +267,9 @@
 				Title = jobOffer.JobPosition,
 				Description = jobOffer.Description,
 				Location = jobOffer.PlaceToWork,
-				Salary = jobOffer.MaxSalary,
+				MaxSalary = jobOffer.MaxSalary,
+				MinSalary = jobOffer.MinSalary,
+				SalaryType = jobOffer.SalaryType,
 				LocationType = jobOffer.JobPlace,
 				WorkingHours = jobOffer.WorkingHours,
 				WorkingExperience = jobOffer.WorkingExperience,
@@ -376,10 +379,20 @@
 				isChanged = true;
 			}
 
-			if (model.Salary != jobOffer.MaxSalary &&
-				model.Salary.HasValue)
+			if (model.SalaryType.HasValue)
 			{
-				jobOffer.MaxSalary = model.Salary;
+				jobOffer.SalaryType = model.SalaryType.Value;
+
+				if (model.SalaryType!.Value == SalaryType.Range)
+				{
+					jobOffer.MinSalary = model.MinSalary;
+					jobOffer.MaxSalary = model.MaxSalary;
+				}
+				else
+				{
+					jobOffer.MaxSalary = model.MaxSalary;
+				}
+
 				isChanged = true;
 			}
 
@@ -434,8 +447,6 @@
 			}
 		}
 
-
-
 		public async Task<string> CreateAndReturnIdAsync(JobOfferFormModel model, string userId)
 		{
 			var company = await this.dbContext
@@ -460,9 +471,19 @@
 				jobOffer.WorkingHours = model.WorkingHours!.Value;
 			}
 
-			if (model.Salary.HasValue)
+			if (model.SalaryType.HasValue)
 			{
-				jobOffer.MaxSalary = model.Salary!.Value;
+				jobOffer.SalaryType = model.SalaryType.Value;
+
+				if (model.SalaryType!.Value == SalaryType.Range)
+				{
+					jobOffer.MinSalary = model.MinSalary;
+					jobOffer.MaxSalary = model.MaxSalary;
+				}
+				else
+				{
+					jobOffer.MaxSalary = model.MaxSalary;
+				}
 			}
 
 			if (model.Technologies != "[]")
@@ -608,6 +629,11 @@
 
 		private static string GetSalary(decimal? minSalary, decimal? maxSalary)
 		{
+			if (minSalary == null && maxSalary == null)
+			{
+				return string.Empty;
+			}
+
 			string? formattedMaxSalary = maxSalary?
 				.ToString("#,0", CultureInfo.InvariantCulture)
 				.Replace(",", " ");

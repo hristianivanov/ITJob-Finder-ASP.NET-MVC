@@ -30,6 +30,8 @@
 		[Precision(18, 2)]
 		public decimal? MaxSalary { get; set; }
 
+		public SalaryType SalaryType { get; set; }
+
 		[Required]
 		[MaxLength(int.MaxValue)]
 		public string Description { get; set; } = null!;
