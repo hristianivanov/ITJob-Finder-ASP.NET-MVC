@@ -13,7 +13,7 @@
 		</div>
 
 		<!--    JOB LOCATION-->
-		<div class="dropdown">
+		<div class="dropdown job-location">
 			<div class="select">
 				<span class="selected">Select job-location</span>
 				<div class="caret"></div>
@@ -28,7 +28,7 @@
 			<div class="input-field" style="display: none">
 				<input asp-for="Location" type="text" placeholder="Job location address" />
 			</div>
-			
+
 			<input asp-for="LocationType" type="hidden" id="LocationType" />
 			<span class="error_messsage" asp-validation-for="LocationType"></span>
 		</div>
@@ -64,25 +64,44 @@
 		</ul>
 		</div>*@
 
+		<div class="two-input-field-range">
+			<div class="dropdown pay">
+				<div class="select">
+					<span class="selected">Select job-salary</span>
+					<div class="caret"></div>
+				</div>
+				<ul class="menu">
+					<!--        range-->
+					<!--        starting amount-->
+					<!--        exact amount-->
+					<!--        per year day month week hour-->
+					@foreach (var salaryType in Model.SalaryTypeModels)
+					{
+						<li data-location="@salaryType.SalaryType">@salaryType.DisplayName</li>
+					}
+				</ul>
+				<input asp-for="SalaryType" type="hidden" id="SalaryType" />
+				<span class="error_messsage" asp-validation-for="SalaryType"></span>
+			</div>
+			<div class="two-input-field-pay">
+				<div class="input-field">
+					<input asp-for="MinSalary" type="number" placeholder="Minimum">
+					<span asp-validation-for="MinSalary"></span>
+				</div>
+				<div class="range-to-text">to</div>
+				<div class="input-field">
+					<input asp-for="MaxSalary" type="number" placeholder="Maximum">
+					<span asp-validation-for="MaxSalary"></span>
+				</div>
+			</div>
+		</div>
+
 		<!--PAY-->
 		<!--    maximum week hours 168-->
 		<div class="two-input-field">
 			<div class="input-field">
 				<input asp-for="WorkingHours" type="number" placeholder="Working hours" />
 				<span asp-validation-for="WorkingHours"></span>
-				<!--        fixed hours-->
-				<!--        range-->
-				<!--        maximum -->
-				<!--        minimum-->
-			</div>
-
-			<div class="input-field">
-				<!--        range-->
-				<!--        starting amount-->
-				<!--        exact amount-->
-				<!--        per year day month week hour-->
-				<input asp-for="Salary" type="number" placeholder="Salary">
-				<span asp-validation-for="Salary"></span>
 			</div>
 		</div>
 
@@ -137,6 +156,42 @@
 </div>
 
 @section Styles {
+	<style>
+		.two-input-field-range {
+			display: flex;
+			justify-content: space-between;
+			align-items: start;
+			gap: 3em;
+		}
+
+			.two-input-field-range.range {
+				justify-content: normal;
+			}
+
+		.dropdown.pay {
+			gap: 0;
+			flex: 1;
+		}
+
+			.two-input-field-pay.range {
+				display: flex;
+			}
+
+		.two-input-field-pay {
+			display: none;
+			align-items: center;
+			column-gap: 1rem;
+			flex: 1;
+		}
+
+		.range-to-text {
+		}
+
+		.two-input-field-range.range .two-input-field-pay .input-field.range {
+			width: 100%;
+		}
+	</style>
+
 	<link rel="stylesheet" href="~/css/job-offer-add/style.css">
 	<link rel="stylesheet" href="~/css/job-offer-add/dropdown.css">
 	<link rel="stylesheet" href="~/css/job-offer-add/select-option.css">

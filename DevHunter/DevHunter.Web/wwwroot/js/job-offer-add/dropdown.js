@@ -18,7 +18,13 @@ function handleOptionClick(option, select, caret, menu, selected) {
 
     option.classList.add('active');
 
-    seniorityOptions();
+    let dropdownType = select.parentElement.classList;
+
+    if (dropdownType.contains("pay")) {
+        payOptions(select.querySelector('.selected'), menu);
+    } else if (dropdownType.contains("job-location")) {
+        seniorityOptions();
+    }
 }
 
 // Select dropdown elements
