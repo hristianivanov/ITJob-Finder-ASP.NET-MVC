@@ -1,6 +1,6 @@
 .dropdown {
     position: relative;
-    min-width: 15em;
+    min-width: 16em;
     display: flex;
     flex-direction: column;
     gap: 1em;
@@ -14,7 +14,7 @@
     align-items: center;
     border: 1px solid #3f3f3f;
     border-radius: 0.5em;
-    padding: 1em;
+    padding: 0.9em;
     cursor: pointer;
     transition: background 0.3s;
 }
