@@ -2,7 +2,6 @@ const dropdown = document.querySelector('.dropdown');
 const input = dropdown.querySelector('.input-field');
 const selectedOpt = dropdown.querySelector('.select > .selected');
 
-
 function seniorityOptions() {
     switch (selectedOpt.textContent) {
         case 'Remote': {
@@ -45,15 +44,25 @@ btnSubmit.addEventListener("click", (e) => {
 var descriptionEditor = document.getElementById("description-editor");
 var descriptionInput = document.getElementById("description-input");
 let locationType = document.getElementById('LocationType');
+let salaryType = document.getElementById('SalaryType');
 
 descriptionEditor.addEventListener("input", function () {
     descriptionInput.value = descriptionEditor.innerHTML;
 });
 
 var locationDropdown = document.querySelector(".menu");
-
+var salaryDrpdown = document.querySelector(".dropdown.pay .menu");
 let locationInput = document.getElementById("Location");
 
+salaryDrpdown.addEventListener("click", function (event) {
+    var target = event.target;
+
+    if (target.tagName === "LI") {
+        var selectedSalary = target.dataset.location;
+
+        salaryType.value = selectedSalary;
+    }
+});
 locationDropdown.addEventListener("click", function (event) {
     var target = event.target;
 
@@ -65,10 +74,11 @@ locationDropdown.addEventListener("click", function (event) {
 });
 loadLocation();
 function loadLocation() {
-    if (locationType.value) {
+    if (locationType.value || salaryType.value) {
         let lis = document.querySelectorAll('.dropdown .menu li');
         lis.forEach(li => {
-            if (li.dataset.location == locationType.value) {
+            if (li.dataset.location == locationType.value ||
+            li.dataset.location == salaryType.value) {
                 const dropdown = li.closest('.dropdown');
                 const select = dropdown.querySelector('.select');
                 const caret = dropdown.querySelector('.caret');
@@ -101,5 +111,30 @@ function handleOptionClick(option, select, caret, menu, selected) {
 
     option.classList.add('active');
 
-    seniorityOptions();
+    let dropdownType = select.parentElement.classList;
+
+    if (dropdownType.contains("pay")) {
+        payOptions(select.querySelector('.selected'), menu);
+    } else if (dropdownType.contains("job-location")) {
+        seniorityOptions();
+    }
+}
+
+function payOptions(select, menu) {
+    let container = menu.parentElement.parentElement;
+    let salaryInputsContainer = container.querySelector('.two-input-field-pay');
+    salaryInputsContainer.classList.add('range');
+    switch (select.textContent) {
+        case 'Range': {
+            container.classList.remove('range');
+            salaryInputsContainer.children[2].classList.remove('range');
+            salaryInputsContainer.children[1].style.display = 'block';
+            salaryInputsContainer.children[0].style.display = 'block';
+        } break;
+        default:
+            container.classList.add('range');
+            salaryInputsContainer.children[2].classList.add('range');
+            salaryInputsContainer.children[1].style.display = 'none';
+            salaryInputsContainer.children[0].style.display = 'none';;
+    }
 }

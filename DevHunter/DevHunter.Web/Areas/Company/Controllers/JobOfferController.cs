@@ -9,6 +9,7 @@
 
 	using static Common.GeneralApplicationConstants;
 	using static Common.NotificationMessagesConstants;
+	using DevHunter.Data.Models.Enums;
 
 	[Area(CompanyAreaName)]
 	[Authorize(Roles = CompanyRoleName)]
@@ -44,6 +45,14 @@
 		[Route("company/postjob")]
 		public async Task<IActionResult> Add(JobOfferFormModel model)
 		{
+			if (model.SalaryType is SalaryType.Range)
+			{
+				if (!model.MaxSalary.HasValue || !model.MinSalary.HasValue)
+				{
+					ModelState.AddModelError(nameof(model.SalaryType), "Please type min and max salary!");
+				}
+			}
+
 			if (!ModelState.IsValid)
 			{
 				return View(model);
@@ -97,6 +106,14 @@
 		[Route("jobpost/edit/{id}")]
 		public async Task<IActionResult> Edit(string id, JobOfferEditFormModel model)
 		{
+			if (model.SalaryType is SalaryType.Range)
+			{
+				if (!model.MaxSalary.HasValue || !model.MinSalary.HasValue)
+				{
+					ModelState.AddModelError(nameof(model.SalaryType), "Please type min and max salary!");
+				}
+			}
+
 			if (!ModelState.IsValid)
 			{
 				return this.View();

@@ -212,6 +212,11 @@
 
 		private static string GetSalary(decimal? minSalary, decimal? maxSalary)
 		{
+			if (minSalary == null && maxSalary == null)
+			{
+				return string.Empty;
+			}
+
 			string? formattedMaxSalary = maxSalary?
 				.ToString("#,0", CultureInfo.InvariantCulture)
 				.Replace(",", " ");

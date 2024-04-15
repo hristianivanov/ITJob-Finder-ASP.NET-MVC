@@ -15,8 +15,9 @@
 
 		public string Title { get; set; } = null!;
 
+        public string? Salary { get; set; }
 
-		public string Description { get; set; } = null!;
+        public string Description { get; set; } = null!;
 
 		public string CreatedOn { get; set; } = null!;
 

@@ -1,4 +1,6 @@
-﻿namespace DevHunter.Web.ViewModels.JobOffer
+﻿using DevHunter.Web.Infrastructure.Extensions;
+
+namespace DevHunter.Web.ViewModels.JobOffer
 {
 	using System.ComponentModel.DataAnnotations;
 
@@ -14,6 +16,11 @@
 				.OfType<PlaceToWork>()
 				.Select(e => new LocationTypeFormModel(e))
 				.ToList();
+
+			this.SalaryTypeModels = Enum.GetValues(typeof(SalaryType))
+				.OfType<SalaryType>()
+				.Select(e => new SalaryTypeFormModel(e))
+				.ToList();
 		}
 
 		[Required]
@@ -26,9 +33,14 @@
 		[Display(Name = "Job location")]
 		public PlaceToWork? LocationType { get; set; }
 
+		public decimal? MinSalary { get; set; }
+		public decimal? MaxSalary { get; set; }
+
+		[Display(Name = "Job salary")]
+		public SalaryType? SalaryType { get; set; }
+
 		public string? WorkingExperience { get; set; }
 		public int? WorkingHours { get; set; }
-		public decimal? Salary { get; set; }
 
 		[Required]
 		public string Description { get; set; } = null!;
@@ -36,6 +48,7 @@
 		public string? Technologies { get; set; }
 
 		public ICollection<LocationTypeFormModel> LocationTypeModels { get; set; }
+		public ICollection<SalaryTypeFormModel> SalaryTypeModels { get; set; }
 	}
-	
+
 }
