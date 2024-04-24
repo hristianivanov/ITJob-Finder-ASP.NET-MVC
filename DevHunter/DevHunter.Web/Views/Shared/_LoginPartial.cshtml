@@ -5,13 +5,14 @@
 @inject UserManager<ApplicationUser> UserManager
 
 @{
-	var nickname = User.Identity.IsAuthenticated ? User.Identity.Name.Substring(0, 2).ToUpper() : null;
+	var user = await UserManager.FindByIdAsync(this.User.GetId()!);
+
+	var nickname = user != null ? $"{user.FirstName[0]}{user.LastName[0]}".ToUpper() : null;
 }
 
 <div class="login-register-cta">
 	@if (SignInManager.IsSignedIn(User))
 	{
-		//Hello @User.Identity?.Name!
 		<a class="user-manage-icon" asp-area="Manage" asp-controller="Account" asp-action="Manage">@nickname</a>
 		<form asp-area="" asp-controller="Account" asp-action="Logout" asp-route-returnUrl="@(Context.Request.Path + Context.Request.QueryString)" method="post">
 			<button type="submit" class="last-btn">Logout</button>
@@ -19,7 +20,7 @@
 	}
 	else
 	{
-		<a asp-area="" asp-controller="Account" asp-action="Login" >Log In.</a>
+		<a asp-area="" asp-controller="Account" asp-action="Login">Log In.</a>
 		<a class="last-btn" asp-area="" asp-controller="Account" asp-action="RegisterOption">Register.</a>
 	}
 

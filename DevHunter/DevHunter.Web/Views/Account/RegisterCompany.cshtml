@@ -32,6 +32,16 @@
 					</div>
 				</header>
 				<h2>Your account</h2>
+				<div style="column-count:2">
+					<div class="input-field">
+						<input asp-for="FirstName" type="text" placeholder="First name" />
+						<span class="error_messsage" asp-validation-for="FirstName"></span>
+					</div>
+					<div class="input-field">
+						<input asp-for="LastName" type="text" placeholder="Last name" />
+						<span class="error_messsage" asp-validation-for="LastName"></span>
+					</div>
+				</div>
 				<div class="input-field">
 					<input asp-for="Email" type="email" placeholder="Professional email" />
 					<span class="error_messsage" asp-validation-for="Email"></span>

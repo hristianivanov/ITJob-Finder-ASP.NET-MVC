@@ -38,6 +38,8 @@
 			var user = await userManager.FindByIdAsync(this.User.GetId()!);
 
 			model.Email = user.Email;
+			model.FirstName = user.FirstName;
+			model.LastName = user.LastName;
 
 			return View(model);
 		}

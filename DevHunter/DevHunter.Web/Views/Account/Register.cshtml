@@ -11,23 +11,29 @@
 				<header>
 					<div class="profile-icon">
 						<svg class="user" width="24" height="25" viewBox="0 0 24 25" fill="none"
-						     xmlns="http://www.w3.org/2000/svg">
+							 xmlns="http://www.w3.org/2000/svg">
 							<path d="M21.4867 20.4687C20.0045 17.9075 17.6776 16.1103 14.9739 15.3481C16.2884 14.6799 17.3396 13.5885 17.9579 12.2498C18.5762 10.911 18.7256 9.40311 18.382 7.9691C18.0385 6.53508 17.222 5.25856 16.0642 4.34537C14.9064 3.43218 13.4747 2.93555 12.0001 2.93555C10.5255 2.93555 9.09392 3.43218 7.93611 4.34537C6.7783 5.25856 5.96179 6.53508 5.61824 7.9691C5.27468 9.40311 5.4241 10.911 6.04241 12.2498C6.66072 13.5885 7.71188 14.6799 9.02639 15.3481C6.32264 16.1094 3.99577 17.9065 2.51358 20.4687C2.47288 20.5328 2.44555 20.6043 2.43324 20.6792C2.42093 20.7541 2.42388 20.8306 2.44193 20.9043C2.45998 20.978 2.49275 21.0473 2.53826 21.108C2.58378 21.1687 2.6411 21.2195 2.70678 21.2575C2.77246 21.2955 2.84514 21.3197 2.92045 21.3289C2.99576 21.338 3.07215 21.3319 3.14501 21.3107C3.21786 21.2896 3.2857 21.2539 3.34442 21.2059C3.40314 21.1579 3.45154 21.0985 3.4867 21.0312C5.28764 17.9197 8.46952 16.0625 12.0001 16.0625C15.5308 16.0625 18.7126 17.9197 20.5136 21.0312C20.5487 21.0985 20.5971 21.1579 20.6559 21.2059C20.7146 21.2539 20.7824 21.2896 20.8553 21.3107C20.9281 21.3319 21.0045 21.338 21.0798 21.3289C21.1551 21.3197 21.2278 21.2955 21.2935 21.2575C21.3592 21.2195 21.4165 21.1687 21.462 21.108C21.5075 21.0473 21.5403 20.978 21.5583 20.9043C21.5764 20.8306 21.5794 20.7541 21.567 20.6792C21.5547 20.6043 21.5274 20.5328 21.4867 20.4687ZM6.56264 9.49998C6.56264 8.42455 6.88155 7.37326 7.47903 6.47907C8.07651 5.58488 8.92573 4.88794 9.9193 4.47639C10.9129 4.06484 12.0062 3.95716 13.0609 4.16696C14.1157 4.37677 15.0846 4.89464 15.845 5.65509C16.6055 6.41554 17.1234 7.38441 17.3332 8.43918C17.543 9.49395 17.4353 10.5873 17.0237 11.5808C16.6122 12.5744 15.9152 13.4236 15.0211 14.0211C14.1269 14.6186 13.0756 14.9375 12.0001 14.9375C10.5586 14.9357 9.17652 14.3623 8.15717 13.343C7.13781 12.3236 6.56438 10.9416 6.56264 9.49998Z"
-							      fill="white"/>
+								  fill="white" />
 						</svg>
 					</div>
 				</header>
 				<h2>Your account</h2>
-				@* <div class="input-field">
-					<input type="email" placeholder="Full name"/>
-					<span></span>
-				</div> *@
+				<div style="column-count:2">
+					<div class="input-field">
+						<input asp-for="FirstName" type="text" placeholder="First name" />
+						<span class="error_messsage" asp-validation-for="FirstName"></span>
+					</div>
+					<div class="input-field">
+						<input asp-for="LastName" type="text" placeholder="Last name" />
+						<span class="error_messsage" asp-validation-for="LastName"></span>
+					</div>
+				</div>
 				<div class="input-field">
-					<input asp-for="Email" type="email" autocomplete="username" aria-required="true" placeholder="Professional email"/>
+					<input asp-for="Email" type="email" autocomplete="username" aria-required="true" placeholder="Professional email" />
 					<span class="error_messsage" asp-validation-for="Email"></span>
 				</div>
 				<div class="input-field">
-					<input asp-for="Password" type="password" autocomplete="new-password" aria-required="true" placeholder="Password"/>
+					<input asp-for="Password" type="password" autocomplete="new-password" aria-required="true" placeholder="Password" />
 					<span class="error_messsage" asp-validation-for="Password"></span>
 				</div>
 				<button type="submit" class="submit-register-btn">Register</button>
