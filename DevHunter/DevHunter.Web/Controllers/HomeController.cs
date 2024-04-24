@@ -86,9 +86,18 @@
 		}
 
 		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-		public IActionResult Error()
+		public IActionResult Error(int statusCode)
 		{
-			return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+			var errorMsg = ((System.Net.HttpStatusCode)statusCode).ToString();
+			
+			var model = new ErrorViewModel
+			{
+				RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier,
+				StatusCode = statusCode,
+				Error = errorMsg.InsertSpacesBeforeUppercase()
+			};
+
+			return View(model);
 		}
 	}
 }

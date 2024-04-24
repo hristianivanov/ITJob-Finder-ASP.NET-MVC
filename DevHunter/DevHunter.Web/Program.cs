@@ -10,6 +10,7 @@ namespace DevHunter.Web
 	using Infrastructure.Extensions;
 	using Infrastructure.ModelBinders;
 	using Services.Data.Interfaces;
+	using Microsoft.Extensions.Options;
 
 	public class Program
 	{
@@ -48,6 +49,8 @@ namespace DevHunter.Web
 			builder.Services.ConfigureApplicationCookie(cfg =>
 			{
 				cfg.LoginPath = "/Account/Login";
+				cfg.LogoutPath = "/Account/Logout";
+				cfg.AccessDeniedPath = "/Home/Error?statusCode=401";
 			});
 
 			builder.Services.AddApplicationServices(typeof(IJobOfferService), builder.Configuration);
@@ -87,7 +90,7 @@ namespace DevHunter.Web
 			}
 			else
 			{
-				app.UseExceptionHandler("/Home/Error/500");
+				app.UseExceptionHandler("/Home/Error?statusCode=500");
 				app.UseStatusCodePagesWithRedirects("/Home/Error?statusCode={0}");
 
 				app.UseHsts();
