@@ -9,7 +9,7 @@
     margin: 6em auto;
 }
 
-.company-register-form > .input-field input {
+.company-register-form .input-field input {
     color: #fff;
     width: 100%;
     background: #000614;

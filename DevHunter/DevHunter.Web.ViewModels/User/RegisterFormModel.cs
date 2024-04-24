@@ -6,13 +6,13 @@
 
 	public class RegisterFormModel
 	{
-		//[Required]
-		//[StringLength(FirstNameMaxLength,MinimumLength = FirstNameMinLength)]
-		//public string FirstName { get; set; } = null!;
+		[Required]
+		[StringLength(FirstNameMaxLength, MinimumLength = FirstNameMinLength)]
+		public string FirstName { get; set; } = null!;
 
-		//[Required]
-		//[StringLength(LastNameMaxLength,MinimumLength = LastNameMinLength)]
-		//public string LastName { get; set; } = null!;
+		[Required]
+		[StringLength(LastNameMaxLength, MinimumLength = LastNameMinLength)]
+		public string LastName { get; set; } = null!;
 
 		[Required]
 		[EmailAddress]

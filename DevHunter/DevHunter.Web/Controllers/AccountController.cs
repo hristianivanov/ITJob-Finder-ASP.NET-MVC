@@ -65,7 +65,11 @@
 				return View(model);
 			}
 
-			ApplicationUser user = new ApplicationUser();
+			ApplicationUser user = new ApplicationUser()
+			{
+				FirstName = model.FirstName,
+				LastName = model.LastName,
+			};
 
 			await this.userManager.SetEmailAsync(user, model.Email);
 			await this.userManager.SetUserNameAsync(user, model.Email);
@@ -114,7 +118,11 @@
 				return this.View(model);
 			}
 
-			ApplicationUser user = new ApplicationUser();
+			ApplicationUser user = new ApplicationUser()
+			{
+				FirstName = model.FirstName,
+				LastName = model.LastName,
+			};
 
 			await this.userManager.SetEmailAsync(user, model.Email);
 			await this.userManager.SetUserNameAsync(user, model.Email);
