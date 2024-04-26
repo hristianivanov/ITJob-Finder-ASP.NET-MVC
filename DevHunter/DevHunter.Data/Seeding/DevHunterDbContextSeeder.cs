@@ -78,10 +78,10 @@
 			{
 				adminUser = new ApplicationUser()
 				{
+					FirstName = "admin",
+					LastName = "admin",
 					UserName = AdminEmail,
 					Email = AdminEmail,
-					FirstName = AdminEmail,
-					LastName = AdminEmail,
 				};
 
 				await userManager.CreateAsync(adminUser, AdminPass);
