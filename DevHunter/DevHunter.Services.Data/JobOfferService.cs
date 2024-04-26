@@ -34,6 +34,11 @@
 
 			jobOffersQuery = FilterJobOffers(queryModel, jobOffersQuery);
 
+			if (jobOffersQuery.Any(j => j.MaxSalary.HasValue))
+			{
+				queryModel.Filters.IsSalaryAvailable = true;
+			}
+
 			await CountFilters(queryModel, jobOffersQuery);
 
 			OrderFilters(queryModel);
@@ -203,7 +208,7 @@
 				Title = jobOffer.JobPosition,
 				Description = jobOffer.Description,
 				JobLocation = jobOffer.PlaceToWork,
-				Salary = GetSalary(jobOffer.MinSalary,jobOffer.MaxSalary),
+				Salary = GetSalary(jobOffer.MinSalary, jobOffer.MaxSalary),
 				CreatedOn = jobOffer.CreatedOn.ToString("dd MMM."),
 				Company = new Web.ViewModels.Company.CompanyViewModel()
 				{
