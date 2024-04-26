@@ -17,7 +17,7 @@
 		[Route("company/all")]
 		public async Task<IActionResult> All()
 		{
-			var model = await this.companyService.AllAsync();
+			var model = await this.companyService.AllForAdminAsync();
 
 			return View(model);
 		}

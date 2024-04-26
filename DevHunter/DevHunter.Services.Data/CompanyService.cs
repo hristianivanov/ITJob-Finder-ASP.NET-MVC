@@ -130,7 +130,7 @@
 			return company.Id.ToString();
 		}
 
-		public async Task<IEnumerable<CompanyAdminViewModel>> AllAsync()
+		public async Task<IEnumerable<CompanyAdminViewModel>> AllForAdminAsync()
 		{
 			var companies = await this.context
 				.Companies
@@ -141,6 +141,24 @@
 					CEO = c.Creator.UserName, // TODO: email
 					OffersCnt = c.JobOffers.Count()
 				})
+				.ToListAsync();
+
+			return companies;
+		}
+
+		public async Task<IEnumerable<CompanyAllViewModel>> AllAsync()
+		{
+			var companies = await this.context
+				.Companies
+				.Select(c => new CompanyAllViewModel()
+				{
+					Id = c.Id.ToString(),
+					JobOffersCount = c.JobOffers.Count(),
+					EmployeesCount = c.EmployeeCount ?? 0,
+					ImageUrl = c.ImageUrl!,
+					Name = c.Name,
+				})
+				.AsNoTracking()
 				.ToListAsync();
 
 			return companies;

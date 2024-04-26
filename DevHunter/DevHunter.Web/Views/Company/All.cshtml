@@ -1,0 +1,38 @@
+﻿@model IEnumerable<CompanyAllViewModel>
+
+<div class="companies-all-container">
+	@foreach (var company in Model)
+	{
+		<div class="company-card">
+			<div class="cover-wrap">
+				<a asp-area="" asp-controller="Company" asp-action="Detail" asp-route-id="@company.Id" class="overlay-link"></a>
+				<div class="img-container">
+					<img src="@company.ImageUrl"
+						 class="cover-image" alt="@company.Name" decoding="async" loading="lazy"
+						 sizes="(max-width: 3217px) 100vw, 3217px" />
+				</div>
+				<div class="logo-wrap">
+					<a asp-area="" asp-controller="Company" asp-action="Detail" asp-route-id="@company.Id" class="overlay-link"></a>
+					<img class="company-logo" src="@company.ImageUrl" alt="">
+				</div>
+			</div>
+			<div class="bottom-wrap">
+				<div class="bottom-inner">
+					<a class="overlay-link" asp-area="" asp-controller="Company" asp-action="Detail" asp-route-id="@company.Id"></a>
+					<h6 class="company-name"> @company.Name </h6>
+					<div class="employee-count-wrap">
+						<img src="~/svgs/icon-person-black.svg"
+							 alt="Staff count">
+						<span class="count">@company.EmployeesCount</span>
+						<span>Staff count</span>
+					</div>
+				</div>
+				<a asp-area="" asp-controller="Company" asp-action="Detail" asp-fragment="jobs" asp-route-id="@company.Id" class="company-jobs-link">@company.JobOffersCount job offers</a>
+			</div>
+		</div>
+	}
+</div>
+
+@section Styles {
+	<link href="~/css/company/all.css" rel="stylesheet" />
+}
