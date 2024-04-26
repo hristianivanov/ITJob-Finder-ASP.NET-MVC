@@ -481,6 +481,10 @@ input {
                 background-image: url("../../svgs/bookmark-ribbon-outline.svg") !important;
             }
 
+.favourite-job-form {
+    display: contents;
+}
+
 .save-job-container .save-cta:hover .icon {
     background-image: url("../../svgs/bookmark-ribbon-outline.svg") !important;
     transition: background-image 0.2s ease-in-out;

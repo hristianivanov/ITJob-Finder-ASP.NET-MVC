@@ -53,7 +53,7 @@ function closeModal() {
 }
 
 
-$('form').submit(function (e) {
+$('form.apply-modal-form').submit(function (e) {
     e.preventDefault();
 
     var form = $(this);

@@ -1,9 +1,14 @@
-﻿@model JobOfferDetailsViewModel
+﻿@using DevHunter.Services.Data.Interfaces
+@model JobOfferDetailsViewModel
+@inject IJobOfferService jobOfferService
 
 @{
 	ViewBag.Id = Model.Id;
 	ViewBag.JobPossition = Model.Title;
+
+	bool isSaved = await this.jobOfferService.IsJobOfferSaved(Model.Id, this.User.GetId()!);
 }
+
 
 <div class="container-single-job">
 	<div class="job-list-item single-job">
@@ -80,12 +85,14 @@
 					<time datetime="2024-03-01">@Model.CreatedOn</time>
 				</li>
 				<li class="save-job">
-					<span class="save-job-container" data-job-id="311885">
-						<button class="save-cta">
-							<span class="label label-save">Save</span>
-							<span class="icon save-icon"></span>
-						</button>
-					</span>
+					<form class="favourite-job-form" asp-controller="JobOffer" asp-action="Save" id="@Model.Id" method="post">
+						<span class="save-job-container">
+							<button type="submit" class="save-cta @(isSaved ? "saved" : null)">
+								<span class="label">@(isSaved ? "Saved" : "Save")</span>
+								<span class="icon save-icon"></span>
+							</button>
+						</span>
+					</form>
 				</li>
 			</ul>
 			<div class="tech-stack">
@@ -109,7 +116,7 @@
 	<aside class="sidebar-container right-sidebar-company">
 		<div class="box-company">
 			<div class="logo-in-company-info">
-				<a href="#"><img class="company-logo" src="@Model.Company.ImageUrl" alt=""></a>
+				<a asp-area="" asp-controller="Company" asp-action="Detail" asp-route-id="@Model.Company.Id"><img class="company-logo" src="@Model.Company.ImageUrl" alt=""></a>
 			</div>
 			<h3 class="company-name-in-company-box">@Model.Company.Name</h3>
 			<div class="company-name-small-heading">About the company</div>
@@ -137,4 +144,5 @@
 
 @section Scripts {
 	<script src="~/js/apply-job-offer/script.js"></script>
+	<script src="~/js/joboffer-partial.js"></script>
 }

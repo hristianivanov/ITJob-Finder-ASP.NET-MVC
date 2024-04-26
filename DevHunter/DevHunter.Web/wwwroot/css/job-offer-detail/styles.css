@@ -58,6 +58,10 @@
     top: calc(50% - 25px);
 }
 
+.save-job-container .save-cta.saved .icon {
+    background-image: url("../../svgs/bookmark-ribbon-outline.svg") !important;
+}
+
 .content-container .section-categories {
     padding: 17px;
     /* ReSharper disable once InvalidValue */
