@@ -20,12 +20,14 @@
 	</div>
 
 	<div class="listing-content-wrap">
-		<span class="save-job-container">
-			<button class="save-cta @(isSaved ? "saved" : null)" onclick="saveJob(this,'@Model.Id')">
-				<span class="label">@(isSaved ? "Saved" : "Save")</span>
-				<span class="icon save-icon"></span>
-			</button>
-		</span>
+		<form class="favourite-job-form" asp-controller="JobOffer" asp-action="Save" id="@Model.Id" method="post">
+			<span class="save-job-container">
+				<button type="submit" class="save-cta @(isSaved ? "saved" : null)">
+					<span class="label">@(isSaved ? "Saved" : "Save")</span>
+					<span class="icon save-icon"></span>
+				</button>
+			</span>
+		</form>
 		<a class="overlay-link" asp-area="" asp-controller="JobOffer" asp-action="Detail" asp-route-id="@Model.Id"></a>
 		<div class="title-date-wrap">
 			<h6 class="job-title">@Model.JobPosition</h6>

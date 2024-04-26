@@ -10,6 +10,10 @@
 	var nickname = user != null ? $"{user.FirstName[0]}{user.LastName[0]}".ToUpper() : null;
 }
 
+@{
+	TempData["ReturnUrl"] = Context.Request.Path + Context.Request.QueryString;
+}
+
 <div class="login-register-cta">
 	@if (SignInManager.IsSignedIn(User))
 	{

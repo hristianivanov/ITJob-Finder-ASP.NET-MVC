@@ -64,6 +64,7 @@
 			return View(queryModel);
 		}
 
+		[HttpPost]
 		public async Task<IActionResult> Save(string id)
 		{
 			if (!User!.Identity!.IsAuthenticated)

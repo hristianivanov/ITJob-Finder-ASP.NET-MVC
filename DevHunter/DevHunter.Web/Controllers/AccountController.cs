@@ -88,7 +88,7 @@
 				return View(model);
 			}
 
-			await this.companyService.AddAsync(model,user.Id);
+			await this.companyService.AddAsync(model, user.Id);
 
 			await this.signInManager.SignInAsync(user, isPersistent: false);
 
@@ -179,13 +179,21 @@
 				return this.View(model);
 			}
 
-			return this.Redirect(model.ReturnUrl ?? "/Home/Index");
+			string returnUrl = TempData["ReturnUrl"] as string;
+			TempData.Remove("ReturnUrl");
+
+			return this.Redirect(returnUrl ?? "/Home/Index");
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> Logout(string? returnUrl)
+		public async Task<IActionResult> Logout()
 		{
 			await signInManager.SignOutAsync();
+
+			string returnUrl = HttpContext.Request.Query["returnUrl"];
+
+			if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+				return Redirect(returnUrl);
 
 			return RedirectToAction("Index", "Home");
 		}
