@@ -12,6 +12,7 @@
 		Task<CompanyFormModel> GetForEditByIdAsync(string id);
 		Task EditAsync(string id, CompanyFormModel model);
 		Task<string?> GetCompanyIdByCreatorIdAsync(string userId);
-		Task<IEnumerable<CompanyAdminViewModel>> AllAsync();
+		Task<IEnumerable<CompanyAdminViewModel>> AllForAdminAsync();
+		Task<IEnumerable<CompanyAllViewModel>> AllAsync();
 	}
 }

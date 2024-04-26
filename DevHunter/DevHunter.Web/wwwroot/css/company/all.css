@@ -1,0 +1,133 @@
+﻿.companies-all-container {
+    width: 90%;
+    max-width: 1585px;
+    margin: 0 auto;
+    margin-top: 5em;
+    background: white;
+    border-radius: 5px;
+    padding: 50px 48px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    column-gap: 30px;
+    row-gap: 30px;
+}
+
+.company-card {
+    border-radius: 5px;
+    transition: all 0.2s ease-in-out;
+    /* ReSharper disable once HexColorValueWithAlpha */
+    box-shadow: 0 0 25px #00000014;
+    flex: 0 0 413px;
+    color: rgb(89, 89, 89);
+    font-family: Axiforma, sans-serif;
+}
+
+    .company-card .cover-wrap {
+        position: relative;
+        height: 165px;
+        background-color: #CED4F5;
+        border-radius: 5px;
+    }
+
+    .company-card .bottom-wrap {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: calc(100% - 165px);
+        padding: 0;
+    }
+
+        .company-card .bottom-wrap .bottom-inner {
+            position: relative;
+        }
+
+.overlay-link {
+    position: absolute;
+    text-decoration: none;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+}
+
+.company-card .bottom-wrap .bottom-inner .company-name {
+    font-size: 18px;
+    color: #231F20;
+    font-weight: 700;
+    margin-top: 0;
+    padding: 30px 140px 0 26px;
+}
+
+.company-card .bottom-wrap .bottom-inner .employee-count-wrap {
+    padding: 0 26px 20px;
+}
+
+.company-card .cover-wrap .logo-wrap {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 135px;
+    height: 90px;
+    padding: 10px;
+    right: 28px;
+    bottom: -45px;
+    border: 1px solid #D5D5D5;
+    background-color: #fff;
+    border-radius: 7px;
+}
+
+.company-card .logo-wrap .company-logo {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.company-card .bottom-wrap .bottom-inner .employee-count-wrap img {
+    max-width: 100%;
+    vertical-align: middle;
+    display: inline-block;
+    width: auto;
+    height: auto;
+}
+
+.company-card .bottom-wrap .bottom-inner .employee-count-wrap .count {
+    font-weight: 600;
+    margin-left: 10px;
+}
+
+.company-card .bottom-wrap .bottom-inner .employee-count-wrap span {
+    font-size: 16px;
+    font-weight: 400;
+    vertical-align: sub;
+    margin-left: 5px;
+}
+
+.company-card .cover-wrap .cover-image {
+    width: 100%;
+    height: 165px;
+    object-fit: cover;
+    border-radius: 5px;
+    filter: blur(3px);
+}
+
+.company-card .bottom-wrap .company-jobs-link {
+    display: block;
+    padding: 0 26px 20px;
+    font-size: 22px;
+    color: rgb(55, 79, 254);
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+    .company-card .bottom-wrap .company-jobs-link:before {
+        content: '';
+        display: block;
+        width: 100%;
+        height: 1px;
+        background-color: #D5D5D5;
+        margin-bottom: 20px;
+    }
+
+   .company-card .cover-wrap .img-container {
+       overflow: hidden;
+   }

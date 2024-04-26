@@ -16,6 +16,15 @@
 		}
 
 		[HttpGet]
+		[Route("companies")]
+		public async Task<IActionResult> All()
+		{
+			var model = await this.companyService.AllAsync();
+
+			return View(model);
+		}
+
+		[HttpGet]
 		[Route("company/detail")]
 		public async Task<IActionResult> Detail(string id)
 		{

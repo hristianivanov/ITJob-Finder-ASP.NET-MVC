@@ -158,7 +158,7 @@
 		{
 			var companies = await dbContext.Companies.ToListAsync();
 
-			var result = await companyService.AllAsync();
+			var result = await companyService.AllForAdminAsync();
 
 			result.Should().NotBeNull()
 				.And
