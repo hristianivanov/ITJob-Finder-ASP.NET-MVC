@@ -83,19 +83,22 @@
 					</div>
 				</div>
 
-				<div id="filter-salary" class="component-filter-toggle">
-					<div class="filter-head">
-						<img src="~/svgs/icon-money.svg" class="icon"
-							 alt="Icon for the 'Само обяви със заплати'">
-						<h6 class="filter-name"> Only offers with salary </h6>
-						<div class="facetwp-facet " data-name="salary"
-							 data-type="checkboxes">
-							<div class="facetwp-checkbox" data-value="1">
-								<input id="salary-filter-slide_checkbox" type="checkbox" />
+				@if (Model.IsSalaryAvailable)
+				{
+					<div id="filter-salary" class="component-filter-toggle">
+						<div class="filter-head">
+							<img src="~/svgs/icon-money.svg" class="icon"
+							     alt="Icon for the 'Само обяви със заплати'">
+							<h6 class="filter-name"> Only offers with salary </h6>
+							<div class="facetwp-facet " data-name="salary"
+							     data-type="checkboxes">
+								<div class="facetwp-checkbox" data-value="1">
+									<input id="salary-filter-slide_checkbox" type="checkbox" />
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
+				}
 				@* <div id="filter-paid-leave" class="component-filter">
 				<div class="filter-head">
 				<img src="~/svgs/icon-calendar-blue.svg"

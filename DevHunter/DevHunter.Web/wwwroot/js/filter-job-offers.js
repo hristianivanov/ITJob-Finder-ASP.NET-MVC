@@ -39,13 +39,14 @@ checkboxInputs.forEach(input => {
 });
 
 const urlParams = new URLSearchParams(window.location.search);
-const salaryParam = urlParams.get('salary');
+if (salaryCheckBox) {
+    const salaryParam = urlParams.get('salary');
 
-if (salaryParam === 'true') {
-    salaryCheckBox.checked = true;
-    salaryCheckBox.parentElement.classList.add("checked");
+    if (salaryParam === 'true') {
+        salaryCheckBox.checked = true;
+        salaryCheckBox.parentElement.classList.add("checked");
+    }
 }
-
 function generateURL(filters) {
     const baseUrl = '/joboffer/all';
     const params = new URLSearchParams();
@@ -56,7 +57,7 @@ function generateURL(filters) {
         }
     });
 
-    if (salaryCheckBox.checked) {
+    if (salaryCheckBox && salaryCheckBox.checked) {
         params.append("salary", true);
     }
 
