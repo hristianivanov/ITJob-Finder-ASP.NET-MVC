@@ -10,6 +10,7 @@
 
 	using static Common.GeneralApplicationConstants;
 	using static Common.NotificationMessagesConstants;
+	using Microsoft.AspNetCore.Authorization;
 
 	public class HomeController : Controller
 	{
@@ -44,6 +45,7 @@
 			return View(model);
 		}
 
+		[Authorize(Roles = "Admin")]
 		public IActionResult About()
 		{
 			return View();
@@ -86,9 +88,9 @@
 		}
 
 		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+		[Route("Error/{statusCode}")]
 		public IActionResult Error(int statusCode)
-		{
-			var errorMsg = ((System.Net.HttpStatusCode)statusCode).ToString();
+		{ var errorMsg = ((System.Net.HttpStatusCode)statusCode).ToString();
 			
 			var model = new ErrorViewModel
 			{

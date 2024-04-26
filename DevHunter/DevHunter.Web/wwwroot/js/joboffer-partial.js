@@ -1,8 +1,22 @@
-﻿function saveJob(buttonElement, jobOfferId) {
+﻿$('form.favourite-job-form').on('submit', function (e) {
+    e.preventDefault();
+    var jobId = $(this).attr('id');
+    var btn = this[0];
+    saveJob(btn, jobId);
+});
+
+function saveJob(buttonElement, jobOfferId) {
+    let csrfToken = $('input[name="__RequestVerificationToken"]').val();
+
     $.ajax({
         url: '/JobOffer/Save',
-        type: 'GET',
-        data: { id: jobOfferId },
+        type: 'POST',
+        headers: {
+            'RequestVerificationToken': csrfToken
+        },
+        data: {
+            id: jobOfferId
+        },
         success: function (response) {
             if (response.success) {
                 const text = buttonElement.querySelector('.label');
@@ -23,3 +37,4 @@
         }
     });
 }
+
