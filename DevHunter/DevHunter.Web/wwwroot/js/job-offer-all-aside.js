@@ -12,9 +12,12 @@ collapseBtns.forEach(btn => {
 });
 
 let salarySlideCheckBox = document.getElementById('salary-filter-slide_checkbox');
-salarySlideCheckBox.addEventListener('click', (e) => {
-    e.target.parentElement.classList.toggle('checked');
-});
+
+if (salarySlideCheckBox) {
+    salarySlideCheckBox.addEventListener('click', (e) => {
+        e.target.parentElement.classList.toggle('checked');
+    });
+}
 let oldMoreText = '';
 function seeMore(target) {
     const overflowContaienr = target.parentElement.querySelector('.filter-overflow-checkboxes');
