@@ -329,6 +329,40 @@
 						},
 					}
 				},
+				new JobOffer
+				{
+					Id = Guid.Parse("59317F18-B028-4CA7-9F90-7B1ED2F60462"),
+					JobPosition = "Backend Software Developer",
+					CreatedOn = new DateTime(2024,5,3),
+					CompanyId = Guid.Parse("2D41345B-3B00-4403-976B-73EE769CA17C"),
+					PlaceToWork = "Sofia",
+					JobPlace = PlaceToWork.Road,
+					Description = "<div>\r\n\t\t\t\t<p><strong>TopView Sightseeing</strong> is a New York-based group of\r\n companies offering a variety of sightseeing bus tours, cruises, and \r\nbike rentals and tours. Our team has served over 2 million customers, \r\ncreating unforgettable experiences for people around the world. As we \r\nscale, we are looking for aspiring professionals to join the team and \r\nhelp drive the growth further. Our company is experiencing a great \r\nvertical and horizontal expansion and has planned to start exporting the\r\n experience, knowledge and success of our operations to other locations \r\naround the world starting in late 2021 such as Washington DC, San \r\nFrancisco, Miami, Los Angeles, Philadelphia, Houston, Chicago, London, \r\nParis, Rome, Barcelona, Dubai, Isntabul and many others.</p>\r\n<p>As a <strong>Backend Developer</strong> you will play an important \r\nrole in developing the TopView Sightseeing platform and services that \r\nare the heart of the company’s operations, driving multiple mobile \r\napplications and websites, working closely with our iOS, Android and Web\r\n developers. Together we will build great apps and experiences for our \r\nusers.</p>\r\n<p>At TopView Sightseeing, we value start-up mentalities. We run in a \r\nfast-paced environment, always try to optimize, stay very competitive, \r\nand we are not afraid to challenge ourselves. If you are ready to build \r\nsomething big – we are waiting for you!</p>\r\n<p><strong>TopView offers competitive salaries and benefits:</strong></p>\r\n<ul><li>Guaranteed annual salary increase</li><li>Performance bonus</li><li>Health insurance</li><li>More</li></ul>\r\n<p><strong>Responsibilities include, but are not limited to:</strong></p>\r\n<ul><li>Build solid backend architectures that integrate easily with other systems and technologies</li><li>Implement and maintain new backend modules for internal and client-facing apps and websites</li><li>Apply the latest backend technologies with a focus on serverless development</li><li>Improve backend services performance</li><li>Perform code reviews</li><li>Clearly and concisely communicate highly technical challenges and solutions with both technical and non-technical peers</li><li>Collaborate with frontend developers and the Management team</li></ul>\r\n<p><strong>Required experience:</strong></p>\r\n<ul><li>At least 2+ years of experience in backend development</li><li>Experienced in NodeJS.</li><li>Experience building RESTful APIs.</li><li>Willingness to learn Firebase.</li><li>Working experience with GIT.</li><li>Good communication skills, fluent English is a plus.</li><li>Ability to write clean, scalable/modular code.</li><li>Organized and with great time management skills.</li><li>Attention to detail and a strong ability to QA one’s own work.</li></ul>\r\n<p><strong>Bonus experience:</strong></p>\r\n<ul><li>Firebase or other serverless services</li><li>TypeScript</li></ul>\r\n\t\t\t</div>",
+					WorkingHours = 48,
+					SalaryType = SalaryType.Range,
+					MinSalary = 5000,
+					MaxSalary = 10000,
+					WorkingExperience = "5+ years work experience",
+					JobOfferTechnologies = new HashSet<TechnologyJobOffers>()
+					{
+						new TechnologyJobOffers
+						{
+							TechnologyId = Guid.Parse("f66c9fc1-f609-4049-a8e4-cd01b152315e")
+						},
+						new TechnologyJobOffers
+						{
+							TechnologyId = Guid.Parse("4972cc43-375b-40a7-829d-9c0acaefbcf0")
+						},
+						new TechnologyJobOffers
+						{
+							TechnologyId = Guid.Parse("097d02e0-0577-4110-8fb7-8989f60d53b9")
+						},
+						new TechnologyJobOffers
+						{
+							TechnologyId = Guid.Parse("56e3673e-0798-4f06-b348-d6129e385bad")
+						}
+					}
+				},
 			};
 		}
 	}
