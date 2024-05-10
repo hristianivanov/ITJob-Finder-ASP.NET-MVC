@@ -52,7 +52,7 @@
 					JobPosition = j.JobPosition,
 					CompanyImageUrl = j.Company.ImageUrl!,
 					CompanyName = j.Company.Name,
-					CreatedOn = j.CreatedOn.ToString("dd MMM."),
+					CreatedOn = j.CreatedOn.ToString("dd MMM.",CultureInfo.InvariantCulture),
 					PlaceToWorkType = j.JobPlace.ToString(),
 					JobLocation = j.PlaceToWork,
 					Technologies = j.JobOfferTechnologies
@@ -101,7 +101,7 @@
 					JobPosition = j.JobPosition,
 					CompanyImageUrl = j.Company.ImageUrl!,
 					CompanyName = j.Company.Name,
-					CreatedOn = j.CreatedOn.ToString("dd MMM."),
+					CreatedOn = j.CreatedOn.ToString("dd MMM.", CultureInfo.InvariantCulture),
 					PlaceToWorkType = j.JobPlace.ToString(),
 					JobLocation = j.PlaceToWork,
 					Technologies = j.JobOfferTechnologies
@@ -209,7 +209,7 @@
 				Description = jobOffer.Description,
 				JobLocation = jobOffer.PlaceToWork,
 				Salary = GetSalary(jobOffer.MinSalary, jobOffer.MaxSalary),
-				CreatedOn = jobOffer.CreatedOn.ToString("dd MMM."),
+				CreatedOn = jobOffer.CreatedOn.ToString("dd MMM.", CultureInfo.InvariantCulture),
 				Company = new Web.ViewModels.Company.CompanyViewModel()
 				{
 					Id = jobOffer.Company.Id.ToString(),
@@ -243,7 +243,7 @@
 				Id = j.Id.ToString(),
 				CompanyName = company.Name,
 				CompanyImageUrl = company.ImageUrl!,
-				CreatedOn = j.CreatedOn.ToString("dd.MM.yyyy"),
+				CreatedOn = j.CreatedOn.ToString("dd.MM.yyyy", CultureInfo.InvariantCulture),
 				JobLocation = j.PlaceToWork,
 				JobPosition = j.JobPosition,
 				Salary = GetSalary(j.MinSalary, j.MaxSalary),
