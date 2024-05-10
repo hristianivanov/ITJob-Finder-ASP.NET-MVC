@@ -176,7 +176,7 @@
 				Id = j.Id.ToString(),
 				CompanyName = company.Name,
 				CompanyImageUrl = company.ImageUrl!,
-				CreatedOn = j.CreatedOn.ToString("dd MMM."),
+				CreatedOn = j.CreatedOn.ToString("dd MMM.", CultureInfo.InvariantCulture),
 				JobLocation = j.PlaceToWork,
 				JobPosition = j.JobPosition,
 				Salary = GetSalary(j.MinSalary, j.MaxSalary),
