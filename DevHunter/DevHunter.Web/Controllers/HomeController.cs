@@ -45,7 +45,6 @@
 			return View(model);
 		}
 
-		[Authorize(Roles = "Admin")]
 		public IActionResult About()
 		{
 			return View();
