@@ -9,7 +9,7 @@
 	using Services.Data.Interfaces;
 
 	using static Common.NotificationMessagesConstants;
-
+	using static Common.GeneralApplicationConstants;
 	public class AccountController : Controller
 	{
 		private readonly SignInManager<ApplicationUser> signInManager;
@@ -76,7 +76,7 @@
 
 			var result = await this.userManager.CreateAsync(user, model.Password);
 
-			await this.userManager.AddToRoleAsync(user, "Company");
+			await this.userManager.AddToRoleAsync(user, CompanyRoleName);
 
 			if (!result.Succeeded)
 			{

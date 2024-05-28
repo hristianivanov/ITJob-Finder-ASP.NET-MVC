@@ -10,7 +10,6 @@
 
 	using static Common.GeneralApplicationConstants;
 	using static Common.NotificationMessagesConstants;
-	using Microsoft.AspNetCore.Authorization;
 
 	public class HomeController : Controller
 	{
