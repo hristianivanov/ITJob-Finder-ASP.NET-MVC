@@ -34,6 +34,7 @@
 				{
 					Id = u.Id.ToString(),
 					Email = u.Email,
+					FullName = $"{u.FirstName} {u.LastName}",
 					IsCompany = u.Companies.Any(c => c.CreatorId == u.Id),
 				})
 				.ToListAsync();

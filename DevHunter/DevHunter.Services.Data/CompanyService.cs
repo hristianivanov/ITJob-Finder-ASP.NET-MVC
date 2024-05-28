@@ -14,6 +14,8 @@
 	using Web.ViewModels.Technology;
 	using Web.ViewModels.Company;
 
+	using static Common.GeneralApplicationConstants.JobOffer;
+
 	public class CompanyService : ICompanyService
 	{
 		private readonly DevHunterDbContext context;
@@ -171,22 +173,24 @@
 				.Companies
 				.FirstAsync(c => c.Id.ToString() == id);
 
-			var jobOffers = company.JobOffers.Select(j => new JobOfferAllViewModel()
-			{
-				Id = j.Id.ToString(),
-				CompanyName = company.Name,
-				CompanyImageUrl = company.ImageUrl!,
-				CreatedOn = j.CreatedOn.ToString("dd MMM.", CultureInfo.InvariantCulture),
-				JobLocation = j.PlaceToWork,
-				JobPosition = j.JobPosition,
-				Salary = GetSalary(j.MinSalary, j.MaxSalary),
-				Technologies = j.JobOfferTechnologies.Select(tj => new TechnologyViewModel()
+			var jobOffers = company
+				.JobOffers
+				.Select(j => new JobOfferAllViewModel()
 				{
-					Id = tj.TechnologyId.ToString(),
-					ImageUrl = tj.Technology.ImageUrl!,
-					Name = tj.Technology.Name,
-				}),
-			})
+					Id = j.Id.ToString(),
+					CompanyName = company.Name,
+					CompanyImageUrl = company.ImageUrl!,
+					CreatedOn = j.CreatedOn.ToString(CreatedOnDateFormat, CultureInfo.InvariantCulture),
+					JobLocation = j.PlaceToWork,
+					JobPosition = j.JobPosition,
+					Salary = GetSalary(j.MinSalary, j.MaxSalary),
+					Technologies = j.JobOfferTechnologies.Select(tj => new TechnologyViewModel()
+					{
+						Id = tj.TechnologyId.ToString(),
+						ImageUrl = tj.Technology.ImageUrl!,
+						Name = tj.Technology.Name,
+					}),
+				})
 				.ToList();
 
 			var model = new CompanyDetailViewModel

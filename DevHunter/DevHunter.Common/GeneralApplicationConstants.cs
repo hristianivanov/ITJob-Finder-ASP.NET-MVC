@@ -17,9 +17,14 @@
 		public const string OnlineUsersCookieName = "IsOnline";
 		public const int LastActivityBeforeOfflineMinutes = 10;
 
+
 		public static class JobOffer
 		{
 			public const int TechStackNumber = 5;
+
+			public const string CreatedOnDateFormat = "dd MMM.";
+			public const string CreatedOnDateForCompany = "dd.MM.yyyy";
+
 		}
 	}
 }
