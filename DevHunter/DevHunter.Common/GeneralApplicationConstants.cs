@@ -24,7 +24,6 @@
 
 			public const string CreatedOnDateFormat = "dd MMM.";
 			public const string CreatedOnDateForCompany = "dd.MM.yyyy";
-
 		}
 	}
 }
