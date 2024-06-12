@@ -1,12 +1,14 @@
 ﻿namespace DevHunter.Web.ViewModels.Company
 {
-    using JobOffer;
+	using Technology;
+	using JobOffer;
 
     public class CompanyDetailViewModel
     {
         public CompanyDetailViewModel()
         {
             JobOffers = new HashSet<JobOfferAllViewModel>();
+            Technologies = new HashSet<TechnologyViewModel>();
         }
 
         public string Id { get; set; } = null!;
@@ -30,5 +32,6 @@
         public int? EmployeesCnt { get; set; }
 
         public IEnumerable<JobOfferAllViewModel> JobOffers { get; set; }
+        public IEnumerable<TechnologyViewModel> Technologies { get; set; }
     }
 }
