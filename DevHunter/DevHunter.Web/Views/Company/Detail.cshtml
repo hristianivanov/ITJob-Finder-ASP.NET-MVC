@@ -87,7 +87,21 @@
 			</div>
 
 		</div>
-		<!--        <div id="technologies" class="detail-box"></div>-->
+		<div id="technologies" class="detail-box">
+			<header class="box-heading"><h2>Technologies</h2></header>
+			<div class="tech-stack">
+				<h6 class="tech-stack-title">Technologies / <span>programming languages ​​used in the company:</span></h6>
+				<ul class="tech-stack-ul">
+					@foreach (var tech in Model.Technologies)
+					{
+						<li class="tech-stack-item">
+							@tech.Name
+							<img src="@tech.ImageUrl" alt=""/>
+						</li>
+					}
+				</ul>
+			</div>
+		</div>
 		<div id="contacts" class="detail-box">
 			<header class="box-heading"><h2>Contacts</h2></header>
 			<div class="company-info icons">
@@ -134,6 +148,42 @@
 </div>
 
 @section Styles {
+	<style>
+		.tech-stack-title {
+			margin-bottom: 25px;
+			font-size: 16px;
+			line-height: 140%;
+			color: rgb(89, 89, 89);
+			font-family: Axiforma, sans-serif;
+		}
+
+		.tech-stack-ul {
+			display: flex;
+			gap: 10px;
+			flex-wrap: wrap;
+		}
+		.tech-stack-item {
+			position: relative;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			min-height: 32px;
+			padding: 8px;
+			border-radius: 5px;
+			background-color: white;
+			/* ReSharper disable once HexColorValueWithAlpha */
+			box-shadow: 0 3px 20px #0000001A;
+			line-height: 1;
+			gap: 5px;
+		}
+		.tech-stack-item img {
+			max-width: 100%;
+			display: inline-block;
+			width: 24px;
+			height: 24px;
+			object-fit: contain;
+		}
+	</style>
 	<link href="~/css/company/styles.css" rel="stylesheet" />
 }
 

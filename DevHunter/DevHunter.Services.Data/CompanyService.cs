@@ -193,6 +193,25 @@
 				})
 				.ToList();
 
+			var companyTechnologies = new List<TechnologyViewModel>();
+
+			foreach (var companyJobOffer in company.JobOffers)
+			{
+				foreach (var technology in companyJobOffer.JobOfferTechnologies)
+				{
+					companyTechnologies.Add(new TechnologyViewModel()
+						{
+
+							Id = technology.TechnologyId.ToString(),
+							Name = technology.Technology.Name,
+							ImageUrl = technology.Technology.ImageUrl!,
+						}
+					);
+				}
+			}
+
+			companyTechnologies = companyTechnologies.DistinctBy(x => x.Id).ToList();
+
 			var model = new CompanyDetailViewModel
 			{
 				Id = company.Id.ToString(),
@@ -200,6 +219,7 @@
 				ImageUrl = company.ImageUrl!,
 				WebsiteUrl = company.WebsiteUrl,
 				JobOffers = jobOffers,
+				Technologies = companyTechnologies
 			};
 
 			if (!string.IsNullOrWhiteSpace(company.Sector))
