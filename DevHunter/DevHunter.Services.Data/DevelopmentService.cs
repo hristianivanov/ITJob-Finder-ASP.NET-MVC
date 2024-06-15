@@ -119,7 +119,8 @@
 
 			if (model.Image != null)
 			{
-				development.ImageUrl = await this.imageService.EditImage(model.Image, development.ImageUrl, development.Name, "DevHunter/development");
+				development.ImageUrl = 
+					await this.imageService.EditImage(model.Image, development.ImageUrl, development.Name, "DevHunter/development");
 				isChanged = true;
 			}
 

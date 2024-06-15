@@ -117,7 +117,8 @@
 
 			if (model.Image != null)
 			{
-				technology.ImageUrl = await this.imageService.EditImage(model.Image, technology.ImageUrl, technology.Name, "DevHunter/technology");
+				technology.ImageUrl = 
+					await this.imageService.EditImage(model.Image, technology.ImageUrl, technology.Name, "DevHunter/technology");
 				isChanged = true;
 			}
 
