@@ -18,7 +18,7 @@ public class Program
 		var builder = WebApplication.CreateBuilder(args);
 
 		var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
-		                       ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+							   ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
 		builder.Services.AddDbContext<DevHunterDbContext>(options =>
 		{
