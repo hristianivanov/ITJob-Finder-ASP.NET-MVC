@@ -83,7 +83,7 @@
 							 sizes="(max-width: 50px) 100vw, 50px">
 					</div>
 				}
-				@if (Model.Technologies.Count() > 5)
+				@if (Model.Technologies.Count() > TechStackNumber)
 				{
 					<span class="more-count">+@(Model.Technologies.Count() - TechStackNumber) more</span>
 				}

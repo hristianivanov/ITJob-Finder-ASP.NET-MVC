@@ -1,5 +1,7 @@
 ﻿@model AllFilterViewModel
 
+@using static DevHunter.Common.GeneralApplicationConstants;
+
 <aside class="job-listing-aside aside-container">
 	<div id="job-listing-aside-container">
 		<div class="box miniboard-sidebar">
@@ -15,7 +17,7 @@
 						</a>
 					</div>
 					<div class="filter-checkboxes component-filter">
-						@foreach (var location in Model.Locations.Take(5))
+						@foreach (var location in Model.Locations.Take(TechStackCount))
 						{
 							@if (location.Location == "Remote")
 							{
@@ -34,10 +36,10 @@
 								</div>
 							}
 						}
-						@if (Model.Locations.Count() > 5)
+						@if (Model.Locations.Count() > TechStackCount)
 						{
 							<div class="filter-overflow-checkboxes component-filter hidden">
-								@foreach (var location in Model.Locations.Skip(5))
+								@foreach (var location in Model.Locations.Skip(TechStackCount))
 								{
 									@if (location.Location == "Remote")
 									{
@@ -57,7 +59,7 @@
 									}
 								}
 							</div>
-							<a class="more-toggle" onclick="seeMore(this)">See more @(Model.Locations.Count() - 5)</a>
+							<a class="more-toggle" onclick="seeMore(this)">See more @(Model.Locations.Count() - TechStackCount)</a>
 						}
 					</div>
 				</div>

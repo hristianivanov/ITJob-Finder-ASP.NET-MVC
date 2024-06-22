@@ -7,6 +7,8 @@
 		public const string AdminEmail = "admin@gmail.com";
 		public const string AdminPass = "Admin12345678!";
 
+		public const int TechStackCount = 5;
+
 		public const int AllImageMaxMegaBytesFileSize = 10;
 
 		public const string CompanyRoleName = "Company";
