@@ -79,8 +79,11 @@
         border-radius: 3em;
         font-weight: 500;
         user-select: none;
-        cursor: not-allowed;
+        pointer-events: none;
     }
+ .section-footer .create-btn-container {
+     cursor: not-allowed;
+ }
 
 .background-circle {
     background: #010149;
@@ -134,10 +137,14 @@
     }
 
 .create-btn.active {
-    cursor: pointer;
+    pointer-events: unset;
     color: #fff;
     background: #cc338b;
     box-shadow: 0 0 0 2px rgb(136, 6, 81);
+}
+
+.section-footer .create-btn-container.active {
+    cursor: pointer;
 }
 
     .create-btn.active:hover {
