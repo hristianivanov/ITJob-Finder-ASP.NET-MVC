@@ -1,7 +1,8 @@
 ﻿const registerOptionContainer = document.getElementById("register-option-container");
 const radioBtns = registerOptionContainer.querySelectorAll("input[type=radio]");
 const radioBtnsContainers = registerOptionContainer.querySelectorAll(".radio-btn");
-const createBtn = registerOptionContainer.querySelector(".section-footer > .create-btn");
+const createBtn = registerOptionContainer.querySelector(".section-footer .create-btn");
+const createBtnContainer = registerOptionContainer.querySelector(".create-btn-container");
 
 const btnHrefAttribute = createBtn.getAttribute("href").toLowerCase();
 
@@ -10,6 +11,7 @@ radioBtnsContainers.forEach((container) =>
         radioBtnsToDefaultState();
 
         createBtn.classList.add("active");
+        createBtnContainer.classList.add("active");
         container.classList.add("active");
         container.querySelector("input[type=radio]").checked = true;
 
