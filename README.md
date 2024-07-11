@@ -6,16 +6,23 @@ Welcome to **DevHunter** – a dynamic web application developed as part of my g
 
 **DevHunter** is a comprehensive web application designed to demonstrate the principles and capabilities of ASP.NET. It serves both educational and demonstrative purposes, showcasing modern web development technologies and best practices.
 
+## Description
+
+**Job Finder System (12/2023 - 04/2024):** This project is a school graduate web application focused on job searching, implemented in C# with ASP.NET MVC, SQL Server, EF Core, and the MVC pattern.
+
 ## Key Features
 
-- **User-Friendly Interface:** The system offers an intuitive interface, making it easy for users to browse, search, and rent vehicles.
-- **Job Board:** A diverse catalog of job listings with detailed information, including specifications, images, and rental pricing.
-- **Booking and Reservations:** Users can book vehicles for specific dates, review their reservations, and manage their bookings seamlessly.
-- **Admin Dashboard:** Admin users have a dedicated dashboard to manage the vehicle catalog, user accounts, reservations, and system settings.
+- **User Authentication:** Provides secure authentication for companies, job seekers, and administrators.
+- **User Interactions:** Users can browse job offers, submit applications, and save job listings.
+- **Company Management:** Companies can perform CRUD operations on job offers and edit their profiles.
+- **Administrator Access:** Administrators have comprehensive site management capabilities.
 
-## Purpose
+## Advanced Features
 
-The primary goal of this project is to serve as a learning resource for those interested in ASP.NET web development. By exploring the code, project structure, and implemented features, developers can gain valuable insights into creating dynamic web applications.
+- **Rich Text Job Descriptions:** Supports detailed job descriptions with rich text formatting.
+- **Multi-Select Tag Suggester:** Enhances job listing and searching with tag suggestions.
+- **Dynamic Filtering and Keyword Search:** Facilitates advanced search functionality.
+- **Contact Page:** Allows users to send direct messages to the administrator.
 
 ## Images
 
@@ -68,4 +75,4 @@ Contributions to this project are welcome. If you identify any bugs, security vu
 
 ## Credits
 
-This project is developed and maintained by Hristian Ivanov. It was created as a part of the ASP.NET Advanced course at SoftUni.
+This project is developed and maintained by Hristian Ivanov. It was created as a part of the graduation at school.
