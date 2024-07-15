@@ -8,7 +8,7 @@ Welcome to **DevHunter** – a dynamic web application developed as part of my g
 
 ## Description
 
-**Job Finder System (12/2023 - 04/2024):** This project is a school graduate web application focused on job searching, implemented in C# with ASP.NET MVC, SQL Server, EF Core, and the MVC pattern.
+**Job Finder System (12/2023 - 05/2024):** This project is a school graduate web application focused on job searching, implemented in C# with ASP.NET MVC, SQL Server, EF Core, and the MVC pattern.
 
 ## Key Features
 
