@@ -17,7 +17,7 @@
 			<div class="input-container">
 				<i class="search-icon fa-solid fa-magnifying-glass"></i>
 				<form id="jobSearchForm" asp-controller="JobOffer" asp-action="AllSearch" method="get">
-					<input placeholder="Find Your Dream Job here..." type="search" name="search" />
+					<input placeholder="Find Your Dream Job here..." type="search" name="search" required />
 					<i class="enter-icon fa-solid fa-arrow-right" onclick="submitForm()"></i>
 					<button type="submit" hidden></button>
 				</form>
@@ -117,7 +117,7 @@
 		} else if (name.toLowerCase().includes('frontend')) {
 			category.classList.add('color-front-end-development',);
 		} else if (name.toLowerCase().includes('quality')) {
-			category.classList.add('color-quality-assurance', );
+			category.classList.add('color-quality-assurance',);
 		} else if (name.toLowerCase().includes('data')) {
 			category.classList.add('color-data-science',);
 		} else if (name.toLowerCase().includes('customer')) {
@@ -125,7 +125,7 @@
 		} else if (name.toLowerCase().includes('fullstack')) {
 			category.classList.add('color-full-stack-development');
 		} else if (name.toLowerCase().includes('pm/ba')) {
-			category.classList.add('color-pm-ba-and-more', );
+			category.classList.add('color-pm-ba-and-more',);
 		} else if (name.toLowerCase().includes('erp / crm')) {
 			category.classList.add('color-erp-crm-development');
 		} else if (name.toLowerCase().includes('arts')) {
@@ -141,7 +141,7 @@
 
 	otherCategories.forEach(category => {
 		const name = category.querySelector('.cat-title').textContent.trim();
-		
+
 		if (name.toLowerCase().includes('junior')) {
 			category.classList.add('junior-intern')
 		} else if (name.toLowerCase().includes('management')) {
