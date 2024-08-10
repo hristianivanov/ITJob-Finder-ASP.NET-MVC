@@ -8,15 +8,15 @@
 	<div class="login-wrapper">
 
 		<form asp-controller="Account" asp-action="Login" class="site-login-form" method="post">
-			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<div asp-validation-summary="ModelOnly" class="text-danger error_messsage"></div>
 			<h1 class="heading">@ViewData["Title"]</h1>
 			<div class="input-field">
 				<input asp-for="Email" class="form-control" autocomplete="username" aria-required="true" placeholder="Email"/>
-				<span asp-validation-for="Email" class="text-danger"></span>
+				<span asp-validation-for="Email" class="text-danger error_messsage"></span>
 			</div>
 			<div class="input-field">
 				<input asp-for="Password" class="form-control" aria-required="true" placeholder="Password"/>
-				<span asp-validation-for="Password" class="text-danger"></span>
+				<span asp-validation-for="Password" class="text-danger error_messsage"></span>
 			</div>
 			<button type="submit" class="submit-btn">Sign in</button>
 		</form>
