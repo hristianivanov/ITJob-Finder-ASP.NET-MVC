@@ -20,6 +20,6 @@ jobs:
     - name: Install dependencies
       run: dotnet restore ./src/DevHunter.Web/DevHunter.Web.csproj
     - name: Build
-      run: dotnet build
+      run: dotnet build ./src/DevHunter.Web/
     - name: Test with the dotnet CLI
       run: dotnet test
