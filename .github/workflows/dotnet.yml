@@ -18,7 +18,7 @@ jobs:
       with:
         dotnet-version: 6.0.x
     - name: Install dependencies
-      run: dotnet restore
+      run: dotnet restore ./src/DevHunter.Web/DevHunter.Web.csproj
     - name: Build
       run: dotnet build
     - name: Test with the dotnet CLI
