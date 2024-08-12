@@ -76,3 +76,5 @@ Contributions to this project are welcome. If you identify any bugs, security vu
 ## Credits
 
 This project is developed and maintained by Hristian Ivanov. It was created as a part of the graduation at school.
+
+[![.NET](https://github.com/hristianivanov/ITJob-Finder-ASP.NET-MVC/actions/workflows/dotnet.yml/badge.svg)](https://github.com/hristianivanov/ITJob-Finder-ASP.NET-MVC/actions/workflows/dotnet.yml)
