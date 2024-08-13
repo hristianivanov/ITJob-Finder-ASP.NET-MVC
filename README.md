@@ -77,4 +77,7 @@ Contributions to this project are welcome. If you identify any bugs, security vu
 
 This project is developed and maintained by Hristian Ivanov. It was created as a part of the graduation at school.
 
+![GitHub repo size](https://img.shields.io/github/repo-size/hristianivanov/ITJob-Finder-ASP.NET-MVC)
+![GitHub Repo stars](https://img.shields.io/github/stars/hristianivanov/ITJob-Finder-ASP.NET-MVC)
+![GitHub forks](https://img.shields.io/github/forks/hristianivanov/ITJob-Finder-ASP.NET-MVC)
 [![.NET](https://github.com/hristianivanov/ITJob-Finder-ASP.NET-MVC/actions/workflows/dotnet.yml/badge.svg)](https://github.com/hristianivanov/ITJob-Finder-ASP.NET-MVC/actions/workflows/dotnet.yml)
