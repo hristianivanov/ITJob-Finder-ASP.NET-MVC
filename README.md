@@ -2,18 +2,6 @@
 
 Welcome to **DevHunter** – a dynamic web application developed as part of my graduation project. This project demonstrates key principles of ASP.NET development and modern web practices.
 
-## 📋 Table of Contents
-
-1. [📝 Overview](#overview)
-2. [📅 Project Description](#description)
-3. [🚀 Key Features](#key-features)
-4. [⚙️ Advanced Features](#advanced-features)
-5. [📸 Screenshots](#screenshots)
-6. [🚀 Getting Started](#getting-started)
-7. [💻 Usage](#usage)
-8. [🤝 Contributing](#contributing)
-9. [📜 Credits](#credits)
-
 ## 📝 Overview
 
 **DevHunter** is a comprehensive job-finding platform built using **ASP.NET MVC**, **C#**, **SQL Server**, and **Entity Framework Core**. It was created as part of a graduation project to showcase modern web development techniques, including database integration, user authentication, and rich interactive features.
