@@ -52,9 +52,9 @@ This web application is designed to facilitate job searches by enabling job seek
 </p>
 
 ### 😎 User Case Diagram
-
-![image](https://github.com/user-attachments/assets/4accbd39-4834-4d23-a0f3-d8c3a72adadc)
-
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/4accbd39-4834-4d23-a0f3-d8c3a72adadc"/>
+</p>
 
 ## 🚀 Getting Started
 
