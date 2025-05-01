@@ -36,6 +36,11 @@ This web application is designed to facilitate job searches by enabling job seek
   <img src="https://github.com/hristianivanov/ITJob-Finder-ASP.NET-MVC/blob/main/docs/common/FireShot%20Capture%20046%20-%20-%20DevHunter%20-%20localhost.png" width="300px" height="150px"/>
 </p>
 
+### 😎 User Case Diagram
+
+![image](https://github.com/user-attachments/assets/75513eed-fd79-4958-bac8-912c3d4bc789)
+
+
 ### 💼 Job Offers
 
 <p align="center">
