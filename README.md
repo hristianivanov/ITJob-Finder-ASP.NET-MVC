@@ -51,6 +51,11 @@ This web application is designed to facilitate job searches by enabling job seek
   <img src="https://github.com/hristianivanov/ITJob-Finder-ASP.NET-MVC/blob/main/docs/company/FireShot%20Capture%20050%20-%20-%20DevHunter%20-%20localhost.png" width="300px" height="150px"/>
 </p>
 
+### 😎 User Case Diagram
+
+![image](https://github.com/user-attachments/assets/4accbd39-4834-4d23-a0f3-d8c3a72adadc)
+
+
 ## 🚀 Getting Started
 
 To start using the **DevHunter** project, follow these steps:
