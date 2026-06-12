@@ -1,7 +1,7 @@
 namespace DevHunter.Services.Tests
 {
-	using FluentAssertions;
-    using Microsoft.AspNetCore.Http.Internal;
+    using FluentAssertions;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.EntityFrameworkCore;
     using Moq;
 
@@ -24,7 +24,7 @@ namespace DevHunter.Services.Tests
         private IDevelopmentService developmentService;
 
         [SetUp]
-        public void Setup()
+        public async Task Setup()
         {
             dbOptions = new DbContextOptionsBuilder<DevHunterDbContext>()
                 .UseInMemoryDatabase("DevHunterInMemory" + Guid.NewGuid())
@@ -34,7 +34,7 @@ namespace DevHunter.Services.Tests
 
             dbContext.Database.EnsureCreated();
 
-            SeedDatabase(dbContext);
+            await SeedDatabase(dbContext);
 
             developmentService =
                 new DevelopmentService(dbContext, ImageServiceMock.Instance, TechnologyServiceMock.Instance);

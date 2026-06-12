@@ -1,227 +1,242 @@
 ﻿namespace DevHunter.Services.Tests
 {
-	using FluentAssertions;
-	using Microsoft.EntityFrameworkCore;
+    using FluentAssertions;
+    using Microsoft.EntityFrameworkCore;
 
-	using Data;
-	using Data.Interfaces;
-	using Mocks;
+    using Data;
+    using Data.Interfaces;
+    using Mocks;
 
-	using DevHunter.Data;
-	
-	using Web.ViewModels.User;
-	using Web.ViewModels.Company;
-	using Web.ViewModels.JobOffer;
+    using DevHunter.Data;
 
-	using static DevHunter.Tests.Common.DatabaseSeeder;
+    using Web.ViewModels.User;
+    using Web.ViewModels.Company;
+    using Web.ViewModels.JobOffer;
 
-	[TestFixture]
-	public class CompanyServiceTests
-	{
-		private DbContextOptions<DevHunterDbContext> dbOptions;
-		private DevHunterDbContext dbContext;
+    using static DevHunter.Tests.Common.DatabaseSeeder;
 
-		private ICompanyService companyService;
+    [TestFixture]
+    public class CompanyServiceTests
+    {
+        private DbContextOptions<DevHunterDbContext> dbOptions;
+        private DevHunterDbContext dbContext;
 
-		[SetUp]
-		public void Setup()
-		{
-			dbOptions = new DbContextOptionsBuilder<DevHunterDbContext>()
-				.UseInMemoryDatabase("DevHunterInMemory" + Guid.NewGuid())
-				.Options;
+        private ICompanyService companyService;
 
-			dbContext = new DevHunterDbContext(dbOptions);
+        [SetUp]
+        public async Task Setup()
+        {
+            dbOptions = new DbContextOptionsBuilder<DevHunterDbContext>()
+                .UseInMemoryDatabase("DevHunterInMemory" + Guid.NewGuid())
+                .Options;
 
-			dbContext.Database.EnsureCreated();
+            dbContext = new DevHunterDbContext(dbOptions);
 
-			SeedDatabase(dbContext);
+            dbContext.Database.EnsureCreated();
 
-			companyService =
-				new CompanyService(dbContext, ImageServiceMock.Instance);
-		}
+            await SeedDatabase(dbContext);
 
-		[TearDown]
-		public void TearDown()
-		{
-			dbContext.Database.EnsureDeleted();
-		}
+            companyService =
+                new CompanyService(dbContext, ImageServiceMock.Instance);
+        }
 
-		[Test]
-		public async Task AddAsync_ShouldAddCompany()
-		{
-			var model = new CompanyRegisterFormModel()
-			{
-				Name = "new_company",
-				WebsiteUrl = "test_url",
-			};
+        [TearDown]
+        public void TearDown()
+        {
+            dbContext.Database.EnsureDeleted();
+        }
 
-			var user = await dbContext.Users.FirstAsync(u => !u.Companies.Any());
+        [Test]
+        public async Task AddAsync_ShouldAddCompany()
+        {
+            var model = new CompanyRegisterFormModel()
+            {
+                Name = "new_company",
+                WebsiteUrl = "test_url",
+            };
 
-			await companyService.AddAsync(model, user.Id);
+            var user = await dbContext.Users.FirstAsync(u => !u.Companies.Any());
 
-			user.Companies.Should()
-				.NotBeNullOrEmpty()
-				.And.Contain(c => c.Name == model.Name);
-		}
+            await companyService.AddAsync(model, user.Id);
 
-		[TestCase("")]
-		[TestCase("  ")]
-		[TestCase("invalid")]
-		[TestCase(null)]
-		public async Task ExistsByNameAsync_ShouldReturnFalseForNonExistingCompany(string nonExistingCompanyName)
-		{
-			var result = await companyService.ExistsByNameAsync(nonExistingCompanyName);
-			
-			result.Should().BeFalse();
-		}
+            user.Companies.Should()
+                .NotBeNullOrEmpty()
+                .And.Contain(c => c.Name == model.Name);
+        }
 
-		[Test]
-		public async Task ExistsByNameAsync_ShouldReturnTrueForExistingCompany()
-		{
-			var existingCompany = await dbContext.Companies.FirstAsync();
+        [TestCase("")]
+        [TestCase("  ")]
+        [TestCase("invalid")]
+        [TestCase(null)]
+        public async Task ExistsByNameAsync_ShouldReturnFalseForNonExistingCompany(string nonExistingCompanyName)
+        {
+            var result = await companyService.ExistsByNameAsync(nonExistingCompanyName);
 
-			var result = await companyService.ExistsByNameAsync(existingCompany.Name);
+            result.Should().BeFalse();
+        }
 
-			result.Should().BeTrue();
-		}
+        [Test]
+        public async Task ExistsByNameAsync_ShouldReturnTrueForExistingCompany()
+        {
+            var existingCompany = await dbContext.Companies.FirstAsync();
 
-		[TestCase("")]
-		[TestCase("  ")]
-		[TestCase("invalid")]
-		[TestCase(null)]
-		public async Task ExistsByIdAsync_ShouldReturnFalseForNonExistingCompany(string nonExistingCompanyName)
-		{
-			var result = await companyService.ExistsByIdAsync(nonExistingCompanyName);
+            var result = await companyService.ExistsByNameAsync(existingCompany.Name);
 
-			result.Should().BeFalse();
-		}
+            result.Should().BeTrue();
+        }
 
-		[Test]
-		public async Task ExistsByIdAsync_ShouldReturnTrueForExistingCompany()
-		{
-			var existingCompany = await dbContext.Companies.FirstAsync();
+        [TestCase("")]
+        [TestCase("  ")]
+        [TestCase("invalid")]
+        [TestCase(null)]
+        public async Task ExistsByIdAsync_ShouldReturnFalseForNonExistingCompany(string nonExistingCompanyName)
+        {
+            var result = await companyService.ExistsByIdAsync(nonExistingCompanyName);
 
-			var result = await companyService.ExistsByIdAsync(existingCompany.Id.ToString());
+            result.Should().BeFalse();
+        }
 
-			result.Should().BeTrue();
-		}
+        [Test]
+        public async Task ExistsByIdAsync_ShouldReturnTrueForExistingCompany()
+        {
+            var existingCompany = await dbContext.Companies.FirstAsync();
 
-		[Test]
-		public async Task GetForEditByIdAsync_ShouldReturnCorrectCompany()
-		{
-			var company = await dbContext.Companies.FirstAsync();
+            var result = await companyService.ExistsByIdAsync(existingCompany.Id.ToString());
 
-			var result = await companyService.GetForEditByIdAsync(company.Id.ToString());
+            result.Should().BeTrue();
+        }
 
-			result.Should().NotBeNull()
-				.And
-				.BeOfType<CompanyFormModel>()
-				.And
-				.BeEquivalentTo(company, options => options.ExcludingMissingMembers());
-		}
+        [Test]
+        public async Task IsOwnedByUserAsync_ShouldCheckCompanyOwnership()
+        {
+            var company = await dbContext.Companies.FirstAsync();
+            var otherUser = await dbContext.Users.FirstAsync(user => user.Id != company.CreatorId);
 
-		[TestCase("")]
-		[TestCase("  ")]
-		[TestCase(null)]
-		[TestCase("invalid_id")]
-		public async Task GetForEditByIdAsync_ShouldThrowExceptionForNonExistingCompany(string nonExistingCompanyId)
-		{
-			var act = async () => await companyService.GetForEditByIdAsync(nonExistingCompanyId);
+            bool ownedByCreator = await companyService
+                .IsOwnedByUserAsync(company.Id.ToString(), company.CreatorId.ToString());
+            bool ownedByOtherUser = await companyService
+                .IsOwnedByUserAsync(company.Id.ToString(), otherUser.Id.ToString());
 
-			await act.Should().ThrowAsync<InvalidOperationException>();
-		}
+            ownedByCreator.Should().BeTrue();
+            ownedByOtherUser.Should().BeFalse();
+        }
 
-		[Test]
-		public async Task GetCompanyIdByCreatorIdAsync_ShouldReturnCompanyIdCorrect()
-		{
-			var companyUser = await dbContext.Users.FirstAsync(u => u.Companies.Any());
+        [Test]
+        public async Task GetForEditByIdAsync_ShouldReturnCorrectCompany()
+        {
+            var company = await dbContext.Companies.FirstAsync();
 
-			var result = await companyService.GetCompanyIdByCreatorIdAsync(companyUser.Id.ToString());
+            var result = await companyService.GetForEditByIdAsync(company.Id.ToString());
 
-			result.Should().NotBeNull();
+            result.Should().NotBeNull()
+                .And
+                .BeOfType<CompanyFormModel>()
+                .And
+                .BeEquivalentTo(company, options => options.ExcludingMissingMembers());
+        }
 
-			companyUser.Companies.Should().ContainSingle(c => c.Id.ToString() == result);
-		}
+        [TestCase("")]
+        [TestCase("  ")]
+        [TestCase(null)]
+        [TestCase("invalid_id")]
+        public async Task GetForEditByIdAsync_ShouldThrowExceptionForNonExistingCompany(string nonExistingCompanyId)
+        {
+            var act = async () => await companyService.GetForEditByIdAsync(nonExistingCompanyId);
 
-		[Test]
-		public async Task GetCompanyIdByCreatorIdAsync_ShouldThrowExceptionForNonExistingCompanyProfile()
-		{
-			var nonExistingUserCompanyId = "invalid";
+            await act.Should().ThrowAsync<InvalidOperationException>();
+        }
 
-			var act = async () => await companyService.GetCompanyIdByCreatorIdAsync(nonExistingUserCompanyId);
+        [Test]
+        public async Task GetCompanyIdByCreatorIdAsync_ShouldReturnCompanyIdCorrect()
+        {
+            var companyUser = await dbContext.Users.FirstAsync(u => u.Companies.Any());
 
-			await act.Should().ThrowAsync<NullReferenceException>();
-		}
+            var result = await companyService.GetCompanyIdByCreatorIdAsync(companyUser.Id.ToString());
 
-		[Test]
-		public async Task AllAsync_ShouldReturnAllCompanies()
-		{
-			var companies = await dbContext.Companies.ToListAsync();
+            result.Should().NotBeNull();
 
-			var result = await companyService.AllForAdminAsync();
+            companyUser.Companies.Should().ContainSingle(c => c.Id.ToString() == result);
+        }
 
-			result.Should().NotBeNull()
-				.And
-				.HaveSameCount(companies)
-				.And
-				.Equal(companies, (c1,c2) => c1.Id == c2.Id.ToString())
-				.And
-				.AllBeOfType<CompanyAdminViewModel>();
-		}
+        [Test]
+        public async Task GetCompanyIdByCreatorIdAsync_ShouldThrowExceptionForNonExistingCompanyProfile()
+        {
+            var nonExistingUserCompanyId = "invalid";
 
-		[Test]
-		public async Task GetDetailsByIdAsync_ShouldReturnCompanyDetails()
-		{
-			var company = await dbContext.Companies.FirstAsync();
+            var act = async () => await companyService.GetCompanyIdByCreatorIdAsync(nonExistingUserCompanyId);
 
-			var result = await companyService.GetDetailsByIdAsync(company.Id.ToString());
+            await act.Should().ThrowAsync<NullReferenceException>();
+        }
 
-			result.Should()
-				.NotBeNull()
-				.And
-				.BeOfType<CompanyDetailViewModel>();
+        [Test]
+        public async Task AllAsync_ShouldReturnAllCompanies()
+        {
+            var companies = await dbContext.Companies.ToListAsync();
 
-			result.Id.Should().Be(company.Id.ToString());
+            var result = await companyService.AllForAdminAsync();
 
-			result.JobOffers.Should()
-				.NotBeNull()
-				.And
-				.BeOfType<List<JobOfferAllViewModel>>()
-				.And
-				.Equal(company.JobOffers, (j1,j2) => j1.Id == j2.Id.ToString())
-				.And
-				.HaveCount(company.JobOffers.Count);
-		}
+            result.Should().NotBeNull()
+                .And
+                .HaveSameCount(companies)
+                .And
+                .Equal(companies, (c1, c2) => c1.Id == c2.Id.ToString())
+                .And
+                .AllBeOfType<CompanyAdminViewModel>();
+        }
 
-		[Test]
-		public async Task EditAsync_ShouldEditCompany()
-		{
-			var company = await dbContext.Companies.FirstAsync();
+        [Test]
+        public async Task GetDetailsByIdAsync_ShouldReturnCompanyDetails()
+        {
+            var company = await dbContext.Companies.FirstAsync();
 
-			var model = new CompanyFormModel()
-			{
-				Name = "new_name",
-				Description = "new_description",
-				FoundedDate = new DateTime(2022, 2, 20),
-				Activity = "new_activity",
-				Address = "new_address",
-				EmployeesCnt = 1,
-				ImageUrl = "new_image_url",
-				Sector = "new_sector",
-				WebsiteUrl = "new_website_url"
-			};
+            var result = await companyService.GetDetailsByIdAsync(company.Id.ToString());
 
-			await companyService.EditAsync(company.Id.ToString(),model);
+            result.Should()
+                .NotBeNull()
+                .And
+                .BeOfType<CompanyDetailViewModel>();
 
-			var editedCompany = await dbContext.Companies.FindAsync(company.Id);
+            result.Id.Should().Be(company.Id.ToString());
 
-			editedCompany.Should()
-				.NotBeNull()
-				.And
-				.BeEquivalentTo(model, options => 
-					options
-						.Including(x => x.Name)
-						.Including(x => x.Description));
-		}
-	}
+            result.JobOffers.Should()
+                .NotBeNull()
+                .And
+                .BeOfType<List<JobOfferAllViewModel>>()
+                .And
+                .Equal(company.JobOffers, (j1, j2) => j1.Id == j2.Id.ToString())
+                .And
+                .HaveCount(company.JobOffers.Count);
+        }
+
+        [Test]
+        public async Task EditAsync_ShouldEditCompany()
+        {
+            var company = await dbContext.Companies.FirstAsync();
+
+            var model = new CompanyFormModel()
+            {
+                Name = "new_name",
+                Description = "new_description",
+                FoundedDate = new DateTime(2022, 2, 20),
+                Activity = "new_activity",
+                Address = "new_address",
+                EmployeesCnt = 1,
+                ImageUrl = "new_image_url",
+                Sector = "new_sector",
+                WebsiteUrl = "new_website_url"
+            };
+
+            await companyService.EditAsync(company.Id.ToString(), model);
+
+            var editedCompany = await dbContext.Companies.FindAsync(company.Id);
+
+            editedCompany.Should()
+                .NotBeNull()
+                .And
+                .BeEquivalentTo(model, options =>
+                    options
+                        .Including(x => x.Name)
+                        .Including(x => x.Description));
+        }
+    }
 }
