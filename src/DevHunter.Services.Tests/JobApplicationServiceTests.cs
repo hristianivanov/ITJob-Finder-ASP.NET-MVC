@@ -72,7 +72,7 @@
         {
             var act = async () => await jobApplicationService.ApplyJobOfferAsync(null, "", "");
 
-            await act.Should().ThrowAsync<NullReferenceException>();
+            await act.Should().ThrowAsync<ArgumentNullException>();
         }
 
         [Test]
@@ -87,7 +87,40 @@
 
             var act = async () => await jobApplicationService.ApplyJobOfferAsync(model, "", "");
 
-            await act.Should().ThrowAsync<FormatException>();
+            await act.Should().ThrowAsync<InvalidOperationException>();
+        }
+
+        [Test]
+        public async Task ApplyJobOfferAsync_ShouldRejectMissingJobOffer()
+        {
+            var model = new JobApplicationFormModel
+            {
+                CandidateName = "candidate_name",
+                Email = "candidate@gmail.com",
+                MotivationalLetter = "letter",
+            };
+
+            var act = async () => await jobApplicationService
+                .ApplyJobOfferAsync(model, Guid.NewGuid().ToString(), null);
+
+            await act.Should().ThrowAsync<InvalidOperationException>();
+        }
+
+        [Test]
+        public async Task ApplyJobOfferAsync_ShouldRejectInvalidAuthenticatedUserId()
+        {
+            var model = new JobApplicationFormModel
+            {
+                CandidateName = "candidate_name",
+                Email = "candidate@gmail.com",
+                MotivationalLetter = "letter",
+            };
+            var jobOffer = await dbContext.JobOffers.FirstAsync();
+
+            var act = async () => await jobApplicationService
+                .ApplyJobOfferAsync(model, jobOffer.Id.ToString(), "invalid");
+
+            await act.Should().ThrowAsync<InvalidOperationException>();
         }
 
         [Test]

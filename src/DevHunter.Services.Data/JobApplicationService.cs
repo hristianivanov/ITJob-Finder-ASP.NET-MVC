@@ -22,20 +22,47 @@
 
         public async Task<string> ApplyJobOfferAsync(JobApplicationFormModel model, string jobOfferId, string? userId)
         {
-            var application = new JobApplication()
+            ArgumentNullException.ThrowIfNull(model);
+
+            if (!Guid.TryParse(jobOfferId, out Guid parsedJobOfferId))
+            {
+                throw new InvalidOperationException("A valid job offer id is required.");
+            }
+
+            bool jobOfferExists = await this.context.JobOffers
+                .AsNoTracking()
+                .AnyAsync(jobOffer => jobOffer.Id == parsedJobOfferId);
+
+            if (!jobOfferExists)
+            {
+                throw new InvalidOperationException("Job offer does not exist.");
+            }
+
+            Guid? parsedUserId = null;
+            if (!string.IsNullOrWhiteSpace(userId))
+            {
+                if (!Guid.TryParse(userId, out Guid validUserId))
+                {
+                    throw new InvalidOperationException("A valid user id is required.");
+                }
+
+                parsedUserId = validUserId;
+            }
+
+            var application = new JobApplication
             {
                 Email = model.Email,
                 CandidateName = model.CandidateName,
                 MotivationalLetter = model.MotivationalLetter,
-                JobOfferId = Guid.Parse(jobOfferId)
+                JobOfferId = parsedJobOfferId
             };
 
-            if (!string.IsNullOrWhiteSpace(userId))
+            if (parsedUserId.HasValue)
             {
-                var userApplication = new UserJobApplications()
+                var userApplication = new UserJobApplications
                 {
                     JobApplicationId = application.Id,
-                    UserId = Guid.Parse(userId),
+                    UserId = parsedUserId.Value,
                     Date = DateTime.UtcNow,
                 };
 
@@ -50,11 +77,16 @@
 
         public async Task<ICollection<AllJobApplicationViewModel>> AllCandidatesByCompanyIdAsync(string? companyId)
         {
+            if (!Guid.TryParse(companyId, out Guid parsedCompanyId))
+            {
+                return Array.Empty<AllJobApplicationViewModel>();
+            }
+
             var jobOffersApplications = await this.context
                 .JobOffers
-                .Where(j => j.CompanyId.ToString() == companyId &&
-                            j.JobApplications.Count() != 0)
                 .AsNoTracking()
+                .Where(j => j.CompanyId == parsedCompanyId &&
+                            j.JobApplications.Any())
                 .Select(j => new AllJobApplicationViewModel()
                 {
                     JobOfferId = j.Id.ToString(),
@@ -106,9 +138,15 @@
 
         public async Task<IEnumerable<MyApplicationViewModel>> AllUserApplicationsAsync(string userId)
         {
+            if (!Guid.TryParse(userId, out Guid parsedUserId))
+            {
+                return Array.Empty<MyApplicationViewModel>();
+            }
+
             var userApplications = await this.context
                 .UsersJobApplications
-                .Where(a => a.UserId.ToString() == userId)
+                .AsNoTracking()
+                .Where(a => a.UserId == parsedUserId)
                 .Select(a => new MyApplicationViewModel()
                 {
                     SavedDate = a.Date.ToString("dd.MM.yyyy"),
