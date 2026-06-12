@@ -159,13 +159,23 @@
         }
 
         [Test]
-        public async Task GetCompanyIdByCreatorIdAsync_ShouldThrowExceptionForNonExistingCompanyProfile()
+        public async Task GetCompanyIdByCreatorIdAsync_ShouldReturnNullForNonExistingCompanyProfile()
         {
             var nonExistingUserCompanyId = "invalid";
 
-            var act = async () => await companyService.GetCompanyIdByCreatorIdAsync(nonExistingUserCompanyId);
+            var result = await companyService.GetCompanyIdByCreatorIdAsync(nonExistingUserCompanyId);
 
-            await act.Should().ThrowAsync<NullReferenceException>();
+            result.Should().BeNull();
+        }
+
+        [Test]
+        public async Task GetCompanyIdByCreatorIdAsync_ShouldReturnNullForUserWithoutCompanyProfile()
+        {
+            var user = await dbContext.Users.FirstAsync(existingUser => !existingUser.Companies.Any());
+
+            var result = await companyService.GetCompanyIdByCreatorIdAsync(user.Id.ToString());
+
+            result.Should().BeNull();
         }
 
         [Test]
@@ -237,6 +247,22 @@
                     options
                         .Including(x => x.Name)
                         .Including(x => x.Description));
+        }
+
+        [TestCase("")]
+        [TestCase("invalid")]
+        [TestCase(null)]
+        public async Task EditAsync_ShouldRejectInvalidCompanyId(string invalidCompanyId)
+        {
+            var model = new CompanyFormModel
+            {
+                Name = "new_name",
+                WebsiteUrl = "https://example.com"
+            };
+
+            var act = async () => await companyService.EditAsync(invalidCompanyId, model);
+
+            await act.Should().ThrowAsync<InvalidOperationException>();
         }
     }
 }
