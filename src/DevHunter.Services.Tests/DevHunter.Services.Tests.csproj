@@ -29,6 +29,7 @@
     <ProjectReference Include="..\DevHunter.Services.Data\DevHunter.Services.Data.csproj" />
     <ProjectReference Include="..\DevHunter.Services.Mocks\DevHunter.Services.Mocks.csproj" />
     <ProjectReference Include="..\DevHunter.Tests.Common\DevHunter.Tests.Common.csproj" />
+    <ProjectReference Include="..\DevHunter.Web\DevHunter.Web.csproj" />
     <ProjectReference Include="..\DevHunter.Web.ViewModels\DevHunter.Web.ViewModels.csproj" />
   </ItemGroup>
 
