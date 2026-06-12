@@ -42,10 +42,21 @@
         }
 
         public async Task<bool> ExistsByNameAsync(string name)
-            => await this.context.Companies.FirstOrDefaultAsync(c => c.Name == name) != null;
+            => await this.context.Companies
+                .AsNoTracking()
+                .AnyAsync(company => company.Name == name);
 
         public async Task<bool> ExistsByIdAsync(string id)
-            => await this.context.Companies.FirstOrDefaultAsync(c => c.Id.ToString() == id) != null;
+        {
+            if (!Guid.TryParse(id, out Guid companyId))
+            {
+                return false;
+            }
+
+            return await this.context.Companies
+                .AsNoTracking()
+                .AnyAsync(company => company.Id == companyId);
+        }
 
         public async Task<bool> IsOwnedByUserAsync(string id, string userId)
         {
@@ -61,9 +72,13 @@
 
         public async Task<CompanyFormModel> GetForEditByIdAsync(string id)
         {
+            Guid companyId = ParseCompanyId(id);
+
             var company = await this.context
                 .Companies
-                .FirstAsync(t => t.Id.ToString() == id);
+                .AsNoTracking()
+                .FirstOrDefaultAsync(company => company.Id == companyId)
+                ?? throw new InvalidOperationException("Company does not exist.");
 
             return new CompanyFormModel
             {
@@ -81,8 +96,13 @@
 
         public async Task EditAsync(string id, CompanyFormModel model)
         {
+            ArgumentNullException.ThrowIfNull(model);
+
+            Guid companyId = ParseCompanyId(id);
+
             var company = await this.context.Companies
-                .FirstAsync(c => c.Id.ToString() == id);
+                .FirstOrDefaultAsync(company => company.Id == companyId)
+                ?? throw new InvalidOperationException("Company does not exist.");
 
             var sanitizer = new HtmlSanitizer();
 
@@ -132,27 +152,35 @@
             }
 
             if (hasChanges)
+            {
                 await this.context.SaveChangesAsync();
+            }
         }
 
         public async Task<string?> GetCompanyIdByCreatorIdAsync(string userId)
         {
-            var company = await this.context
-                .Companies
-                .FirstOrDefaultAsync(c => c.CreatorId.ToString() == userId);
+            if (!Guid.TryParse(userId, out Guid creatorId))
+            {
+                return null;
+            }
 
-            return company.Id.ToString();
+            return await this.context.Companies
+                .AsNoTracking()
+                .Where(company => company.CreatorId == creatorId)
+                .Select(company => (string?)company.Id.ToString())
+                .FirstOrDefaultAsync();
         }
 
         public async Task<IEnumerable<CompanyAdminViewModel>> AllForAdminAsync()
         {
             var companies = await this.context
                 .Companies
+                .AsNoTracking()
                 .Select(c => new CompanyAdminViewModel()
                 {
                     Id = c.Id.ToString(),
                     Name = c.Name,
-                    CEO = c.Creator.UserName, // TODO: email
+                    CEO = c.Creator.UserName,
                     OffersCnt = c.JobOffers.Count()
                 })
                 .ToListAsync();
@@ -181,9 +209,16 @@
 
         public async Task<CompanyDetailViewModel> GetDetailsByIdAsync(string id)
         {
+            Guid companyId = ParseCompanyId(id);
+
             var company = await this.context
                 .Companies
-                .FirstAsync(c => c.Id.ToString() == id);
+                .AsNoTracking()
+                .Include(company => company.JobOffers)
+                    .ThenInclude(jobOffer => jobOffer.JobOfferTechnologies)
+                        .ThenInclude(jobOfferTechnology => jobOfferTechnology.Technology)
+                .FirstOrDefaultAsync(company => company.Id == companyId)
+                ?? throw new InvalidOperationException("Company does not exist.");
 
             var jobOffers = company
                 .JobOffers
@@ -263,6 +298,11 @@
         }
 
 
+
+        private static Guid ParseCompanyId(string id)
+            => Guid.TryParse(id, out Guid companyId)
+                ? companyId
+                : throw new InvalidOperationException("A valid company id is required.");
 
         private static string GetSalary(decimal? minSalary, decimal? maxSalary)
         {
