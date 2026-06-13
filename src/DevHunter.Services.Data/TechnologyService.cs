@@ -1,5 +1,7 @@
 ﻿namespace DevHunter.Services.Data
 {
+    using System.Linq.Expressions;
+
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Http.Internal;
     using Microsoft.EntityFrameworkCore;
@@ -68,12 +70,7 @@
             var technologies = await this.dbContext
                 .Technologies
                 .AsNoTracking()
-                .Select(t => new TechnologyViewModel()
-                {
-                    Id = t.Id.ToString(),
-                    Name = t.Name,
-                    ImageUrl = t.ImageUrl.EnhanceCloudinaryUrl(50, "auto")
-                })
+                .Select(ToEnhancedViewModel)
                 .ToListAsync();
 
             return technologies;
@@ -147,12 +144,8 @@
                 .TechnologiesDevelopments
                 .AsNoTracking()
                 .Where(t => t.DevelopmentId.ToString() == id)
-                .Select(t => new TechnologyViewModel()
-                {
-                    Id = t.Technology.Id.ToString(),
-                    Name = t.Technology.Name,
-                    ImageUrl = t.Technology.ImageUrl.EnhanceCloudinaryUrl(50, "auto")
-                })
+                .Select(t => t.Technology)
+                .Select(ToEnhancedViewModel)
                 .ToListAsync();
 
             foreach (var technology in technologies)
@@ -193,16 +186,19 @@
                 .Technologies
                 .Where(t => !existingTechnologyIds.Any(et => t.Id == et))
                 .AsNoTracking()
-                .Select(t => new TechnologyViewModel()
-                {
-                    Id = t.Id.ToString(),
-                    Name = t.Name,
-                    ImageUrl = t.ImageUrl.EnhanceCloudinaryUrl(50, "auto")
-                })
+                .Select(ToEnhancedViewModel)
                 .ToListAsync();
 
             return technologies;
         }
+
+        private static readonly Expression<Func<Technology, TechnologyViewModel>> ToEnhancedViewModel =
+            technology => new TechnologyViewModel
+            {
+                Id = technology.Id.ToString(),
+                Name = technology.Name,
+                ImageUrl = technology.ImageUrl.EnhanceCloudinaryUrl(50, "auto")
+            };
 
         private async Task<IFormFile> ConvertImageUrlToFormFileAsync(string imageUrl)
         {
