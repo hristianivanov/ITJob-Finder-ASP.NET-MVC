@@ -1,82 +1,82 @@
 ﻿namespace DevHunter.Services.Data
 {
-	using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Http;
 
-	using CloudinaryDotNet;
-	using CloudinaryDotNet.Actions;
+    using CloudinaryDotNet;
+    using CloudinaryDotNet.Actions;
 
-	using Interfaces;
+    using Interfaces;
 
-	public class ImageService : IImageService
-	{
-		private readonly ICloudinaryService cloudinaryService;
+    public class ImageService : IImageService
+    {
+        private readonly ICloudinaryService cloudinaryService;
 
-		public ImageService(ICloudinaryService cloudinaryService)
-		{
-			this.cloudinaryService = cloudinaryService;
-		}
+        public ImageService(ICloudinaryService cloudinaryService)
+        {
+            this.cloudinaryService = cloudinaryService;
+        }
 
-		public async Task<string> UploadImage(IFormFile file, string folder, string fileName)
-		{
-			await using var stream = file.OpenReadStream();
+        public async Task<string> UploadImage(IFormFile file, string folder, string fileName)
+        {
+            await using var stream = file.OpenReadStream();
 
-			var uploadParams = new ImageUploadParams()
-			{
-				Folder = folder,
-				PublicId = fileName,
-				File = new FileDescription(fileName, stream),
-			};
+            var uploadParams = new ImageUploadParams()
+            {
+                Folder = folder,
+                PublicId = fileName,
+                File = new FileDescription(fileName, stream),
+            };
 
-			var uploadResult = await cloudinaryService.UploadAsync(uploadParams);
+            var uploadResult = await cloudinaryService.UploadAsync(uploadParams);
 
-			if (uploadResult.Error != null)
-			{
-				throw new InvalidOperationException(uploadResult.Error.Message);
-			}
+            if (uploadResult.Error != null)
+            {
+                throw new InvalidOperationException(uploadResult.Error.Message);
+            }
 
-			return uploadResult.Url.ToString();
-		}
+            return uploadResult.Url.ToString();
+        }
 
-		public async Task<string> EditImage(IFormFile file, string оldImageUrl, string fileName, string folder)
-		{
-			await using var stream = file.OpenReadStream();
+        public async Task<string> EditImage(IFormFile file, string оldImageUrl, string fileName, string folder)
+        {
+            await using var stream = file.OpenReadStream();
 
-			var uploadParams = new ImageUploadParams()
-			{
-				Folder = folder,
-				PublicId = fileName,
-				File = new FileDescription(fileName, stream)
-			};
+            var uploadParams = new ImageUploadParams()
+            {
+                Folder = folder,
+                PublicId = fileName,
+                File = new FileDescription(fileName, stream)
+            };
 
-			var deletionResult = await this.DeletePhotoAsync(оldImageUrl);
+            var deletionResult = await this.DeletePhotoAsync(оldImageUrl);
 
-			if (deletionResult.Error != null)
-			{
-				throw new InvalidOperationException(deletionResult.Error.Message);
-			}
+            if (deletionResult.Error != null)
+            {
+                throw new InvalidOperationException(deletionResult.Error.Message);
+            }
 
-			var uploadResult = await cloudinaryService.UploadAsync(uploadParams);
+            var uploadResult = await cloudinaryService.UploadAsync(uploadParams);
 
-			if (uploadResult.Error != null)
-			{
-				throw new InvalidOperationException(uploadResult.Error.Message);
-			}
+            if (uploadResult.Error != null)
+            {
+                throw new InvalidOperationException(uploadResult.Error.Message);
+            }
 
-			return uploadResult.Url.ToString();
-		}
+            return uploadResult.Url.ToString();
+        }
 
-		private async Task<DeletionResult> DeletePhotoAsync(string id)
-		{
-			var deleteParams = new DeletionParams(id);
+        private async Task<DeletionResult> DeletePhotoAsync(string id)
+        {
+            var deleteParams = new DeletionParams(id);
 
-			var result = await this.cloudinaryService.DestroyAsync(deleteParams);
+            var result = await this.cloudinaryService.DestroyAsync(deleteParams);
 
-			return result;
-		}
+            return result;
+        }
 
-		#region Uploading to db
+        #region Uploading to db
 
-		/*public Task<Stream> GetThumbnail(string id)
+        /*public Task<Stream> GetThumbnail(string id)
 			=> this.GetImageData(id, "Thumbnail");
 
 		public Task<Stream> GetOriginal(string id)
@@ -174,8 +174,8 @@
 			return memoryStream.ToArray();
 		}*/
 
-		#endregion
-	}
+        #endregion
+    }
 
 
 }

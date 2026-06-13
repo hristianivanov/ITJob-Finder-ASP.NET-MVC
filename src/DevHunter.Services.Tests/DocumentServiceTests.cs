@@ -1,108 +1,108 @@
 ﻿namespace DevHunter.Services.Tests
 {
-	using CloudinaryDotNet.Actions;
-	using FluentAssertions;
-	using Microsoft.AspNetCore.Http;
-	using Microsoft.EntityFrameworkCore;
-	using Moq;
+    using CloudinaryDotNet.Actions;
+    using FluentAssertions;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.EntityFrameworkCore;
+    using Moq;
 
-	using DevHunter.Data;
+    using DevHunter.Data;
 
-	using Data;
-	using Data.Interfaces;
-	
-	using static DevHunter.Tests.Common.DatabaseSeeder;
-	using static Common.TestEntityConstants;
+    using Data;
+    using Data.Interfaces;
 
-	[TestFixture]
-	public class DocumentServiceTests
-	{
-		private DbContextOptions<DevHunterDbContext> dbOptions;
-		private DevHunterDbContext dbContext;
+    using static DevHunter.Tests.Common.DatabaseSeeder;
+    using static Common.TestEntityConstants;
 
-		private IDocumentService documentService;
+    [TestFixture]
+    public class DocumentServiceTests
+    {
+        private DbContextOptions<DevHunterDbContext> dbOptions;
+        private DevHunterDbContext dbContext;
 
-		private Mock<ICloudinaryService> cloudinaryMock;
+        private IDocumentService documentService;
 
-		[SetUp]
-		public void Setup()
-		{
-			dbOptions = new DbContextOptionsBuilder<DevHunterDbContext>()
-				.UseInMemoryDatabase("DevHunterInMemory" + Guid.NewGuid())
-				.Options;
+        private Mock<ICloudinaryService> cloudinaryMock;
 
-			dbContext = new DevHunterDbContext(dbOptions);
+        [SetUp]
+        public async Task Setup()
+        {
+            dbOptions = new DbContextOptionsBuilder<DevHunterDbContext>()
+                .UseInMemoryDatabase("DevHunterInMemory" + Guid.NewGuid())
+                .Options;
 
-			dbContext.Database.EnsureCreated();
+            dbContext = new DevHunterDbContext(dbOptions);
 
-			SeedDatabase(dbContext);
+            dbContext.Database.EnsureCreated();
 
-			cloudinaryMock = new Mock<ICloudinaryService>();
+            await SeedDatabase(dbContext);
 
-			documentService =
-				new DocumentService(dbContext,cloudinaryMock.Object);
-		}
+            cloudinaryMock = new Mock<ICloudinaryService>();
 
-		[TearDown]
-		public void TearDown()
-		{
-			dbContext.Database.EnsureDeleted();
-		}
+            documentService =
+                new DocumentService(dbContext, cloudinaryMock.Object);
+        }
 
-		[Test]
-		public async Task UploadDocumentAsync_ShouldUploadDocument()
-		{
-			var fileMock = new Mock<IFormFile>();
+        [TearDown]
+        public void TearDown()
+        {
+            dbContext.Database.EnsureDeleted();
+        }
 
-			var uploadResult = new RawUploadResult
-			{
-				SecureUrl = new Uri(TEST_DOCUMENT_URL)
-			};
+        [Test]
+        public async Task UploadDocumentAsync_ShouldUploadDocument()
+        {
+            var fileMock = new Mock<IFormFile>();
 
-			cloudinaryMock
-				.Setup(x => x.UploadAsync(It.IsAny<RawUploadParams>()))
-				.ReturnsAsync(uploadResult);
+            var uploadResult = new RawUploadResult
+            {
+                SecureUrl = new Uri(TEST_DOCUMENT_URL)
+            };
 
-			var result = await documentService.UploadDocumentAsync(fileMock.Object, TEST_FOLDER);
+            cloudinaryMock
+                .Setup(x => x.UploadAsync(It.IsAny<RawUploadParams>()))
+                .ReturnsAsync(uploadResult);
 
-			result.Should()
-				.BeOfType<string>()
-				.And
-				.BeSameAs(uploadResult.SecureUrl.ToString());
-		}
+            var result = await documentService.UploadDocumentAsync(fileMock.Object, TEST_FOLDER);
 
-		[Test]
-		public async Task UploadDocumentAsync_ShouldThrowExceptionForNotSuccessfulUploading()
-		{
-			var fileMock = new Mock<IFormFile>();
+            result.Should()
+                .BeOfType<string>()
+                .And
+                .BeSameAs(uploadResult.SecureUrl.ToString());
+        }
 
-			var uploadResult = new RawUploadResult
-			{
-				Error = new Error()
-			};
+        [Test]
+        public async Task UploadDocumentAsync_ShouldThrowExceptionForNotSuccessfulUploading()
+        {
+            var fileMock = new Mock<IFormFile>();
 
-			cloudinaryMock
-				.Setup(x => x.UploadAsync(It.IsAny<RawUploadParams>()))
-				.ReturnsAsync(uploadResult);
+            var uploadResult = new RawUploadResult
+            {
+                Error = new Error()
+            };
 
-			var act =  async ()=> await documentService.UploadDocumentAsync(fileMock.Object, TEST_FOLDER);
+            cloudinaryMock
+                .Setup(x => x.UploadAsync(It.IsAny<RawUploadParams>()))
+                .ReturnsAsync(uploadResult);
 
-			await act.Should().ThrowAsync<InvalidOperationException>();
-		}
+            var act = async () => await documentService.UploadDocumentAsync(fileMock.Object, TEST_FOLDER);
 
-		[Test]
-		public async Task AddAsync_ShouldAddCorrectDocument()
-		{
-			var application = await dbContext.JobApplications.FirstAsync();
+            await act.Should().ThrowAsync<InvalidOperationException>();
+        }
 
-			await documentService.AddAsync(TEST_DOCUMENT_URL, application.Id.ToString());
+        [Test]
+        public async Task AddAsync_ShouldAddCorrectDocument()
+        {
+            var application = await dbContext.JobApplications.FirstAsync();
 
-			var applicationDocuments = await dbContext.ApplicationDocuments.Where(a => a.JobApplicationId == application.Id).ToListAsync();
+            await documentService.AddAsync(TEST_DOCUMENT_URL, application.Id.ToString());
 
-			applicationDocuments.Should()
-				.NotBeNullOrEmpty()
-				.And
-				.HaveCount(1);
-		}
-	}
+            var applicationDocuments = await dbContext.ApplicationDocuments.Where(a => a.JobApplicationId == application.Id).ToListAsync();
+
+            applicationDocuments.Should()
+                .NotBeNullOrEmpty()
+                .And
+                .HaveCount(1);
+        }
+    }
 }
