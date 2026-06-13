@@ -314,16 +314,18 @@
             };
         }
 
-        public async Task DeleteByIdAsync(string id)
+        public async Task DeleteByIdAsync(string id, string userId)
         {
-            if (!Guid.TryParse(id, out Guid parsedId))
+            if (!TryParseIds(id, userId, out Guid parsedId, out Guid parsedUserId))
             {
                 return;
             }
 
             var jobOffer = await this.dbContext
                 .JobOffers
-                .FirstOrDefaultAsync(t => t.Id == parsedId);
+                .FirstOrDefaultAsync(jobOffer =>
+                    jobOffer.Id == parsedId &&
+                    jobOffer.Company.CreatorId == parsedUserId);
 
             if (jobOffer != null)
             {
@@ -385,15 +387,108 @@
             };
         }
 
-        public async Task EditJobOfferAsync(string id, JobOfferEditFormModel model)
+        public async Task EditJobOfferAsync(string id, JobOfferEditFormModel model, string userId)
         {
             Guid parsedId = ParseRequiredId(id, "job offer");
+            Guid parsedUserId = ParseRequiredId(userId, "user");
 
             var jobOffer = await this.dbContext
                 .JobOffers
-                .FirstOrDefaultAsync(j => j.Id == parsedId)
-                ?? throw new InvalidOperationException("Job offer does not exist.");
+                .FirstOrDefaultAsync(jobOffer =>
+                    jobOffer.Id == parsedId &&
+                    jobOffer.Company.CreatorId == parsedUserId)
+                ?? throw new InvalidOperationException("Job offer does not exist or does not belong to the company.");
 
+            bool isChanged = UpdateJobOfferFields(jobOffer, model);
+            isChanged |= await AddTechnologiesAsync(jobOffer, model.Technologies, skipExisting: true);
+
+            if (isChanged)
+            {
+                await this.dbContext.SaveChangesAsync();
+            }
+        }
+
+        public async Task<string> CreateAndReturnIdAsync(JobOfferFormModel model, string userId)
+        {
+            Guid parsedUserId = ParseRequiredId(userId, "user");
+
+            var company = await this.dbContext
+                .Companies
+                .FirstOrDefaultAsync(c => c.CreatorId == parsedUserId)
+                ?? throw new InvalidOperationException("Company does not exist.");
+
+            JobOffer jobOffer = CreateJobOffer(model, company.Id);
+            await AddTechnologiesAsync(jobOffer, model.Technologies, skipExisting: false);
+
+            await this.dbContext.JobOffers.AddAsync(jobOffer);
+            await this.dbContext.SaveChangesAsync();
+
+            return jobOffer.Id!.ToString();
+        }
+
+        private async Task<bool> AddTechnologiesAsync(JobOffer jobOffer, string? serializedTechnologies, bool skipExisting)
+        {
+            if (string.IsNullOrWhiteSpace(serializedTechnologies) || serializedTechnologies == "[]")
+            {
+                return false;
+            }
+
+            string[] technologyNames = JsonConvert.DeserializeObject<string[]>(serializedTechnologies)
+                ?? Array.Empty<string>();
+
+            var technologies = await this.dbContext.Technologies
+                .Where(technology => technologyNames.Contains(technology.Name))
+                .ToListAsync();
+
+            if (skipExisting)
+            {
+                var existingTechnologyIds = await this.dbContext.TechnologyJobOffers
+                    .Where(technologyJobOffer => technologyJobOffer.JobOfferId == jobOffer.Id)
+                    .Select(technologyJobOffer => technologyJobOffer.TechnologyId)
+                    .ToListAsync();
+
+                technologies = technologies
+                    .Where(technology => !existingTechnologyIds.Contains(technology.Id))
+                    .ToList();
+            }
+
+            var jobOfferTechnologies = technologies
+                .Select(technology => new TechnologyJobOffers
+                {
+                    JobOfferId = jobOffer.Id,
+                    TechnologyId = technology.Id
+                })
+                .ToList();
+
+            await this.dbContext.TechnologyJobOffers.AddRangeAsync(jobOfferTechnologies);
+            return true;
+        }
+
+        private static JobOffer CreateJobOffer(JobOfferFormModel model, Guid companyId)
+        {
+            var sanitizer = new HtmlSanitizer();
+            var jobOffer = new JobOffer
+            {
+                JobPosition = model.Title,
+                Description = sanitizer.Sanitize(model.Description),
+                CreatedOn = DateTime.UtcNow,
+                JobPlace = model.LocationType!.Value,
+                PlaceToWork = model.LocationType.Value == PlaceToWork.Remote ? "Remote" : model.Location!,
+                WorkingExperience = model.WorkingExperience,
+                CompanyId = companyId,
+            };
+
+            if (model.WorkingHours.HasValue)
+            {
+                jobOffer.WorkingHours = model.WorkingHours.Value;
+            }
+
+            ApplySalary(jobOffer, model.SalaryType, model.MinSalary, model.MaxSalary);
+            return jobOffer;
+        }
+
+        private static bool UpdateJobOfferFields(JobOffer jobOffer, JobOfferEditFormModel model)
+        {
             bool isChanged = false;
 
             if (model.Title != jobOffer.JobPosition)
@@ -411,7 +506,6 @@
             if (model.LocationType!.Value != jobOffer.JobPlace)
             {
                 jobOffer.JobPlace = model.LocationType.Value;
-
                 if (jobOffer.JobPlace == PlaceToWork.Remote)
                 {
                     jobOffer.PlaceToWork = "Remote";
@@ -419,7 +513,6 @@
 
                 isChanged = true;
             }
-
 
             if (model.WorkingExperience != jobOffer.WorkingExperience)
             {
@@ -429,23 +522,11 @@
 
             if (model.SalaryType.HasValue)
             {
-                jobOffer.SalaryType = model.SalaryType.Value;
-
-                if (model.SalaryType!.Value == SalaryType.Range)
-                {
-                    jobOffer.MinSalary = model.MinSalary;
-                    jobOffer.MaxSalary = model.MaxSalary;
-                }
-                else
-                {
-                    jobOffer.MaxSalary = model.MaxSalary;
-                }
-
+                ApplySalary(jobOffer, model.SalaryType, model.MinSalary, model.MaxSalary);
                 isChanged = true;
             }
 
-            if (model.WorkingHours != jobOffer.WorkingHours &&
-                model.WorkingHours.HasValue)
+            if (model.WorkingHours != jobOffer.WorkingHours && model.WorkingHours.HasValue)
             {
                 jobOffer.WorkingHours = model.WorkingHours.Value;
                 isChanged = true;
@@ -454,115 +535,30 @@
             if (model.Description != jobOffer.Description)
             {
                 var sanitizer = new HtmlSanitizer();
-
-                var sanitized = sanitizer.Sanitize(model.Description);
-
-                jobOffer.Description = sanitized;
-
+                jobOffer.Description = sanitizer.Sanitize(model.Description);
                 isChanged = true;
             }
 
-            if (!string.IsNullOrWhiteSpace(model.Technologies) && model.Technologies != "[]")
-            {
-                string[] techStackNames = JsonConvert.DeserializeObject<string[]>(model.Technologies)
-                    ?? Array.Empty<string>();
-
-                var techStack = await dbContext.Technologies
-                    .Where(t => techStackNames.Contains(t.Name))
-                    .ToListAsync();
-
-                var existingTechnologyIds = await dbContext.TechnologyJobOffers
-                    .Where(t => t.JobOfferId == jobOffer.Id)
-                    .Select(t => t.TechnologyId)
-                    .ToListAsync();
-
-                var jobOfferTechnologies = techStack
-                    .Where(tech => !existingTechnologyIds.Contains(tech.Id))
-                    .Select(tech => new TechnologyJobOffers
-                    {
-                        JobOfferId = jobOffer.Id,
-                        TechnologyId = tech.Id
-                    })
-                    .ToList();
-
-                isChanged = true;
-
-                await dbContext.TechnologyJobOffers.AddRangeAsync(jobOfferTechnologies);
-            }
-
-            if (isChanged)
-            {
-                await this.dbContext.SaveChangesAsync();
-            }
+            return isChanged;
         }
 
-        public async Task<string> CreateAndReturnIdAsync(JobOfferFormModel model, string userId)
+        private static void ApplySalary(JobOffer jobOffer, SalaryType? salaryType, decimal? minSalary, decimal? maxSalary)
         {
-            Guid parsedUserId = ParseRequiredId(userId, "user");
-
-            var company = await this.dbContext
-                .Companies
-                .FirstOrDefaultAsync(c => c.CreatorId == parsedUserId)
-                ?? throw new InvalidOperationException("Company does not exist.");
-
-            var sanitizer = new HtmlSanitizer();
-
-            var jobOffer = new JobOffer()
+            if (!salaryType.HasValue)
             {
-                JobPosition = model.Title,
-                Description = sanitizer.Sanitize(model.Description),
-                CreatedOn = DateTime.UtcNow,
-                JobPlace = model.LocationType!.Value,
-                PlaceToWork = model.LocationType.Value == PlaceToWork.Remote ? "Remote" : model.Location!,
-                WorkingExperience = model.WorkingExperience,
-                CompanyId = company.Id,
-            };
-
-            if (model.WorkingHours.HasValue)
-            {
-                jobOffer.WorkingHours = model.WorkingHours!.Value;
+                return;
             }
 
-            if (model.SalaryType.HasValue)
+            jobOffer.SalaryType = salaryType.Value;
+            if (salaryType.Value == SalaryType.Range)
             {
-                jobOffer.SalaryType = model.SalaryType.Value;
-
-                if (model.SalaryType!.Value == SalaryType.Range)
-                {
-                    jobOffer.MinSalary = model.MinSalary;
-                    jobOffer.MaxSalary = model.MaxSalary;
-                }
-                else
-                {
-                    jobOffer.MaxSalary = model.MaxSalary;
-                }
+                jobOffer.MinSalary = minSalary;
+                jobOffer.MaxSalary = maxSalary;
             }
-
-            if (!string.IsNullOrWhiteSpace(model.Technologies) && model.Technologies != "[]")
+            else
             {
-                string[] techStackNames = JsonConvert.DeserializeObject<string[]>(model.Technologies)
-                    ?? Array.Empty<string>();
-
-                var techStack = await dbContext.Technologies
-                    .Where(t => techStackNames.Contains(t.Name))
-                    .ToListAsync();
-
-                var jobOfferTechnologies = techStack
-                    .Select(tech => new TechnologyJobOffers
-                    {
-                        JobOfferId = jobOffer.Id,
-                        TechnologyId = tech.Id
-                    })
-                    .ToList();
-
-                await dbContext.TechnologyJobOffers.AddRangeAsync(jobOfferTechnologies);
+                jobOffer.MaxSalary = maxSalary;
             }
-
-
-            await this.dbContext.JobOffers.AddAsync(jobOffer);
-            await this.dbContext.SaveChangesAsync();
-
-            return jobOffer.Id!.ToString();
         }
 
         private static void OrderFilters(AllJobOffersQueryModel queryModel)
@@ -616,64 +612,79 @@
 
         private static IQueryable<JobOffer> FilterJobOffers(AllJobOffersQueryModel queryModel, IQueryable<JobOffer> jobOffersQuery)
         {
-            if (!string.IsNullOrWhiteSpace(queryModel.JobLocation))
+            jobOffersQuery = FilterByLocation(queryModel, jobOffersQuery);
+            jobOffersQuery = FilterByExperience(queryModel, jobOffersQuery);
+            jobOffersQuery = FilterBySalary(queryModel, jobOffersQuery);
+            jobOffersQuery = FilterByStaffCount(queryModel, jobOffersQuery);
+            return jobOffersQuery;
+        }
+
+        private static IQueryable<JobOffer> FilterByLocation(AllJobOffersQueryModel queryModel, IQueryable<JobOffer> jobOffersQuery)
+        {
+            if (string.IsNullOrWhiteSpace(queryModel.JobLocation))
             {
-                var locationSet = new HashSet<string>(queryModel.JobLocation.Split(','));
+                return jobOffersQuery;
+            }
 
-                jobOffersQuery = jobOffersQuery
-                    .Where(j => locationSet.Contains(j.PlaceToWork));
-
-                foreach (var filter in queryModel.Filters.Locations)
+            var locationSet = new HashSet<string>(queryModel.JobLocation.Split(','));
+            foreach (var filter in queryModel.Filters.Locations)
+            {
+                if (locationSet.Contains(filter.Location))
                 {
-                    if (locationSet.Contains(filter.Location))
-                        filter.IsChecked = true;
+                    filter.IsChecked = true;
                 }
             }
 
-            if (!string.IsNullOrWhiteSpace(queryModel.Experience))
+            return jobOffersQuery.Where(jobOffer => locationSet.Contains(jobOffer.PlaceToWork));
+        }
+
+        private static IQueryable<JobOffer> FilterByExperience(AllJobOffersQueryModel queryModel, IQueryable<JobOffer> jobOffersQuery)
+        {
+            if (string.IsNullOrWhiteSpace(queryModel.Experience))
             {
-                var experienceSet = new HashSet<string>(queryModel.Experience.Split(","));
+                return jobOffersQuery;
+            }
 
-                jobOffersQuery = jobOffersQuery
-                    .Where(j => experienceSet.Contains(j.WorkingExperience!));
-
-                foreach (var filter in queryModel.Filters.Experiences)
+            var experienceSet = new HashSet<string>(queryModel.Experience.Split(","));
+            foreach (var filter in queryModel.Filters.Experiences)
+            {
+                if (experienceSet.Contains(filter.Seniority))
                 {
-                    if (experienceSet.Contains(filter.Seniority))
-                        filter.IsChecked = true;
+                    filter.IsChecked = true;
                 }
             }
 
-            if (queryModel.Salary)
+            return jobOffersQuery.Where(jobOffer => experienceSet.Contains(jobOffer.WorkingExperience!));
+        }
+
+        private static IQueryable<JobOffer> FilterBySalary(AllJobOffersQueryModel queryModel, IQueryable<JobOffer> jobOffersQuery)
+            => queryModel.Salary
+                ? jobOffersQuery.Where(jobOffer => jobOffer.MaxSalary.HasValue)
+                : jobOffersQuery;
+
+        private static IQueryable<JobOffer> FilterByStaffCount(AllJobOffersQueryModel queryModel, IQueryable<JobOffer> jobOffersQuery)
+        {
+            if (string.IsNullOrWhiteSpace(queryModel.EmployeesCnt))
             {
-                jobOffersQuery = jobOffersQuery.Where(j => j.MaxSalary.HasValue);
+                return jobOffersQuery;
             }
 
-            if (!string.IsNullOrWhiteSpace(queryModel.EmployeesCnt))
+            var staffCountSet = new HashSet<string>(queryModel.EmployeesCnt.Split(","));
+            foreach (string range in staffCountSet)
             {
-                var staffCountSet = new HashSet<string>(queryModel.EmployeesCnt.Split(","));
+                (int minimum, int maximum) = ExtractDigits(range);
+                jobOffersQuery = maximum == -1
+                    ? jobOffersQuery.Where(jobOffer => jobOffer.Company.EmployeeCount > minimum)
+                    : jobOffersQuery.Where(jobOffer =>
+                        jobOffer.Company.EmployeeCount >= minimum &&
+                        jobOffer.Company.EmployeeCount <= maximum);
+            }
 
-                foreach (var range in staffCountSet)
+            foreach (var filter in queryModel.Filters.Staffs)
+            {
+                if (staffCountSet.Contains(filter.Staff))
                 {
-                    var digits = ExtractDigits(range);
-
-                    if (digits.Item2 == -1)
-                    {
-                        jobOffersQuery = jobOffersQuery
-                            .Where(j => j.Company.EmployeeCount > digits.Item1);
-                    }
-                    else
-                    {
-                        jobOffersQuery = jobOffersQuery
-                            .Where(j => j.Company.EmployeeCount >= digits.Item1 &&
-                                        j.Company.EmployeeCount <= digits.Item2);
-                    }
-                }
-
-                foreach (var filter in queryModel.Filters.Staffs)
-                {
-                    if (staffCountSet.Contains(filter.Staff))
-                        filter.IsChecked = true;
+                    filter.IsChecked = true;
                 }
             }
 

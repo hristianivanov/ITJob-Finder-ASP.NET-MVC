@@ -244,7 +244,7 @@
                 WebsiteUrl = "new_website_url"
             };
 
-            await companyService.EditAsync(company.Id.ToString(), model);
+            await companyService.EditAsync(company.Id.ToString(), model, company.CreatorId.ToString());
 
             var editedCompany = await dbContext.Companies.FindAsync(company.Id);
 
@@ -268,9 +268,30 @@
                 WebsiteUrl = "https://example.com"
             };
 
-            var act = async () => await companyService.EditAsync(invalidCompanyId, model);
+            var company = await dbContext.Companies.FirstAsync();
+            var act = async () => await companyService
+                .EditAsync(invalidCompanyId, model, company.CreatorId.ToString());
 
             await act.Should().ThrowAsync<InvalidOperationException>();
+        }
+
+        [Test]
+        public async Task EditAsync_ShouldRejectAnotherUser()
+        {
+            var company = await dbContext.Companies.FirstAsync();
+            var otherUser = await dbContext.Users.FirstAsync(user => user.Id != company.CreatorId);
+            string originalName = company.Name;
+            var model = new CompanyFormModel
+            {
+                Name = "unauthorized_name",
+                WebsiteUrl = "https://example.com"
+            };
+
+            var act = async () => await companyService
+                .EditAsync(company.Id.ToString(), model, otherUser.Id.ToString());
+
+            await act.Should().ThrowAsync<InvalidOperationException>();
+            company.Name.Should().Be(originalName);
         }
     }
 }

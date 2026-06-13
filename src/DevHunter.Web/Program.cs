@@ -95,23 +95,20 @@ public class Program
             app.UseHsts();
         }
 
-        app.UseEndpoints(config =>
-        {
-            config.MapControllerRoute(
-                name: "areas",
-                pattern: "/{area:exists}/{controller=Home}/{action=Index}/{id?}"
-            );
+        app.MapControllerRoute(
+            name: "areas",
+            pattern: "/{area:exists}/{controller=Home}/{action=Index}/{id?}"
+        );
 
-            config.MapControllerRoute(
-                name: "error",
-                pattern: "/Error/{statusCode}",
-                defaults: new { controller = "Home", action = "Error" }
-            );
+        app.MapControllerRoute(
+            name: "error",
+            pattern: "/Error/{statusCode}",
+            defaults: new { controller = "Home", action = "Error" }
+        );
 
-            config.MapDefaultControllerRoute();
+        app.MapDefaultControllerRoute();
 
-            config.MapRazorPages();
-        });
+        app.MapRazorPages();
 
         await app.RunAsync();
     }

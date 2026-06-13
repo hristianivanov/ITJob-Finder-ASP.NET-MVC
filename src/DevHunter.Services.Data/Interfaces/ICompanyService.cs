@@ -11,7 +11,7 @@
         Task<bool> ExistsByIdAsync(string id);
         Task<bool> IsOwnedByUserAsync(string id, string userId);
         Task<CompanyFormModel> GetForEditByIdAsync(string id);
-        Task EditAsync(string id, CompanyFormModel model);
+        Task EditAsync(string id, CompanyFormModel model, string userId);
         Task<string?> GetCompanyIdByCreatorIdAsync(string userId);
         Task<IEnumerable<CompanyAdminViewModel>> AllForAdminAsync();
         Task<IEnumerable<CompanyAllViewModel>> AllAsync();

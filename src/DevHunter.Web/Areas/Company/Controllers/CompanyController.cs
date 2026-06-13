@@ -66,7 +66,7 @@
                     return RedirectToAction("Index", "Home");
                 }
 
-                await this.companyService.EditAsync(id!, model);
+                await this.companyService.EditAsync(id!, model, this.User.GetId()!);
             }
             catch (Exception)
             {

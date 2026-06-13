@@ -10,19 +10,19 @@
             ErrorMessage = "The field {0} must be a valid website URL.";
         }
 
-        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+        protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
         {
             if (value == null || string.IsNullOrWhiteSpace(value.ToString()))
             {
-                return ValidationResult.Success!;
+                return ValidationResult.Success;
             }
 
-            string url = value.ToString()!;
+            string url = value.ToString() ?? string.Empty;
 
-            if (Uri.TryCreate(url, UriKind.Absolute, out Uri result)
+            if (Uri.TryCreate(url, UriKind.Absolute, out Uri? result)
                 && (result.Scheme == Uri.UriSchemeHttp || result.Scheme == Uri.UriSchemeHttps))
             {
-                return ValidationResult.Success!;
+                return ValidationResult.Success;
             }
 
             return new ValidationResult(FormatErrorMessage(validationContext.DisplayName));

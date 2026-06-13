@@ -131,7 +131,7 @@
 
                 TempData[SuccessMessage] = "Job post was edited successfully!";
 
-                await jobOfferService.EditJobOfferAsync(id, model);
+                await jobOfferService.EditJobOfferAsync(id, model, this.User.GetId()!);
             }
             catch (Exception)
             {
@@ -159,7 +159,7 @@
                     return RedirectToAction("All");
                 }
 
-                await jobOfferService.DeleteByIdAsync(id);
+                await jobOfferService.DeleteByIdAsync(id, this.User.GetId()!);
 
                 TempData[WarningMessage] = "The job post successfully was deleted!";
 
