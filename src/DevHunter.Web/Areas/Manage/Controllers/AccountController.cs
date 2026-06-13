@@ -37,6 +37,11 @@
         {
             var user = await userManager.FindByIdAsync(this.User.GetId()!);
 
+            if (user == null)
+            {
+                return NotFound();
+            }
+
             model.Email = user.Email;
             model.FirstName = user.FirstName;
             model.LastName = user.LastName;

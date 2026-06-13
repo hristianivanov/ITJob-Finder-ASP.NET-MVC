@@ -22,7 +22,9 @@
                     .GetCustomAttributes(typeof(DisplayAttribute), false)
                 as DisplayAttribute[];
 
-            return displayAttribute?.Length > 0 ? displayAttribute[0].Name : locationType.ToString();
+            return displayAttribute?.Length > 0
+                ? displayAttribute[0].Name ?? locationType.ToString()
+                : locationType.ToString();
         }
     }
 }

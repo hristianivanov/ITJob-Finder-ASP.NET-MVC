@@ -70,7 +70,7 @@
         [Test]
         public async Task ApplyJobOfferAsync_ShouldThrowExceptionForNullableFormModel()
         {
-            var act = async () => await jobApplicationService.ApplyJobOfferAsync(null, "", "");
+            var act = async () => await jobApplicationService.ApplyJobOfferAsync(null!, "", "");
 
             await act.Should().ThrowAsync<ArgumentNullException>();
         }
