@@ -1,5 +1,6 @@
 ﻿namespace DevHunter.Services.Data
 {
+    using System.Linq.Expressions;
     using System.Web;
 
     using Microsoft.EntityFrameworkCore;
@@ -109,31 +110,16 @@
         {
             (Guid parsedApplicationId, Guid parsedCompanyUserId) = ParseRequiredIds(applicationId, companyUserId);
 
-            var application = await this.context
-                .JobApplications
+            ApplicationDetailsData application = await this.context.JobApplications
                 .AsNoTracking()
-                .Include(a => a.JobOffer)
-                .Include(a => a.Documents)
-                .FirstOrDefaultAsync(a =>
-                    a.Id == parsedApplicationId &&
-                    a.JobOffer.Company.CreatorId == parsedCompanyUserId)
+                .Where(application =>
+                    application.Id == parsedApplicationId &&
+                    application.JobOffer.Company.CreatorId == parsedCompanyUserId)
+                .Select(ApplicationDetailsSelector)
+                .FirstOrDefaultAsync()
                 ?? throw new InvalidOperationException("Application does not exist or does not belong to the company.");
 
-            string googleDocsViewerBaseUrl = "https://docs.google.com/viewer?url=";
-
-            return new JobApplicationViewModel()
-            {
-                Id = application.Id.ToString(),
-                CandidateName = application.CandidateName,
-                Email = application.Email,
-                MotivationalLetter = application.MotivationalLetter,
-                JobPosition = application.JobOffer.JobPosition,
-                DocumentsUrl = application.Documents.Select(d => new DocumentViewModel()
-                {
-                    DocumentName = ExtractDocumentName(d.DocumentUrl),
-                    DocumentUrl = $"{googleDocsViewerBaseUrl}{HttpUtility.UrlEncode(d.DocumentUrl)}",
-                }).ToList(),
-            };
+            return MapApplicationDetails(application);
         }
 
         public async Task<IEnumerable<MyApplicationViewModel>> AllUserApplicationsAsync(string userId)
@@ -223,6 +209,27 @@
             return documentName;
         }
 
+        private static JobApplicationViewModel MapApplicationDetails(ApplicationDetailsData application)
+        {
+            const string googleDocsViewerBaseUrl = "https://docs.google.com/viewer?url=";
+
+            return new JobApplicationViewModel
+            {
+                Id = application.Id.ToString(),
+                CandidateName = application.CandidateName,
+                Email = application.Email,
+                MotivationalLetter = application.MotivationalLetter,
+                JobPosition = application.JobPosition,
+                DocumentsUrl = application.DocumentUrls
+                    .Select(documentUrl => new DocumentViewModel
+                    {
+                        DocumentName = ExtractDocumentName(documentUrl),
+                        DocumentUrl = $"{googleDocsViewerBaseUrl}{HttpUtility.UrlEncode(documentUrl)}",
+                    })
+                    .ToList(),
+            };
+        }
+
         private static (Guid FirstId, Guid SecondId) ParseRequiredIds(string firstId, string secondId)
         {
             if (!TryParseIds(firstId, secondId, out Guid parsedFirstId, out Guid parsedSecondId))
@@ -239,6 +246,29 @@
             bool secondIdIsValid = Guid.TryParse(secondId, out parsedSecondId);
 
             return firstIdIsValid && secondIdIsValid;
+        }
+
+        private static readonly Expression<Func<JobApplication, ApplicationDetailsData>> ApplicationDetailsSelector =
+            application => new ApplicationDetailsData
+            {
+                Id = application.Id,
+                CandidateName = application.CandidateName,
+                Email = application.Email,
+                MotivationalLetter = application.MotivationalLetter,
+                JobPosition = application.JobOffer.JobPosition,
+                DocumentUrls = application.Documents
+                    .Select(document => document.DocumentUrl)
+                    .ToList(),
+            };
+
+        private sealed class ApplicationDetailsData
+        {
+            public Guid Id { get; init; }
+            public string CandidateName { get; init; } = null!;
+            public string Email { get; init; } = null!;
+            public string MotivationalLetter { get; init; } = null!;
+            public string JobPosition { get; init; } = null!;
+            public List<string> DocumentUrls { get; init; } = new();
         }
     }
 }
