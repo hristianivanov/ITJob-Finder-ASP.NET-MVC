@@ -112,7 +112,7 @@
 
 				if (!technologyExists)
 				{
-					TempData[ErrorMessage] = "Technology with the provided id does not exist!";
+					TempData[ErrorMessage] = TechnologyNotFoundError;
 
 					return RedirectToAction("All");
 				}
@@ -142,7 +142,7 @@
 
 				if (!technologyExists)
 				{
-					TempData[ErrorMessage] = "Technology with the provided id does not exist!";
+					TempData[ErrorMessage] = TechnologyNotFoundError;
 
 					return RedirectToAction("All");
 				}
@@ -170,7 +170,7 @@
 
 				if (!technologyExists)
 				{
-					TempData[ErrorMessage] = "Technology with the provided id does not exist!";
+					TempData[ErrorMessage] = TechnologyNotFoundError;
 
 					return RedirectToAction("All");
 				}
@@ -204,7 +204,7 @@
 		}
 		private IActionResult GeneralError()
 		{
-			TempData[ErrorMessage] = "Unexpected error occurred!";
+			TempData[ErrorMessage] = UnexpectedError;
 
 			return RedirectToAction("Index", "Home");
 		}

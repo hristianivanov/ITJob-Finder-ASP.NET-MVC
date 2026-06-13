@@ -64,7 +64,7 @@
 		{
 			if (!ModelState.IsValid)
 			{
-				TempData[ErrorMessage] = "Unexpected error occurred!";
+				TempData[ErrorMessage] = UnexpectedError;
 
 				return View(model);
 			}

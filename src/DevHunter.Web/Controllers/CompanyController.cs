@@ -53,7 +53,7 @@
 
 		private IActionResult GeneralError()
 		{
-			TempData[ErrorMessage] = "Unexpected error occurred!";
+			TempData[ErrorMessage] = UnexpectedError;
 
 			return RedirectToAction("Index", "Home");
 		}
