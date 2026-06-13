@@ -33,7 +33,7 @@
                 .Select(u => new UserViewModel()
                 {
                     Id = u.Id.ToString(),
-                    Email = u.Email,
+                    Email = u.Email ?? string.Empty,
                     FullName = $"{u.FirstName} {u.LastName}",
                     IsCompany = u.Companies.Any(c => c.CreatorId == u.Id),
                 })

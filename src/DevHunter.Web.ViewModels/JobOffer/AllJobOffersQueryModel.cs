@@ -10,6 +10,8 @@
         {
             this.CurrentPage = 1;
             this.JobOffersPerPage = 10;
+            this.Development = new DevelopmentOfferViewModel();
+            this.Filters = new AllFilterViewModel();
             this.JobOffers = new HashSet<JobOfferAllViewModel>();
         }
 

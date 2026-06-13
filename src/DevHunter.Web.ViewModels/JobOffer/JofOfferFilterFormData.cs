@@ -2,7 +2,7 @@
 {
     public class JofOfferFilterFormData
     {
-        public string[] Locations { get; set; }
-        public string[] Experiences { get; set; }
+        public string[] Locations { get; set; } = Array.Empty<string>();
+        public string[] Experiences { get; set; } = Array.Empty<string>();
     }
 }

@@ -71,24 +71,50 @@
                 LastName = model.LastName,
             };
 
-            await this.userManager.SetEmailAsync(user, model.Email);
-            await this.userManager.SetUserNameAsync(user, model.Email);
+            IdentityResult emailResult = await this.userManager.SetEmailAsync(user, model.Email);
+            IdentityResult userNameResult = await this.userManager.SetUserNameAsync(user, model.Email);
 
-            var result = await this.userManager.CreateAsync(user, model.Password);
+            bool emailSucceeded = AddIdentityErrors(emailResult);
+            bool userNameSucceeded = AddIdentityErrors(userNameResult);
 
-            await this.userManager.AddToRoleAsync(user, CompanyRoleName);
-
-            if (!result.Succeeded)
+            if (!emailSucceeded || !userNameSucceeded)
             {
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError(string.Empty, error.Description);
-                }
-
                 return View(model);
             }
 
-            await this.companyService.AddAsync(model, user.Id);
+            IdentityResult createResult = await this.userManager.CreateAsync(user, model.Password);
+
+            if (!AddIdentityErrors(createResult))
+            {
+                return View(model);
+            }
+
+            IdentityResult roleResult;
+            try
+            {
+                roleResult = await this.userManager.AddToRoleAsync(user, CompanyRoleName);
+            }
+            catch
+            {
+                await DeleteCreatedUserAsync(user);
+                throw;
+            }
+
+            if (!AddIdentityErrors(roleResult))
+            {
+                await DeleteCreatedUserAsync(user);
+                return View(model);
+            }
+
+            try
+            {
+                await this.companyService.AddAsync(model, user.Id);
+            }
+            catch
+            {
+                await DeleteCreatedUserAsync(user);
+                throw;
+            }
 
             await this.signInManager.SignInAsync(user, isPersistent: false);
 
@@ -179,7 +205,7 @@
                 return this.View(model);
             }
 
-            string returnUrl = TempData["ReturnUrl"] as string;
+            string? returnUrl = TempData["ReturnUrl"] as string;
             TempData.Remove("ReturnUrl");
 
             return this.Redirect(returnUrl ?? "/Home/Index");
@@ -190,12 +216,37 @@
         {
             await signInManager.SignOutAsync();
 
-            string returnUrl = HttpContext.Request.Query["returnUrl"];
+            string? returnUrl = HttpContext.Request.Query["returnUrl"].FirstOrDefault();
 
             if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
                 return Redirect(returnUrl);
 
             return RedirectToAction("Index", "Home");
+        }
+
+        private bool AddIdentityErrors(IdentityResult result)
+        {
+            if (result.Succeeded)
+            {
+                return true;
+            }
+
+            foreach (IdentityError error in result.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
+
+            return false;
+        }
+
+        private async Task DeleteCreatedUserAsync(ApplicationUser user)
+        {
+            IdentityResult deleteResult = await this.userManager.DeleteAsync(user);
+            if (!deleteResult.Succeeded)
+            {
+                throw new InvalidOperationException(
+                    $"Failed to roll back company user creation: {string.Join("; ", deleteResult.Errors.Select(error => error.Description))}");
+            }
         }
     }
 }

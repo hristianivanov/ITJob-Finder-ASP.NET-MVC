@@ -71,7 +71,7 @@
             }
 
 
-            ApplicationUser adminUser =
+            ApplicationUser? adminUser =
                 await userManager.FindByEmailAsync(AdminEmail);
 
             if (adminUser == null)

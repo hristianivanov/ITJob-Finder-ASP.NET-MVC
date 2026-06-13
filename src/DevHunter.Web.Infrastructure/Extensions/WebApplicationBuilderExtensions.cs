@@ -61,6 +61,11 @@
                 .GetSection("EmailConfiguration")
                 .Get<EmailConfig>();
 
+            if (emailConfig == null)
+            {
+                throw new InvalidOperationException("Email configuration is missing.");
+            }
+
             services.AddSingleton(emailConfig);
         }
 
@@ -70,7 +75,9 @@
             var apiKey = configuration.GetValue<string>("AccountSettings:ApiKey");
             var apiSecret = configuration.GetValue<string>("AccountSettings:ApiSecret");
 
-            if (new[] { cloudName, apiKey, apiSecret }.Any(string.IsNullOrWhiteSpace))
+            if (string.IsNullOrWhiteSpace(cloudName)
+                || string.IsNullOrWhiteSpace(apiKey)
+                || string.IsNullOrWhiteSpace(apiSecret))
             {
                 throw new ArgumentException("Please specify your Cloudinary account Information");
             }
@@ -146,7 +153,7 @@
 
             Task.Run(async () =>
             {
-                ApplicationUser adminUser =
+                ApplicationUser? adminUser =
                     await userManager.FindByEmailAsync(email);
 
                 if (adminUser == null)
