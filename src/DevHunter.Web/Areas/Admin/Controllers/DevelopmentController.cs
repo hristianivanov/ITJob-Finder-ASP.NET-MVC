@@ -92,7 +92,7 @@
 
                 if (!developmentExists)
                 {
-                    TempData[ErrorMessage] = "Development with the provided id does not exist!";
+                    TempData[ErrorMessage] = DevelopmentNotFoundError;
 
                     return RedirectToAction("All");
                 }
@@ -122,7 +122,7 @@
 
 		        if (!developmentExists)
 		        {
-			        TempData[ErrorMessage] = "Development with the provided id does not exist!";
+			        TempData[ErrorMessage] = DevelopmentNotFoundError;
 
 			        return RedirectToAction("All");
 		        }
@@ -149,7 +149,7 @@
 
 		        if (!developmentExists)
 		        {
-			        TempData[ErrorMessage] = "Development with the provided id does not exist!";
+			        TempData[ErrorMessage] = DevelopmentNotFoundError;
 
 			        return RedirectToAction("All");
 		        }
@@ -167,7 +167,7 @@
 		}
         private IActionResult GeneralError()
         {
-            TempData[ErrorMessage] = "Unexpected error occurred!";
+            TempData[ErrorMessage] = UnexpectedError;
 
             return RedirectToAction("Index", "Home");
         }

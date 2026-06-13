@@ -51,7 +51,7 @@
 
             if (companyId == null)
             {
-                TempData[ErrorMessage] = "Unexpected error occurred!";
+                TempData[ErrorMessage] = UnexpectedError;
 
                 return RedirectToAction("Manage");
             }
@@ -85,7 +85,7 @@
 
             if (companyId == null)
             {
-                TempData[ErrorMessage] = "Unexpected error occurred!";
+                TempData[ErrorMessage] = UnexpectedError;
 
                 return RedirectToAction("Manage");
             }
