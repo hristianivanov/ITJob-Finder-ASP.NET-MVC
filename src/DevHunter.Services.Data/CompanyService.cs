@@ -181,7 +181,7 @@
                 {
                     Id = c.Id.ToString(),
                     Name = c.Name,
-                    CEO = c.Creator.UserName,
+                    CEO = c.Creator.UserName ?? string.Empty,
                     OffersCnt = c.JobOffers.Count()
                 })
                 .ToListAsync();

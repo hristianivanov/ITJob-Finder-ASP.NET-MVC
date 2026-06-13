@@ -31,9 +31,14 @@
         {
             if (context.User.Identity?.IsAuthenticated ?? false)
             {
-                if (!context.Request.Cookies.TryGetValue(this.cookieName, out string userId))
+                if (!context.Request.Cookies.TryGetValue(this.cookieName, out string? userId))
                 {
-                    userId = context.User.GetId()!;
+                    userId = context.User.GetId();
+
+                    if (userId == null)
+                    {
+                        return this.next(context);
+                    }
 
                     context.Response.Cookies.Append(this.cookieName, userId, new CookieOptions() { HttpOnly = true, MaxAge = TimeSpan.FromDays(30) });
                 }
@@ -55,7 +60,7 @@
             }
             else
             {
-                if (context.Request.Cookies.TryGetValue(this.cookieName, out string userId))
+                if (context.Request.Cookies.TryGetValue(this.cookieName, out string? userId))
                 {
                     if (!AllKeys.TryRemove(userId, out _))
                     {
@@ -76,7 +81,7 @@
             return success && valueTaken;
         }
 
-        private void RemoveKeyWhenExpired(object key, object value, EvictionReason reason, object state)
+        private void RemoveKeyWhenExpired(object key, object? value, EvictionReason reason, object? state)
         {
             string keyStr = (string)key;
 

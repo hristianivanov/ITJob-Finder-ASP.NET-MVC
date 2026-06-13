@@ -179,7 +179,7 @@
                 return this.View(model);
             }
 
-            string returnUrl = TempData["ReturnUrl"] as string;
+            string? returnUrl = TempData["ReturnUrl"] as string;
             TempData.Remove("ReturnUrl");
 
             return this.Redirect(returnUrl ?? "/Home/Index");
@@ -190,7 +190,7 @@
         {
             await signInManager.SignOutAsync();
 
-            string returnUrl = HttpContext.Request.Query["returnUrl"];
+            string? returnUrl = HttpContext.Request.Query["returnUrl"].FirstOrDefault();
 
             if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
                 return Redirect(returnUrl);

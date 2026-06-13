@@ -528,9 +528,9 @@
         [TestCase(" ")]
         [TestCase(null)]
         [TestCase("invalid")]
-        public async Task EditJobOfferAsync_ShouldThrowExceptionForNonExistingJobOffer(string nonExistingJobOfferId)
+        public async Task EditJobOfferAsync_ShouldThrowExceptionForNonExistingJobOffer(string? nonExistingJobOfferId)
         {
-            var act = async () => await jobOfferService.EditJobOfferAsync(nonExistingJobOfferId, null);
+            var act = async () => await jobOfferService.EditJobOfferAsync(nonExistingJobOfferId!, null!);
 
             await act.Should().ThrowAsync<InvalidOperationException>();
         }
@@ -540,7 +540,7 @@
         {
             var jobOffer = await dbContext.JobOffers.FirstAsync();
 
-            var act = async () => await jobOfferService.EditJobOfferAsync(jobOffer.Id.ToString(), null);
+            var act = async () => await jobOfferService.EditJobOfferAsync(jobOffer.Id.ToString(), null!);
 
             await act.Should().ThrowAsync<NullReferenceException>();
         }
@@ -616,9 +616,9 @@
         [TestCase(" ")]
         [TestCase(null)]
         [TestCase("invalid")]
-        public async Task CreateAndReturnIdAsync_ShouldThrowExceptionForNonExistingUserCompanyProfile(string nonExistingJobOfferId)
+        public async Task CreateAndReturnIdAsync_ShouldThrowExceptionForNonExistingUserCompanyProfile(string? nonExistingJobOfferId)
         {
-            var act = async () => await jobOfferService.CreateAndReturnIdAsync(null, nonExistingJobOfferId);
+            var act = async () => await jobOfferService.CreateAndReturnIdAsync(null!, nonExistingJobOfferId!);
 
             await act.Should().ThrowAsync<InvalidOperationException>();
         }
@@ -628,7 +628,7 @@
         {
             var user = await dbContext.Companies.FirstAsync();
 
-            var act = async () => await jobOfferService.CreateAndReturnIdAsync(null, user.CreatorId.ToString());
+            var act = async () => await jobOfferService.CreateAndReturnIdAsync(null!, user.CreatorId.ToString());
 
             await act.Should().ThrowAsync<NullReferenceException>();
         }

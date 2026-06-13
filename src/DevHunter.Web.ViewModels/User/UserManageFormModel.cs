@@ -7,6 +7,6 @@
 
         public string? Email { get; set; }
 
-        public UserChangePasswordFormModel ChangePasswordModel { get; set; }
+        public UserChangePasswordFormModel ChangePasswordModel { get; set; } = new();
     }
 }

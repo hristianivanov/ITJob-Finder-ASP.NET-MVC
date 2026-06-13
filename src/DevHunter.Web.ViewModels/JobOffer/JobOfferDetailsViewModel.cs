@@ -8,6 +8,7 @@
     {
         public JobOfferDetailsViewModel()
         {
+            this.Company = new CompanyViewModel();
             this.TechStack = new HashSet<TechnologyViewModel>();
         }
 

@@ -13,7 +13,7 @@
             this.extensions = extensions;
         }
 
-        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+        protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
         {
             var file = value as IFormFile;
             if (file != null)
@@ -25,7 +25,7 @@
                 }
             }
 
-            return ValidationResult.Success!;
+            return ValidationResult.Success;
         }
 
         public string GetErrorMessage()
