@@ -314,16 +314,18 @@
             };
         }
 
-        public async Task DeleteByIdAsync(string id)
+        public async Task DeleteByIdAsync(string id, string userId)
         {
-            if (!Guid.TryParse(id, out Guid parsedId))
+            if (!TryParseIds(id, userId, out Guid parsedId, out Guid parsedUserId))
             {
                 return;
             }
 
             var jobOffer = await this.dbContext
                 .JobOffers
-                .FirstOrDefaultAsync(t => t.Id == parsedId);
+                .FirstOrDefaultAsync(jobOffer =>
+                    jobOffer.Id == parsedId &&
+                    jobOffer.Company.CreatorId == parsedUserId);
 
             if (jobOffer != null)
             {
@@ -385,14 +387,17 @@
             };
         }
 
-        public async Task EditJobOfferAsync(string id, JobOfferEditFormModel model)
+        public async Task EditJobOfferAsync(string id, JobOfferEditFormModel model, string userId)
         {
             Guid parsedId = ParseRequiredId(id, "job offer");
+            Guid parsedUserId = ParseRequiredId(userId, "user");
 
             var jobOffer = await this.dbContext
                 .JobOffers
-                .FirstOrDefaultAsync(j => j.Id == parsedId)
-                ?? throw new InvalidOperationException("Job offer does not exist.");
+                .FirstOrDefaultAsync(jobOffer =>
+                    jobOffer.Id == parsedId &&
+                    jobOffer.Company.CreatorId == parsedUserId)
+                ?? throw new InvalidOperationException("Job offer does not exist or does not belong to the company.");
 
             bool isChanged = UpdateJobOfferFields(jobOffer, model);
             isChanged |= await AddTechnologiesAsync(jobOffer, model.Technologies, skipExisting: true);
