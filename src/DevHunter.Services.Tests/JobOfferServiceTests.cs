@@ -453,7 +453,9 @@
         {
             var jobOffer = await dbContext.JobOffers.FirstAsync();
 
-            await jobOfferService.DeleteByIdAsync(jobOffer.Id.ToString());
+            await jobOfferService.DeleteByIdAsync(
+                jobOffer.Id.ToString(),
+                jobOffer.Company.CreatorId.ToString());
 
             var result = await dbContext.JobOffers.FindAsync(jobOffer.Id);
 
@@ -468,7 +470,8 @@
         {
             var jobOffersCntBefore = await dbContext.JobOffers.CountAsync();
 
-            await jobOfferService.DeleteByIdAsync(nonExistingJobOfferId);
+            var company = await dbContext.Companies.FirstAsync();
+            await jobOfferService.DeleteByIdAsync(nonExistingJobOfferId, company.CreatorId.ToString());
 
             var jobOffersCntAfter = await dbContext.JobOffers.CountAsync();
 
@@ -494,7 +497,10 @@
                 Description = "new_description",
             };
 
-            await jobOfferService.EditJobOfferAsync(jobOffer.Id.ToString(), model);
+            await jobOfferService.EditJobOfferAsync(
+                jobOffer.Id.ToString(),
+                model,
+                jobOffer.Company.CreatorId.ToString());
 
             var editedJobOffer = await dbContext.JobOffers.FindAsync(jobOffer.Id);
 
@@ -517,7 +523,10 @@
                 Technologies = "[]",
             };
 
-            await jobOfferService.EditJobOfferAsync(jobOffer.Id.ToString(), model);
+            await jobOfferService.EditJobOfferAsync(
+                jobOffer.Id.ToString(),
+                model,
+                jobOffer.Company.CreatorId.ToString());
 
             var editedJobOffer = await dbContext.JobOffers.FindAsync(jobOffer.Id);
             editedJobOffer!.Description.Should().NotContain("<script>");
@@ -530,7 +539,9 @@
         [TestCase("invalid")]
         public async Task EditJobOfferAsync_ShouldThrowExceptionForNonExistingJobOffer(string? nonExistingJobOfferId)
         {
-            var act = async () => await jobOfferService.EditJobOfferAsync(nonExistingJobOfferId!, null!);
+            var company = await dbContext.Companies.FirstAsync();
+            var act = async () => await jobOfferService
+                .EditJobOfferAsync(nonExistingJobOfferId!, null!, company.CreatorId.ToString());
 
             await act.Should().ThrowAsync<InvalidOperationException>();
         }
@@ -540,9 +551,46 @@
         {
             var jobOffer = await dbContext.JobOffers.FirstAsync();
 
-            var act = async () => await jobOfferService.EditJobOfferAsync(jobOffer.Id.ToString(), null!);
+            var act = async () => await jobOfferService
+                .EditJobOfferAsync(jobOffer.Id.ToString(), null!, jobOffer.Company.CreatorId.ToString());
 
             await act.Should().ThrowAsync<NullReferenceException>();
+        }
+
+        [Test]
+        public async Task DeleteByIdAsync_ShouldRejectAnotherCompanyUser()
+        {
+            var jobOffer = await dbContext.JobOffers.FirstAsync();
+            var otherUser = await dbContext.Users
+                .FirstAsync(user => user.Id != jobOffer.Company.CreatorId);
+
+            await jobOfferService.DeleteByIdAsync(jobOffer.Id.ToString(), otherUser.Id.ToString());
+
+            var existingJobOffer = await dbContext.JobOffers.FindAsync(jobOffer.Id);
+            existingJobOffer.Should().NotBeNull();
+        }
+
+        [Test]
+        public async Task EditJobOfferAsync_ShouldRejectAnotherCompanyUser()
+        {
+            var jobOffer = await dbContext.JobOffers.FirstAsync();
+            var otherUser = await dbContext.Users
+                .FirstAsync(user => user.Id != jobOffer.Company.CreatorId);
+            string originalTitle = jobOffer.JobPosition;
+            var model = new JobOfferEditFormModel
+            {
+                Title = "unauthorized_title",
+                Location = jobOffer.PlaceToWork,
+                LocationType = jobOffer.JobPlace,
+                Description = jobOffer.Description,
+                Technologies = "[]",
+            };
+
+            var act = async () => await jobOfferService
+                .EditJobOfferAsync(jobOffer.Id.ToString(), model, otherUser.Id.ToString());
+
+            await act.Should().ThrowAsync<InvalidOperationException>();
+            jobOffer.JobPosition.Should().Be(originalTitle);
         }
 
         [Test]

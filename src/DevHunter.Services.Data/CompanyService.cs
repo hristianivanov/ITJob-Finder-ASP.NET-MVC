@@ -95,15 +95,16 @@
             };
         }
 
-        public async Task EditAsync(string id, CompanyFormModel model)
+        public async Task EditAsync(string id, CompanyFormModel model, string userId)
         {
             ArgumentNullException.ThrowIfNull(model);
 
             Guid companyId = ParseCompanyId(id);
+            Guid creatorId = ParseCreatorId(userId);
 
             var company = await this.context.Companies
-                .FirstOrDefaultAsync(company => company.Id == companyId)
-                ?? throw new InvalidOperationException("Company does not exist.");
+                .FirstOrDefaultAsync(company => company.Id == companyId && company.CreatorId == creatorId)
+                ?? throw new InvalidOperationException("Company does not exist or does not belong to the user.");
 
             var sanitizer = new HtmlSanitizer();
 
@@ -249,6 +250,11 @@
             => Guid.TryParse(id, out Guid companyId)
                 ? companyId
                 : throw new InvalidOperationException("A valid company id is required.");
+
+        private static Guid ParseCreatorId(string id)
+            => Guid.TryParse(id, out Guid creatorId)
+                ? creatorId
+                : throw new InvalidOperationException("A valid user id is required.");
 
         private static JobOfferAllViewModel MapJobOffer(JobOfferDetailsData jobOffer, CompanyDetailsData company)
             => new()
