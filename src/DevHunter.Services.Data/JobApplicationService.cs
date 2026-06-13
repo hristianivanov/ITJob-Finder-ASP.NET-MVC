@@ -1,158 +1,274 @@
 ﻿namespace DevHunter.Services.Data
 {
-	using System.Web;
+    using System.Linq.Expressions;
+    using System.Web;
 
-	using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore;
 
-	using DevHunter.Data;
-	using DevHunter.Data.Models;
+    using DevHunter.Data;
+    using DevHunter.Data.Models;
 
-	using Interfaces;
-	using Web.ViewModels.JobApplication;
-	using DevHunter.Data.Models.Enums;
+    using Interfaces;
+    using Web.ViewModels.JobApplication;
+    using DevHunter.Data.Models.Enums;
 
-	public class JobApplicationService : IJobApplicationService
-	{
-		private readonly DevHunterDbContext context;
+    public class JobApplicationService : IJobApplicationService
+    {
+        private readonly DevHunterDbContext context;
 
-		public JobApplicationService(DevHunterDbContext context)
-		{
-			this.context = context;
-		}
+        public JobApplicationService(DevHunterDbContext context)
+        {
+            this.context = context;
+        }
 
-		public async Task<string> ApplyJobOfferAsync(JobApplicationFormModel model, string jobOfferId, string? userId)
-		{
-			var application = new JobApplication()
-			{
-				Email = model.Email,
-				CandidateName = model.CandidateName,
-				MotivationalLetter = model.MotivationalLetter,
-				JobOfferId = Guid.Parse(jobOfferId)
-			};
+        public async Task<string> ApplyJobOfferAsync(JobApplicationFormModel model, string jobOfferId, string? userId)
+        {
+            ArgumentNullException.ThrowIfNull(model);
 
-			if (!string.IsNullOrWhiteSpace(userId))
-			{
-				var userApplication = new UserJobApplications()
-				{
-					JobApplicationId = application.Id,
-					UserId = Guid.Parse(userId),
-					Date = DateTime.UtcNow,
-				};
+            if (!Guid.TryParse(jobOfferId, out Guid parsedJobOfferId))
+            {
+                throw new InvalidOperationException("A valid job offer id is required.");
+            }
 
-				await this.context.UsersJobApplications.AddAsync(userApplication);
-			}
+            bool jobOfferExists = await this.context.JobOffers
+                .AsNoTracking()
+                .AnyAsync(jobOffer => jobOffer.Id == parsedJobOfferId);
 
-			await this.context.JobApplications.AddAsync(application);
-			await this.context.SaveChangesAsync();
+            if (!jobOfferExists)
+            {
+                throw new InvalidOperationException("Job offer does not exist.");
+            }
 
-			return application.Id.ToString();
-		}
+            Guid? parsedUserId = null;
+            if (!string.IsNullOrWhiteSpace(userId))
+            {
+                if (!Guid.TryParse(userId, out Guid validUserId))
+                {
+                    throw new InvalidOperationException("A valid user id is required.");
+                }
 
-		public async Task<ICollection<AllJobApplicationViewModel>> AllCandidatesByCompanyIdAsync(string? companyId)
-		{
-			var jobOffersApplications = await this.context
-				.JobOffers
-				.Where(j => j.CompanyId.ToString() == companyId &&
-							j.JobApplications.Count() != 0)
-				.AsNoTracking()
-				.Select(j => new AllJobApplicationViewModel()
-				{
-					JobOfferId = j.Id.ToString(),
-					JobOfferTitle = j.JobPosition,
-					JobApplications = j.JobApplications
-						.Select(a => new JobApplicationViewModel()
-						{
-							Id = a.Id.ToString(),
-							CandidateName = a.CandidateName,
-							Email = a.Email,
-							Status = a.Status.ToString()
-						}).ToList(),
-				})
-				.ToListAsync();
+                parsedUserId = validUserId;
+            }
 
-			return jobOffersApplications;
-		}
+            var application = new JobApplication
+            {
+                Email = model.Email,
+                CandidateName = model.CandidateName,
+                MotivationalLetter = model.MotivationalLetter,
+                JobOfferId = parsedJobOfferId
+            };
 
-		public async Task<JobApplicationViewModel> GetApplicationById(string applicationId)
-		{
-			var application = await this.context
-				.JobApplications
-				.FirstAsync(a => a.Id.ToString() == applicationId);
+            if (parsedUserId.HasValue)
+            {
+                var userApplication = new UserJobApplications
+                {
+                    JobApplicationId = application.Id,
+                    UserId = parsedUserId.Value,
+                    Date = DateTime.UtcNow,
+                };
 
-			string googleDocsViewerBaseUrl = "https://docs.google.com/viewer?url=";
+                await this.context.UsersJobApplications.AddAsync(userApplication);
+            }
 
-			return new JobApplicationViewModel()
-			{
-				Id = application.Id.ToString(),
-				CandidateName = application.CandidateName,
-				Email = application.Email,
-				MotivationalLetter = application.MotivationalLetter,
-				JobPosition = application.JobOffer.JobPosition,
-				DocumentsUrl = application.Documents.Select(d => new DocumentViewModel()
-				{
-					DocumentName = ExtractDocumentName(d.DocumentUrl),
-					DocumentUrl = $"{googleDocsViewerBaseUrl}{HttpUtility.UrlEncode(d.DocumentUrl)}",
-				}).ToList(),
-			};
-		}
+            await this.context.JobApplications.AddAsync(application);
+            await this.context.SaveChangesAsync();
 
-		public async Task<IEnumerable<MyApplicationViewModel>> AllUserApplicationsAsync(string userId)
-		{
-			var userApplications = await this.context
-				.UsersJobApplications
-				.Where(a => a.UserId.ToString() == userId)
-				.Select(a => new MyApplicationViewModel()
-				{
-					SavedDate = a.Date.ToString("dd.MM.yyyy"),
-					CompanyId = a.JobApplication.JobOffer.Company.Id.ToString(),
-					CompanyName = a.JobApplication.JobOffer.Company.Name,
-					JobOfferId = a.JobApplication.JobOfferId.ToString(),
-					JobTitle = a.JobApplication.JobOffer.JobPosition,
-					Status = a.JobApplication.Status.ToString()!
-				})
-				.ToListAsync();
+            return application.Id.ToString();
+        }
 
-			return userApplications;
-		}
+        public async Task<ICollection<AllJobApplicationViewModel>> AllCandidatesByCompanyIdAsync(string? companyId)
+        {
+            if (!Guid.TryParse(companyId, out Guid parsedCompanyId))
+            {
+                return Array.Empty<AllJobApplicationViewModel>();
+            }
 
-		public async Task<bool> ExistsByIdAsync(string id)
-		{
-			var result = await this.context
-				.JobApplications
-				.FirstOrDefaultAsync(a => a.Id.ToString() == id);
+            var jobOffersApplications = await this.context
+                .JobOffers
+                .AsNoTracking()
+                .Where(j => j.CompanyId == parsedCompanyId &&
+                            j.JobApplications.Any())
+                .Select(j => new AllJobApplicationViewModel()
+                {
+                    JobOfferId = j.Id.ToString(),
+                    JobOfferTitle = j.JobPosition,
+                    JobApplications = j.JobApplications
+                        .Select(a => new JobApplicationViewModel()
+                        {
+                            Id = a.Id.ToString(),
+                            CandidateName = a.CandidateName,
+                            Email = a.Email,
+                            Status = a.Status.ToString()
+                        }).ToList(),
+                })
+                .ToListAsync();
 
-			return result != null!;
-		}
+            return jobOffersApplications;
+        }
 
-		public async Task ApproveApplicationAsync(string id)
-		{
-			var application = await this.context
-				.JobApplications
-				.FirstAsync(a => a.Id.ToString() == id);
+        public async Task<JobApplicationViewModel> GetApplicationById(string applicationId, string companyUserId)
+        {
+            (Guid parsedApplicationId, Guid parsedCompanyUserId) = ParseRequiredIds(applicationId, companyUserId);
 
-			application!.Status = ApplicationStatus.Approved;
+            ApplicationDetailsData application = await this.context.JobApplications
+                .AsNoTracking()
+                .Where(application =>
+                    application.Id == parsedApplicationId &&
+                    application.JobOffer.Company.CreatorId == parsedCompanyUserId)
+                .Select(ApplicationDetailsSelector)
+                .FirstOrDefaultAsync()
+                ?? throw new InvalidOperationException("Application does not exist or does not belong to the company.");
 
-			await this.context.SaveChangesAsync();
-		}
+            return MapApplicationDetails(application);
+        }
 
-		public async Task RejectApplicationAsync(string id)
-		{
-			var application = await this.context
-				.JobApplications
-				.FirstAsync(a => a.Id.ToString() == id);
+        public async Task<IEnumerable<MyApplicationViewModel>> AllUserApplicationsAsync(string userId)
+        {
+            if (!Guid.TryParse(userId, out Guid parsedUserId))
+            {
+                return Array.Empty<MyApplicationViewModel>();
+            }
 
-			application!.Status = ApplicationStatus.Rejected;
+            var userApplications = await this.context
+                .UsersJobApplications
+                .AsNoTracking()
+                .Where(a => a.UserId == parsedUserId)
+                .Select(a => new MyApplicationViewModel()
+                {
+                    SavedDate = a.Date.ToString("dd.MM.yyyy"),
+                    CompanyId = a.JobApplication.JobOffer.Company.Id.ToString(),
+                    CompanyName = a.JobApplication.JobOffer.Company.Name,
+                    JobOfferId = a.JobApplication.JobOfferId.ToString(),
+                    JobTitle = a.JobApplication.JobOffer.JobPosition,
+                    Status = a.JobApplication.Status.ToString()!
+                })
+                .ToListAsync();
 
-			await this.context.SaveChangesAsync();
-		}
+            return userApplications;
+        }
 
-		private static string ExtractDocumentName(string url)
-		{
-			string[] parts = url.Split('/');
+        public async Task<bool> ExistsByIdAsync(string id)
+        {
+            if (!Guid.TryParse(id, out Guid applicationId))
+            {
+                return false;
+            }
 
-			string documentName = parts[parts.Length - 1];
+            return await this.context.JobApplications
+                .AsNoTracking()
+                .AnyAsync(application => application.Id == applicationId);
+        }
 
-			return documentName;
-		}
-	}
+        public async Task<bool> IsOwnedByCompanyAsync(string id, string companyUserId)
+        {
+            if (!TryParseIds(id, companyUserId, out Guid applicationId, out Guid parsedCompanyUserId))
+            {
+                return false;
+            }
+
+            return await this.context.JobApplications
+                .AsNoTracking()
+                .AnyAsync(application =>
+                    application.Id == applicationId &&
+                    application.JobOffer.Company.CreatorId == parsedCompanyUserId);
+        }
+
+        public Task ApproveApplicationAsync(string id, string companyUserId)
+        {
+            return UpdateApplicationStatusAsync(id, companyUserId, ApplicationStatus.Approved);
+        }
+
+        public Task RejectApplicationAsync(string id, string companyUserId)
+        {
+            return UpdateApplicationStatusAsync(id, companyUserId, ApplicationStatus.Rejected);
+        }
+
+        private async Task UpdateApplicationStatusAsync(string id, string companyUserId, ApplicationStatus status)
+        {
+            (Guid applicationId, Guid parsedCompanyUserId) = ParseRequiredIds(id, companyUserId);
+
+            var application = await this.context.JobApplications
+                .FirstOrDefaultAsync(application =>
+                    application.Id == applicationId &&
+                    application.JobOffer.Company.CreatorId == parsedCompanyUserId)
+                ?? throw new InvalidOperationException("Application does not exist or does not belong to the company.");
+
+            if (application.Status != status)
+            {
+                application.Status = status;
+                await this.context.SaveChangesAsync();
+            }
+        }
+
+        private static string ExtractDocumentName(string url)
+        {
+            string[] parts = url.Split('/');
+
+            string documentName = parts[parts.Length - 1];
+
+            return documentName;
+        }
+
+        private static JobApplicationViewModel MapApplicationDetails(ApplicationDetailsData application)
+        {
+            const string googleDocsViewerBaseUrl = "https://docs.google.com/viewer?url=";
+
+            return new JobApplicationViewModel
+            {
+                Id = application.Id.ToString(),
+                CandidateName = application.CandidateName,
+                Email = application.Email,
+                MotivationalLetter = application.MotivationalLetter,
+                JobPosition = application.JobPosition,
+                DocumentsUrl = application.DocumentUrls
+                    .Select(documentUrl => new DocumentViewModel
+                    {
+                        DocumentName = ExtractDocumentName(documentUrl),
+                        DocumentUrl = $"{googleDocsViewerBaseUrl}{HttpUtility.UrlEncode(documentUrl)}",
+                    })
+                    .ToList(),
+            };
+        }
+
+        private static (Guid FirstId, Guid SecondId) ParseRequiredIds(string firstId, string secondId)
+        {
+            if (!TryParseIds(firstId, secondId, out Guid parsedFirstId, out Guid parsedSecondId))
+            {
+                throw new InvalidOperationException("Valid identifiers are required.");
+            }
+
+            return (parsedFirstId, parsedSecondId);
+        }
+
+        private static bool TryParseIds(string firstId, string secondId, out Guid parsedFirstId, out Guid parsedSecondId)
+        {
+            bool firstIdIsValid = Guid.TryParse(firstId, out parsedFirstId);
+            bool secondIdIsValid = Guid.TryParse(secondId, out parsedSecondId);
+
+            return firstIdIsValid && secondIdIsValid;
+        }
+
+        private static readonly Expression<Func<JobApplication, ApplicationDetailsData>> ApplicationDetailsSelector =
+            application => new ApplicationDetailsData
+            {
+                Id = application.Id,
+                CandidateName = application.CandidateName,
+                Email = application.Email,
+                MotivationalLetter = application.MotivationalLetter,
+                JobPosition = application.JobOffer.JobPosition,
+                DocumentUrls = application.Documents
+                    .Select(document => document.DocumentUrl)
+                    .ToList(),
+            };
+
+        private sealed class ApplicationDetailsData
+        {
+            public Guid Id { get; init; }
+            public string CandidateName { get; init; } = null!;
+            public string Email { get; init; } = null!;
+            public string MotivationalLetter { get; init; } = null!;
+            public string JobPosition { get; init; } = null!;
+            public List<string> DocumentUrls { get; init; } = new();
+        }
+    }
 }

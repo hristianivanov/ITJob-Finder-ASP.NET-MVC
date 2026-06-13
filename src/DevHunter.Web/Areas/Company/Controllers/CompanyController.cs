@@ -1,147 +1,152 @@
 ﻿namespace DevHunter.Web.Areas.Company.Controllers
 {
-	using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc;
 
-	using ViewModels.Company;
-	using Services.Data.Interfaces;
-	using Infrastructure.Extensions;
+    using ViewModels.Company;
+    using Services.Data.Interfaces;
+    using Infrastructure.Extensions;
 
-	using static Common.NotificationMessagesConstants;
+    using static Common.NotificationMessagesConstants;
 
-	public class CompanyController : BaseCompanyController
-	{
-		private readonly ICompanyService companyService;
-		private readonly IJobApplicationService jobApplicationService;
+    public class CompanyController : BaseCompanyController
+    {
+        private readonly ICompanyService companyService;
+        private readonly IJobApplicationService jobApplicationService;
 
-		public CompanyController(ICompanyService companyService, IJobApplicationService jobApplicationService)
-		{
-			this.companyService = companyService;
-			this.jobApplicationService = jobApplicationService;
-		}
+        public CompanyController(ICompanyService companyService, IJobApplicationService jobApplicationService)
+        {
+            this.companyService = companyService;
+            this.jobApplicationService = jobApplicationService;
+        }
 
-		[HttpGet]
-		[Route("company/edit/{id}")]
-		public async Task<IActionResult> Edit(string id)
-		{
-			try
-			{
-				bool companyExists = await this.companyService.ExistsByIdAsync(id!);
+        [HttpGet]
+        [Route("company/edit/{id}")]
+        public async Task<IActionResult> Edit(string id)
+        {
+            try
+            {
+                bool isOwnedByCompany = await this.companyService
+                    .IsOwnedByUserAsync(id, this.User.GetId()!);
 
-				if (!companyExists)
-				{
-					TempData[ErrorMessage] = "Company does not exist!";
+                if (!isOwnedByCompany)
+                {
+                    TempData[ErrorMessage] = "Company does not exist or does not belong to your account!";
 
-					return RedirectToAction("Index", "Home", new { area = "" });
-				}
+                    return RedirectToAction("Index", "Home", new { area = "" });
+                }
 
-				var model = await this.companyService.GetForEditByIdAsync(id!);
+                var model = await this.companyService.GetForEditByIdAsync(id!);
 
-				return View(model);
-			}
-			catch (Exception)
-			{
-				return GeneralError();
-			}
-		}
+                return View(model);
+            }
+            catch (Exception)
+            {
+                return GeneralError();
+            }
+        }
 
-		[HttpPost]
-		[Route("company/edit/{id}")]
-		public async Task<IActionResult> Edit([FromRoute] string id, CompanyFormModel model)
-		{
-			if (!ModelState.IsValid)
-			{
-				return this.View();
-			}
+        [HttpPost]
+        [Route("company/edit/{id}")]
+        public async Task<IActionResult> Edit([FromRoute] string id, CompanyFormModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return this.View();
+            }
 
-			try
-			{
-				bool companyExists = await this.companyService.ExistsByIdAsync(id!);
+            try
+            {
+                bool isOwnedByCompany = await this.companyService
+                    .IsOwnedByUserAsync(id, this.User.GetId()!);
 
-				if (!companyExists)
-				{
-					TempData[ErrorMessage] = "Company does not exist!";
+                if (!isOwnedByCompany)
+                {
+                    TempData[ErrorMessage] = "Company does not exist or does not belong to your account!";
 
-					return RedirectToAction("Index", "Home");
-				}
+                    return RedirectToAction("Index", "Home");
+                }
 
-				await this.companyService.EditAsync(id!, model);
-			}
-			catch (Exception)
-			{
-				ModelState.AddModelError(string.Empty,
-					"Unexpected error occurred while trying to edit the company!");
+                await this.companyService.EditAsync(id!, model, this.User.GetId()!);
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError(string.Empty,
+                    "Unexpected error occurred while trying to edit the company!");
 
-				return View(model);
-			}
+                return View(model);
+            }
 
-			return RedirectToAction("Detail", "Company", new { area = "", id });
-		}
+            return RedirectToAction("Detail", "Company", new { area = "", id });
+        }
 
-		[HttpPost]
-		public async Task<IActionResult> ApproveApplication(string id)
-		{
-			bool applicationExists = await this.jobApplicationService.ExistsByIdAsync(id);
+        [HttpPost]
+        public async Task<IActionResult> ApproveApplication(string id)
+        {
+            string companyUserId = this.User.GetId()!;
+            bool isOwnedByCompany = await this.jobApplicationService.IsOwnedByCompanyAsync(id, companyUserId);
 
-			if (!applicationExists)
-			{
-				TempData[ErrorMessage] = "Application does not exist!";
+            if (!isOwnedByCompany)
+            {
+                TempData[ErrorMessage] = "Application does not exist or does not belong to your company!";
 
-				return RedirectToAction("Candidates");
-			}
+                return RedirectToAction("Candidates");
+            }
 
-			await this.jobApplicationService.ApproveApplicationAsync(id);
+            await this.jobApplicationService.ApproveApplicationAsync(id, companyUserId);
 
-			TempData[SuccessMessage] = "You successfully approved one candidate!";
+            TempData[SuccessMessage] = "You successfully approved one candidate!";
 
-			return RedirectToAction("Candidates");
-		}
+            return RedirectToAction("Candidates");
+        }
 
-		[HttpPost]
-		public async Task<IActionResult> RejectApplication(string id)
-		{
-			bool applicationExists = await this.jobApplicationService.ExistsByIdAsync(id);
+        [HttpPost]
+        public async Task<IActionResult> RejectApplication(string id)
+        {
+            string companyUserId = this.User.GetId()!;
+            bool isOwnedByCompany = await this.jobApplicationService.IsOwnedByCompanyAsync(id, companyUserId);
 
-			if (!applicationExists)
-			{
-				TempData[ErrorMessage] = "Application does not exist!";
+            if (!isOwnedByCompany)
+            {
+                TempData[ErrorMessage] = "Application does not exist or does not belong to your company!";
 
-				return RedirectToAction("Candidates");
-			}
+                return RedirectToAction("Candidates");
+            }
 
-			await this.jobApplicationService.RejectApplicationAsync(id);
+            await this.jobApplicationService.RejectApplicationAsync(id, companyUserId);
 
-			TempData[InformationMessage] = "You successfully rejected one candidate!";
+            TempData[InformationMessage] = "You successfully rejected one candidate!";
 
-			return RedirectToAction("Candidates");
-		}
+            return RedirectToAction("Candidates");
+        }
 
-		[HttpGet]
-		[Route("company/candidates")]
-		public async Task<IActionResult> Candidates()
-		{
-			string? companyId =
-				await this.companyService.GetCompanyIdByCreatorIdAsync(this.User.GetId()!);
+        [HttpGet]
+        [Route("company/candidates")]
+        public async Task<IActionResult> Candidates()
+        {
+            string? companyId =
+                await this.companyService.GetCompanyIdByCreatorIdAsync(this.User.GetId()!);
 
-			var model = await this.jobApplicationService
-				.AllCandidatesByCompanyIdAsync(companyId);
+            var model = await this.jobApplicationService
+                .AllCandidatesByCompanyIdAsync(companyId);
 
-			return View(model);
-		}
+            return View(model);
+        }
 
-		[HttpGet]
-		public async Task<IActionResult> GetApplicationDetails(string applicationId)
-		{
+        [HttpGet]
+        public async Task<IActionResult> GetApplicationDetails(string applicationId)
+        {
 
-			var application = await this.jobApplicationService.GetApplicationById(applicationId);
+            var application = await this.jobApplicationService
+                .GetApplicationById(applicationId, this.User.GetId()!);
 
-			return PartialView("_JobApplicationModalPartial", application);
-		}
+            return PartialView("_JobApplicationModalPartial", application);
+        }
 
-		private IActionResult GeneralError()
-		{
-			TempData[ErrorMessage] = "Unexpected error occurred!";
+        private IActionResult GeneralError()
+        {
+                TempData[ErrorMessage] = UnexpectedError;
 
-			return RedirectToAction("Index", "Home", new { area = "" });
-		}
-	}
+            return RedirectToAction("Index", "Home", new { area = "" });
+        }
+    }
 }

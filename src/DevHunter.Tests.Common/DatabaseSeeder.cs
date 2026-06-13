@@ -1,228 +1,234 @@
 ﻿namespace DevHunter.Tests.Common
 {
-	using Microsoft.AspNetCore.Identity;
-	using Microsoft.EntityFrameworkCore;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.EntityFrameworkCore;
 
-	using Data;
-	using Data.Models;
-	using Data.Models.Enums;
+    using Data;
+    using Data.Models;
+    using Data.Models.Enums;
 
-	using JobOffer = Data.Models.JobOffer;
+    using JobOffer = Data.Models.JobOffer;
 
-	using static DevHunter.Common.GeneralApplicationConstants;
+    using static DevHunter.Common.GeneralApplicationConstants;
 
-	public static class DatabaseSeeder
-	{
-		public static async void SeedDatabase(DevHunterDbContext dbContext)
-		{
-			await SeedUsers(dbContext);
-			await SeedTechnologies(dbContext);
-			await SeedDevelopments(dbContext);
-			await SeedCompanies(dbContext);
-			await SeedJobOffers(dbContext);
-			await SeedApplications(dbContext);
-			await SeedSavedJobOffers(dbContext);
+    public static class DatabaseSeeder
+    {
+        public static async Task SeedDatabase(DevHunterDbContext dbContext)
+        {
+            await SeedUsers(dbContext);
+            await SeedTechnologies(dbContext);
+            await SeedDevelopments(dbContext);
+            await SeedCompanies(dbContext);
+            await SeedJobOffers(dbContext);
+            await SeedApplications(dbContext);
+            await SeedSavedJobOffers(dbContext);
 
-			await dbContext.SaveChangesAsync();
-		}
+            await dbContext.SaveChangesAsync();
+        }
 
-		private static async Task SeedSavedJobOffers(DevHunterDbContext dbContext)
-		{
-			var jobOffer = await dbContext.JobOffers.FirstAsync();
+        private static async Task SeedSavedJobOffers(DevHunterDbContext dbContext)
+        {
+            var jobOffer = await dbContext.JobOffers.FirstAsync();
 
-			var user = await dbContext.Users.FirstAsync();
+            var user = await dbContext.Users.FirstAsync();
 
-			var savedJobOffers = new SavedJobOffer[]
-			{
-				new()
-				{
-					JobOfferId = jobOffer.Id,
-					UserId = user.Id,
-					Date = DateTime.UtcNow,
-				}
-			};
+            var savedJobOffers = new SavedJobOffer[]
+            {
+                new()
+                {
+                    JobOfferId = jobOffer.Id,
+                    UserId = user.Id,
+                    Date = DateTime.UtcNow,
+                }
+            };
 
-			await dbContext.SavedJobOffers.AddRangeAsync(savedJobOffers);
-			await dbContext.SaveChangesAsync();
-		}
+            await dbContext.SavedJobOffers.AddRangeAsync(savedJobOffers);
+            await dbContext.SaveChangesAsync();
+        }
 
-		private static async Task SeedApplications(DevHunterDbContext dbContext)
-		{
-			var jobOffer = await dbContext.JobOffers.FirstAsync();
+        private static async Task SeedApplications(DevHunterDbContext dbContext)
+        {
+            var jobOffer = await dbContext.JobOffers.FirstAsync();
 
-			var applicatons = new JobApplication[]
-			{
-				new()
-				{
-					Email = "test@gmail.com",
-					CandidateName = "candidate_name",
-					JobOfferId = jobOffer.Id,
-					MotivationalLetter = "...",
-				}
-			};
+            var applicatons = new JobApplication[]
+            {
+                new()
+                {
+                    Email = "test@gmail.com",
+                    CandidateName = "candidate_name",
+                    JobOfferId = jobOffer.Id,
+                    MotivationalLetter = "...",
+                }
+            };
 
-			await dbContext.JobApplications.AddRangeAsync(applicatons);
-			await dbContext.SaveChangesAsync();
-		}
+            await dbContext.JobApplications.AddRangeAsync(applicatons);
+            await dbContext.SaveChangesAsync();
+        }
 
-		private static async Task SeedJobOffers(DevHunterDbContext dbContext)
-		{
-			var company = await dbContext.Companies.FirstAsync();
-			var technology = await dbContext.Technologies.FirstAsync();
+        private static async Task SeedJobOffers(DevHunterDbContext dbContext)
+        {
+            var company = await dbContext.Companies.FirstAsync();
+            var technology = await dbContext.Technologies.FirstAsync();
 
-			var jobOffers = new JobOffer[]
-			{
-				new()
-				{
-					JobPosition = "c# developer",
-					CreatedOn = new DateTime(2024, 4, 2),
-					CompanyId = company.Id,
-					PlaceToWork = "Sofia",
-					JobPlace = PlaceToWork.Location,
-					Description = "description",
-					WorkingHours = 24,
-					MaxSalary = 50,
-					MinSalary = 50,
-					WorkingExperience = "5+ years work experience",
-					JobOfferTechnologies = new HashSet<TechnologyJobOffers>()
-					{
-						new TechnologyJobOffers
-						{
-							TechnologyId = technology.Id,
-						},
-					}
-				}
-			};
+            var jobOffers = new JobOffer[]
+            {
+                new()
+                {
+                    JobPosition = "c# developer",
+                    CreatedOn = new DateTime(2024, 4, 2),
+                    CompanyId = company.Id,
+                    PlaceToWork = "Sofia",
+                    JobPlace = PlaceToWork.Location,
+                    Description = "description",
+                    WorkingHours = 24,
+                    MaxSalary = 50,
+                    MinSalary = 50,
+                    WorkingExperience = "5+ years work experience",
+                    JobOfferTechnologies = new HashSet<TechnologyJobOffers>()
+                    {
+                        new TechnologyJobOffers
+                        {
+                            TechnologyId = technology.Id,
+                        },
+                    }
+                }
+            };
 
-			await dbContext.JobOffers.AddRangeAsync(jobOffers);
-			await dbContext.SaveChangesAsync();
-		}
+            await dbContext.JobOffers.AddRangeAsync(jobOffers);
+            await dbContext.SaveChangesAsync();
+        }
 
-		private static async Task SeedTechnologies(DevHunterDbContext dbContext)
-		{
-			var technologies = new Technology[]
-			{
-				new()
-				{
-					Name = "technology_1",
-					ImageUrl = "image_url"
-				},
-				new()
-				{
-					Name = "technology_2",
-					ImageUrl = "image_url"
-				},
-			};
+        private static async Task SeedTechnologies(DevHunterDbContext dbContext)
+        {
+            var technologies = new Technology[]
+            {
+                new()
+                {
+                    Name = "technology_1",
+                    ImageUrl = "image_url"
+                },
+                new()
+                {
+                    Name = "technology_2",
+                    ImageUrl = "image_url"
+                },
+            };
 
-			await dbContext.Technologies.AddRangeAsync(technologies);
-			await dbContext.SaveChangesAsync();
-		}
+            await dbContext.Technologies.AddRangeAsync(technologies);
+            await dbContext.SaveChangesAsync();
+        }
 
-		private static async Task SeedCompanies(DevHunterDbContext dbContext)
-		{
-			var userCompany = await dbContext.Users.FirstAsync(u => u.UserName == "company");
+        private static async Task SeedCompanies(DevHunterDbContext dbContext)
+        {
+            var userCompany = await dbContext.Users.FirstAsync(u => u.UserName == "company");
 
-			var company = new Company
-			{
-				Name = "company_name",
-				EmployeeCount = 15,
-				Location = "location",
-				FoundedDate = new DateTime(2005, 5, 7),
-				Sector = "sector",
-				Activity = "activity",
-				ImageUrl = "image_url",
-				WebsiteUrl = "website_url",
-				CreatorId = userCompany.Id,
-				Description = "description"
-			};
+            var company = new Company
+            {
+                Name = "company_name",
+                EmployeeCount = 15,
+                Location = "location",
+                FoundedDate = new DateTime(2005, 5, 7),
+                Sector = "sector",
+                Activity = "activity",
+                ImageUrl = "image_url",
+                WebsiteUrl = "website_url",
+                CreatorId = userCompany.Id,
+                Description = "description"
+            };
 
-			await dbContext.Companies.AddAsync(company);
-			await dbContext.SaveChangesAsync();
-		}
+            await dbContext.Companies.AddAsync(company);
+            await dbContext.SaveChangesAsync();
+        }
 
-		private static async Task SeedDevelopments(DevHunterDbContext dbContext)
-		{
-			var technology = await dbContext.Technologies.FirstAsync();
+        private static async Task SeedDevelopments(DevHunterDbContext dbContext)
+        {
+            var technology = await dbContext.Technologies.FirstAsync();
 
-			var developments = new Development[]
-			{
-				new()
-				{
-					Name = "development_1",
-					ImageUrl = "image_url",
-				},
-				new()
-				{
-					Name = "development_2",
-					ImageUrl = "image_url",
-					DevelopmentTechnologies = new HashSet<TechnologyDevelopments>
-					{
-						new()
-						{
-							TechnologyId = technology.Id,
-						}
-					}
-				}
-			};
+            var developments = new Development[]
+            {
+                new()
+                {
+                    Name = "development_1",
+                    ImageUrl = "image_url",
+                },
+                new()
+                {
+                    Name = "development_2",
+                    ImageUrl = "image_url",
+                    DevelopmentTechnologies = new HashSet<TechnologyDevelopments>
+                    {
+                        new()
+                        {
+                            TechnologyId = technology.Id,
+                        }
+                    }
+                }
+            };
 
-			await dbContext.Developments.AddRangeAsync(developments);
-			await dbContext.SaveChangesAsync();
-		}
+            await dbContext.Developments.AddRangeAsync(developments);
+            await dbContext.SaveChangesAsync();
+        }
 
-		private static async Task SeedUsers(DevHunterDbContext dbContext)
-		{
-			var roles = new IdentityRole<Guid>[]
-			{
-				new()
-				{
-					Name =  AdminRoleName
-				},
-				new()
-				{
-					Name =  CompanyRoleName
-				},
-			};
+        private static async Task SeedUsers(DevHunterDbContext dbContext)
+        {
+            var roles = new IdentityRole<Guid>[]
+            {
+                new()
+                {
+                    Name =  AdminRoleName
+                },
+                new()
+                {
+                    Name =  CompanyRoleName
+                },
+            };
 
-			var users = new ApplicationUser[]
-			{
-				new()
-				{
-					UserName = "test",
-					Email = "test@gmail.com",
-					PasswordHash = "hashedPassword",
-				},
-				new()
-				{
-					UserName = "company",
-					Email = "company@gmail.com",
-					PasswordHash = "hashedPassword"
-				},
-				new()
-				{
-					UserName = "admin",
-					Email = "admin@gmail.com",
-					PasswordHash = "hashedPassword"
-				},
-			};
+            var users = new ApplicationUser[]
+            {
+                new()
+                {
+                    UserName = "test",
+                    Email = "test@gmail.com",
+                    FirstName = "Test",
+                    LastName = "User",
+                    PasswordHash = "hashedPassword",
+                },
+                new()
+                {
+                    UserName = "company",
+                    Email = "company@gmail.com",
+                    FirstName = "Company",
+                    LastName = "Owner",
+                    PasswordHash = "hashedPassword"
+                },
+                new()
+                {
+                    UserName = "admin",
+                    Email = "admin@gmail.com",
+                    FirstName = "Admin",
+                    LastName = "User",
+                    PasswordHash = "hashedPassword"
+                },
+            };
 
-			//var userRoles = new IdentityUserRole<Guid>[]
-			//{
-			//	new()
-			//	{
-			//		UserId = users[2].Id,
-			//		RoleId = roles[0].Id
-			//	},
-			//	new()
-			//	{
-			//		UserId = users[1].Id,
-			//		RoleId = roles[1].Id
-			//	},
-			//};
-			//await dbContext.UserRoles.AddRangeAsync(userRoles);
+            //var userRoles = new IdentityUserRole<Guid>[]
+            //{
+            //	new()
+            //	{
+            //		UserId = users[2].Id,
+            //		RoleId = roles[0].Id
+            //	},
+            //	new()
+            //	{
+            //		UserId = users[1].Id,
+            //		RoleId = roles[1].Id
+            //	},
+            //};
+            //await dbContext.UserRoles.AddRangeAsync(userRoles);
 
-			await dbContext.Roles.AddRangeAsync(roles);
-			await dbContext.Users.AddRangeAsync(users);
-			await dbContext.SaveChangesAsync();
-		}
-	}
+            await dbContext.Roles.AddRangeAsync(roles);
+            await dbContext.Users.AddRangeAsync(users);
+            await dbContext.SaveChangesAsync();
+        }
+    }
 }

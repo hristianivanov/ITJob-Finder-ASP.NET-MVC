@@ -1,7 +1,7 @@
 ﻿namespace DevHunter.Web.ViewModels.Company
 {
-	using Technology;
-	using JobOffer;
+    using Technology;
+    using JobOffer;
 
     public class CompanyDetailViewModel
     {

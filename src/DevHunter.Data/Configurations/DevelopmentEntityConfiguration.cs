@@ -1,15 +1,15 @@
 ﻿namespace DevHunter.Data.Configurations
 {
-	using Microsoft.EntityFrameworkCore;
-	using Microsoft.EntityFrameworkCore.Metadata.Builders;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-	using Models;
+    using Models;
 
-	public class DevelopmentEntityConfiguration : IEntityTypeConfiguration<Development>
-	{
-		public void Configure(EntityTypeBuilder<Development> builder)
-		{
+    public class DevelopmentEntityConfiguration : IEntityTypeConfiguration<Development>
+    {
+        public void Configure(EntityTypeBuilder<Development> builder)
+        {
 
-		}
-	}
+        }
+    }
 }

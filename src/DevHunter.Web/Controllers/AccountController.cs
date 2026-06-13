@@ -1,201 +1,252 @@
 ﻿namespace DevHunter.Web.Controllers
 {
-	using Microsoft.AspNetCore.Authentication;
-	using Microsoft.AspNetCore.Mvc;
-	using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Authentication;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Identity;
 
-	using Data.Models;
-	using ViewModels.User;
-	using Services.Data.Interfaces;
+    using Data.Models;
+    using ViewModels.User;
+    using Services.Data.Interfaces;
 
-	using static Common.NotificationMessagesConstants;
-	using static Common.GeneralApplicationConstants;
-	public class AccountController : Controller
-	{
-		private readonly SignInManager<ApplicationUser> signInManager;
-		private readonly UserManager<ApplicationUser> userManager;
-		private readonly ICompanyService companyService;
+    using static Common.NotificationMessagesConstants;
+    using static Common.GeneralApplicationConstants;
+    public class AccountController : Controller
+    {
+        private readonly SignInManager<ApplicationUser> signInManager;
+        private readonly UserManager<ApplicationUser> userManager;
+        private readonly ICompanyService companyService;
 
-		public AccountController(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager, ICompanyService companyService)
-		{
-			this.signInManager = signInManager;
-			this.userManager = userManager;
-			this.companyService = companyService;
-		}
+        public AccountController(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager, ICompanyService companyService)
+        {
+            this.signInManager = signInManager;
+            this.userManager = userManager;
+            this.companyService = companyService;
+        }
 
-		[HttpGet]
-		[Route("account/option")]
-		public IActionResult RegisterOption()
-		{
-			if (User?.Identity?.IsAuthenticated ?? false)
-			{
-				return RedirectToAction("Index", "Home");
-			}
+        [HttpGet]
+        [Route("account/option")]
+        public IActionResult RegisterOption()
+        {
+            if (User?.Identity?.IsAuthenticated ?? false)
+            {
+                return RedirectToAction("Index", "Home");
+            }
 
-			return View();
-		}
+            return View();
+        }
 
-		[HttpGet]
-		[Route("account/register-company")]
-		public IActionResult RegisterCompany()
-		{
-			if (User?.Identity?.IsAuthenticated ?? false)
-			{
-				return RedirectToAction("Index", "Home");
-			}
+        [HttpGet]
+        [Route("account/register-company")]
+        public IActionResult RegisterCompany()
+        {
+            if (User?.Identity?.IsAuthenticated ?? false)
+            {
+                return RedirectToAction("Index", "Home");
+            }
 
-			var model = new CompanyRegisterFormModel();
+            var model = new CompanyRegisterFormModel();
 
-			return View(model);
-		}
+            return View(model);
+        }
 
-		[HttpPost]
-		[Route("account/register-company")]
-		public async Task<IActionResult> RegisterCompany(CompanyRegisterFormModel model)
-		{
-			bool companyExists = await this.companyService.ExistsByNameAsync(model.Name);
+        [HttpPost]
+        [Route("account/register-company")]
+        public async Task<IActionResult> RegisterCompany(CompanyRegisterFormModel model)
+        {
+            bool companyExists = await this.companyService.ExistsByNameAsync(model.Name);
 
-			if (companyExists)
-			{
-				ModelState.AddModelError(nameof(model.Name), "Company with this name already exists!");
-			}
+            if (companyExists)
+            {
+                ModelState.AddModelError(nameof(model.Name), "Company with this name already exists!");
+            }
 
-			if (!ModelState.IsValid)
-			{
-				return View(model);
-			}
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
 
-			ApplicationUser user = new ApplicationUser()
-			{
-				FirstName = model.FirstName,
-				LastName = model.LastName,
-			};
+            ApplicationUser user = new ApplicationUser()
+            {
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+            };
 
-			await this.userManager.SetEmailAsync(user, model.Email);
-			await this.userManager.SetUserNameAsync(user, model.Email);
+            IdentityResult emailResult = await this.userManager.SetEmailAsync(user, model.Email);
+            IdentityResult userNameResult = await this.userManager.SetUserNameAsync(user, model.Email);
 
-			var result = await this.userManager.CreateAsync(user, model.Password);
+            bool emailSucceeded = AddIdentityErrors(emailResult);
+            bool userNameSucceeded = AddIdentityErrors(userNameResult);
 
-			await this.userManager.AddToRoleAsync(user, CompanyRoleName);
+            if (!emailSucceeded || !userNameSucceeded)
+            {
+                return View(model);
+            }
 
-			if (!result.Succeeded)
-			{
-				foreach (var error in result.Errors)
-				{
-					ModelState.AddModelError(string.Empty, error.Description);
-				}
+            IdentityResult createResult = await this.userManager.CreateAsync(user, model.Password);
 
-				return View(model);
-			}
+            if (!AddIdentityErrors(createResult))
+            {
+                return View(model);
+            }
 
-			await this.companyService.AddAsync(model, user.Id);
+            IdentityResult roleResult;
+            try
+            {
+                roleResult = await this.userManager.AddToRoleAsync(user, CompanyRoleName);
+            }
+            catch
+            {
+                await DeleteCreatedUserAsync(user);
+                throw;
+            }
 
-			await this.signInManager.SignInAsync(user, isPersistent: false);
+            if (!AddIdentityErrors(roleResult))
+            {
+                await DeleteCreatedUserAsync(user);
+                return View(model);
+            }
 
-			return RedirectToAction("Index", "Home");
-		}
+            try
+            {
+                await this.companyService.AddAsync(model, user.Id);
+            }
+            catch
+            {
+                await DeleteCreatedUserAsync(user);
+                throw;
+            }
 
-		[HttpGet]
-		[Route("account/register-user")]
-		public IActionResult Register()
-		{
-			if (User?.Identity?.IsAuthenticated ?? false)
-			{
-				return RedirectToAction("Index", "Home");
-			}
+            await this.signInManager.SignInAsync(user, isPersistent: false);
 
-			var model = new RegisterFormModel();
+            return RedirectToAction("Index", "Home");
+        }
 
-			return View(model);
-		}
+        [HttpGet]
+        [Route("account/register-user")]
+        public IActionResult Register()
+        {
+            if (User?.Identity?.IsAuthenticated ?? false)
+            {
+                return RedirectToAction("Index", "Home");
+            }
 
-		[HttpPost]
-		[Route("account/register-user")]
-		public async Task<IActionResult> Register(RegisterFormModel model)
-		{
-			if (!ModelState.IsValid)
-			{
-				return this.View(model);
-			}
+            var model = new RegisterFormModel();
 
-			ApplicationUser user = new ApplicationUser()
-			{
-				FirstName = model.FirstName,
-				LastName = model.LastName,
-			};
+            return View(model);
+        }
 
-			await this.userManager.SetEmailAsync(user, model.Email);
-			await this.userManager.SetUserNameAsync(user, model.Email);
+        [HttpPost]
+        [Route("account/register-user")]
+        public async Task<IActionResult> Register(RegisterFormModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return this.View(model);
+            }
 
-			var result = await this.userManager.CreateAsync(user, model.Password);
+            ApplicationUser user = new ApplicationUser()
+            {
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+            };
 
-			if (!result.Succeeded)
-			{
-				foreach (var error in result.Errors)
-				{
-					ModelState.AddModelError(string.Empty, error.Description);
-					TempData[ErrorMessage] = error.Description;
-				}
+            await this.userManager.SetEmailAsync(user, model.Email);
+            await this.userManager.SetUserNameAsync(user, model.Email);
 
-				return View(model);
-			}
+            var result = await this.userManager.CreateAsync(user, model.Password);
 
-			await this.signInManager.SignInAsync(user, isPersistent: false);
+            if (!result.Succeeded)
+            {
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                    TempData[ErrorMessage] = error.Description;
+                }
 
-			return RedirectToAction("Index", "Home");
-		}
+                return View(model);
+            }
 
-		[HttpGet]
-		[Route("account/login")]
+            await this.signInManager.SignInAsync(user, isPersistent: false);
 
-		public IActionResult Login()
-		{
-			if (User?.Identity?.IsAuthenticated ?? false)
-			{
-				return RedirectToAction("Index", "Home");
-			}
+            return RedirectToAction("Index", "Home");
+        }
 
-			return View();
-		}
+        [HttpGet]
+        [Route("account/login")]
 
-		[HttpPost]
-		[Route("account/login")]
-		public async Task<IActionResult> Login(LoginFormModel model)
-		{
-			await this.HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
+        public IActionResult Login()
+        {
+            if (User?.Identity?.IsAuthenticated ?? false)
+            {
+                return RedirectToAction("Index", "Home");
+            }
 
-			if (!ModelState.IsValid)
-			{
-				return this.View();
-			}
+            return View();
+        }
 
-			var result =
-				await signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
+        [HttpPost]
+        [Route("account/login")]
+        public async Task<IActionResult> Login(LoginFormModel model)
+        {
+            await this.HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
-			if (!result.Succeeded)
-			{
-				this.TempData[ErrorMessage] = "Invalid login attempt!";
+            if (!ModelState.IsValid)
+            {
+                return this.View();
+            }
 
-				return this.View(model);
-			}
+            var result =
+                await signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
 
-			string returnUrl = TempData["ReturnUrl"] as string;
-			TempData.Remove("ReturnUrl");
+            if (!result.Succeeded)
+            {
+                this.TempData[ErrorMessage] = "Invalid login attempt!";
 
-			return this.Redirect(returnUrl ?? "/Home/Index");
-		}
+                return this.View(model);
+            }
 
-		[HttpPost]
-		public async Task<IActionResult> Logout()
-		{
-			await signInManager.SignOutAsync();
+            string? returnUrl = TempData["ReturnUrl"] as string;
+            TempData.Remove("ReturnUrl");
 
-			string returnUrl = HttpContext.Request.Query["returnUrl"];
+            return this.Redirect(returnUrl ?? "/Home/Index");
+        }
 
-			if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
-				return Redirect(returnUrl);
+        [HttpPost]
+        public async Task<IActionResult> Logout()
+        {
+            await signInManager.SignOutAsync();
 
-			return RedirectToAction("Index", "Home");
-		}
-	}
+            string? returnUrl = HttpContext.Request.Query["returnUrl"].FirstOrDefault();
+
+            if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+                return Redirect(returnUrl);
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        private bool AddIdentityErrors(IdentityResult result)
+        {
+            if (result.Succeeded)
+            {
+                return true;
+            }
+
+            foreach (IdentityError error in result.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
+
+            return false;
+        }
+
+        private async Task DeleteCreatedUserAsync(ApplicationUser user)
+        {
+            IdentityResult deleteResult = await this.userManager.DeleteAsync(user);
+            if (!deleteResult.Succeeded)
+            {
+                throw new InvalidOperationException(
+                    $"Failed to roll back company user creation: {string.Join("; ", deleteResult.Errors.Select(error => error.Description))}");
+            }
+        }
+    }
 }

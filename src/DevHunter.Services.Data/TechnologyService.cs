@@ -1,224 +1,219 @@
 ﻿namespace DevHunter.Services.Data
 {
-	using Microsoft.AspNetCore.Http;
-	using Microsoft.AspNetCore.Http.Internal;
-	using Microsoft.EntityFrameworkCore;
+    using System.Linq.Expressions;
 
-	using DevHunter.Data;
-	using DevHunter.Data.Models;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.EntityFrameworkCore;
 
-	using Interfaces;
-	using Web.ViewModels.Technology;
-	using Web.Infrastructure.Extensions;
+    using DevHunter.Data;
+    using DevHunter.Data.Models;
 
-	public class TechnologyService : ITechnologyService
-	{
-		private readonly DevHunterDbContext dbContext;
+    using Interfaces;
+    using Web.ViewModels.Technology;
+    using Web.Infrastructure.Extensions;
 
-		private readonly IImageService imageService;
+    public class TechnologyService : ITechnologyService
+    {
+        private readonly DevHunterDbContext dbContext;
 
-		public TechnologyService(DevHunterDbContext dbContext, IImageService imageService)
-		{
-			this.dbContext = dbContext;
-			this.imageService = imageService;
-		}
+        private readonly IImageService imageService;
 
-		public async Task<bool> TechnologyExistsByNameAsync(string technologyName)
-		{
-			bool exists = await this.dbContext
-				.Technologies
-				.AnyAsync(t => t.Name.ToLower() == technologyName.ToLower());
+        public TechnologyService(DevHunterDbContext dbContext, IImageService imageService)
+        {
+            this.dbContext = dbContext;
+            this.imageService = imageService;
+        }
 
-			return exists;
-		}
+        public async Task<bool> TechnologyExistsByNameAsync(string technologyName)
+        {
+            bool exists = await this.dbContext
+                .Technologies
+                .AnyAsync(t => t.Name.ToLower() == technologyName.ToLower());
 
-		public async Task AddAsync(TechnologyFormModel formModel,string developmentId)
-		{
-			Technology technology = new Technology()
-			{
-				Name = formModel.Name,
-				ImageUrl = await this.imageService
-					.UploadImage(formModel.Image, "DevHunter/technology", formModel.Name)
-			};
+            return exists;
+        }
 
-			if (!string.IsNullOrWhiteSpace(developmentId))
-			{
-				var development = await this.dbContext.Developments
-					.FirstOrDefaultAsync(d => d.Id.ToString() == developmentId);
+        public async Task AddAsync(TechnologyFormModel formModel, string? developmentId)
+        {
+            Technology technology = new Technology()
+            {
+                Name = formModel.Name,
+                ImageUrl = await this.imageService
+                    .UploadImage(formModel.Image, "DevHunter/technology", formModel.Name)
+            };
 
-				if (development != null)
-				{
-					TechnologyDevelopments technologyDevelopments = new TechnologyDevelopments()
-					{
-						DevelopmentId = development!.Id,
-						TechnologyId = technology.Id,
-						IsActive = true,
-					};
+            if (!string.IsNullOrWhiteSpace(developmentId))
+            {
+                var development = await this.dbContext.Developments
+                    .FirstOrDefaultAsync(d => d.Id.ToString() == developmentId);
 
-					await this.dbContext.TechnologiesDevelopments.AddAsync(technologyDevelopments);
-				}
-			}
+                if (development != null)
+                {
+                    TechnologyDevelopments technologyDevelopments = new TechnologyDevelopments()
+                    {
+                        DevelopmentId = development!.Id,
+                        TechnologyId = technology.Id,
+                        IsActive = true,
+                    };
 
-			await this.dbContext.Technologies.AddAsync(technology);
-			await this.dbContext.SaveChangesAsync();
-		}
+                    await this.dbContext.TechnologiesDevelopments.AddAsync(technologyDevelopments);
+                }
+            }
 
-		public async Task<IEnumerable<TechnologyViewModel>> AllAsync()
-		{
-			var technologies = await this.dbContext
-				.Technologies
-				.AsNoTracking()
-				.Select(t => new TechnologyViewModel()
-				{
-					Id = t.Id.ToString(),
-					Name = t.Name,
-					ImageUrl = t.ImageUrl.EnhanceCloudinaryUrl(50, "auto")
-				})
-				.ToListAsync();
+            await this.dbContext.Technologies.AddAsync(technology);
+            await this.dbContext.SaveChangesAsync();
+        }
 
-			return technologies;
-		}
+        public async Task<IEnumerable<TechnologyViewModel>> AllAsync()
+        {
+            var technologies = await this.dbContext
+                .Technologies
+                .AsNoTracking()
+                .Select(ToEnhancedViewModel)
+                .ToListAsync();
 
-		public async Task<bool> ExistsByIdAsync(string id)
-		{
-			bool result = await this.dbContext
-				.Technologies
-				.AnyAsync(t => t.Id.ToString() == id);
+            return technologies;
+        }
 
-			return result;
-		}
+        public async Task<bool> ExistsByIdAsync(string id)
+        {
+            bool result = await this.dbContext
+                .Technologies
+                .AnyAsync(t => t.Id.ToString() == id);
 
-		public async Task<TechnologyEditFormModel> GetForEditByIdAsync(string id)
-		{
-			var technology = await this.dbContext
-				.Technologies
-				.FirstAsync(t => t.Id.ToString() == id);
+            return result;
+        }
 
-			return new TechnologyEditFormModel
-			{
-				Name = technology.Name,
-				ImageUrl = technology.ImageUrl,
-			};
-		}
+        public async Task<TechnologyEditFormModel> GetForEditByIdAsync(string id)
+        {
+            var technology = await this.dbContext
+                .Technologies
+                .FirstAsync(t => t.Id.ToString() == id);
 
-		public async Task EditTechnologyAsync(string technologyId, TechnologyEditFormModel model)
-		{
-			var technology = await this.dbContext
-				.Technologies
-				.FirstAsync(t => t.Id.ToString() == technologyId);
+            return new TechnologyEditFormModel
+            {
+                Name = technology.Name,
+                ImageUrl = technology.ImageUrl,
+            };
+        }
 
-			bool isChanged = false;
+        public async Task EditTechnologyAsync(string technologyId, TechnologyEditFormModel model)
+        {
+            var technology = await this.dbContext
+                .Technologies
+                .FirstAsync(t => t.Id.ToString() == technologyId);
 
-			if (technology.Name != model.Name)
-			{
-				technology.Name = model.Name;
-				isChanged = true;
-			}
+            bool isChanged = false;
 
-			if (model.Image != null)
-			{
-				technology.ImageUrl = 
-					await this.imageService.EditImage(model.Image, technology.ImageUrl, technology.Name, "DevHunter/technology");
-				isChanged = true;
-			}
+            if (technology.Name != model.Name)
+            {
+                technology.Name = model.Name;
+                isChanged = true;
+            }
 
-			if (isChanged)
-			{
-				await this.dbContext.SaveChangesAsync();
-			}
-		}
+            if (model.Image != null)
+            {
+                technology.ImageUrl =
+                    await this.imageService.EditImage(model.Image, technology.ImageUrl, technology.Name, "DevHunter/technology");
+                isChanged = true;
+            }
 
-		public async Task DeleteByIdAsync(string id)
-		{
-			var technology = await this.dbContext
-				.Technologies
-				.FirstOrDefaultAsync(t => t.Id.ToString() == id);
+            if (isChanged)
+            {
+                await this.dbContext.SaveChangesAsync();
+            }
+        }
 
-			if (technology != null)
-			{
-				this.dbContext.Technologies.Remove(technology);
-				await this.dbContext.SaveChangesAsync();
-			}
-		}
+        public async Task DeleteByIdAsync(string id)
+        {
+            var technology = await this.dbContext
+                .Technologies
+                .FirstOrDefaultAsync(t => t.Id.ToString() == id);
 
-		public async Task<IEnumerable<TechnologyViewModel>> AllByDevelopmentAsync(string id)
-		{
-			var technologies = await this.dbContext
-				.TechnologiesDevelopments
-				.AsNoTracking()
-				.Where(t => t.DevelopmentId.ToString() == id)
-				.Select(t => new TechnologyViewModel()
-				{
-					Id = t.Technology.Id.ToString(),
-					Name = t.Technology.Name,
-					ImageUrl = t.Technology.ImageUrl.EnhanceCloudinaryUrl(50, "auto")
-				})
-				.ToListAsync();
+            if (technology != null)
+            {
+                this.dbContext.Technologies.Remove(technology);
+                await this.dbContext.SaveChangesAsync();
+            }
+        }
 
-			foreach (var technology in technologies)
-			{
-				technology.Count = await this.dbContext
-					.TechnologyJobOffers
-					.CountAsync(t => t.TechnologyId.ToString() == technology.Id);
-			}
+        public async Task<IEnumerable<TechnologyViewModel>> AllByDevelopmentAsync(string id)
+        {
+            var technologies = await this.dbContext
+                .TechnologiesDevelopments
+                .AsNoTracking()
+                .Where(t => t.DevelopmentId.ToString() == id)
+                .Select(t => t.Technology)
+                .Select(ToEnhancedViewModel)
+                .ToListAsync();
 
-			return technologies;
-		}
+            foreach (var technology in technologies)
+            {
+                technology.Count = await this.dbContext
+                    .TechnologyJobOffers
+                    .CountAsync(t => t.TechnologyId.ToString() == technology.Id);
+            }
 
-		public async Task<IEnumerable<TechnologyViewModel>> AllByJobOfferIdAsync(string id)
-		{
-			var technologies = await this.dbContext
-				.TechnologyJobOffers
-				.Where(tj => tj.JobOfferId.ToString() == id)
-				.Select(tj => new TechnologyViewModel()
-				{
-					Id = tj.TechnologyId.ToString(),
-					Name = tj.Technology.Name,
-					ImageUrl = tj.Technology.ImageUrl
-				})
-				.ToListAsync();
+            return technologies;
+        }
 
-			return technologies;
-		}
+        public async Task<IEnumerable<TechnologyViewModel>> AllByJobOfferIdAsync(string id)
+        {
+            var technologies = await this.dbContext
+                .TechnologyJobOffers
+                .Where(tj => tj.JobOfferId.ToString() == id)
+                .Select(tj => new TechnologyViewModel()
+                {
+                    Id = tj.TechnologyId.ToString(),
+                    Name = tj.Technology.Name,
+                    ImageUrl = tj.Technology.ImageUrl
+                })
+                .ToListAsync();
 
-		public async Task<IEnumerable<TechnologyViewModel>> AllWithoutJobOfferOnesAsync(string id)
-		{
-			var jobOffer = await this.dbContext
-				.JobOffers
-				.FirstAsync(j => j.Id.ToString() == id);
+            return technologies;
+        }
 
-			var existingTechnologyIds = jobOffer.JobOfferTechnologies.Select(t => t.TechnologyId).ToList();
+        public async Task<IEnumerable<TechnologyViewModel>> AllWithoutJobOfferOnesAsync(string id)
+        {
+            var jobOffer = await this.dbContext
+                .JobOffers
+                .FirstAsync(j => j.Id.ToString() == id);
 
-			var technologies = await this.dbContext
-				.Technologies
-				.Where(t => !existingTechnologyIds.Any(et => t.Id == et))
-				.AsNoTracking()
-				.Select(t => new TechnologyViewModel()
-				{
-					Id = t.Id.ToString(),
-					Name = t.Name,
-					ImageUrl = t.ImageUrl.EnhanceCloudinaryUrl(50, "auto")
-				})
-				.ToListAsync();
+            var existingTechnologyIds = jobOffer.JobOfferTechnologies.Select(t => t.TechnologyId).ToList();
 
-			return technologies;
-		}
+            var technologies = await this.dbContext
+                .Technologies
+                .Where(t => !existingTechnologyIds.Any(et => t.Id == et))
+                .AsNoTracking()
+                .Select(ToEnhancedViewModel)
+                .ToListAsync();
 
-		private async Task<IFormFile> ConvertImageUrlToFormFileAsync(string imageUrl)
-		{
-			using (HttpClient client = new HttpClient())
-			{
-				byte[] imageBytes = await client.GetByteArrayAsync(imageUrl);
+            return technologies;
+        }
 
-				string fileName = Path.GetFileName(imageUrl);
+        private static readonly Expression<Func<Technology, TechnologyViewModel>> ToEnhancedViewModel =
+            technology => new TechnologyViewModel
+            {
+                Id = technology.Id.ToString(),
+                Name = technology.Name,
+                ImageUrl = technology.ImageUrl.EnhanceCloudinaryUrl(50, "auto")
+            };
 
-				using (MemoryStream stream = new MemoryStream(imageBytes))
-				{
-					IFormFile formFile = new FormFile(stream, 0, imageBytes.Length, "file", fileName);
+        private async Task<IFormFile> ConvertImageUrlToFormFileAsync(string imageUrl)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                byte[] imageBytes = await client.GetByteArrayAsync(imageUrl);
 
-					return formFile;
-				}
-			}
-		}
-	}
+                string fileName = Path.GetFileName(imageUrl);
+
+                using (MemoryStream stream = new MemoryStream(imageBytes))
+                {
+                    IFormFile formFile = new FormFile(stream, 0, imageBytes.Length, "file", fileName);
+
+                    return formFile;
+                }
+            }
+        }
+    }
 }
