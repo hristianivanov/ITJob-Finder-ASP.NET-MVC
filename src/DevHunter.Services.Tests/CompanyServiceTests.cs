@@ -216,6 +216,14 @@
                 .Equal(company.JobOffers, (j1, j2) => j1.Id == j2.Id.ToString())
                 .And
                 .HaveCount(company.JobOffers.Count);
+
+            var expectedTechnologyIds = company.JobOffers
+                .SelectMany(jobOffer => jobOffer.JobOfferTechnologies)
+                .Select(jobOfferTechnology => jobOfferTechnology.TechnologyId.ToString())
+                .Distinct();
+
+            result.Technologies.Select(technology => technology.Id)
+                .Should().BeEquivalentTo(expectedTechnologyIds);
         }
 
         [Test]

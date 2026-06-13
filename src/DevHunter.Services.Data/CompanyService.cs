@@ -1,6 +1,7 @@
 ﻿namespace DevHunter.Services.Data
 {
     using System.Globalization;
+    using System.Linq.Expressions;
 
     using Ganss.Xss;
     using Microsoft.EntityFrameworkCore;
@@ -211,90 +212,35 @@
         {
             Guid companyId = ParseCompanyId(id);
 
-            var company = await this.context
-                .Companies
+            CompanyDetailsData company = await this.context.Companies
                 .AsNoTracking()
-                .Include(company => company.JobOffers)
-                    .ThenInclude(jobOffer => jobOffer.JobOfferTechnologies)
-                        .ThenInclude(jobOfferTechnology => jobOfferTechnology.Technology)
-                .FirstOrDefaultAsync(company => company.Id == companyId)
+                .Where(company => company.Id == companyId)
+                .Select(CompanyDetailsSelector)
+                .FirstOrDefaultAsync()
                 ?? throw new InvalidOperationException("Company does not exist.");
 
-            var jobOffers = company
-                .JobOffers
-                .Select(j => new JobOfferAllViewModel()
-                {
-                    Id = j.Id.ToString(),
-                    CompanyName = company.Name,
-                    CompanyImageUrl = company.ImageUrl!,
-                    CreatedOn = j.CreatedOn.ToString(CreatedOnDateFormat, CultureInfo.InvariantCulture),
-                    JobLocation = j.PlaceToWork,
-                    JobPosition = j.JobPosition,
-                    Salary = GetSalary(j.MinSalary, j.MaxSalary),
-                    Technologies = j.JobOfferTechnologies.Select(tj => new TechnologyViewModel()
-                    {
-                        Id = tj.TechnologyId.ToString(),
-                        ImageUrl = tj.Technology.ImageUrl!,
-                        Name = tj.Technology.Name,
-                    }),
-                })
+            List<JobOfferAllViewModel> jobOffers = company.JobOffers
+                .Select(jobOffer => MapJobOffer(jobOffer, company))
                 .ToList();
 
-            var companyTechnologies = new List<TechnologyViewModel>();
-
-            foreach (var companyJobOffer in company.JobOffers)
-            {
-                foreach (var technology in companyJobOffer.JobOfferTechnologies)
-                {
-                    companyTechnologies.Add(new TechnologyViewModel()
-                    {
-
-                        Id = technology.TechnologyId.ToString(),
-                        Name = technology.Technology.Name,
-                        ImageUrl = technology.Technology.ImageUrl!,
-                    }
-                    );
-                }
-            }
-
-            companyTechnologies = companyTechnologies.DistinctBy(x => x.Id).ToList();
-
-            var model = new CompanyDetailViewModel
+            return new CompanyDetailViewModel
             {
                 Id = company.Id.ToString(),
                 Name = company.Name,
-                ImageUrl = company.ImageUrl!,
+                ImageUrl = company.ImageUrl,
                 WebsiteUrl = company.WebsiteUrl,
+                Sector = company.Sector,
+                Activity = company.Activity,
+                Location = company.Location,
+                Description = company.Description,
+                FoundedYear = company.FoundedDate?.Year,
+                EmployeesCnt = company.EmployeeCount,
                 JobOffers = jobOffers,
-                Technologies = companyTechnologies
+                Technologies = jobOffers
+                    .SelectMany(jobOffer => jobOffer.Technologies)
+                    .DistinctBy(technology => technology.Id)
+                    .ToList()
             };
-
-            if (!string.IsNullOrWhiteSpace(company.Sector))
-            {
-                model.Sector = company.Sector;
-            }
-            if (!string.IsNullOrWhiteSpace(company.Activity))
-            {
-                model.Activity = company.Activity;
-            }
-            if (!string.IsNullOrWhiteSpace(company.Location))
-            {
-                model.Location = company.Location;
-            }
-            if (!string.IsNullOrWhiteSpace(company.Description))
-            {
-                model.Description = company.Description;
-            }
-            if (company.FoundedDate.HasValue)
-            {
-                model.FoundedYear = company.FoundedDate.Value.Year;
-            }
-            if (company.EmployeeCount.HasValue)
-            {
-                model.EmployeesCnt = company.EmployeeCount.Value;
-            }
-
-            return model;
         }
 
 
@@ -303,6 +249,26 @@
             => Guid.TryParse(id, out Guid companyId)
                 ? companyId
                 : throw new InvalidOperationException("A valid company id is required.");
+
+        private static JobOfferAllViewModel MapJobOffer(JobOfferDetailsData jobOffer, CompanyDetailsData company)
+            => new()
+            {
+                Id = jobOffer.Id.ToString(),
+                CompanyName = company.Name,
+                CompanyImageUrl = company.ImageUrl,
+                CreatedOn = jobOffer.CreatedOn.ToString(CreatedOnDateFormat, CultureInfo.InvariantCulture),
+                JobLocation = jobOffer.PlaceToWork,
+                JobPosition = jobOffer.JobPosition,
+                Salary = GetSalary(jobOffer.MinSalary, jobOffer.MaxSalary),
+                Technologies = jobOffer.Technologies
+                    .Select(technology => new TechnologyViewModel
+                    {
+                        Id = technology.Id.ToString(),
+                        ImageUrl = technology.ImageUrl,
+                        Name = technology.Name,
+                    })
+                    .ToList(),
+            };
 
         private static string GetSalary(decimal? minSalary, decimal? maxSalary)
         {
@@ -324,6 +290,73 @@
             }
 
             return $"{formattedMaxSalary} lv.";
+        }
+
+        private static readonly Expression<Func<Company, CompanyDetailsData>> CompanyDetailsSelector =
+            company => new CompanyDetailsData
+            {
+                Id = company.Id,
+                Name = company.Name,
+                ImageUrl = company.ImageUrl!,
+                WebsiteUrl = company.WebsiteUrl,
+                Sector = company.Sector,
+                Activity = company.Activity,
+                Location = company.Location,
+                Description = company.Description,
+                FoundedDate = company.FoundedDate,
+                EmployeeCount = company.EmployeeCount,
+                JobOffers = company.JobOffers
+                    .Select(jobOffer => new JobOfferDetailsData
+                    {
+                        Id = jobOffer.Id,
+                        CreatedOn = jobOffer.CreatedOn,
+                        PlaceToWork = jobOffer.PlaceToWork,
+                        JobPosition = jobOffer.JobPosition,
+                        MinSalary = jobOffer.MinSalary,
+                        MaxSalary = jobOffer.MaxSalary,
+                        Technologies = jobOffer.JobOfferTechnologies
+                            .Select(jobOfferTechnology => new TechnologyDetailsData
+                            {
+                                Id = jobOfferTechnology.TechnologyId,
+                                ImageUrl = jobOfferTechnology.Technology.ImageUrl!,
+                                Name = jobOfferTechnology.Technology.Name,
+                            })
+                            .ToList(),
+                    })
+                    .ToList(),
+            };
+
+        private sealed class CompanyDetailsData
+        {
+            public Guid Id { get; init; }
+            public string Name { get; init; } = null!;
+            public string ImageUrl { get; init; } = null!;
+            public string? WebsiteUrl { get; init; }
+            public string? Sector { get; init; }
+            public string? Activity { get; init; }
+            public string? Location { get; init; }
+            public string? Description { get; init; }
+            public DateTime? FoundedDate { get; init; }
+            public int? EmployeeCount { get; init; }
+            public List<JobOfferDetailsData> JobOffers { get; init; } = new();
+        }
+
+        private sealed class JobOfferDetailsData
+        {
+            public Guid Id { get; init; }
+            public DateTime CreatedOn { get; init; }
+            public string PlaceToWork { get; init; } = null!;
+            public string JobPosition { get; init; } = null!;
+            public decimal? MinSalary { get; init; }
+            public decimal? MaxSalary { get; init; }
+            public List<TechnologyDetailsData> Technologies { get; init; } = new();
+        }
+
+        private sealed class TechnologyDetailsData
+        {
+            public Guid Id { get; init; }
+            public string ImageUrl { get; init; } = null!;
+            public string Name { get; init; } = null!;
         }
     }
 }
