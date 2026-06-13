@@ -1,15 +1,16 @@
 ﻿namespace DevHunter.Services.Data.Interfaces
 {
-	using Web.ViewModels.JobApplication;
+    using Web.ViewModels.JobApplication;
 
-	public interface IJobApplicationService
-	{
-		Task<string> ApplyJobOfferAsync(JobApplicationFormModel model, string jobOfferId,string? userId);
-		Task<ICollection<AllJobApplicationViewModel>> AllCandidatesByCompanyIdAsync(string? companyId);
-		Task<JobApplicationViewModel> GetApplicationById(string applicationId);
-		Task<IEnumerable<MyApplicationViewModel>> AllUserApplicationsAsync(string userId);
-		Task<bool> ExistsByIdAsync(string id);
-		Task ApproveApplicationAsync(string id);
-		Task RejectApplicationAsync(string id);
-	}
+    public interface IJobApplicationService
+    {
+        Task<string> ApplyJobOfferAsync(JobApplicationFormModel model, string jobOfferId, string? userId);
+        Task<ICollection<AllJobApplicationViewModel>> AllCandidatesByCompanyIdAsync(string? companyId);
+        Task<JobApplicationViewModel> GetApplicationById(string applicationId, string companyUserId);
+        Task<IEnumerable<MyApplicationViewModel>> AllUserApplicationsAsync(string userId);
+        Task<bool> ExistsByIdAsync(string id);
+        Task<bool> IsOwnedByCompanyAsync(string id, string companyUserId);
+        Task ApproveApplicationAsync(string id, string companyUserId);
+        Task RejectApplicationAsync(string id, string companyUserId);
+    }
 }

@@ -13,106 +13,103 @@ using Services.Data.Interfaces;
 
 public class Program
 {
-	public static async Task Main(string[] args)
-	{
-		var builder = WebApplication.CreateBuilder(args);
+    public static async Task Main(string[] args)
+    {
+        var builder = WebApplication.CreateBuilder(args);
 
-		var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
-							   ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+        var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
+                               ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
-		builder.Services.AddDbContext<DevHunterDbContext>(options =>
-		{
-			options.UseLazyLoadingProxies();
-			options.UseSqlServer(connectionString);
-		});
+        builder.Services.AddDbContext<DevHunterDbContext>(options =>
+        {
+            options.UseLazyLoadingProxies();
+            options.UseSqlServer(connectionString);
+        });
 
-		builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+        builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-		builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
-			{
-				options.SignIn.RequireConfirmedAccount =
-					builder.Configuration.GetValue<bool>("Identity:SignIn:RequireConfirmedAccount");
-				options.Password.RequireLowercase =
-					builder.Configuration.GetValue<bool>("Identity:Password:RequireLowercase");
-				options.Password.RequireUppercase =
-					builder.Configuration.GetValue<bool>("Identity:Password:RequireUppercase");
-				options.Password.RequireNonAlphanumeric =
-					builder.Configuration.GetValue<bool>("Identity:Password:RequireNonAlphanumeric");
-				options.Password.RequiredLength =
-					builder.Configuration.GetValue<int>("Identity:Password:RequiredLength");
-			})
-			.AddRoles<IdentityRole<Guid>>()
-			.AddEntityFrameworkStores<DevHunterDbContext>()
-			.AddDefaultTokenProviders();
+        builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
+            {
+                options.SignIn.RequireConfirmedAccount =
+                    builder.Configuration.GetValue<bool>("Identity:SignIn:RequireConfirmedAccount");
+                options.Password.RequireLowercase =
+                    builder.Configuration.GetValue<bool>("Identity:Password:RequireLowercase");
+                options.Password.RequireUppercase =
+                    builder.Configuration.GetValue<bool>("Identity:Password:RequireUppercase");
+                options.Password.RequireNonAlphanumeric =
+                    builder.Configuration.GetValue<bool>("Identity:Password:RequireNonAlphanumeric");
+                options.Password.RequiredLength =
+                    builder.Configuration.GetValue<int>("Identity:Password:RequiredLength");
+            })
+            .AddRoles<IdentityRole<Guid>>()
+            .AddEntityFrameworkStores<DevHunterDbContext>()
+            .AddDefaultTokenProviders();
 
-		builder.Services.ConfigureApplicationCookie(cfg =>
-		{
-			cfg.LoginPath = "/Account/Login";
-			cfg.LogoutPath = "/Account/Logout";
-			cfg.AccessDeniedPath = "/Error/403";
-		});
+        builder.Services.ConfigureApplicationCookie(cfg =>
+        {
+            cfg.LoginPath = "/Account/Login";
+            cfg.LogoutPath = "/Account/Logout";
+            cfg.AccessDeniedPath = "/Error/403";
+        });
 
-		builder.Services.AddApplicationServices(typeof(IJobOfferService), builder.Configuration);
+        builder.Services.AddApplicationServices(typeof(IJobOfferService), builder.Configuration);
 
-		builder.Services.AddControllersWithViews()
-			.AddMvcOptions(options =>
-			{
-				options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
-				options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
-			});
+        builder.Services.AddControllersWithViews()
+            .AddMvcOptions(options =>
+            {
+                options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
+                options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
+            });
 
-		var app = builder.Build();
+        var app = builder.Build();
 
-		using (var serviceScope = app.Services.CreateScope())
-		{
-			var dbContext = serviceScope.ServiceProvider.GetRequiredService<DevHunterDbContext>();
+        using (var serviceScope = app.Services.CreateScope())
+        {
+            var dbContext = serviceScope.ServiceProvider.GetRequiredService<DevHunterDbContext>();
 
-			await dbContext.Database.MigrateAsync();
+            await dbContext.Database.MigrateAsync();
 
-			await DevHunterDbContextSeeder.SeedAsync(dbContext, serviceScope.ServiceProvider);
-		}
+            await DevHunterDbContextSeeder.SeedAsync(dbContext, serviceScope.ServiceProvider);
+        }
 
-		app.UseHttpsRedirection();
-		app.UseStaticFiles();
+        app.UseHttpsRedirection();
+        app.UseStaticFiles();
 
-		app.UseRouting();
+        app.UseRouting();
 
-		app.UseAuthentication();
-		app.UseAuthorization();
+        app.UseAuthentication();
+        app.UseAuthorization();
 
-		app.EnableOnlineUsersCheck();
+        app.EnableOnlineUsersCheck();
 
-		if (app.Environment.IsDevelopment())
-		{
-			app.UseMigrationsEndPoint();
-			app.UseDeveloperExceptionPage();
-		}
-		else
-		{
-			app.UseExceptionHandler("/Error/500");
-			app.UseStatusCodePagesWithReExecute("/Error/{0}");
+        if (app.Environment.IsDevelopment())
+        {
+            app.UseMigrationsEndPoint();
+            app.UseDeveloperExceptionPage();
+        }
+        else
+        {
+            app.UseExceptionHandler("/Error/500");
+            app.UseStatusCodePagesWithReExecute("/Error/{0}");
 
-			app.UseHsts();
-		}
+            app.UseHsts();
+        }
 
-		app.UseEndpoints(config =>
-		{
-			config.MapControllerRoute(
-				name: "areas",
-				pattern: "/{area:exists}/{controller=Home}/{action=Index}/{id?}"
-			);
+        app.MapControllerRoute(
+            name: "areas",
+            pattern: "/{area:exists}/{controller=Home}/{action=Index}/{id?}"
+        );
 
-			config.MapControllerRoute(
-				name: "error",
-				pattern: "/Error/{statusCode}",
-				defaults: new { controller = "Home", action = "Error" }
-			);
+        app.MapControllerRoute(
+            name: "error",
+            pattern: "/Error/{statusCode}",
+            defaults: new { controller = "Home", action = "Error" }
+        );
 
-			config.MapDefaultControllerRoute();
+        app.MapDefaultControllerRoute();
 
-			config.MapRazorPages();
-		});
+        app.MapRazorPages();
 
-		await app.RunAsync();
-	}
+        await app.RunAsync();
+    }
 }

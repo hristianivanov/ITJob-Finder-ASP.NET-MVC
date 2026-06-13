@@ -1,26 +1,26 @@
 ﻿namespace DevHunter.Web.ViewModels.User
 {
-	using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations;
 
-	using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Http;
 
-	using Infrastructure.Extensions;
-	
-	using static Common.EntityValidationConstants.Company;
+    using Infrastructure.Extensions;
 
-	public class CompanyRegisterFormModel : RegisterFormModel
-	{
-		[Required]
-		[StringLength(NameMaxLength,MinimumLength = NameMinLength)]
-		public string Name { get; set; } = null!;
+    using static Common.EntityValidationConstants.Company;
 
-		[WebsiteUrl(ErrorMessage = "Please enter a valid website URL.")]
-		public string? WebsiteUrl { get; set; }
+    public class CompanyRegisterFormModel : RegisterFormModel
+    {
+        [Required]
+        [StringLength(NameMaxLength, MinimumLength = NameMinLength)]
+        public string Name { get; set; } = null!;
 
-		[DataType(DataType.Upload)]
-		[Required(ErrorMessage = "Please select a file.")]
-		[MaxFileSize(ImageMaxMegaBytesFileSize * 1024 * 1024)]
-		[AllowedExtensions(new string[] { ".jpg", ".png" })]
-		public IFormFile Image { get; set; } = null!;
-	}
+        [WebsiteUrl(ErrorMessage = "Please enter a valid website URL.")]
+        public string? WebsiteUrl { get; set; }
+
+        [DataType(DataType.Upload)]
+        [Required(ErrorMessage = "Please select a file.")]
+        [MaxFileSize(ImageMaxMegaBytesFileSize * 1024 * 1024)]
+        [AllowedExtensions(new string[] { ".jpg", ".png" })]
+        public IFormFile Image { get; set; } = null!;
+    }
 }

@@ -1,180 +1,187 @@
 ﻿namespace DevHunter.Web.Infrastructure.Extensions
 {
-	using System.Linq;
-	using System.Reflection;
+    using System.Linq;
+    using System.Reflection;
 
-	using CloudinaryDotNet;
-	using Microsoft.AspNetCore.Builder;
-	using Microsoft.AspNetCore.Identity;
-	using Microsoft.Extensions.Configuration;
-	using Microsoft.Extensions.DependencyInjection;
+    using CloudinaryDotNet;
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
 
-	using Common;
-	using Middlewares;
-	using Data.Models;
+    using Common;
+    using Middlewares;
+    using Data.Models;
 
-	using static Common.GeneralApplicationConstants;
+    using static Common.GeneralApplicationConstants;
 
-	public static class WebApplicationBuilderExtensions
-	{
-		/// <summary>
-		/// This method registers all services with their interfaces and implementations of given assembly.
-		/// The assembly is taken from the type of any service implementation provided.
-		/// </summary>
-		/// <param name="serviceType"></param>
-		/// <exception cref="InvalidOperationException"></exception>
-		public static IServiceCollection AddApplicationServices(this IServiceCollection services, Type serviceType, IConfiguration configuration)
-		{
-			ConfigureCloudinaryService(services, configuration);
+    public static class WebApplicationBuilderExtensions
+    {
+        /// <summary>
+        /// This method registers all services with their interfaces and implementations of given assembly.
+        /// The assembly is taken from the type of any service implementation provided.
+        /// </summary>
+        /// <param name="serviceType"></param>
+        /// <exception cref="InvalidOperationException"></exception>
+        public static IServiceCollection AddApplicationServices(this IServiceCollection services, Type serviceType, IConfiguration configuration)
+        {
+            ConfigureCloudinaryService(services, configuration);
 
-			ConfigureEmailService(services, configuration);
+            ConfigureEmailService(services, configuration);
 
-			Assembly? serviceAssembly = Assembly.GetAssembly(serviceType);
-			if (serviceAssembly == null)
-			{
-				throw new InvalidOperationException("Invalid service type provided!");
-			}
+            Assembly? serviceAssembly = Assembly.GetAssembly(serviceType);
+            if (serviceAssembly == null)
+            {
+                throw new InvalidOperationException("Invalid service type provided!");
+            }
 
-			Type[] serviceTypes = serviceAssembly
-				.GetTypes()
-				.Where(t => t.Name.EndsWith("Service") && !t.IsInterface)
-				.ToArray();
+            Type[] serviceTypes = serviceAssembly
+                .GetTypes()
+                .Where(t => t.Name.EndsWith("Service") && !t.IsInterface)
+                .ToArray();
 
-			foreach (Type implementationType in serviceTypes)
-			{
-				Type? interfaceType = implementationType.GetInterface($"I{implementationType.Name}");
+            foreach (Type implementationType in serviceTypes)
+            {
+                Type? interfaceType = implementationType.GetInterface($"I{implementationType.Name}");
 
-				if (interfaceType == null)
-				{
-					throw new InvalidOperationException($"No interface is provided for the service with name: {implementationType.Name}");
-				}
+                if (interfaceType == null)
+                {
+                    throw new InvalidOperationException($"No interface is provided for the service with name: {implementationType.Name}");
+                }
 
-				services.AddScoped(interfaceType, implementationType);
-			}
+                services.AddScoped(interfaceType, implementationType);
+            }
 
-			return services;
-		}
+            return services;
+        }
 
-		private static void ConfigureEmailService(IServiceCollection services, IConfiguration configuration)
-		{
-			var emailConfig = configuration
-				.GetSection("EmailConfiguration")
-				.Get<EmailConfig>();
+        private static void ConfigureEmailService(IServiceCollection services, IConfiguration configuration)
+        {
+            var emailConfig = configuration
+                .GetSection("EmailConfiguration")
+                .Get<EmailConfig>();
 
-			services.AddSingleton(emailConfig);
-		}
+            if (emailConfig == null)
+            {
+                throw new InvalidOperationException("Email configuration is missing.");
+            }
 
-		private static void ConfigureCloudinaryService(IServiceCollection services, IConfiguration configuration)
-		{
-			var cloudName = configuration.GetValue<string>("AccountSettings:CloudName");
-			var apiKey = configuration.GetValue<string>("AccountSettings:ApiKey");
-			var apiSecret = configuration.GetValue<string>("AccountSettings:ApiSecret");
+            services.AddSingleton(emailConfig);
+        }
 
-			if (new[] { cloudName, apiKey, apiSecret }.Any(string.IsNullOrWhiteSpace))
-			{
-				throw new ArgumentException("Please specify your Cloudinary account Information");
-			}
+        private static void ConfigureCloudinaryService(IServiceCollection services, IConfiguration configuration)
+        {
+            var cloudName = configuration.GetValue<string>("AccountSettings:CloudName");
+            var apiKey = configuration.GetValue<string>("AccountSettings:ApiKey");
+            var apiSecret = configuration.GetValue<string>("AccountSettings:ApiSecret");
 
-			services.AddSingleton(new Cloudinary(new Account(cloudName, apiKey, apiSecret)));
-		}
+            if (string.IsNullOrWhiteSpace(cloudName)
+                || string.IsNullOrWhiteSpace(apiKey)
+                || string.IsNullOrWhiteSpace(apiSecret))
+            {
+                throw new ArgumentException("Please specify your Cloudinary account Information");
+            }
 
-		/// <summary>
-		/// This method seeds company role if it does not exist.
-		/// Passed email should be valid email of existing user in the application.
-		/// </summary>
-		/// <param name="app"></param>
-		/// <returns></returns>
-		public static IApplicationBuilder SeedCompany(this IApplicationBuilder app)
-		{
-			using IServiceScope scopedServices = app.ApplicationServices.CreateScope();
+            services.AddSingleton(new Cloudinary(new Account(cloudName, apiKey, apiSecret)));
+        }
 
-			IServiceProvider serviceProvider = scopedServices.ServiceProvider;
+        /// <summary>
+        /// This method seeds company role if it does not exist.
+        /// Passed email should be valid email of existing user in the application.
+        /// </summary>
+        /// <param name="app"></param>
+        /// <returns></returns>
+        public static IApplicationBuilder SeedCompany(this IApplicationBuilder app)
+        {
+            using IServiceScope scopedServices = app.ApplicationServices.CreateScope();
 
-			RoleManager<IdentityRole<Guid>> roleManager =
-				serviceProvider.GetRequiredService<RoleManager<IdentityRole<Guid>>>();
+            IServiceProvider serviceProvider = scopedServices.ServiceProvider;
 
-			Task.Run(async () =>
-				{
-					if (await roleManager.RoleExistsAsync("Company"))
-					{
-						return;
-					}
+            RoleManager<IdentityRole<Guid>> roleManager =
+                serviceProvider.GetRequiredService<RoleManager<IdentityRole<Guid>>>();
 
-					IdentityRole<Guid> role =
-						new IdentityRole<Guid>("Company");
+            Task.Run(async () =>
+                {
+                    if (await roleManager.RoleExistsAsync("Company"))
+                    {
+                        return;
+                    }
 
-					await roleManager.CreateAsync(role);
-				})
-				.GetAwaiter()
-				.GetResult();
+                    IdentityRole<Guid> role =
+                        new IdentityRole<Guid>("Company");
 
-			return app;
-		}
+                    await roleManager.CreateAsync(role);
+                })
+                .GetAwaiter()
+                .GetResult();
 
-		/// <summary>
-		/// This method seeds admin role if it does not exist.
-		/// Passed email should be valid email of existing user in the application.
-		/// </summary>
-		/// <param name="app"></param>
-		/// <param name="email"></param>
-		/// <returns></returns>
-		public static IApplicationBuilder SeedAdministrator(this IApplicationBuilder app, string email = AdminEmail)
-		{
-			using IServiceScope scopedServices = app.ApplicationServices.CreateScope();
+            return app;
+        }
 
-			IServiceProvider serviceProvider = scopedServices.ServiceProvider;
+        /// <summary>
+        /// This method seeds admin role if it does not exist.
+        /// Passed email should be valid email of existing user in the application.
+        /// </summary>
+        /// <param name="app"></param>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        public static IApplicationBuilder SeedAdministrator(this IApplicationBuilder app, string email = AdminEmail)
+        {
+            using IServiceScope scopedServices = app.ApplicationServices.CreateScope();
 
-			UserManager<ApplicationUser> userManager =
-				serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-			RoleManager<IdentityRole<Guid>> roleManager =
-				serviceProvider.GetRequiredService<RoleManager<IdentityRole<Guid>>>();
+            IServiceProvider serviceProvider = scopedServices.ServiceProvider;
 
-			Task.Run(async () =>
-			{
-				if (await roleManager.RoleExistsAsync(AdminRoleName))
-				{
-					return;
-				}
+            UserManager<ApplicationUser> userManager =
+                serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+            RoleManager<IdentityRole<Guid>> roleManager =
+                serviceProvider.GetRequiredService<RoleManager<IdentityRole<Guid>>>();
 
-				IdentityRole<Guid> role =
-					new IdentityRole<Guid>(AdminRoleName);
+            Task.Run(async () =>
+            {
+                if (await roleManager.RoleExistsAsync(AdminRoleName))
+                {
+                    return;
+                }
 
-				await roleManager.CreateAsync(role);
-			})
-			.GetAwaiter()
-			.GetResult();
+                IdentityRole<Guid> role =
+                    new IdentityRole<Guid>(AdminRoleName);
 
-			Task.Run(async () =>
-			{
-				ApplicationUser adminUser =
-					await userManager.FindByEmailAsync(email);
+                await roleManager.CreateAsync(role);
+            })
+            .GetAwaiter()
+            .GetResult();
 
-				if (adminUser == null)
-				{
-					adminUser = new ApplicationUser()
-					{
-						Id = Guid.NewGuid(),
-						UserName = AdminEmail,
-						NormalizedUserName = AdminEmail.ToUpper(),
-						Email = AdminEmail,
-						NormalizedEmail = AdminEmail.ToUpper(),
-						SecurityStamp = Guid.NewGuid().ToString(),
-					};
+            Task.Run(async () =>
+            {
+                ApplicationUser? adminUser =
+                    await userManager.FindByEmailAsync(email);
 
-					await userManager.CreateAsync(adminUser, AdminPass);
-				}
+                if (adminUser == null)
+                {
+                    adminUser = new ApplicationUser()
+                    {
+                        Id = Guid.NewGuid(),
+                        UserName = AdminEmail,
+                        NormalizedUserName = AdminEmail.ToUpper(),
+                        Email = AdminEmail,
+                        NormalizedEmail = AdminEmail.ToUpper(),
+                        SecurityStamp = Guid.NewGuid().ToString(),
+                    };
 
-				await userManager.AddToRoleAsync(adminUser, AdminRoleName);
-			})
-			.GetAwaiter()
-			.GetResult();
+                    await userManager.CreateAsync(adminUser, AdminPass);
+                }
 
-			return app;
-		}
+                await userManager.AddToRoleAsync(adminUser, AdminRoleName);
+            })
+            .GetAwaiter()
+            .GetResult();
 
-		public static IApplicationBuilder EnableOnlineUsersCheck(this IApplicationBuilder app)
-		{
-			return app.UseMiddleware<OnlineUsersMiddleware>();
-		}
-	}
+            return app;
+        }
+
+        public static IApplicationBuilder EnableOnlineUsersCheck(this IApplicationBuilder app)
+        {
+            return app.UseMiddleware<OnlineUsersMiddleware>();
+        }
+    }
 }

@@ -1,12 +1,12 @@
 ﻿namespace DevHunter.Web.Areas.Admin.Controllers
 {
-	using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc;
 
-	public class HomeController : BaseAdminController
-	{
-		public IActionResult Index()
-		{
-			return View();
-		}
-	}
+    public class HomeController : BaseAdminController
+    {
+        public IActionResult Index()
+        {
+            return View();
+        }
+    }
 }

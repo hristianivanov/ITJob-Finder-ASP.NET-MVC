@@ -1,7 +1,7 @@
 namespace DevHunter.Services.Tests
 {
-	using FluentAssertions;
-    using Microsoft.AspNetCore.Http.Internal;
+    using FluentAssertions;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.EntityFrameworkCore;
     using Moq;
 
@@ -24,7 +24,7 @@ namespace DevHunter.Services.Tests
         private IDevelopmentService developmentService;
 
         [SetUp]
-        public void Setup()
+        public async Task Setup()
         {
             dbOptions = new DbContextOptionsBuilder<DevHunterDbContext>()
                 .UseInMemoryDatabase("DevHunterInMemory" + Guid.NewGuid())
@@ -34,7 +34,7 @@ namespace DevHunter.Services.Tests
 
             dbContext.Database.EnsureCreated();
 
-            SeedDatabase(dbContext);
+            await SeedDatabase(dbContext);
 
             developmentService =
                 new DevelopmentService(dbContext, ImageServiceMock.Instance, TechnologyServiceMock.Instance);
@@ -102,7 +102,7 @@ namespace DevHunter.Services.Tests
             var development = new DevelopmentFormModel()
             {
                 Name = "new_development",
-                Image = null
+                Image = null!
             };
 
             await developmentService.AddAsync(development);
@@ -212,7 +212,7 @@ namespace DevHunter.Services.Tests
             var model = new DevelopmentEditFormModel
             {
                 Name = "new_development_name",
-                Image = new FormFile(null, 0, 0, "test.jpg", "test.jpg")
+                Image = new FormFile(Stream.Null, 0, 0, "test.jpg", "test.jpg")
             };
 
             await developmentService.EditDevelopmentAsync(development.Id.ToString(), model);
@@ -229,9 +229,9 @@ namespace DevHunter.Services.Tests
         [TestCase("  ")]
         [TestCase(null)]
         [TestCase("invalid_id")]
-        public async Task EditDevelopmentAsync_ShouldThrowExceptionForNonExistingId(string nonExistingDevelopmentId)
+        public async Task EditDevelopmentAsync_ShouldThrowExceptionForNonExistingId(string? nonExistingDevelopmentId)
         {
-            var act = async () => await developmentService.EditDevelopmentAsync(nonExistingDevelopmentId, null);
+            var act = async () => await developmentService.EditDevelopmentAsync(nonExistingDevelopmentId!, null!);
 
             await act.Should().ThrowAsync<InvalidOperationException>();
         }
@@ -241,7 +241,7 @@ namespace DevHunter.Services.Tests
         {
             var development = await dbContext.Developments.FirstAsync();
 
-            var act = async () => await developmentService.EditDevelopmentAsync(development.Id.ToString(), null);
+            var act = async () => await developmentService.EditDevelopmentAsync(development.Id.ToString(), null!);
 
             await act.Should().ThrowAsync<NullReferenceException>();
         }

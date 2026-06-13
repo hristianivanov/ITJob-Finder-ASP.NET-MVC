@@ -37,30 +37,30 @@
                         },
                         new TechnologyDevelopments
                         {
-	                        TechnologyId = Guid.Parse("85eb8c55-d4ac-4408-8167-8887f9b3dc78")
+                            TechnologyId = Guid.Parse("85eb8c55-d4ac-4408-8167-8887f9b3dc78")
                         },
                         new TechnologyDevelopments
                         {
-	                        TechnologyId = Guid.Parse("64ff7067-eb71-49d1-8672-ac5d71da71ac")
+                            TechnologyId = Guid.Parse("64ff7067-eb71-49d1-8672-ac5d71da71ac")
                         },
                         new TechnologyDevelopments
                         {
-	                        TechnologyId = Guid.Parse("075ec4e5-5197-456c-9a75-aa215fa8b3da")
+                            TechnologyId = Guid.Parse("075ec4e5-5197-456c-9a75-aa215fa8b3da")
                         },
                         new TechnologyDevelopments
                         {
-	                        TechnologyId = Guid.Parse("b540d04c-7569-493e-a390-62f3df559d4f")
+                            TechnologyId = Guid.Parse("b540d04c-7569-493e-a390-62f3df559d4f")
                         },
                         new TechnologyDevelopments
                         {
-	                        TechnologyId = Guid.Parse("bb8aafc8-0ac4-4694-9dda-a10ddfdd31ce")
+                            TechnologyId = Guid.Parse("bb8aafc8-0ac4-4694-9dda-a10ddfdd31ce")
                         },
                         new TechnologyDevelopments
                         {
-	                        TechnologyId = Guid.Parse("4972cc43-375b-40a7-829d-9c0acaefbcf0")
+                            TechnologyId = Guid.Parse("4972cc43-375b-40a7-829d-9c0acaefbcf0")
                         }
                     }
-				},
+                },
                 new Development()
                 {
                     Id = Guid.Parse("c385035d-2a4d-442a-b6ca-6443bb378be1"),
@@ -74,18 +74,18 @@
                         },
                         new TechnologyDevelopments
                         {
-	                        TechnologyId = Guid.Parse("8b8d6dc4-5abe-46fe-b7f9-dbe2c5d2fac9")
+                            TechnologyId = Guid.Parse("8b8d6dc4-5abe-46fe-b7f9-dbe2c5d2fac9")
                         },
                         new TechnologyDevelopments
                         {
-	                        TechnologyId = Guid.Parse("9dcfddda-5de8-4406-8e73-c4c0f6f0951e")
+                            TechnologyId = Guid.Parse("9dcfddda-5de8-4406-8e73-c4c0f6f0951e")
                         },
                         new TechnologyDevelopments
                         {
-	                        TechnologyId = Guid.Parse("e6218084-2b54-4165-b8a9-60c0d9ee7e1d")
+                            TechnologyId = Guid.Parse("e6218084-2b54-4165-b8a9-60c0d9ee7e1d")
                         }
                     }
-				},
+                },
                 new Development()
                 {
                     Id = Guid.Parse("010164b3-025f-461c-b393-b35bd679bf30"),
@@ -105,24 +105,24 @@
                     ImageUrl = "https://res.cloudinary.com/dlffxtrek/image/upload/v1712052843/DevHunter/development/Data%20Science.png",
                     DevelopmentTechnologies = new HashSet<TechnologyDevelopments>
                     {
-	                    new TechnologyDevelopments
-	                    {
-		                    TechnologyId = Guid.Parse("e0988db1-54b6-47b9-9293-c96423280230")
-	                    },
-	                    new TechnologyDevelopments
-	                    {
-		                    TechnologyId = Guid.Parse("c43707a9-9307-476c-95e6-3c1381364e0e")
-	                    },
-	                    new TechnologyDevelopments
-	                    {
-		                    TechnologyId = Guid.Parse("2a698b89-b775-41f4-b97d-f20942a72b8d")
-	                    },
-	                    new TechnologyDevelopments
-	                    {
-		                    TechnologyId = Guid.Parse("1835a5be-934c-4149-a7bf-72e4d22589b0")
-	                    }
+                        new TechnologyDevelopments
+                        {
+                            TechnologyId = Guid.Parse("e0988db1-54b6-47b9-9293-c96423280230")
+                        },
+                        new TechnologyDevelopments
+                        {
+                            TechnologyId = Guid.Parse("c43707a9-9307-476c-95e6-3c1381364e0e")
+                        },
+                        new TechnologyDevelopments
+                        {
+                            TechnologyId = Guid.Parse("2a698b89-b775-41f4-b97d-f20942a72b8d")
+                        },
+                        new TechnologyDevelopments
+                        {
+                            TechnologyId = Guid.Parse("1835a5be-934c-4149-a7bf-72e4d22589b0")
+                        }
                     }
-				},
+                },
                 new Development() {
                     Id = Guid.Parse("5f4e14ae-b693-4f22-8167-4c808c436391"),
                     Name = "IT Management",
@@ -134,16 +134,16 @@
                     ImageUrl = "https://res.cloudinary.com/dlffxtrek/image/upload/v1712052843/DevHunter/development/ERP%20-%20CRM%20development.png",
                     DevelopmentTechnologies = new HashSet<TechnologyDevelopments>
                     {
-	                    new TechnologyDevelopments
-	                    {
-		                    TechnologyId = Guid.Parse("1e27c97f-ffdb-4d3a-afc6-6d4d75532711")
-	                    },
-	                    new TechnologyDevelopments
-	                    {
-		                    TechnologyId = Guid.Parse("8c8373a3-a9bf-4b31-96d8-e9a8ec6a5f13")
-	                    }
+                        new TechnologyDevelopments
+                        {
+                            TechnologyId = Guid.Parse("1e27c97f-ffdb-4d3a-afc6-6d4d75532711")
+                        },
+                        new TechnologyDevelopments
+                        {
+                            TechnologyId = Guid.Parse("8c8373a3-a9bf-4b31-96d8-e9a8ec6a5f13")
+                        }
                     }
-				},
+                },
                 new Development() {
                     Id = Guid.Parse("134cb2eb-71a2-430f-ae7d-b01895cbefb8"),
                     Name = "Infrastructure",
@@ -156,18 +156,18 @@
                         },
                         new TechnologyDevelopments
                         {
-	                        TechnologyId = Guid.Parse("a367010c-a083-490c-b2ed-976ee8f49c53")
+                            TechnologyId = Guid.Parse("a367010c-a083-490c-b2ed-976ee8f49c53")
                         },
                         new TechnologyDevelopments
                         {
-	                        TechnologyId = Guid.Parse("f7861a1b-f927-475f-9a9c-86aa1e923b73")
+                            TechnologyId = Guid.Parse("f7861a1b-f927-475f-9a9c-86aa1e923b73")
                         },
                         new TechnologyDevelopments
                         {
-	                        TechnologyId = Guid.Parse("e1fdc176-5f0e-44a2-8b02-84f757fe5118")
+                            TechnologyId = Guid.Parse("e1fdc176-5f0e-44a2-8b02-84f757fe5118")
                         }
                     }
-				},
+                },
                 new Development() {
                     Id = Guid.Parse("60151c1f-394a-49e4-8777-fd85d41f1341"),
                     Name = "Junior/Intern",
@@ -179,60 +179,60 @@
                     ImageUrl = "https://res.cloudinary.com/dlffxtrek/image/upload/v1712052844/DevHunter/development/Mobile%20Development.png",
                     DevelopmentTechnologies = new HashSet<TechnologyDevelopments>
                     {
-	                    new TechnologyDevelopments
-	                    {
-		                    TechnologyId = Guid.Parse("4815599e-4d99-458a-ad41-de90b75b3c0f")
-	                    },
-	                    new TechnologyDevelopments
-	                    {
-		                    TechnologyId = Guid.Parse("6208abee-b855-4281-beaa-aa94673784a0")
-	                    }
+                        new TechnologyDevelopments
+                        {
+                            TechnologyId = Guid.Parse("4815599e-4d99-458a-ad41-de90b75b3c0f")
+                        },
+                        new TechnologyDevelopments
+                        {
+                            TechnologyId = Guid.Parse("6208abee-b855-4281-beaa-aa94673784a0")
+                        }
                     }
-				},
+                },
                 new Development() {
                     Id = Guid.Parse("3925bab7-3529-47e6-807f-37a57d9c9cfd"),
                     Name = "PM/BA and more",
                     ImageUrl = "https://res.cloudinary.com/dlffxtrek/image/upload/v1712052844/DevHunter/development/PM%20-%20BA%20and%20more.png",
                     DevelopmentTechnologies = new HashSet<TechnologyDevelopments>
                     {
-	                    new TechnologyDevelopments
-	                    {
-		                    TechnologyId = Guid.Parse("88a342ad-594b-4fff-91ee-ce21baadf092")
-	                    },
-	                    new TechnologyDevelopments
-	                    {
-		                    TechnologyId = Guid.Parse("81692dbb-1b59-432b-a2fa-a56115b38e77")
-	                    },
-	                    new TechnologyDevelopments
-	                    {
-		                    TechnologyId = Guid.Parse("646b656f-3fb9-47d5-80e4-ba0f807e70d3")
-	                    },
-	                    new TechnologyDevelopments
-	                    {
-		                    TechnologyId = Guid.Parse("2961db2f-88a5-4831-b721-ebf69eff0e2b")
-	                    },
-	                    new TechnologyDevelopments
-	                    {
-		                    TechnologyId = Guid.Parse("f1aaf947-ccbf-4418-a55a-7c48931cb4bf")
-	                    }
-					}
-				},
+                        new TechnologyDevelopments
+                        {
+                            TechnologyId = Guid.Parse("88a342ad-594b-4fff-91ee-ce21baadf092")
+                        },
+                        new TechnologyDevelopments
+                        {
+                            TechnologyId = Guid.Parse("81692dbb-1b59-432b-a2fa-a56115b38e77")
+                        },
+                        new TechnologyDevelopments
+                        {
+                            TechnologyId = Guid.Parse("646b656f-3fb9-47d5-80e4-ba0f807e70d3")
+                        },
+                        new TechnologyDevelopments
+                        {
+                            TechnologyId = Guid.Parse("2961db2f-88a5-4831-b721-ebf69eff0e2b")
+                        },
+                        new TechnologyDevelopments
+                        {
+                            TechnologyId = Guid.Parse("f1aaf947-ccbf-4418-a55a-7c48931cb4bf")
+                        }
+                    }
+                },
                 new Development() {
                     Id = Guid.Parse("8448cd52-5cb6-4a42-8324-17c34e58837f"),
                     Name = "Quality Assurance",
                     ImageUrl = "https://res.cloudinary.com/dlffxtrek/image/upload/v1712052845/DevHunter/development/Quality%20Assurance.png",
                     DevelopmentTechnologies = new HashSet<TechnologyDevelopments>
                     {
-	                    new TechnologyDevelopments
-	                    {
-		                    TechnologyId = Guid.Parse("d9fa804a-d7dd-4ba4-b790-8827a6b06e1e")
-	                    },
-	                    new TechnologyDevelopments
-	                    {
-		                    TechnologyId = Guid.Parse("ed1f9d3f-835c-4af3-95a1-fa2f32e67f4e")
-	                    }
+                        new TechnologyDevelopments
+                        {
+                            TechnologyId = Guid.Parse("d9fa804a-d7dd-4ba4-b790-8827a6b06e1e")
+                        },
+                        new TechnologyDevelopments
+                        {
+                            TechnologyId = Guid.Parse("ed1f9d3f-835c-4af3-95a1-fa2f32e67f4e")
+                        }
                     }
-				},
+                },
                 new Development() {
                     Id = Guid.Parse("5223d4e3-3508-47ca-a24c-538923500838"),
                     Name = "Technical Support",
