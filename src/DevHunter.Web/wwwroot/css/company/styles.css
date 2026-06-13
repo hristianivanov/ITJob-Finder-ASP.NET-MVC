@@ -112,7 +112,7 @@
 }
 
 .company-name-holder::before {
-    content: url(divider.svg);
+    content: url('../../svgs/divider.svg');
     position: absolute;
     top: 4%;
     left: 13px;

@@ -31,12 +31,12 @@
 
 .custom-pagination .direction.prev {
     margin-right: 1.2em;
-    background-image: url('0.finished-pages/company-job-offer-crud/pagination-arrow-left.svg');
+    background-image: url('../../svgs/pagination-arrow-left.svg');
 }
 
 .custom-pagination .direction.next {
     margin-left: 1.2em;
-    background-image: url('0.finished-pages/company-job-offer-crud/pagination-arrow-right.svg');
+    background-image: url('../../svgs/pagination-arrow-right.svg');
 }
 
 .custom-pagination .first {
