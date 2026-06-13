@@ -92,7 +92,7 @@
 
                 if (!developmentExists)
                 {
-                    TempData[ErrorMessage] = DevelopmentNotFoundError;
+                TempData[ErrorMessage] = DevelopmentNotFoundError;
 
                     return RedirectToAction("All");
                 }
@@ -111,63 +111,63 @@
         [HttpPost]
         public async Task<IActionResult> Edit(string id, DevelopmentEditFormModel model)
         {
-	        if (!ModelState.IsValid)
-	        {
-		        return View();
-	        }
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
 
-	        try
-	        {
-		        bool developmentExists = await developmentService.ExistsByIdAsync(id);
+            try
+            {
+                bool developmentExists = await developmentService.ExistsByIdAsync(id);
 
-		        if (!developmentExists)
-		        {
-			        TempData[ErrorMessage] = DevelopmentNotFoundError;
+                if (!developmentExists)
+                {
+                TempData[ErrorMessage] = DevelopmentNotFoundError;
 
-			        return RedirectToAction("All");
-		        }
+                    return RedirectToAction("All");
+                }
 
-		        await developmentService.EditDevelopmentAsync(id, model);
-	        }
-	        catch (Exception)
-	        {
-		        ModelState.AddModelError(string.Empty,
-			        "Unexpected error occurred while trying to edit the technology!");
+                await developmentService.EditDevelopmentAsync(id, model);
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError(string.Empty,
+                    "Unexpected error occurred while trying to edit the technology!");
 
-		        return View(model);
-	        }
+                return View(model);
+            }
 
-	        return RedirectToAction("All");
-		}
+            return RedirectToAction("All");
+        }
 
         [HttpPost]
         public async Task<IActionResult> Delete(string id)
         {
-	        try
-	        {
-		        bool developmentExists = await developmentService.ExistsByIdAsync(id);
+            try
+            {
+                bool developmentExists = await developmentService.ExistsByIdAsync(id);
 
-		        if (!developmentExists)
-		        {
-			        TempData[ErrorMessage] = DevelopmentNotFoundError;
+                if (!developmentExists)
+                {
+                TempData[ErrorMessage] = DevelopmentNotFoundError;
 
-			        return RedirectToAction("All");
-		        }
+                    return RedirectToAction("All");
+                }
 
-		        await developmentService.DeleteByIdAsync(id);
+                await developmentService.DeleteByIdAsync(id);
 
-		        TempData[WarningMessage] = "The development successfully was deleted!";
+                TempData[WarningMessage] = "The development successfully was deleted!";
 
-		        return RedirectToAction("All");
-	        }
-	        catch (Exception)
-	        {
-		        return GeneralError();
-	        }
-		}
+                return RedirectToAction("All");
+            }
+            catch (Exception)
+            {
+                return GeneralError();
+            }
+        }
         private IActionResult GeneralError()
         {
-            TempData[ErrorMessage] = UnexpectedError;
+                TempData[ErrorMessage] = UnexpectedError;
 
             return RedirectToAction("Index", "Home");
         }

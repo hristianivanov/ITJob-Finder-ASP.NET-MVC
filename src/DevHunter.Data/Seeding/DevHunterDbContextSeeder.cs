@@ -1,100 +1,100 @@
 ﻿namespace DevHunter.Data.Seeding
 {
-	using Microsoft.AspNetCore.Identity;
-	using Microsoft.Extensions.DependencyInjection;
-	using Microsoft.Extensions.Logging;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Logging;
 
-	using Contacts;
-	using Models;
-	using EntitySeeders;
+    using Contacts;
+    using Models;
+    using EntitySeeders;
 
-	using static Common.GeneralApplicationConstants;
+    using static Common.GeneralApplicationConstants;
 
-	public static class DevHunterDbContextSeeder
-	{
-		public static async Task SeedAsync(DevHunterDbContext dbContext, IServiceProvider serviceProvider)
-		{
-			if (dbContext == null)
-			{
-				throw new ArgumentNullException(nameof(dbContext));
-			}
+    public static class DevHunterDbContextSeeder
+    {
+        public static async Task SeedAsync(DevHunterDbContext dbContext, IServiceProvider serviceProvider)
+        {
+            if (dbContext == null)
+            {
+                throw new ArgumentNullException(nameof(dbContext));
+            }
 
-			if (serviceProvider == null)
-			{
-				throw new ArgumentNullException(nameof(serviceProvider));
-			}
+            if (serviceProvider == null)
+            {
+                throw new ArgumentNullException(nameof(serviceProvider));
+            }
 
-			var logger = serviceProvider
-				.GetService<ILoggerFactory>()?
-				.CreateLogger(typeof(DevHunterDbContext));
+            var logger = serviceProvider
+                .GetService<ILoggerFactory>()?
+                .CreateLogger(typeof(DevHunterDbContext));
 
-			using var scope = serviceProvider.CreateScope();
+            using var scope = serviceProvider.CreateScope();
 
-			var roleManager = scope.ServiceProvider
-				.GetRequiredService<RoleManager<IdentityRole<Guid>>>();
-			var userManager = scope.ServiceProvider
-				.GetRequiredService<UserManager<ApplicationUser>>();
+            var roleManager = scope.ServiceProvider
+                .GetRequiredService<RoleManager<IdentityRole<Guid>>>();
+            var userManager = scope.ServiceProvider
+                .GetRequiredService<UserManager<ApplicationUser>>();
 
-			if (!await roleManager.RoleExistsAsync(CompanyRoleName))
-			{
-				IdentityRole<Guid> companyRole =
-					new IdentityRole<Guid>(CompanyRoleName);
+            if (!await roleManager.RoleExistsAsync(CompanyRoleName))
+            {
+                IdentityRole<Guid> companyRole =
+                    new IdentityRole<Guid>(CompanyRoleName);
 
-				await roleManager.CreateAsync(companyRole);
+                await roleManager.CreateAsync(companyRole);
 
-				logger?.LogInformation("Company role created.");
-			}
+                logger?.LogInformation("Company role created.");
+            }
 
-			var seeders = new List<IEntitySeeder>
-			{
-				new ApplicationUserEntitySeeder(),
-				new CompanyEntitySeeder(),
-				new TechnologyEntitySeeder(),
-				new DevelopmentEntitySeeder(),
-				new JobOfferEntitySeeder(),
-			};
+            var seeders = new List<IEntitySeeder>
+            {
+                new ApplicationUserEntitySeeder(),
+                new CompanyEntitySeeder(),
+                new TechnologyEntitySeeder(),
+                new DevelopmentEntitySeeder(),
+                new JobOfferEntitySeeder(),
+            };
 
-			foreach (var seeder in seeders)
-			{
-				await seeder.SeedAsync(dbContext, serviceProvider);
-				logger?.LogInformation($"Seeder {seeder.GetType().Name} done.");
-			}
+            foreach (var seeder in seeders)
+            {
+                await seeder.SeedAsync(dbContext, serviceProvider);
+                logger?.LogInformation($"Seeder {seeder.GetType().Name} done.");
+            }
 
-			if (!await roleManager.RoleExistsAsync(AdminRoleName))
-			{
-				IdentityRole<Guid> adminRole =
-					new IdentityRole<Guid>(AdminRoleName);
+            if (!await roleManager.RoleExistsAsync(AdminRoleName))
+            {
+                IdentityRole<Guid> adminRole =
+                    new IdentityRole<Guid>(AdminRoleName);
 
-				await roleManager.CreateAsync(adminRole);
+                await roleManager.CreateAsync(adminRole);
 
-				logger?.LogInformation("Admin role created.");
-			}
+                logger?.LogInformation("Admin role created.");
+            }
 
 
-			ApplicationUser adminUser =
-				await userManager.FindByEmailAsync(AdminEmail);
+            ApplicationUser adminUser =
+                await userManager.FindByEmailAsync(AdminEmail);
 
-			if (adminUser == null)
-			{
-				adminUser = new ApplicationUser()
-				{
-					FirstName = "admin",
-					LastName = "admin",
-					UserName = AdminEmail,
-					Email = AdminEmail,
-				};
+            if (adminUser == null)
+            {
+                adminUser = new ApplicationUser()
+                {
+                    FirstName = "admin",
+                    LastName = "admin",
+                    UserName = AdminEmail,
+                    Email = AdminEmail,
+                };
 
-				await userManager.CreateAsync(adminUser, AdminPass);
+                await userManager.CreateAsync(adminUser, AdminPass);
 
-				logger?.LogInformation($"Created admin profile.");
-			}
+                logger?.LogInformation($"Created admin profile.");
+            }
 
-			if (!await userManager.IsInRoleAsync(adminUser, AdminRoleName))
-			{
-				await userManager.AddToRoleAsync(adminUser, AdminRoleName);
+            if (!await userManager.IsInRoleAsync(adminUser, AdminRoleName))
+            {
+                await userManager.AddToRoleAsync(adminUser, AdminRoleName);
 
-				logger?.LogInformation($"Assigned admin role to the admin.");
-			}
-		}
-	}
+                logger?.LogInformation($"Assigned admin role to the admin.");
+            }
+        }
+    }
 }

@@ -1,9 +1,9 @@
 ﻿namespace DevHunter.Data.Models
 {
-	using System.ComponentModel.DataAnnotations.Schema;
+    using System.ComponentModel.DataAnnotations.Schema;
 
-	public class TechnologyJobOffers
-	{
+    public class TechnologyJobOffers
+    {
         [ForeignKey(nameof(JobOffer))]
         public Guid JobOfferId { get; set; }
 
@@ -12,5 +12,5 @@
         [ForeignKey(nameof(Technology))]
         public Guid TechnologyId { get; set; }
         public virtual Technology Technology { get; set; } = null!;
-	}
+    }
 }

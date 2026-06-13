@@ -21,10 +21,4 @@
     <ProjectReference Include="..\DevHunter.Data.Models\DevHunter.Data.Models.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Reference Include="DevHunter.Web.Infrastructure">
-      <HintPath>..\DevHunter.Web.Infrastructure\bin\Debug\net6.0\DevHunter.Web.Infrastructure.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
 </Project>
