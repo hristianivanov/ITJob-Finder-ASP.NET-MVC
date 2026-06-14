@@ -1,83 +1,90 @@
-# DevHunter: Job Finder System
+# DevHunter
 
-Welcome to **DevHunter** - a dynamic web application developed as part of my graduation project. This project demonstrates key principles of ASP.NET development and modern web practices.
+DevHunter is a role-based IT recruitment platform built with ASP.NET Core MVC. Candidates can discover and apply for jobs, companies can manage offers and applicants, and administrators can maintain platform content. It began as a graduation project and was later refactored for stronger security, maintainability, testing, and data-access performance.
 
-The project was later refactored to improve security, code quality, query performance, and test reliability while preserving its original UI and features.
+[Live Demo Showcase](REPLACE_WITH_VERCEL_URL) · [GitHub Repository](https://github.com/hristianivanov/ITJob-Finder-ASP.NET-MVC)
 
-## 📝 Overview
+> The showcase is a static React site. The full ASP.NET MVC application runs locally.
 
-**DevHunter** is a comprehensive job-finding platform built using **ASP.NET MVC**, **C#**, **SQL Server**, and **Entity Framework Core**. It was created as part of a graduation project to showcase modern web development techniques, including database integration, user authentication, and rich interactive features.
+![DevHunter home page](showcase/public/media/screenshots/home.png)
 
-## 📅 Description
+## Quick Highlights
 
-**Project Duration:** December 2023 - May 2024  
-**Technologies Used:** C#, ASP.NET MVC, SQL Server, Entity Framework Core
+| Area | Details |
+| --- | --- |
+| Application | ASP.NET Core MVC on .NET 8 |
+| Data | Entity Framework Core and SQL Server |
+| Authentication | ASP.NET Core Identity with candidate, company, and admin roles |
+| Testing | 177 automated tests |
+| Delivery | GitHub Actions CI |
+| Configuration | Local secrets managed with `dotnet user-secrets` |
+| Security | Role checks and service-level ownership enforcement |
 
-This web application is designed to facilitate job searches by enabling job seekers to browse listings, submit applications, and save jobs. It also allows companies to post and manage their own job offers, while administrators oversee the system.
+## Screenshots
 
-## 🚀 Key Features
+| Job discovery | Job details |
+| --- | --- |
+| ![DevHunter job list](showcase/public/media/screenshots/job-list.png) | ![DevHunter job details](showcase/public/media/screenshots/job-details.png) |
 
-- 🔒 **User Authentication:** Secure login for companies, job seekers, and administrators.
-- 💼 **Job Interaction:** Users can explore job offers, apply to positions, and save jobs for later.
-- 🏢 **Company Dashboard:** Employers can create, update, and manage their own job listings and company profiles.
-- 🛠 **Admin Dashboard:** Administrators can manage users, companies, technologies, and development categories.
+| Candidate application | Company dashboard |
+| --- | --- |
+| ![DevHunter candidate application](showcase/public/media/screenshots/candidate-apply.png) | ![DevHunter company dashboard](showcase/public/media/screenshots/company-dashboard.png) |
 
-## ⚙️ Advanced Features
+| Company details | Admin panel |
+| --- | --- |
+| ![DevHunter company details](showcase/public/media/screenshots/company-details.png) | ![DevHunter admin panel](showcase/public/media/screenshots/admin-panel.png) |
 
-- 📝 **Rich Text Job Descriptions:** Detailed formatting with server-side HTML sanitization.
-- 🏷 **Tag Suggestions:** Multi-select technology tags for job listings and searches.
-- 🔍 **Dynamic Filtering & Search:** Job search with filtering and server-side pagination.
-- 📩 **Contact Page:** Users can send direct messages through configured SMTP email.
-- ☁️ **Cloud Uploads:** Images and application documents can be uploaded through Cloudinary.
+## Features by Role
 
-## 📸 Screenshots
+| Candidate | Company | Admin |
+| --- | --- | --- |
+| Search and filter job offers | Create and manage owned job offers | Manage users and companies |
+| Save jobs for later | Review job applications | Manage technologies |
+| Apply with documents | Approve or reject applicants | Manage development categories |
+| Track submitted applications | Maintain company profile | Access role-protected admin tools |
 
-### 🏠 Home Page
+Additional features include server-side pagination, HTML-sanitized job descriptions, Cloudinary uploads, and SMTP contact messages.
 
-<p align="center">
-  <img src="docs/common/FireShot%20Capture%20045%20-%20-%20DevHunter%20-%20localhost.png" width="300px" height="150px" alt="DevHunter home page" />
-  <img src="docs/common/FireShot%20Capture%20046%20-%20-%20DevHunter%20-%20localhost.png" width="300px" height="150px" alt="DevHunter home page features"/>
-</p>
+## Improvements After Graduation
 
-### 💼 Job Offers
+- Migrated the active solution from .NET 6 to .NET 8.
+- Removed tracked credentials and moved local configuration to user-secrets.
+- Added service-level ownership enforcement for company mutations.
+- Reduced duplicated mapping and projection logic.
+- Added `AsNoTracking` and server-side EF Core query projections.
+- Replaced unsafe string-based Guid comparisons.
+- Cleaned nullable warnings and improved missing-data handling.
+- Expanded automated coverage to 177 tests.
+- Removed approximately 7.9 MB of unused static assets.
+- Added and aligned GitHub Actions CI.
 
-<p align="center">
-  <img src="docs/common/FireShot%20Capture%20047%20-%20-%20DevHunter%20-%20localhost.png" width="300px" height="150px" alt="DevHunter job offers"/>
-  <img src="docs/common/FireShot%20Capture%20048%20-%20-%20DevHunter%20-%20localhost.png" width="300px" height="150px" alt="DevHunter job offer details"/>
-  <img src="docs/common/FireShot%20Capture%20051%20-%20-%20DevHunter%20-%20localhost.png" width="300px" height="150px" alt="DevHunter job search"/>
-</p>
+## Tech Stack
 
-### 🛠 Admin Panel
+| Category | Technologies |
+| --- | --- |
+| Backend | C#, .NET 8, ASP.NET Core MVC |
+| Data | Entity Framework Core, SQL Server |
+| Identity and security | ASP.NET Core Identity, role authorization, HTML sanitization |
+| Integrations | Cloudinary, MailKit |
+| Testing | NUnit, Moq, in-memory test data |
+| Delivery | GitHub Actions |
+| Showcase | React, Vite, TypeScript |
 
-<p align="center">
-  <img src="docs/admin/FireShot%20Capture%20049%20-%20-%20DevHunter%20-%20localhost.png" width="300px" height="150px" alt="DevHunter admin panel"/>
-  <img src="docs/company/FireShot%20Capture%20050%20-%20-%20DevHunter%20-%20localhost.png" width="300px" height="150px" alt="DevHunter company panel"/>
-</p>
-
-### 😎 Use Case Diagram
-
-<p align="center">
-  <img src="docs/Use%20Case%20Diagram.png" alt="DevHunter use case diagram"/>
-</p>
-
-## 🚀 Getting Started
+## Local Setup
 
 ### Requirements
 
-- .NET SDK with .NET 6 targeting support
+- .NET 8 SDK
 - SQL Server or SQL Server Express
-- Cloudinary account
-- SMTP account for the contact form
+- Optional Cloudinary account for uploads
+- Optional SMTP account for contact messages
 
-### Setup
-
-1. Clone the repository and open the `src/DevHunter.sln` solution.
-2. Review the required configuration keys in [`src/DevHunter.Web/appsettings.example.json`](src/DevHunter.Web/appsettings.example.json).
-3. Store real credentials using .NET user-secrets or environment variables. Do not commit credentials to `appsettings.json`.
-4. Restore dependencies, build the solution, and run the web project.
+### Configure and Run
 
 ```powershell
-cd src
+git clone https://github.com/hristianivanov/ITJob-Finder-ASP.NET-MVC.git
+cd ITJob-Finder-ASP.NET-MVC/src
+
 dotnet restore DevHunter.sln
 
 cd DevHunter.Web
@@ -88,61 +95,52 @@ dotnet user-secrets set "AccountSettings:ApiSecret" "your-cloudinary-api-secret"
 dotnet user-secrets set "EmailConfiguration:To" "recipient@example.com"
 dotnet user-secrets set "EmailConfiguration:SmtpServer" "smtp.example.com"
 dotnet user-secrets set "EmailConfiguration:Port" "465"
-dotnet user-secrets set "EmailConfiguration:Username" "smtp-user@example.com"
+dotnet user-secrets set "EmailConfiguration:UserName" "smtp-user@example.com"
 dotnet user-secrets set "EmailConfiguration:Password" "your-smtp-password"
 
 dotnet run
 ```
 
-The application applies database migrations and seeds development data during startup.
+Configuration keys are documented in [`src/DevHunter.Web/appsettings.example.json`](src/DevHunter.Web/appsettings.example.json). Do not commit real credentials.
 
-### Demo Accounts
+Database migrations and seeded demo data are applied during startup.
 
-Recruiters and reviewers can use these seeded development accounts to explore the application:
-
-**Administrator**
-
-- Email: `admin@gmail.com`
-- Password: `Admin12345678!`
-
-**Job Seeker**
-
-- Email: `defi@gmail.com`
-- Password: `123456`
-
-These credentials are intended only for the seeded local demo environment and must not be used in production.
-
-## 🧪 Build and Tests
-
-Run the following commands from the `src` directory:
+### Build and Test
 
 ```powershell
+cd src
 dotnet build DevHunter.sln
 dotnet test DevHunter.Services.Tests/DevHunter.Services.Tests.csproj
 ```
 
-The service tests cover job filtering, pagination, salary formatting, saved jobs, creating and editing job offers, ownership checks, and HTML sanitization.
+### Static Showcase
 
-## 💻 Usage
+```powershell
+cd showcase
+corepack pnpm install
+corepack pnpm build
+corepack pnpm dev
+```
 
-Feel free to explore the codebase by cloning or downloading this repository. This project provides a hands-on example of ASP.NET concepts, database integration, authentication, service-layer testing, and interactive web application development.
+## Demo Accounts
 
-## 🔮 Future Improvements
+These accounts are created only for the seeded local demo environment.
 
-- Upgrade the project from .NET 6 to a supported .NET release.
-- Update packages with outstanding security advisories.
-- Add integration tests for controller authorization workflows.
-- Add continuous integration checks for formatting, builds, and tests.
+| Role | Email | Password |
+| --- | --- | --- |
+| Candidate | `defi@gmail.com` | `123456` |
+| Company | `smartit@gmail.com` | `company123` |
+| Administrator | `admin@gmail.com` | `Admin12345678!` |
 
-## 🤝 Contributing
+Do not use these credentials in a production environment.
 
-Contributions to this project are welcome! If you find bugs, security vulnerabilities, or have suggestions for improvements, please open an issue or submit a pull request.
+## Current Known Limitation
 
-## 📜 Credits
+`SixLabors.ImageSharp` 3.1.5 currently reports security advisories. Upgrading to ImageSharp 4 requires a Six Labors licensing decision. The project does not add or bypass a license key; this dependency should be revisited with a proper license or a replacement image-processing library.
 
-This project was developed and is maintained by Hristian Ivanov. It was created as part of my school graduation project and later refactored for better code quality.
+## Repository Status
 
-![GitHub repo size](https://img.shields.io/github/repo-size/hristianivanov/ITJob-Finder-ASP.NET-MVC)
-![GitHub Repo stars](https://img.shields.io/github/stars/hristianivanov/ITJob-Finder-ASP.NET-MVC)
-![GitHub forks](https://img.shields.io/github/forks/hristianivanov/ITJob-Finder-ASP.NET-MVC)
-[![.NET](https://github.com/hristianivanov/ITJob-Finder-ASP.NET-MVC/actions/workflows/dotnet.yml/badge.svg)](https://github.com/hristianivanov/ITJob-Finder-ASP.NET-MVC/actions/workflows/dotnet.yml)
+- Graduation project later refactored for portfolio-quality engineering.
+- Active ASP.NET solution targets .NET 8.
+- Build and test workflow is available in GitHub Actions.
+- Static showcase is ready for Vercel deployment after replacing the live-demo URL placeholder.
