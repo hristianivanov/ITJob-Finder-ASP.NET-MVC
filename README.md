@@ -1,8 +1,8 @@
 # DevHunter
 
-DevHunter is a role-based IT recruitment platform built with ASP.NET Core MVC. Candidates can discover and apply for jobs, companies can manage offers and applicants, and administrators can maintain platform content. It began as a graduation project and was later refactored for stronger security, maintainability, testing, and data-access performance.
+DevHunter is a role-based IT recruitment platform built with ASP.NET Core MVC. Candidates can discover and apply for jobs, companies can manage offers and applicants, and administrators can maintain platform content.
 
-[Live Demo Showcase](REPLACE_WITH_VERCEL_URL) · [GitHub Repository](https://github.com/hristianivanov/ITJob-Finder-ASP.NET-MVC)
+[Live Demo Showcase](https://devhuntershowcase.vercel.app/)
 
 > The showcase is a static React site. The full ASP.NET MVC application runs locally.
 
@@ -44,19 +44,6 @@ DevHunter is a role-based IT recruitment platform built with ASP.NET Core MVC. C
 | Track submitted applications | Maintain company profile | Access role-protected admin tools |
 
 Additional features include server-side pagination, HTML-sanitized job descriptions, Cloudinary uploads, and SMTP contact messages.
-
-## Improvements After Graduation
-
-- Migrated the active solution from .NET 6 to .NET 8.
-- Removed tracked credentials and moved local configuration to user-secrets.
-- Added service-level ownership enforcement for company mutations.
-- Reduced duplicated mapping and projection logic.
-- Added `AsNoTracking` and server-side EF Core query projections.
-- Replaced unsafe string-based Guid comparisons.
-- Cleaned nullable warnings and improved missing-data handling.
-- Expanded automated coverage to 177 tests.
-- Removed approximately 7.9 MB of unused static assets.
-- Added and aligned GitHub Actions CI.
 
 ## Tech Stack
 
@@ -133,14 +120,3 @@ These accounts are created only for the seeded local demo environment.
 | Administrator | `admin@gmail.com` | `Admin12345678!` |
 
 Do not use these credentials in a production environment.
-
-## Current Known Limitation
-
-`SixLabors.ImageSharp` 3.1.5 currently reports security advisories. Upgrading to ImageSharp 4 requires a Six Labors licensing decision. The project does not add or bypass a license key; this dependency should be revisited with a proper license or a replacement image-processing library.
-
-## Repository Status
-
-- Graduation project later refactored for portfolio-quality engineering.
-- Active ASP.NET solution targets .NET 8.
-- Build and test workflow is available in GitHub Actions.
-- Static showcase is ready for Vercel deployment after replacing the live-demo URL placeholder.
