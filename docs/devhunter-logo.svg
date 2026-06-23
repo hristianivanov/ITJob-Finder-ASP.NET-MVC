@@ -1,0 +1,19 @@
+<svg width="2048" height="420" viewBox="0 0 2048 420" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">DevHunter logo</title>
+  <desc id="desc">DH icon, slash separator, and DevHunter wordmark on a transparent background.</desc>
+
+  <g transform="translate(180 90)">
+    <rect x="0" y="0" width="270" height="220" rx="44" fill="white" stroke="#06142B" stroke-width="10"/>
+    <text x="135" y="145" text-anchor="middle"
+          font-family="Inter, Segoe UI, Arial, sans-serif"
+          font-size="104" font-weight="800" letter-spacing="-4"
+          fill="#06142B">DH</text>
+  </g>
+
+  <path d="M650 100L605 320" stroke="#126CFF" stroke-width="18" stroke-linecap="round"/>
+
+  <text x="790" y="255"
+        font-family="Inter, Segoe UI, Arial, sans-serif"
+        font-size="156" font-weight="800" letter-spacing="-8"
+        fill="#06142B">DevHunter</text>
+</svg>

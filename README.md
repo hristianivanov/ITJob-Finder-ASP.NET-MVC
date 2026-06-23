@@ -1,6 +1,13 @@
-# DevHunter
+<p align="center">
+  <img src="docs/devhunter-logo.svg" width="1100" alt="DevHunter logo">
+</p>
 
-DevHunter is a role-based IT recruitment platform built with ASP.NET Core MVC. Candidates can discover and apply for jobs, companies can manage offers and applicants, and administrators can maintain platform content.
+<h1 align="center">
+DevHunter
+<strong>IT Recruitment Platform</strong>
+</h1>
+
+Role-based IT recruitment platform built with ASP.NET Core MVC. Candidates can discover and apply for jobs, companies can manage offers and applicants, and administrators can maintain platform content.
 
 [Live Demo Showcase](https://devhuntershowcase.vercel.app/)
 
@@ -120,3 +127,7 @@ These accounts are created only for the seeded local demo environment.
 | Administrator | `admin@gmail.com` | `Admin12345678!` |
 
 Do not use these credentials in a production environment.
+
+## Give a Star ⭐
+
+If you find this project useful, please consider giving it a star! It helps to show appreciation for the effort put into this project.
