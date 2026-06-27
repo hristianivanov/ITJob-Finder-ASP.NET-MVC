@@ -37,7 +37,7 @@
             return uploadResult.Url.ToString();
         }
 
-        public async Task<string> EditImage(IFormFile file, string оldImageUrl, string fileName, string folder)
+        public async Task<string> EditImage(IFormFile file, string oldImageUrl, string fileName, string folder)
         {
             await using var stream = file.OpenReadStream();
 
@@ -48,7 +48,7 @@
                 File = new FileDescription(fileName, stream)
             };
 
-            var deletionResult = await this.DeletePhotoAsync(оldImageUrl);
+            var deletionResult = await this.DeletePhotoAsync(oldImageUrl);
 
             if (deletionResult.Error != null)
             {
