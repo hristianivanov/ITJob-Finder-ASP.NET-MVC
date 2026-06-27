@@ -125,7 +125,7 @@
         /// <param name="app"></param>
         /// <param name="email"></param>
         /// <returns></returns>
-        public static IApplicationBuilder SeedAdministrator(this IApplicationBuilder app, string email = AdminEmail)
+        public static IApplicationBuilder SeedAdministrator(this IApplicationBuilder app, string email, string password)
         {
             using IServiceScope scopedServices = app.ApplicationServices.CreateScope();
 
@@ -161,14 +161,14 @@
                     adminUser = new ApplicationUser()
                     {
                         Id = Guid.NewGuid(),
-                        UserName = AdminEmail,
-                        NormalizedUserName = AdminEmail.ToUpper(),
-                        Email = AdminEmail,
-                        NormalizedEmail = AdminEmail.ToUpper(),
+                        UserName = email,
+                        NormalizedUserName = email.ToUpper(),
+                        Email = email,
+                        NormalizedEmail = email.ToUpper(),
                         SecurityStamp = Guid.NewGuid().ToString(),
                     };
 
-                    await userManager.CreateAsync(adminUser, AdminPass);
+                    await userManager.CreateAsync(adminUser, password);
                 }
 
                 await userManager.AddToRoleAsync(adminUser, AdminRoleName);

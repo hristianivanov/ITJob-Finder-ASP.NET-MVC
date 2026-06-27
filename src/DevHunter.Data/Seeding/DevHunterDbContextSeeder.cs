@@ -12,7 +12,7 @@
 
     public static class DevHunterDbContextSeeder
     {
-        public static async Task SeedAsync(DevHunterDbContext dbContext, IServiceProvider serviceProvider)
+        public static async Task SeedAsync(DevHunterDbContext dbContext, IServiceProvider serviceProvider, string adminEmail, string adminPassword)
         {
             if (dbContext == null)
             {
@@ -72,7 +72,7 @@
 
 
             ApplicationUser? adminUser =
-                await userManager.FindByEmailAsync(AdminEmail);
+                await userManager.FindByEmailAsync(adminEmail);
 
             if (adminUser == null)
             {
@@ -80,11 +80,11 @@
                 {
                     FirstName = "admin",
                     LastName = "admin",
-                    UserName = AdminEmail,
-                    Email = AdminEmail,
+                    UserName = adminEmail,
+                    Email = adminEmail,
                 };
 
-                await userManager.CreateAsync(adminUser, AdminPass);
+                await userManager.CreateAsync(adminUser, adminPassword);
 
                 logger?.LogInformation($"Created admin profile.");
             }
