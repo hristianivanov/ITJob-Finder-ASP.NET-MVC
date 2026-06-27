@@ -12,6 +12,11 @@
 
     public class DocumentService : IDocumentService
     {
+        private static readonly HashSet<string> AllowedExtensions =
+            new(StringComparer.OrdinalIgnoreCase) { ".pdf", ".doc", ".docx", ".txt", ".rtf" };
+
+        private const long MaxFileSizeBytes = 10 * 1024 * 1024; // 10 MB
+
         private readonly DevHunterDbContext dbContext;
         private readonly ICloudinaryService cloudinaryService;
 
@@ -23,13 +28,27 @@
 
         public async Task<string> UploadDocumentAsync(IFormFile file, string folder)
         {
+            if (file.Length > MaxFileSizeBytes)
+            {
+                throw new InvalidOperationException("File size exceeds the 10 MB limit.");
+            }
+
+            string extension = Path.GetExtension(file.FileName);
+            if (!AllowedExtensions.Contains(extension))
+            {
+                throw new InvalidOperationException(
+                    $"File type '{extension}' is not allowed. Accepted types: {string.Join(", ", AllowedExtensions)}");
+            }
+
+            string safeFileName = Path.GetFileNameWithoutExtension(Guid.NewGuid().ToString()) + extension;
+
             await using var stream = file.OpenReadStream();
 
             var uploadParams = new RawUploadParams()
             {
                 Folder = folder,
-                PublicId = file.FileName,
-                File = new FileDescription(file.FileName, stream),
+                PublicId = safeFileName,
+                File = new FileDescription(safeFileName, stream),
             };
 
             var uploadResult = await cloudinaryService.UploadAsync(uploadParams);
