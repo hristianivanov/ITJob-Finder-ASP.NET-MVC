@@ -69,7 +69,12 @@ public class Program
 
             await dbContext.Database.MigrateAsync();
 
-            await DevHunterDbContextSeeder.SeedAsync(dbContext, serviceScope.ServiceProvider);
+            string adminEmail = builder.Configuration["AdminSettings:Email"]
+                ?? throw new InvalidOperationException("AdminSettings:Email is not configured.");
+            string adminPassword = builder.Configuration["AdminSettings:Password"]
+                ?? throw new InvalidOperationException("AdminSettings:Password is not configured.");
+
+            await DevHunterDbContextSeeder.SeedAsync(dbContext, serviceScope.ServiceProvider, adminEmail, adminPassword);
         }
 
         app.UseHttpsRedirection();
