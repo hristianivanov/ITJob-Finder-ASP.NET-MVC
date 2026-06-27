@@ -6,6 +6,6 @@
     {
         Task<string> UploadImage(IFormFile file, string folder, string fileName);
 
-        Task<string> EditImage(IFormFile file, string оldImageUrl, string fileName, string folder);
+        Task<string> EditImage(IFormFile file, string oldImageUrl, string fileName, string folder);
     }
 }
