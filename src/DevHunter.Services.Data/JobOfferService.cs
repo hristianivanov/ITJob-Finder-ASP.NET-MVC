@@ -243,10 +243,9 @@
             if (!string.IsNullOrWhiteSpace(jobOffer.Company.Description))
             {
                 string[] words = jobOffer.Company.Description.Split(' ');
+                string truncated = words.Length <= 69 ? jobOffer.Company.Description : string.Join(" ", words.Take(69)) + "...";
 
-                string truncatedDescription = words.Length <= 69 ? jobOffer.Company.Description : string.Join(" ", words.Take(69)) + "...";
-
-                model.Company.Info = truncatedDescription;
+                model.Company.Info = new HtmlSanitizer().Sanitize(truncated);
             }
 
 
