@@ -42,11 +42,18 @@
             return allUsers;
         }
 
-        public async Task<ApplicationUser> GetUserByIdAsync(string userId)
+        public async Task<UserViewModel> GetUserByIdAsync(string userId)
         {
-            var user = await this.context.Users.FirstAsync(u => u.Id.ToString() == userId);
-
-            return user;
+            return await this.context.Users
+                .Where(u => u.Id.ToString() == userId)
+                .Select(u => new UserViewModel()
+                {
+                    Id = u.Id.ToString(),
+                    Email = u.Email ?? string.Empty,
+                    FullName = $"{u.FirstName} {u.LastName}",
+                    IsCompany = u.Companies.Any(c => c.CreatorId == u.Id),
+                })
+                .FirstAsync();
         }
     }
 }
