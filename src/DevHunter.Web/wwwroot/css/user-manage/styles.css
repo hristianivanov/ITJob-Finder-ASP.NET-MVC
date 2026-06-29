@@ -22,7 +22,7 @@
         padding: 55px 0 0 45px;
         min-width: 375px;
         font-family: Axiforma,sans-serif;
-        /*box-shadow: 0 0 21px 5px #4056C0 inset;*/
+        /*box-shadow: 0 0 21px 5px var(--color-accent) inset;*/
     }
 
 .subscriber-sidebar::after {
@@ -134,7 +134,7 @@
         cursor: pointer;
         display: inline-block;
         font-size: 16px;
-        background-color: #304ffe;
+        background-color: var(--color-primary);
         padding: 14px 25px 12px;
         color: #fff;
         border-radius: 5px;
@@ -171,7 +171,7 @@
     }
 
         .management-wrapper .menu .menu-item:hover {
-            background: #111A39;
+            background: var(--color-bg-card);
             border-radius: 10px;
             padding-right: 30px;
         }
@@ -217,7 +217,7 @@
         }
 
 .management-wrapper hr {
-    background: #000614;
+    background: var(--color-bg-dark);
     border: none;
     height: 2px;
     margin-left: -45px;

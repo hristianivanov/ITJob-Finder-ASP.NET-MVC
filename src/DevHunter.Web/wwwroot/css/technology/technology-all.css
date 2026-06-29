@@ -26,9 +26,9 @@
         justify-content: center;
         padding: 6px;
         border-radius: 5px;
-        box-shadow: 0 3px 20px #00001A;
+        box-shadow: var(--shadow-card);
         line-height: 1;
-        background: #111A39;
+        background: var(--color-bg-card);
     }
 
     .technology-all-container img {

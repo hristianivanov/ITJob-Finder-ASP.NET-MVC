@@ -1,4 +1,4 @@
-.multiselect-autocomplete-tech-stack {
+﻿.multiselect-autocomplete-tech-stack {
     border-radius: 10px;
     color: rgb(201, 209, 217);
 }
@@ -15,7 +15,7 @@
             padding: 7px;
             margin: 12px 0;
             border-radius: 5px;
-            background: #000614;
+            background: var(--color-bg-dark);
             border: 1px solid #30363d;
         }
 

@@ -1,4 +1,4 @@
-.site-footer {
+﻿.site-footer {
     position: relative;
     background: #010715;
 }
@@ -10,8 +10,8 @@
     left: 0;
     width: 100%;
     height: 2px;
-    /*box-shadow: 0px 0px 0px 1px #4056C0 inset, 0px 0px 38px 34px rgba(0, 102, 255, 0.25);*/
-    box-shadow: 0 0 0 1px #4056C0 inset, 0 0 59px 10px rgba(0, 102, 255, 0.25);
+    /*box-shadow: 0px 0px 0px 1px var(--color-accent) inset, 0px 0px 38px 34px var(--color-glow);*/
+    box-shadow: 0 0 0 1px var(--color-accent) inset, 0 0 59px 10px var(--color-glow);
     z-index: -1;
 }
 

@@ -28,7 +28,7 @@
         }
 
         .table-container .table-heading p {
-            color: #E5E4E6;
+            color: var(--color-text-light);
         }
 
     .table-container .table-content {
@@ -88,25 +88,25 @@
 
         .table-container .table-content .data-row .date {
             font-size: 14px;
-            color: #898989;
+            color: var(--color-text-muted);
             flex-basis: 20%;
         }
 
         .table-container .table-content .data-row .email {
             font-size: 14px;
-            color: #898989;
+            color: var(--color-text-muted);
             flex-basis: 30%;
         }
 
         .table-container .table-content .data-row .name {
             font-size: 14px;
-            color: #898989;
+            color: var(--color-text-muted);
             flex-basis: 20%;
         }
 
         .table-container .table-content .data-row .status {
             font-size: 14px;
-            color: #898989;
+            color: var(--color-text-muted);
             flex-basis: 15%;
         }
 

@@ -1,4 +1,4 @@
-.badge {
+﻿.badge {
   display: inline-block;
   position: relative;
   background-color: #fff;
@@ -15,12 +15,12 @@
 
 .badge.green {
   background-color: #CEF5D9;
-  color: #127C30;
+  color: var(--color-success);
 }
 
 .badge.blue {
   background-color: #EBF3FF;
-  color: #374FFE;
+  color: var(--color-primary-alt);
 }
 
 .badge > img {
@@ -49,7 +49,7 @@
 /* bright green */
 
 .badge-count.badge-bright-green {
-  color: #127C30;
+  color: var(--color-success);
 }
 
 .badge-count.badge-bright-green::after {

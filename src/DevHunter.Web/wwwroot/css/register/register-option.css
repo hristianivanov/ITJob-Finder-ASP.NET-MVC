@@ -43,7 +43,7 @@
     flex-direction: column;
     justify-content: space-around;
     padding: 1em 1em 1em 1.5em;
-    border: 2px solid rgba(0,0,73,1);
+    border: 2px solid var(--color-primary-rgba);
     border-radius: .4em;
     width: 300px;
     height: 190px;
@@ -123,8 +123,8 @@
 
     .radio-btn.active,
     .radio-btn:hover {
-        box-shadow: inset 0 0 0 1px rgba(0,0,73,1);
-        background: rgba(0,0,88,0.10);
+        box-shadow: inset 0 0 0 1px var(--color-primary-rgba);
+        background: var(--overlay-dark);
     }
 
     .radio-btn:active {

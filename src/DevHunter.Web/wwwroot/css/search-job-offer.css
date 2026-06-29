@@ -59,7 +59,7 @@
 .search-heading .search-text {
     margin-right: 3px;
     margin-left: 3px;
-    color: #304ffe;
+    color: var(--color-primary);
     font-size: 30px;
     font-weight: 700;
 }

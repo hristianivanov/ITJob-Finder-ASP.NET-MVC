@@ -1,4 +1,4 @@
-/* styles for the categories section on the homepage */
+﻿/* styles for the categories section on the homepage */
 
 /* There are a lot of styles for this section, left in custom.css.
  * Our goal is to eventually either refactor them, or at least bring
@@ -13,11 +13,11 @@
     flex: 1 1 0;
     width: 50%;
     padding: 80px 60px 30px 20px;
-    border-top: 1px solid rgba(0,0,73,1);
+    border-top: 1px solid var(--color-primary-rgba);
 }
 
 .homepage-other-categories .junior-intern {
-    border-right: 1px solid rgba(0,0,73,1);
+    border-right: 1px solid var(--color-primary-rgba);
     padding-left: 15px;
 }
 
@@ -66,7 +66,7 @@
     background-color: #B3F7D6;
 }
 .junior-intern .job-qty {
-    color: #127C30;
+    color: var(--color-success);
 }
 
 .it-management .job-qty:after {

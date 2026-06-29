@@ -1,4 +1,4 @@
-.custom-pagination {
+﻿.custom-pagination {
     margin-top: 3em;
     display: flex;
     justify-content: center;
@@ -17,7 +17,7 @@
 }
 
 .custom-pagination a.current {
-    color: #374ffe;
+    color: var(--color-primary-alt);
 }
 
 .custom-pagination .direction {

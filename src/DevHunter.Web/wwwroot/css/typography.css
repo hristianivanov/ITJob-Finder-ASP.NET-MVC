@@ -1,4 +1,4 @@
-@import url(fonts/global.css);
+﻿@import url(fonts/global.css);
 
 html {
     font: 16px/1.4 'Satoshi-Variable',sans-serif;
@@ -10,5 +10,5 @@ body, table, input, textarea, button {
 }
 
 body {
-    background: #000614;
+    background: var(--color-bg-dark);
 }
