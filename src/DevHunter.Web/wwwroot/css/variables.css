@@ -1,0 +1,35 @@
+:root {
+    /* --- Backgrounds --- */
+    --color-bg-dark: #000614;
+    --color-bg-card: #111A39;
+
+    /* --- Blue palette --- */
+    /* Note: --color-primary and --color-primary-alt are visually very close
+       (#304ffe vs #374ffe) and could be consolidated into one token. */
+    --color-primary: #304ffe;
+    --color-primary-alt: #374ffe;
+    --color-accent: #4056C0;
+    --color-navy: #000058;
+    --color-navy-dark: #000049;
+
+    /* --- Text --- */
+    --color-text-light: #E5E4E6;
+    --color-text-muted: #898989;
+
+    /* --- Status --- */
+    --color-success: #127C30;
+
+    /* --- rgba equivalents (for use inside gradients, borders, shadows) --- */
+    --color-primary-rgba: rgba(0, 0, 73, 1);       /* #000049 at full opacity */
+    --color-accent-rgba: rgba(64, 86, 192, 1);     /* #4056C0 at full opacity */
+    --color-glow: rgba(0, 102, 255, 0.25);
+    --color-border-rgba: rgba(51, 51, 52, 1);
+    --overlay-dark: rgba(0, 0, 88, 0.10);          /* #000058 at 10% opacity */
+
+    /* --- Composite shadows --- */
+    --shadow-subtle: 0 10px 30px 0 rgba(0, 0, 0, 0.02);
+    --shadow-card: 0 3px 20px #00001A;
+    --shadow-border: inset 0 0 0 1px var(--color-border-rgba);
+    --shadow-navy-border: 0 0 0 1px var(--color-navy-dark) inset;
+    --shadow-glow: 0 0 0 1px var(--color-accent-rgba) inset, 0 0 26px -3px var(--color-glow);
+}

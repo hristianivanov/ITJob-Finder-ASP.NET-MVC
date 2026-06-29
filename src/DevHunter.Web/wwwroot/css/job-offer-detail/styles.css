@@ -43,7 +43,7 @@
     align-items: center;
     font-weight: 500;
     font-size: 16px;
-    background-color: #304ffe;
+    background-color: var(--color-primary);
     padding: 14px 25px 12px;
     color: #fff;
     border-radius: 5px;
@@ -68,7 +68,7 @@
     background: linear-gradient(90deg, var(--color-job-list-item-left) 4%, var(--color-job-list-item-right) 92%);
     margin-bottom: 15px;
     border-radius: 5px;
-    box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.02);
+    box-shadow: var(--shadow-subtle);
 }
 
     .content-container .section-categories .section-title {
@@ -106,7 +106,7 @@
         display: inline-block;
         padding: 13px 29px 13px 18px;
         margin: 0 12px 12px 0;
-        background-color: #111A39;
+        background-color: var(--color-bg-card);
         border-radius: 5px;
         color: #fff;
         font-family: Axiforma,sans-serif;
@@ -120,7 +120,7 @@
 
 .section-categories .categories-wrap .category .count {
     margin-left: 5px;
-    color: #304ffe;
+    color: var(--color-primary);
 }
 
 .container-single-job .job-box {
@@ -131,8 +131,8 @@
     border-radius: 5px;
     /* ReSharper disable once InvalidValue */
     background: linear-gradient(90deg, var(--color-job-list-item-left) 4%, var(--color-job-list-item-right) 92%);
-    box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.02);
-    color: #898989;
+    box-shadow: var(--shadow-subtle);
+    color: var(--color-text-muted);
 }
 
 .job-box .job-listing-meta {
@@ -272,7 +272,7 @@
     flex-direction: column;
     border-radius: 5px;
     background-color: #020A24;
-    box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.02);
+    box-shadow: var(--shadow-subtle);
 }
 
 
@@ -286,7 +286,7 @@
     top: 0;
     left: 6px;
     filter: blur(12px);
-    box-shadow: 0 0 21px 5px #4056C0 inset, 20px -1px 35px 0 #4056C0;
+    box-shadow: 0 0 21px 5px var(--color-accent) inset, 20px -1px 35px 0 var(--color-accent);
 }
 
 .box-company .logo-in-company-info {
@@ -343,7 +343,7 @@
     padding: 14px 25px;
     line-height: 140%;
     font-weight: 400;
-    color: #304ffe;
+    color: var(--color-primary);
 }
 
 

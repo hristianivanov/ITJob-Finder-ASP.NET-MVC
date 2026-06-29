@@ -35,7 +35,7 @@
 }
 
 .actions .submit-btn {
-    background: #374EF5;
+    background: var(--color-primary-alt);
     color: #fff;
 }
 

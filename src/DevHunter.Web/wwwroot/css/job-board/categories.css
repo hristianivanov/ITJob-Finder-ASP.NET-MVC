@@ -1,4 +1,4 @@
-/* styles for the categories section on the homepage */
+﻿/* styles for the categories section on the homepage */
 
 /* There are a lot of styles for this section, left in custom.css.
  * Our goal is to eventually either refactor them, or at least bring
@@ -11,8 +11,8 @@
     margin: 0 auto;
     padding: 5em 0;
     border-radius: 1em;
-    background: rgba(0,0,88,0.10) !important;
-    box-shadow: inset 0 0 0 1px rgba(0,0,73,1);
+    background: var(--overlay-dark) !important;
+    box-shadow: inset 0 0 0 1px var(--color-primary-rgba);
     backdrop-filter: blur(12px);
 }
 
@@ -58,15 +58,15 @@
 }
 
 .border-left {
-    border-left: 1px solid rgba(0,0,73,1);
+    border-left: 1px solid var(--color-primary-rgba);
 }
 
 .border-right {
-    border-right: 1px solid rgba(0,0,73,1);
+    border-right: 1px solid var(--color-primary-rgba);
 }
 
 .border-bottom {
-    border-bottom: 1px solid rgba(0,0,73,1);
+    border-bottom: 1px solid var(--color-primary-rgba);
 }
 
 .category-block-title-holder {
@@ -314,7 +314,7 @@
 }
 
 .color-front-end-development .job-qty {
-    color: #127C30;
+    color: var(--color-success);
 }
 
 .color-front-end-development .job-qty:after {
@@ -456,11 +456,11 @@
     }
 
     .category-block.color-back-end-development {
-        border-right: 1px solid rgba(0,0,73,1);
+        border-right: 1px solid var(--color-primary-rgba);
     }
 
     .category-block.color-infrastructure {
-        border-right: 1px solid rgba(0,0,73,1);;
+        border-right: 1px solid var(--color-primary-rgba);;
     }
 
     .category-block.color-data-science {
@@ -474,14 +474,14 @@
     }
 
     .category-block.color-mobile-development {
-        border-bottom: 1px solid rgba(0,0,73,1);;
-        border-right: 1px solid rgba(0,0,73,1);;
+        border-bottom: 1px solid var(--color-primary-rgba);;
+        border-right: 1px solid var(--color-primary-rgba);;
     }
 
     .category-block.color-customer-support {
         border-right: none;
         border-left: none;
-        border-bottom: 1px solid rgba(0,0,73,1);
+        border-bottom: 1px solid var(--color-primary-rgba);
     }
 
     .category-block.color-quality-assurance {
@@ -538,7 +538,7 @@
     .section-category-block .category-block {
         border-width: 0 0 1px 0;
         border-style: solid;
-        border-color: rgba(0,0,73,1);
+        border-color: var(--color-primary-rgba);
     }
 
     .category-block .child-term {

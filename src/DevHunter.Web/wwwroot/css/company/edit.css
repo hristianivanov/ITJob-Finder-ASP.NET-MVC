@@ -13,8 +13,8 @@
 
 .company-edit-container {
     position: relative;
-    background: rgba(0, 0, 88, 0.10);
-    box-shadow: 0 0 0 1px #000049 inset;
+    background: var(--overlay-dark);
+    box-shadow: var(--shadow-navy-border);
     margin: 2em auto 6em auto;
     padding: 1em 3em;
     border-radius: 4px;
@@ -37,7 +37,7 @@
 
     .company-edit-form > button[type=submit] {
         font-weight: 600;
-        background-color: #304ffe;
+        background-color: var(--color-primary);
         padding: 14px 25px 12px;
         color: #fff;
         border-radius: 5px;
@@ -48,16 +48,16 @@
 .input-field input {
     color: #fff;
     width: 100%;
-    background: #000614;
+    background: var(--color-bg-dark);
     border-radius: 0.5em;
     padding: 1em 1.5em;
     font: small-caption;
     font-size: 16px;
-    box-shadow: inset 0 0 0 1px rgba(51, 51, 52, 1.00);
+    box-shadow: var(--shadow-border);
 }
 
 .input-field input:focus {
-    box-shadow: 0 0 0 1px rgba(64, 86, 192, 1.00) inset, 0 0 26px -3px rgba(0, 102, 255, 0.25);
+    box-shadow: var(--shadow-glow);
 }
 
 /*Mozilla*/

@@ -1,4 +1,4 @@
-.container-with-sidebar {
+﻿.container-with-sidebar {
     padding: 40px 0;
     font-family: Axiforma, sans-serif;
     display: flex;
@@ -17,7 +17,7 @@
 }
 
 .sidebar-container .sidebar-nav-list {
-    box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.02);
+    box-shadow: var(--shadow-subtle);
 }
 
 .content-container {
@@ -48,7 +48,7 @@
     justify-content: center;
     align-items: center;
     border-radius: 20px;
-    background-color: #304ffe;
+    background-color: var(--color-primary);
     color: white;
     font-size: 10px;
     line-height: 100%;
@@ -66,7 +66,7 @@
 }
 
 .sidebar-nav-item.current {
-    border-left-color: #304ffe;
+    border-left-color: var(--color-primary);
 }
 
 
@@ -76,7 +76,7 @@
     border-radius: 5px;
     background-color: white;
     color: rgb(89, 89, 89);
-    box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.02);
+    box-shadow: var(--shadow-subtle);
     margin-bottom: 10px;
     padding: 20px;
     -webkit-box-orient: vertical;
@@ -126,14 +126,14 @@
     padding: 30px;
     border-radius: 5px;
     background-color: white;
-    box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.02);
+    box-shadow: var(--shadow-subtle);
     color: rgb(89, 89, 89);
 }
 
 .detail-box .box-heading {
     margin: -30px -30px 0;
     padding: 0 30px 20px;
-    border-bottom: 3px solid #000614;
+    border-bottom: 3px solid var(--color-bg-dark);
 }
 
 .detail-box .box-heading h2 {
@@ -254,7 +254,7 @@
 
 .jobs-holder .jobs-number-heading {
     font-size: 22px;
-    color: #304ffe;
+    color: var(--color-primary);
 }
 
 
@@ -268,7 +268,7 @@
 .company-name-holder .company-scroll-to-job {
     font-weight: 400;
     font-size: 16px;
-    background-color: #304ffe;
+    background-color: var(--color-primary);
     padding: 14px 25px 12px;
     color: #fff;
     border-radius: 5px;
@@ -285,7 +285,7 @@
     font-size: 16px;
     text-align: center;
     background-color: white;
-    color: #304ffe;
+    color: var(--color-primary);
     font-weight: 500;
     border-radius: 50%;
     line-height: 1.4;
@@ -305,7 +305,7 @@
 .question-mark-no-info {
     font-size: 10em;
     font-weight: bold;
-    color: #304ffe;
+    color: var(--color-primary);
     opacity: 0.5;
     position: absolute;
     right: 30%;

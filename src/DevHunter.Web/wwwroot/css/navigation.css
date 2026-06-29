@@ -1,9 +1,9 @@
-.site-header > .site-title {
+﻿.site-header > .site-title {
     margin: 0.5em 0;
 }
 
 .site-full-name {
-    color: #E5E4E6;
+    color: var(--color-text-light);
 }
 
 .site-title p {
@@ -12,8 +12,8 @@
 }
 
 .site-title span {
-    color: #000614;
-    background: #E5E4E6;
+    color: var(--color-bg-dark);
+    background: var(--color-text-light);
     padding: 0.2em 0.4em;
     border-radius: 0.4em;
     margin-right: 0.3em;
@@ -37,14 +37,14 @@
 }
 
     .main-nav a:hover {
-        color: #E5E4E6;
+        color: var(--color-text-light);
         transition: ease-in 400ms;
     }
 
 .main-nav ul {
-    border: 2px solid #000058;
+    border: 2px solid var(--color-navy);
     border-radius: 4em;
-    box-shadow: 0 0 0 2px #4056C0 inset, 0 0 26px 3px rgba(0, 102, 255, 0.25);
+    box-shadow: 0 0 0 2px var(--color-accent) inset, 0 0 26px 3px var(--color-glow);
     backdrop-filter: blur(12px);
     padding: 0.3em 0.4em;
 }
@@ -75,9 +75,9 @@
     }
 
     .login-register-cta a {
-        color: #E5E4E6;
-        border: 2px solid #000058;
-        box-shadow: 0 0 0 3px #4056C0 inset, 0 0 26px -3px rgba(0, 102, 255, 0.25);
+        color: var(--color-text-light);
+        border: 2px solid var(--color-navy);
+        box-shadow: 0 0 0 3px var(--color-accent) inset, 0 0 26px -3px var(--color-glow);
         backdrop-filter: blur(12px);
     }
 

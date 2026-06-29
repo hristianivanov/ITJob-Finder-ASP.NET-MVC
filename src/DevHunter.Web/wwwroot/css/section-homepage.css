@@ -1,4 +1,4 @@
-.site-homepage {
+﻿.site-homepage {
     margin: 8em;
 }
 
@@ -7,7 +7,7 @@
     text-align: center;
     font-family: 'Mona-Sans', sans-serif;
     /* ReSharper disable InvalidValue */
-    background: radial-gradient(1779.2% 193.77% at 21.33% -10.76%, #E5E4E6 22.6%, rgba(255, 255, 255, 0.00) 100%);
+    background: radial-gradient(1779.2% 193.77% at 21.33% -10.76%, var(--color-text-light) 22.6%, rgba(255, 255, 255, 0.00) 100%);
     background-clip: text;
     /* ReSharper restore InvalidValue */
     -webkit-background-clip: text;
@@ -16,7 +16,7 @@
 
 .site-homepage .container-wrap p {
     font-family: Satoshi-Medium, sans-serif;
-    color: #E5E4E6;
+    color: var(--color-text-light);
     font-size: 1.5em;
     text-align: center;
 }
@@ -59,13 +59,13 @@
     margin: 3em 0;
     padding: 1.5em 5em;
     min-width: 30em;
-    background: #000614;
+    background: var(--color-bg-dark);
     color: #fff;
     font-family: Satoshi-Medium, sans-serif;
     font-size: 1.1em;
     outline: none;
-    border: 2px solid #000058;
+    border: 2px solid var(--color-navy);
     border-radius: 4em;
-    box-shadow: 0 0 0 2px #4056C0 inset, 0 0 26px -3px rgba(0, 102, 255, 0.25);
+    box-shadow: 0 0 0 2px var(--color-accent) inset, 0 0 26px -3px var(--color-glow);
     backdrop-filter: blur(12px);
 }
