@@ -54,9 +54,11 @@
         {
             var fileMock = new Mock<IFormFile>();
 
+            fileMock.Setup(x => x.FileName).Returns(TEST_DOCUMENT_URL);
+
             var uploadResult = new RawUploadResult
             {
-                SecureUrl = new Uri(TEST_DOCUMENT_URL)
+                SecureUrl = new Uri(TEST_DOCUMENT_URL),
             };
 
             cloudinaryMock
