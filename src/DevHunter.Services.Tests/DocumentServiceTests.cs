@@ -106,5 +106,95 @@
                 .And
                 .HaveCount(1);
         }
+
+        // ── UploadDocumentAsync – validation ────────────────────────────────────
+
+        [Test]
+        public async Task UploadDocumentAsync_ShouldThrowForOversizedFile()
+        {
+            var fileMock = new Mock<IFormFile>();
+            fileMock.Setup(x => x.FileName).Returns("resume.pdf");
+            fileMock.Setup(x => x.Length).Returns(11L * 1024 * 1024); // 11 MB
+
+            var act = async () => await documentService.UploadDocumentAsync(fileMock.Object, TEST_FOLDER);
+
+            await act.Should().ThrowAsync<InvalidOperationException>()
+                .WithMessage("*10 MB*");
+        }
+
+        [TestCase("file.exe")]
+        [TestCase("file.bat")]
+        [TestCase("file.js")]
+        [TestCase("file.html")]
+        public async Task UploadDocumentAsync_ShouldThrowForDisallowedExtension(string fileName)
+        {
+            var fileMock = new Mock<IFormFile>();
+            fileMock.Setup(x => x.FileName).Returns(fileName);
+            fileMock.Setup(x => x.Length).Returns(100L);
+
+            var act = async () => await documentService.UploadDocumentAsync(fileMock.Object, TEST_FOLDER);
+
+            await act.Should().ThrowAsync<InvalidOperationException>()
+                .WithMessage("*not allowed*");
+        }
+
+        // ── AddAsync – invalid GUID ─────────────────────────────────────────────
+
+        [TestCase("")]
+        [TestCase(" ")]
+        [TestCase("invalid_guid")]
+        public async Task AddAsync_ShouldThrowArgumentExceptionForInvalidGuid(string invalidId)
+        {
+            var act = async () => await documentService.AddAsync(TEST_DOCUMENT_URL, invalidId);
+
+            await act.Should().ThrowAsync<ArgumentException>();
+        }
+
+        // ── UploadAndSaveAsync ──────────────────────────────────────────────────
+
+        [Test]
+        public async Task UploadAndSaveAsync_ShouldUploadAndSaveDocument()
+        {
+            var fileMock = new Mock<IFormFile>();
+            fileMock.Setup(x => x.FileName).Returns("resume.pdf");
+            fileMock.Setup(x => x.Length).Returns(1024L);
+            fileMock.Setup(x => x.OpenReadStream()).Returns(Stream.Null);
+
+            var application = await dbContext.JobApplications.FirstAsync();
+
+            cloudinaryMock
+                .Setup(x => x.UploadAsync(It.IsAny<RawUploadParams>()))
+                .ReturnsAsync(new RawUploadResult { SecureUrl = new Uri(TEST_DOCUMENT_URL) });
+
+            await documentService.UploadAndSaveAsync(
+                fileMock.Object, TEST_FOLDER, application.Id.ToString());
+
+            bool saved = await dbContext.ApplicationDocuments
+                .AnyAsync(d => d.JobApplicationId == application.Id);
+            saved.Should().BeTrue();
+        }
+
+        [Test]
+        public async Task UploadAndSaveAsync_ShouldRollbackCloudinaryWhenDbSaveFails()
+        {
+            var fileMock = new Mock<IFormFile>();
+            fileMock.Setup(x => x.FileName).Returns("resume.pdf");
+            fileMock.Setup(x => x.Length).Returns(1024L);
+            fileMock.Setup(x => x.OpenReadStream()).Returns(Stream.Null);
+
+            cloudinaryMock
+                .Setup(x => x.UploadAsync(It.IsAny<RawUploadParams>()))
+                .ReturnsAsync(new RawUploadResult { SecureUrl = new Uri(TEST_DOCUMENT_URL) });
+            cloudinaryMock
+                .Setup(x => x.DestroyAsync(It.IsAny<DeletionParams>()))
+                .ReturnsAsync(new DeletionResult());
+
+            // Invalid applicationId causes AddAsync to throw, triggering Cloudinary rollback
+            var act = async () => await documentService
+                .UploadAndSaveAsync(fileMock.Object, TEST_FOLDER, "not-a-valid-guid");
+
+            await act.Should().ThrowAsync<ArgumentException>();
+            cloudinaryMock.Verify(x => x.DestroyAsync(It.IsAny<DeletionParams>()), Times.Once);
+        }
     }
 }

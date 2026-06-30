@@ -680,5 +680,46 @@
 
             await act.Should().ThrowAsync<NullReferenceException>();
         }
+
+        // ── AllAsync – no-filter path ────────────────────────────────────────────
+
+        [Test]
+        public async Task AllAsync_ShouldReturnAllJobOffersWhenNoFiltersApplied()
+        {
+            var allJobOffers = await dbContext.JobOffers.ToListAsync();
+
+            var model = new AllJobOffersQueryModel
+            {
+                Filters = await jobOfferService.LoadFiltersAsync()
+            };
+
+            var result = await jobOfferService.AllAsync(model);
+
+            result.Should().NotBeNull().And.BeOfType<AllJobOffersFilteredAndPagedServiceModel>();
+            result.JobOffers.Should()
+                .HaveCount(allJobOffers.Count)
+                .And.Equal(allJobOffers, (j1, j2) => j1.Id == j2.Id.ToString());
+        }
+
+        // ── GetDetailsByIdAsync – error path ────────────────────────────────────
+
+        [Test]
+        public async Task GetDetailsByIdAsync_ShouldThrowForNonExistingJobOffer()
+        {
+            var act = async () => await jobOfferService.GetDetailsByIdAsync(Guid.NewGuid().ToString());
+
+            await act.Should().ThrowAsync<InvalidOperationException>();
+        }
+
+        [TestCase("")]
+        [TestCase(" ")]
+        [TestCase(null)]
+        [TestCase("invalid_id")]
+        public async Task GetDetailsByIdAsync_ShouldThrowForInvalidId(string invalidId)
+        {
+            var act = async () => await jobOfferService.GetDetailsByIdAsync(invalidId);
+
+            await act.Should().ThrowAsync<InvalidOperationException>();
+        }
     }
 }

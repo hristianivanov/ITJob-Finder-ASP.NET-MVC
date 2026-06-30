@@ -322,5 +322,34 @@
             jobApplication.Status.Should().Be(ApplicationStatus.Approved);
         }
 
+        // ── RejectApplicationAsync – missing coverage ────────────────────────────
+
+        [Test]
+        public async Task RejectApplicationAsync_ShouldRejectAnotherCompanyUser()
+        {
+            var jobApplication = await dbContext.JobApplications.FirstAsync();
+            var company = await dbContext.Companies.FirstAsync();
+            var otherUser = await dbContext.Users.FirstAsync(user => user.Id != company.CreatorId);
+
+            var act = async () => await jobApplicationService
+                .RejectApplicationAsync(jobApplication.Id.ToString(), otherUser.Id.ToString());
+
+            await act.Should().ThrowAsync<InvalidOperationException>();
+        }
+
+        [Test]
+        public async Task RejectApplicationAsync_ShouldAllowDuplicateRejection()
+        {
+            var jobApplication = await dbContext.JobApplications.FirstAsync();
+            var company = await dbContext.Companies.FirstAsync();
+
+            await jobApplicationService
+                .RejectApplicationAsync(jobApplication.Id.ToString(), company.CreatorId.ToString());
+            var act = async () => await jobApplicationService
+                .RejectApplicationAsync(jobApplication.Id.ToString(), company.CreatorId.ToString());
+
+            await act.Should().NotThrowAsync();
+            jobApplication.Status.Should().Be(ApplicationStatus.Rejected);
+        }
     }
 }
