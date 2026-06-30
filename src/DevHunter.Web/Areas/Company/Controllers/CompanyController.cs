@@ -1,6 +1,7 @@
-﻿namespace DevHunter.Web.Areas.Company.Controllers
+namespace DevHunter.Web.Areas.Company.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Logging;
 
     using ViewModels.Company;
     using Services.Data.Interfaces;
@@ -12,11 +13,13 @@
     {
         private readonly ICompanyService companyService;
         private readonly IJobApplicationService jobApplicationService;
+        private readonly ILogger<CompanyController> logger;
 
-        public CompanyController(ICompanyService companyService, IJobApplicationService jobApplicationService)
+        public CompanyController(ICompanyService companyService, IJobApplicationService jobApplicationService, ILogger<CompanyController> logger)
         {
             this.companyService = companyService;
             this.jobApplicationService = jobApplicationService;
+            this.logger = logger;
         }
 
         [HttpGet]
@@ -39,8 +42,9 @@
 
                 return View(model);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                logger.LogError(ex, "Unhandled exception in {Controller}", nameof(CompanyController));
                 return GeneralError();
             }
         }
@@ -68,8 +72,9 @@
 
                 await this.companyService.EditAsync(id!, model, this.User.GetId()!);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                logger.LogError(ex, "Unhandled exception in {Controller}", nameof(CompanyController));
                 ModelState.AddModelError(string.Empty,
                     "Unexpected error occurred while trying to edit the company!");
 

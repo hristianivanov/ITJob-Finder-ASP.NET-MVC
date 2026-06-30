@@ -1,7 +1,8 @@
-﻿namespace DevHunter.Web.Areas.Company.Controllers
+namespace DevHunter.Web.Areas.Company.Controllers
 {
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Logging;
 
     using Infrastructure.Extensions;
     using Services.Data.Interfaces;
@@ -16,10 +17,12 @@
     public class JobOfferController : Controller
     {
         private readonly IJobOfferService jobOfferService;
+        private readonly ILogger<JobOfferController> logger;
 
-        public JobOfferController(IJobOfferService jobOfferService)
+        public JobOfferController(IJobOfferService jobOfferService, ILogger<JobOfferController> logger)
         {
             this.jobOfferService = jobOfferService;
+            this.logger = logger;
         }
 
         [Route("company/job-offers")]
@@ -64,8 +67,9 @@
 
                 return RedirectToAction("All");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                logger.LogError(ex, "Unhandled exception in {Controller}", nameof(JobOfferController));
                 ModelState.AddModelError(string.Empty,
                     "Unexpected error occurred while trying to add your new job offer!");
 
@@ -94,8 +98,9 @@
 
                 return View(model);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                logger.LogError(ex, "Unhandled exception in {Controller}", nameof(JobOfferController));
                 return GeneralError();
             }
         }
@@ -133,8 +138,9 @@
 
                 await jobOfferService.EditJobOfferAsync(id, model, this.User.GetId()!);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                logger.LogError(ex, "Unhandled exception in {Controller}", nameof(JobOfferController));
                 ModelState.AddModelError(string.Empty,
                     "Unexpected error occurred while trying to edit the technology!");
 
@@ -165,8 +171,9 @@
 
                 return RedirectToAction("All");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                logger.LogError(ex, "Unhandled exception in {Controller}", nameof(JobOfferController));
                 return GeneralError();
             }
         }

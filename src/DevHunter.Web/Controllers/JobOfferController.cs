@@ -1,6 +1,7 @@
 ﻿namespace DevHunter.Web.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Logging;
 
     using Infrastructure.Extensions;
     using Services.Data.Interfaces;
@@ -16,13 +17,15 @@
         private readonly IJobOfferService jobOfferService;
         private readonly IDevelopmentService devDevelopmentService;
         private readonly IJobApplicationService jobApplicationService;
+        private readonly ILogger<JobOfferController> logger;
 
-        public JobOfferController(IJobOfferService jobOfferService, IJobApplicationService jobApplicationService, IDocumentService documentService, IDevelopmentService devDevelopmentService)
+        public JobOfferController(IJobOfferService jobOfferService, IJobApplicationService jobApplicationService, IDocumentService documentService, IDevelopmentService devDevelopmentService, ILogger<JobOfferController> logger)
         {
             this.jobOfferService = jobOfferService;
             this.jobApplicationService = jobApplicationService;
             this.documentService = documentService;
             this.devDevelopmentService = devDevelopmentService;
+            this.logger = logger;
         }
 
         [HttpGet]
@@ -96,8 +99,9 @@
 
                 return new JsonResult(new { success = true });
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                logger.LogError(ex, "Unhandled exception in {Controller}", nameof(JobOfferController));
                 return GeneralError();
             }
         }
@@ -131,8 +135,9 @@
 
                 return View(model);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                logger.LogError(ex, "Unhandled exception in {Controller}", nameof(JobOfferController));
                 return GeneralError();
             }
         }
@@ -175,8 +180,9 @@
 
                 return new JsonResult(new { success = true, successMsg = "Your application has been sent successfully!" });
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                logger.LogError(ex, "Unhandled exception in {Controller}", nameof(JobOfferController));
                 return GeneralError();
             }
         }

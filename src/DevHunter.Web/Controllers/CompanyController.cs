@@ -1,6 +1,7 @@
-﻿namespace DevHunter.Web.Controllers
+namespace DevHunter.Web.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Logging;
 
     using Services.Data.Interfaces;
 
@@ -9,10 +10,12 @@
     public class CompanyController : Controller
     {
         private readonly ICompanyService companyService;
+        private readonly ILogger<CompanyController> logger;
 
-        public CompanyController(ICompanyService companyService)
+        public CompanyController(ICompanyService companyService, ILogger<CompanyController> logger)
         {
             this.companyService = companyService;
+            this.logger = logger;
         }
 
         [HttpGet]
@@ -45,8 +48,9 @@
 
                 return View(model);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                logger.LogError(ex, "Unhandled exception in {Controller}", nameof(CompanyController));
                 return GeneralError();
             }
         }

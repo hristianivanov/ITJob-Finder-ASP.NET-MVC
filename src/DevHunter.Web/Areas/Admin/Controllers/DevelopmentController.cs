@@ -1,6 +1,7 @@
-﻿namespace DevHunter.Web.Areas.Admin.Controllers
+namespace DevHunter.Web.Areas.Admin.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Logging;
 
     using ViewModels.Development;
     using Services.Data.Interfaces;
@@ -11,10 +12,12 @@
     public class DevelopmentController : BaseAdminController
     {
         private readonly IDevelopmentService developmentService;
+        private readonly ILogger<DevelopmentController> logger;
 
-        public DevelopmentController(IDevelopmentService developmentService)
+        public DevelopmentController(IDevelopmentService developmentService, ILogger<DevelopmentController> logger)
         {
             this.developmentService = developmentService;
+            this.logger = logger;
         }
 
         public async Task<IActionResult> All()
@@ -36,8 +39,9 @@
 
                 return View(formModel);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                logger.LogError(ex, "Unhandled exception in {Controller}", nameof(DevelopmentController));
                 return GeneralError();
             }
         }
@@ -74,8 +78,9 @@
 
                 return RedirectToAction("Index", "Home");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                logger.LogError(ex, "Unhandled exception in {Controller}", nameof(DevelopmentController));
                 ModelState.AddModelError(string.Empty,
                     "Unexpected error occurred while trying to add your new technology!");
 
@@ -101,8 +106,9 @@
 
                 return View(model);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                logger.LogError(ex, "Unhandled exception in {Controller}", nameof(DevelopmentController));
                 return GeneralError();
             }
         }
@@ -129,8 +135,9 @@
 
                 await developmentService.EditDevelopmentAsync(id, model);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                logger.LogError(ex, "Unhandled exception in {Controller}", nameof(DevelopmentController));
                 ModelState.AddModelError(string.Empty,
                     "Unexpected error occurred while trying to edit the technology!");
 
@@ -160,8 +167,9 @@
 
                 return RedirectToAction("All");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                logger.LogError(ex, "Unhandled exception in {Controller}", nameof(DevelopmentController));
                 return GeneralError();
             }
         }
