@@ -63,10 +63,15 @@
 
         public async Task AddAsync(string url, string applicationId)
         {
+            if (!Guid.TryParse(applicationId, out Guid parsedId))
+            {
+                throw new ArgumentException($"Invalid application ID: '{applicationId}'.", nameof(applicationId));
+            }
+
             ApplicationDocument document = new ApplicationDocument()
             {
                 DocumentUrl = url,
-                JobApplicationId = Guid.Parse(applicationId),
+                JobApplicationId = parsedId,
             };
 
             await this.dbContext.ApplicationDocuments.AddAsync(document);
