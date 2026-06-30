@@ -17,6 +17,8 @@
 
         public string ImageUrl { get; set; } = null!;
 
+        public int SortOrder { get; set; }
+
         public virtual ICollection<TechnologyDevelopments> DevelopmentTechnologies { get; set; }
     }
 }

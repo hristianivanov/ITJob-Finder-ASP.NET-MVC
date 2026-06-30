@@ -6,6 +6,7 @@
 
     using Interfaces;
     using Web.ViewModels.Development;
+    using Web.ViewModels.Technology;
 
     using Development = DevHunter.Data.Models.Development;
 
@@ -48,6 +49,7 @@
         {
             var developments = await this.dbContext
                 .Developments
+                .OrderBy(d => d.SortOrder)
                 .Select(d => new DevelopmentViewModel()
                 {
                     Id = d.Id.ToString(),
@@ -56,27 +58,45 @@
                 })
                 .ToListAsync();
 
+            var developmentIds = developments
+                .Select(d => Guid.Parse(d.Id))
+                .ToList();
+
+            var allTechCounts = await this.dbContext.TechnologyJobOffers
+                .GroupBy(t => t.TechnologyId)
+                .Select(g => new { TechnologyId = g.Key, Count = g.Count() })
+                .ToDictionaryAsync(x => x.TechnologyId, x => x.Count);
+
+            var allTechsByDev = await this.dbContext.TechnologiesDevelopments
+                .AsNoTracking()
+                .Where(td => developmentIds.Contains(td.DevelopmentId))
+                .Select(td => new
+                {
+                    td.DevelopmentId,
+                    TechId = td.TechnologyId,
+                    td.Technology.Name,
+                    td.Technology.ImageUrl
+                })
+                .ToListAsync();
+
             foreach (var development in developments)
             {
-                development.Technologies = await this.technologyService.AllByDevelopmentAsync(development.Id);
-                development.Technologies = development.Technologies.Where(t => t.Count > 0);
-                development.Count = development.Technologies.Sum(t => t.Count);
-            }
+                var devId = Guid.Parse(development.Id);
+                var techs = allTechsByDev
+                    .Where(t => t.DevelopmentId == devId)
+                    .Select(t => new Web.ViewModels.Technology.TechnologyViewModel
+                    {
+                        Id = t.TechId.ToString(),
+                        Name = t.Name,
+                        ImageUrl = t.ImageUrl,
+                        Count = allTechCounts.GetValueOrDefault(t.TechId, 0)
+                    })
+                    .Where(t => t.Count > 0)
+                    .ToList();
 
-            developments = developments
-                .OrderByDescending(d => d.Name.StartsWith("backend", StringComparison.OrdinalIgnoreCase))
-                .ThenByDescending(d => d.Name.StartsWith("infrastructure", StringComparison.OrdinalIgnoreCase))
-                .ThenByDescending(d => d.Name.StartsWith("mobile", StringComparison.OrdinalIgnoreCase))
-                .ThenByDescending(d => d.Name.StartsWith("frontend", StringComparison.OrdinalIgnoreCase))
-                .ThenByDescending(d => d.Name.StartsWith("quality", StringComparison.OrdinalIgnoreCase))
-                .ThenByDescending(d => d.Name.StartsWith("data", StringComparison.OrdinalIgnoreCase))
-                .ThenByDescending(d => d.Name.StartsWith("customer", StringComparison.OrdinalIgnoreCase))
-                .ThenByDescending(d => d.Name.StartsWith("fullstack", StringComparison.OrdinalIgnoreCase))
-                .ThenByDescending(d => d.Name.StartsWith("technical", StringComparison.OrdinalIgnoreCase))
-                .ThenByDescending(d => d.Name.StartsWith("pm/ba", StringComparison.OrdinalIgnoreCase))
-                .ThenByDescending(d => d.Name.StartsWith("erp / crm", StringComparison.OrdinalIgnoreCase))
-                .ThenByDescending(d => d.Name, StringComparer.OrdinalIgnoreCase)
-                .ToList();
+                development.Technologies = techs;
+                development.Count = techs.Sum(t => t.Count);
+            }
 
             return developments;
         }
@@ -134,6 +154,7 @@
         {
             var development = await this.dbContext
                 .Developments
+                .Include(d => d.DevelopmentTechnologies)
                 .FirstAsync(d => d.Id.ToString() == id);
 
             if (development.DevelopmentTechnologies.Any())

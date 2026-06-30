@@ -28,6 +28,7 @@
                 {
                     Id = Guid.Parse("4423b2a0-4b46-49fd-b6cd-92eadfcbcfd0"),
                     Name = "Backend Development",
+                    SortOrder = 0,
                     ImageUrl = "https://res.cloudinary.com/dlffxtrek/image/upload/v1711954697/DevHunter/development/Backend%20Development.png",
                     DevelopmentTechnologies = new HashSet<TechnologyDevelopments>()
                     {
@@ -65,6 +66,7 @@
                 {
                     Id = Guid.Parse("c385035d-2a4d-442a-b6ca-6443bb378be1"),
                     Name = "Frontend Development",
+                    SortOrder = 3,
                     ImageUrl = "https://res.cloudinary.com/dlffxtrek/image/upload/v1711959225/DevHunter/development/Frontend%20Development.png",
                     DevelopmentTechnologies = new HashSet<TechnologyDevelopments>()
                     {
@@ -90,18 +92,21 @@
                 {
                     Id = Guid.Parse("010164b3-025f-461c-b393-b35bd679bf30"),
                     Name = "Customer Support",
+                    SortOrder = 6,
                     ImageUrl = "https://res.cloudinary.com/dlffxtrek/image/upload/v1712052843/DevHunter/development/Customer%20Support.png"
                 },
                 new Development()
                 {
                     Id = Guid.Parse("58e9c362-031c-4106-a273-7b730162f23b"),
                     Name = "Fullstack Development",
+                    SortOrder = 7,
                     ImageUrl = "https://res.cloudinary.com/dlffxtrek/image/upload/v1712052406/DevHunter/development/Fullstack%20Development.png"
                 },
                 new Development()
                 {
                     Id = Guid.Parse("f86ea64b-6602-48e6-a951-c4eed172decd"),
                     Name = "Data Science",
+                    SortOrder = 5,
                     ImageUrl = "https://res.cloudinary.com/dlffxtrek/image/upload/v1712052843/DevHunter/development/Data%20Science.png",
                     DevelopmentTechnologies = new HashSet<TechnologyDevelopments>
                     {
@@ -126,11 +131,13 @@
                 new Development() {
                     Id = Guid.Parse("5f4e14ae-b693-4f22-8167-4c808c436391"),
                     Name = "IT Management",
+                    SortOrder = 11,
                     ImageUrl = "https://res.cloudinary.com/dlffxtrek/image/upload/v1712052844/DevHunter/development/IT%20Management.png",
                 },
                 new Development() {
                     Id = Guid.Parse("8b1cdd7b-2455-4067-96f0-452a7a9eba50"),
                     Name = "ERP / CRM Development",
+                    SortOrder = 10,
                     ImageUrl = "https://res.cloudinary.com/dlffxtrek/image/upload/v1712052843/DevHunter/development/ERP%20-%20CRM%20development.png",
                     DevelopmentTechnologies = new HashSet<TechnologyDevelopments>
                     {
@@ -147,6 +154,7 @@
                 new Development() {
                     Id = Guid.Parse("134cb2eb-71a2-430f-ae7d-b01895cbefb8"),
                     Name = "Infrastructure",
+                    SortOrder = 1,
                     ImageUrl = "https://res.cloudinary.com/dlffxtrek/image/upload/v1712052844/DevHunter/development/Infrastructure.png",
                     DevelopmentTechnologies = new HashSet<TechnologyDevelopments>
                     {
@@ -171,11 +179,13 @@
                 new Development() {
                     Id = Guid.Parse("60151c1f-394a-49e4-8777-fd85d41f1341"),
                     Name = "Junior/Intern",
+                    SortOrder = 12,
                     ImageUrl = "https://res.cloudinary.com/dlffxtrek/image/upload/v1712052844/DevHunter/development/Junior%20-%20Intern.png",
                 },
                 new Development() {
                     Id = Guid.Parse("09b3a04b-ca29-42db-8f68-85e92f8c83ac"),
                     Name = "Mobile Development",
+                    SortOrder = 2,
                     ImageUrl = "https://res.cloudinary.com/dlffxtrek/image/upload/v1712052844/DevHunter/development/Mobile%20Development.png",
                     DevelopmentTechnologies = new HashSet<TechnologyDevelopments>
                     {
@@ -192,6 +202,7 @@
                 new Development() {
                     Id = Guid.Parse("3925bab7-3529-47e6-807f-37a57d9c9cfd"),
                     Name = "PM/BA and more",
+                    SortOrder = 9,
                     ImageUrl = "https://res.cloudinary.com/dlffxtrek/image/upload/v1712052844/DevHunter/development/PM%20-%20BA%20and%20more.png",
                     DevelopmentTechnologies = new HashSet<TechnologyDevelopments>
                     {
@@ -220,6 +231,7 @@
                 new Development() {
                     Id = Guid.Parse("8448cd52-5cb6-4a42-8324-17c34e58837f"),
                     Name = "Quality Assurance",
+                    SortOrder = 4,
                     ImageUrl = "https://res.cloudinary.com/dlffxtrek/image/upload/v1712052845/DevHunter/development/Quality%20Assurance.png",
                     DevelopmentTechnologies = new HashSet<TechnologyDevelopments>
                     {
@@ -236,6 +248,7 @@
                 new Development() {
                     Id = Guid.Parse("5223d4e3-3508-47ca-a24c-538923500838"),
                     Name = "Technical Support",
+                    SortOrder = 8,
                     ImageUrl = "https://res.cloudinary.com/dlffxtrek/image/upload/v1712052845/DevHunter/development/Technical%20Support.png",
                 }
             };

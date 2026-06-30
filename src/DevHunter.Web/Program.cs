@@ -22,7 +22,6 @@ public class Program
 
         builder.Services.AddDbContext<DevHunterDbContext>(options =>
         {
-            options.UseLazyLoadingProxies();
             options.UseSqlServer(connectionString);
         });
 
