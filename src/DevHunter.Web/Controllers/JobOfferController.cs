@@ -169,9 +169,7 @@
                 {
                     foreach (var file in model.Files)
                     {
-                        string documentUrl = await this.documentService.UploadDocumentAsync(file, "DevHunter/documents");
-
-                        await this.documentService.AddAsync(documentUrl, applicationId);
+                        await this.documentService.UploadAndSaveAsync(file, "DevHunter/documents", applicationId);
                     }
                 }
 

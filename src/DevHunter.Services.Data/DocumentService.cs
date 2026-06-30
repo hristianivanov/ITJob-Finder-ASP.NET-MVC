@@ -72,5 +72,22 @@
             await this.dbContext.ApplicationDocuments.AddAsync(document);
             await this.dbContext.SaveChangesAsync();
         }
+
+        public async Task UploadAndSaveAsync(IFormFile file, string folder, string applicationId)
+        {
+            string url = await UploadDocumentAsync(file, folder);
+
+            string publicId = Path.GetFileNameWithoutExtension(new Uri(url).Segments.Last());
+
+            try
+            {
+                await AddAsync(url, applicationId);
+            }
+            catch
+            {
+                await cloudinaryService.DestroyAsync(new DeletionParams(publicId));
+                throw;
+            }
+        }
     }
 }

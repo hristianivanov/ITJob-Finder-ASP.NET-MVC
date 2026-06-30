@@ -417,9 +417,9 @@
                 ?? throw new InvalidOperationException("Company does not exist.");
 
             JobOffer jobOffer = CreateJobOffer(model, company.Id);
-            await AddTechnologiesAsync(jobOffer, model.Technologies, skipExisting: false);
 
             await this.dbContext.JobOffers.AddAsync(jobOffer);
+            await AddTechnologiesAsync(jobOffer, model.Technologies, skipExisting: false);
             await this.dbContext.SaveChangesAsync();
 
             return jobOffer.Id!.ToString();
