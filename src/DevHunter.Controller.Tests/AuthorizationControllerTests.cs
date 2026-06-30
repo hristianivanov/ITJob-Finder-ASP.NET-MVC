@@ -1,4 +1,4 @@
-namespace DevHunter.Services.Tests
+namespace DevHunter.Controller.Tests
 {
     using FluentAssertions;
     using Microsoft.AspNetCore.Authorization;
@@ -9,7 +9,7 @@ namespace DevHunter.Services.Tests
 
     using static Common.GeneralApplicationConstants;
 
-    public class ControllerAuthorizationTests
+    public class AuthorizationControllerTests
     {
         [TestCase(typeof(BaseAdminController), AdminRoleName)]
         [TestCase(typeof(BaseCompanyController), CompanyRoleName)]
