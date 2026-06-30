@@ -29,12 +29,10 @@ namespace DevHunter.Web.Areas.Company.Controllers
             try
             {
                 bool isOwnedByCompany = await this.companyService
-                    .IsOwnedByUserAsync(id, this.User.GetId()!);
+                    .IsOwnedByUserAsync(id, CurrentUserId);
 
-                if (!isOwnedByCompany)
+                if (!AssertOwnership(isOwnedByCompany))
                 {
-                    TempData[ErrorMessage] = "Company does not exist or does not belong to your account!";
-
                     return RedirectToAction("Index", "Home", new { area = "" });
                 }
 
@@ -61,16 +59,14 @@ namespace DevHunter.Web.Areas.Company.Controllers
             try
             {
                 bool isOwnedByCompany = await this.companyService
-                    .IsOwnedByUserAsync(id, this.User.GetId()!);
+                    .IsOwnedByUserAsync(id, CurrentUserId);
 
-                if (!isOwnedByCompany)
+                if (!AssertOwnership(isOwnedByCompany))
                 {
-                    TempData[ErrorMessage] = "Company does not exist or does not belong to your account!";
-
                     return RedirectToAction("Index", "Home");
                 }
 
-                await this.companyService.EditAsync(id!, model, this.User.GetId()!);
+                await this.companyService.EditAsync(id!, model, CurrentUserId);
             }
             catch (Exception ex)
             {
@@ -87,7 +83,7 @@ namespace DevHunter.Web.Areas.Company.Controllers
         [HttpPost]
         public async Task<IActionResult> ApproveApplication(string id)
         {
-            string companyUserId = this.User.GetId()!;
+            string companyUserId = CurrentUserId;
             bool isOwnedByCompany = await this.jobApplicationService.IsOwnedByCompanyAsync(id, companyUserId);
 
             if (!isOwnedByCompany)
@@ -107,7 +103,7 @@ namespace DevHunter.Web.Areas.Company.Controllers
         [HttpPost]
         public async Task<IActionResult> RejectApplication(string id)
         {
-            string companyUserId = this.User.GetId()!;
+            string companyUserId = CurrentUserId;
             bool isOwnedByCompany = await this.jobApplicationService.IsOwnedByCompanyAsync(id, companyUserId);
 
             if (!isOwnedByCompany)
@@ -129,7 +125,7 @@ namespace DevHunter.Web.Areas.Company.Controllers
         public async Task<IActionResult> Candidates()
         {
             string? companyId =
-                await this.companyService.GetCompanyIdByCreatorIdAsync(this.User.GetId()!);
+                await this.companyService.GetCompanyIdByCreatorIdAsync(CurrentUserId);
 
             var model = await this.jobApplicationService
                 .AllCandidatesByCompanyIdAsync(companyId);
@@ -142,7 +138,7 @@ namespace DevHunter.Web.Areas.Company.Controllers
         {
 
             var application = await this.jobApplicationService
-                .GetApplicationById(applicationId, this.User.GetId()!);
+                .GetApplicationById(applicationId, CurrentUserId);
 
             return PartialView("_JobApplicationModalPartial", application);
         }

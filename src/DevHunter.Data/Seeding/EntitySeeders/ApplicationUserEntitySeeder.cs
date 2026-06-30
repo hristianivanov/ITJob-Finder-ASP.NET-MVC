@@ -18,7 +18,8 @@
         {
             var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
-            if (await dbContext.Users.AnyAsync())
+            var seedId = Guid.Parse("F06D4765-779A-4766-EB64-08DB8A42133C");
+            if (await dbContext.Users.AnyAsync(u => u.Id == seedId))
             {
                 return;
             }

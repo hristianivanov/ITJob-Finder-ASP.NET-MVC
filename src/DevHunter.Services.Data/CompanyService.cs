@@ -6,6 +6,7 @@
     using Ganss.Xss;
     using Microsoft.EntityFrameworkCore;
 
+    using DevHunter.Common;
     using DevHunter.Data;
     using DevHunter.Data.Models;
 
@@ -265,7 +266,7 @@
                 CreatedOn = jobOffer.CreatedOn.ToString(CreatedOnDateFormat, CultureInfo.InvariantCulture),
                 JobLocation = jobOffer.PlaceToWork,
                 JobPosition = jobOffer.JobPosition,
-                Salary = GetSalary(jobOffer.MinSalary, jobOffer.MaxSalary),
+                Salary = SalaryFormatter.Format(jobOffer.MinSalary, jobOffer.MaxSalary),
                 Technologies = jobOffer.Technologies
                     .Select(technology => new TechnologyViewModel
                     {
@@ -275,28 +276,6 @@
                     })
                     .ToList(),
             };
-
-        private static string GetSalary(decimal? minSalary, decimal? maxSalary)
-        {
-            if (minSalary == null && maxSalary == null)
-            {
-                return string.Empty;
-            }
-
-            string? formattedMaxSalary = maxSalary?
-                .ToString("#,0", CultureInfo.InvariantCulture)
-                .Replace(",", " ");
-            string? formattedMinSalary = minSalary?
-                .ToString("#,0", CultureInfo.InvariantCulture)
-                .Replace(",", " ");
-
-            if (!string.IsNullOrWhiteSpace(formattedMinSalary))
-            {
-                return $"{formattedMinSalary} - {formattedMaxSalary} lv.";
-            }
-
-            return $"{formattedMaxSalary} lv.";
-        }
 
         private static readonly Expression<Func<Company, CompanyDetailsData>> CompanyDetailsSelector =
             company => new CompanyDetailsData

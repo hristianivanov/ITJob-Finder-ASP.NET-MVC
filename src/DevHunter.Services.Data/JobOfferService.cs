@@ -16,6 +16,8 @@
     using Web.ViewModels.JobOffer;
     using Web.ViewModels.Technology;
 
+    using DevHunter.Common;
+
     using static Common.GeneralApplicationConstants.JobOffer;
 
     public class JobOfferService : IJobOfferService
@@ -92,7 +94,7 @@
 
         public async Task SaveJobAsync(string jobOfferId, string userId)
         {
-            if (!TryParseIds(jobOfferId, userId, out Guid parsedJobOfferId, out Guid parsedUserId))
+            if (!GuidParser.TryParseTwo(jobOfferId, userId, out Guid parsedJobOfferId, out Guid parsedUserId))
             {
                 throw new InvalidOperationException("A valid job offer and user are required.");
             }
@@ -127,7 +129,7 @@
 
         public async Task<bool> IsJobOfferSaved(string jobOfferId, string userId)
         {
-            if (!TryParseIds(jobOfferId, userId, out Guid parsedJobOfferId, out Guid parsedUserId))
+            if (!GuidParser.TryParseTwo(jobOfferId, userId, out Guid parsedJobOfferId, out Guid parsedUserId))
             {
                 return false;
             }
@@ -139,7 +141,7 @@
 
         public async Task RemoveSaveJobAsync(string jobOfferId, string userId)
         {
-            if (!TryParseIds(jobOfferId, userId, out Guid parsedJobOfferId, out Guid parsedUserId))
+            if (!GuidParser.TryParseTwo(jobOfferId, userId, out Guid parsedJobOfferId, out Guid parsedUserId))
             {
                 return;
             }
@@ -191,7 +193,7 @@
 
         public async Task<bool> IsOwnedByCompanyAsync(string id, string userId)
         {
-            if (!TryParseIds(id, userId, out Guid parsedId, out Guid parsedUserId))
+            if (!GuidParser.TryParseTwo(id, userId, out Guid parsedId, out Guid parsedUserId))
             {
                 return false;
             }
@@ -203,7 +205,7 @@
 
         public async Task<JobOfferDetailsViewModel> GetDetailsByIdAsync(string id)
         {
-            Guid parsedId = ParseRequiredId(id, "job offer");
+            Guid parsedId = GuidParser.ParseRequired(id, "job offer");
 
             var jobOffer = await this.dbContext
                 .JobOffers
@@ -229,7 +231,7 @@
                 Title = jobOffer.JobPosition,
                 Description = jobOffer.Description,
                 JobLocation = jobOffer.PlaceToWork,
-                Salary = GetSalary(jobOffer.MinSalary, jobOffer.MaxSalary),
+                Salary = SalaryFormatter.Format(jobOffer.MinSalary, jobOffer.MaxSalary),
                 CreatedOn = jobOffer.CreatedOn.ToString(CreatedOnDateFormat, CultureInfo.InvariantCulture),
                 Company = new Web.ViewModels.Company.CompanyViewModel()
                 {
@@ -254,7 +256,7 @@
 
         public async Task<IEnumerable<JobOfferAllViewModel>> AllByCompanyIdAsync(string userId)
         {
-            Guid parsedUserId = ParseRequiredId(userId, "user");
+            Guid parsedUserId = GuidParser.ParseRequired(userId, "user");
 
             bool companyExists = await this.dbContext.Companies
                 .AsNoTracking()
@@ -276,7 +278,7 @@
                     CreatedOn = jobOffer.CreatedOn.ToString(CreatedOnDateForCompany, CultureInfo.InvariantCulture),
                     JobLocation = jobOffer.PlaceToWork,
                     JobPosition = jobOffer.JobPosition,
-                    Salary = GetSalary(jobOffer.MinSalary, jobOffer.MaxSalary),
+                    Salary = SalaryFormatter.Format(jobOffer.MinSalary, jobOffer.MaxSalary),
                     Technologies = jobOffer.JobOfferTechnologies.Select(technologyJobOffer => new TechnologyViewModel
                     {
                         Id = technologyJobOffer.TechnologyId.ToString(),
@@ -289,7 +291,7 @@
 
         public async Task<JobOfferEditFormModel> GetForEditByIdAsync(string id)
         {
-            Guid parsedId = ParseRequiredId(id, "job offer");
+            Guid parsedId = GuidParser.ParseRequired(id, "job offer");
 
             var jobOffer = await this.dbContext
                 .JobOffers
@@ -315,7 +317,7 @@
 
         public async Task DeleteByIdAsync(string id, string userId)
         {
-            if (!TryParseIds(id, userId, out Guid parsedId, out Guid parsedUserId))
+            if (!GuidParser.TryParseTwo(id, userId, out Guid parsedId, out Guid parsedUserId))
             {
                 return;
             }
@@ -388,8 +390,8 @@
 
         public async Task EditJobOfferAsync(string id, JobOfferEditFormModel model, string userId)
         {
-            Guid parsedId = ParseRequiredId(id, "job offer");
-            Guid parsedUserId = ParseRequiredId(userId, "user");
+            Guid parsedId = GuidParser.ParseRequired(id, "job offer");
+            Guid parsedUserId = GuidParser.ParseRequired(userId, "user");
 
             var jobOffer = await this.dbContext
                 .JobOffers
@@ -409,7 +411,7 @@
 
         public async Task<string> CreateAndReturnIdAsync(JobOfferFormModel model, string userId)
         {
-            Guid parsedUserId = ParseRequiredId(userId, "user");
+            Guid parsedUserId = GuidParser.ParseRequired(userId, "user");
 
             var company = await this.dbContext
                 .Companies
@@ -689,28 +691,6 @@
             return jobOffersQuery;
         }
 
-        private static string GetSalary(decimal? minSalary, decimal? maxSalary)
-        {
-            if (minSalary == null && maxSalary == null)
-            {
-                return string.Empty;
-            }
-
-            string? formattedMaxSalary = maxSalary?
-                .ToString("#,0", CultureInfo.InvariantCulture)
-                .Replace(",", " ");
-            string? formattedMinSalary = minSalary?
-                .ToString("#,0", CultureInfo.InvariantCulture)
-                .Replace(",", " ");
-
-            if (!string.IsNullOrWhiteSpace(formattedMinSalary))
-            {
-                return $"{formattedMinSalary} - {formattedMaxSalary} lv.";
-            }
-
-            return $"{formattedMaxSalary} lv.";
-        }
-
         private static System.Linq.Expressions.Expression<Func<JobOffer, JobOfferAllViewModel>> ToAllViewModel()
         {
             return jobOffer => new JobOfferAllViewModel
@@ -730,26 +710,8 @@
                         ImageUrl = technologyJobOffer.Technology.ImageUrl,
                     })
                     .ToList(),
-                Salary = GetSalary(jobOffer.MinSalary, jobOffer.MaxSalary),
+                Salary = SalaryFormatter.Format(jobOffer.MinSalary, jobOffer.MaxSalary),
             };
-        }
-
-        private static Guid ParseRequiredId(string id, string entityName)
-        {
-            if (Guid.TryParse(id, out Guid parsedId))
-            {
-                return parsedId;
-            }
-
-            throw new InvalidOperationException($"A valid {entityName} id is required.");
-        }
-
-        private static bool TryParseIds(string firstId, string secondId, out Guid parsedFirstId, out Guid parsedSecondId)
-        {
-            bool firstIdIsValid = Guid.TryParse(firstId, out parsedFirstId);
-            bool secondIdIsValid = Guid.TryParse(secondId, out parsedSecondId);
-
-            return firstIdIsValid && secondIdIsValid;
         }
 
         private static (int, int) ExtractDigits(string input)
