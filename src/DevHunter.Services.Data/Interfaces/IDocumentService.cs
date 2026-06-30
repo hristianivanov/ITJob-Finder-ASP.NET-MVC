@@ -6,5 +6,6 @@
     {
         Task<string> UploadDocumentAsync(IFormFile file, string folder);
         Task AddAsync(string url, string applicationId);
+        Task UploadAndSaveAsync(IFormFile file, string folder, string applicationId);
     }
 }
