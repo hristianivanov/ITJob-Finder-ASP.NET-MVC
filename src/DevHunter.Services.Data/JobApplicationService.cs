@@ -5,6 +5,7 @@
 
     using Microsoft.EntityFrameworkCore;
 
+    using DevHunter.Common;
     using DevHunter.Data;
     using DevHunter.Data.Models;
 
@@ -108,7 +109,7 @@
 
         public async Task<JobApplicationViewModel> GetApplicationById(string applicationId, string companyUserId)
         {
-            (Guid parsedApplicationId, Guid parsedCompanyUserId) = ParseRequiredIds(applicationId, companyUserId);
+            (Guid parsedApplicationId, Guid parsedCompanyUserId) = GuidParser.ParseRequiredTwo(applicationId, companyUserId);
 
             ApplicationDetailsData application = await this.context.JobApplications
                 .AsNoTracking()
@@ -161,7 +162,7 @@
 
         public async Task<bool> IsOwnedByCompanyAsync(string id, string companyUserId)
         {
-            if (!TryParseIds(id, companyUserId, out Guid applicationId, out Guid parsedCompanyUserId))
+            if (!GuidParser.TryParseTwo(id, companyUserId, out Guid applicationId, out Guid parsedCompanyUserId))
             {
                 return false;
             }
@@ -185,7 +186,7 @@
 
         private async Task UpdateApplicationStatusAsync(string id, string companyUserId, ApplicationStatus status)
         {
-            (Guid applicationId, Guid parsedCompanyUserId) = ParseRequiredIds(id, companyUserId);
+            (Guid applicationId, Guid parsedCompanyUserId) = GuidParser.ParseRequiredTwo(id, companyUserId);
 
             var application = await this.context.JobApplications
                 .FirstOrDefaultAsync(application =>
@@ -228,24 +229,6 @@
                     })
                     .ToList(),
             };
-        }
-
-        private static (Guid FirstId, Guid SecondId) ParseRequiredIds(string firstId, string secondId)
-        {
-            if (!TryParseIds(firstId, secondId, out Guid parsedFirstId, out Guid parsedSecondId))
-            {
-                throw new InvalidOperationException("Valid identifiers are required.");
-            }
-
-            return (parsedFirstId, parsedSecondId);
-        }
-
-        private static bool TryParseIds(string firstId, string secondId, out Guid parsedFirstId, out Guid parsedSecondId)
-        {
-            bool firstIdIsValid = Guid.TryParse(firstId, out parsedFirstId);
-            bool secondIdIsValid = Guid.TryParse(secondId, out parsedSecondId);
-
-            return firstIdIsValid && secondIdIsValid;
         }
 
         private static readonly Expression<Func<JobApplication, ApplicationDetailsData>> ApplicationDetailsSelector =

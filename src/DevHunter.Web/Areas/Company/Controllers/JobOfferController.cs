@@ -1,20 +1,15 @@
 namespace DevHunter.Web.Areas.Company.Controllers
 {
-    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Logging;
 
-    using Infrastructure.Extensions;
     using Services.Data.Interfaces;
     using ViewModels.JobOffer;
 
-    using static Common.GeneralApplicationConstants;
     using static Common.NotificationMessagesConstants;
     using DevHunter.Data.Models.Enums;
 
-    [Area(CompanyAreaName)]
-    [Authorize(Roles = CompanyRoleName)]
-    public class JobOfferController : Controller
+    public class JobOfferController : BaseCompanyController
     {
         private readonly IJobOfferService jobOfferService;
         private readonly ILogger<JobOfferController> logger;
@@ -29,7 +24,7 @@ namespace DevHunter.Web.Areas.Company.Controllers
         public async Task<IActionResult> All()
         {
             var model = await this.jobOfferService
-                .AllByCompanyIdAsync(this.User.GetId()!);
+                .AllByCompanyIdAsync(CurrentUserId);
 
             return View(model);
         }
@@ -61,7 +56,7 @@ namespace DevHunter.Web.Areas.Company.Controllers
 
             try
             {
-                await jobOfferService.CreateAndReturnIdAsync(model, this.User.GetId()!);
+                await jobOfferService.CreateAndReturnIdAsync(model, CurrentUserId);
 
                 TempData[SuccessMessage] = "Job offer was added successfully!";
 
@@ -84,12 +79,10 @@ namespace DevHunter.Web.Areas.Company.Controllers
             try
             {
                 bool isOwnedByCompany = await this.jobOfferService
-                    .IsOwnedByCompanyAsync(id, this.User.GetId()!);
+                    .IsOwnedByCompanyAsync(id, CurrentUserId);
 
-                if (!isOwnedByCompany)
+                if (!AssertOwnership(isOwnedByCompany))
                 {
-                TempData[ErrorMessage] = JobOfferOwnershipError;
-
                     return RedirectToAction("All");
                 }
 
@@ -125,18 +118,16 @@ namespace DevHunter.Web.Areas.Company.Controllers
             try
             {
                 bool isOwnedByCompany = await this.jobOfferService
-                    .IsOwnedByCompanyAsync(id, this.User.GetId()!);
+                    .IsOwnedByCompanyAsync(id, CurrentUserId);
 
-                if (!isOwnedByCompany)
+                if (!AssertOwnership(isOwnedByCompany))
                 {
-                TempData[ErrorMessage] = JobOfferOwnershipError;
-
                     return RedirectToAction("All");
                 }
 
                 TempData[SuccessMessage] = "Job post was edited successfully!";
 
-                await jobOfferService.EditJobOfferAsync(id, model, this.User.GetId()!);
+                await jobOfferService.EditJobOfferAsync(id, model, CurrentUserId);
             }
             catch (Exception ex)
             {
@@ -156,16 +147,14 @@ namespace DevHunter.Web.Areas.Company.Controllers
             try
             {
                 bool isOwnedByCompany = await this.jobOfferService
-                    .IsOwnedByCompanyAsync(id, this.User.GetId()!);
+                    .IsOwnedByCompanyAsync(id, CurrentUserId);
 
-                if (!isOwnedByCompany)
+                if (!AssertOwnership(isOwnedByCompany))
                 {
-                TempData[ErrorMessage] = JobOfferOwnershipError;
-
                     return RedirectToAction("All");
                 }
 
-                await jobOfferService.DeleteByIdAsync(id, this.User.GetId()!);
+                await jobOfferService.DeleteByIdAsync(id, CurrentUserId);
 
                 TempData[WarningMessage] = "The job post successfully was deleted!";
 
