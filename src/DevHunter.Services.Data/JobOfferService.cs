@@ -579,33 +579,32 @@
 
         private static async Task CountFilters(AllJobOffersQueryModel queryModel, IQueryable<JobOffer> jobOffersQuery)
         {
+            var locationCounts = await jobOffersQuery
+                .GroupBy(j => j.PlaceToWork)
+                .Select(g => new { Location = g.Key, Count = g.Count() })
+                .ToDictionaryAsync(x => x.Location, x => x.Count);
+
             foreach (var location in queryModel.Filters.Locations)
-            {
-                location.Count = await jobOffersQuery
-                    .CountAsync(j => j.PlaceToWork == location.Location);
-            }
+                location.Count = locationCounts.GetValueOrDefault(location.Location, 0);
+
+            var experienceCounts = await jobOffersQuery
+                .GroupBy(j => j.WorkingExperience)
+                .Select(g => new { Seniority = g.Key, Count = g.Count() })
+                .ToDictionaryAsync(x => x.Seniority ?? string.Empty, x => x.Count);
 
             foreach (var filter in queryModel.Filters.Experiences)
-            {
-                filter.Count = await jobOffersQuery
-                    .CountAsync(j => j.WorkingExperience == filter.Seniority);
-            }
+                filter.Count = experienceCounts.GetValueOrDefault(filter.Seniority, 0);
+
+            var employeeCounts = await jobOffersQuery
+                .Select(j => (int?)j.Company.EmployeeCount)
+                .ToListAsync();
 
             foreach (var filter in queryModel.Filters.Staffs)
             {
                 var digits = ExtractDigits(filter.Staff);
-
-                if (digits.Item2 == -1)
-                {
-                    filter.Count = await jobOffersQuery
-                        .CountAsync(j => j.Company.EmployeeCount > digits.Item1);
-                }
-                else
-                {
-                    filter.Count = await jobOffersQuery
-                        .CountAsync(j => j.Company.EmployeeCount >= digits.Item1 &&
-                                         j.Company.EmployeeCount <= digits.Item2);
-                }
+                filter.Count = digits.Item2 == -1
+                    ? employeeCounts.Count(s => s > digits.Item1)
+                    : employeeCounts.Count(s => s >= digits.Item1 && s <= digits.Item2);
             }
         }
 

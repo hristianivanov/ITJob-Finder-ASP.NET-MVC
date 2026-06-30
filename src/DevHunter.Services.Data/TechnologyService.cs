@@ -139,19 +139,34 @@
 
         public async Task<IEnumerable<TechnologyViewModel>> AllByDevelopmentAsync(string id)
         {
+            if (!Guid.TryParse(id, out Guid parsedId))
+                return Enumerable.Empty<TechnologyViewModel>();
+
             var technologies = await this.dbContext
                 .TechnologiesDevelopments
                 .AsNoTracking()
-                .Where(t => t.DevelopmentId.ToString() == id)
+                .Where(t => t.DevelopmentId == parsedId)
                 .Select(t => t.Technology)
                 .Select(ToEnhancedViewModel)
                 .ToListAsync();
 
+            if (technologies.Count == 0)
+                return technologies;
+
+            var techIds = technologies
+                .Select(t => Guid.Parse(t.Id))
+                .ToList();
+
+            var counts = await this.dbContext.TechnologyJobOffers
+                .Where(t => techIds.Contains(t.TechnologyId))
+                .GroupBy(t => t.TechnologyId)
+                .Select(g => new { TechnologyId = g.Key, Count = g.Count() })
+                .ToDictionaryAsync(x => x.TechnologyId, x => x.Count);
+
             foreach (var technology in technologies)
             {
-                technology.Count = await this.dbContext
-                    .TechnologyJobOffers
-                    .CountAsync(t => t.TechnologyId.ToString() == technology.Id);
+                if (Guid.TryParse(technology.Id, out var techId))
+                    technology.Count = counts.GetValueOrDefault(techId, 0);
             }
 
             return technologies;
@@ -177,6 +192,7 @@
         {
             var jobOffer = await this.dbContext
                 .JobOffers
+                .Include(j => j.JobOfferTechnologies)
                 .FirstAsync(j => j.Id.ToString() == id);
 
             var existingTechnologyIds = jobOffer.JobOfferTechnologies.Select(t => t.TechnologyId).ToList();
