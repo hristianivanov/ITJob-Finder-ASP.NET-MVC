@@ -22,6 +22,8 @@
 
     public class JobOfferService : IJobOfferService
     {
+        private const int CompanyDescriptionPreviewWords = 69;
+
         private readonly DevHunterDbContext dbContext;
 
         public JobOfferService(DevHunterDbContext dbContext)
@@ -245,7 +247,7 @@
             if (!string.IsNullOrWhiteSpace(jobOffer.Company.Description))
             {
                 string[] words = jobOffer.Company.Description.Split(' ');
-                string truncated = words.Length <= 69 ? jobOffer.Company.Description : string.Join(" ", words.Take(69)) + "...";
+                string truncated = words.Length <= CompanyDescriptionPreviewWords ? jobOffer.Company.Description : string.Join(" ", words.Take(CompanyDescriptionPreviewWords)) + "...";
 
                 model.Company.Info = new HtmlSanitizer().Sanitize(truncated);
             }
