@@ -293,5 +293,83 @@
             await act.Should().ThrowAsync<InvalidOperationException>();
             company.Name.Should().Be(originalName);
         }
+
+        // ── AllAsync (public, CompanyAllViewModel) ──────────────────────────────
+
+        [Test]
+        public async Task AllAsync_ShouldReturnAllCompaniesAsCompanyAllViewModel()
+        {
+            var companies = await dbContext.Companies.ToListAsync();
+
+            var result = (await companyService.AllAsync()).ToList();
+
+            result.Should().NotBeNull()
+                .And.HaveCount(companies.Count)
+                .And.AllBeOfType<CompanyAllViewModel>();
+        }
+
+        [Test]
+        public async Task AllAsync_ShouldMapCorrectFields()
+        {
+            var company = await dbContext.Companies.FirstAsync();
+
+            var result = (await companyService.AllAsync()).ToList();
+
+            var vm = result.First(c => c.Id == company.Id.ToString());
+            vm.Name.Should().Be(company.Name);
+            vm.EmployeesCount.Should().Be(company.EmployeeCount ?? 0);
+            vm.ImageUrl.Should().Be(company.ImageUrl);
+        }
+
+        // ── EditAsync – all fields and no-change guard ───────────────────────────
+
+        [Test]
+        public async Task EditAsync_ShouldEditAllFields()
+        {
+            var company = await dbContext.Companies.FirstAsync();
+            var model = new CompanyFormModel
+            {
+                Name = "updated_name",
+                Description = "updated_description",
+                Activity = "updated_activity",
+                Address = "updated_address",
+                EmployeesCnt = 99,
+                FoundedDate = new DateTime(2010, 6, 15),
+                Sector = "updated_sector",
+                WebsiteUrl = "https://updated.com"
+            };
+
+            await companyService.EditAsync(company.Id.ToString(), model, company.CreatorId.ToString());
+
+            var edited = await dbContext.Companies.FindAsync(company.Id);
+            edited!.Activity.Should().Be(model.Activity);
+            edited.Location.Should().Be(model.Address);
+            edited.EmployeeCount.Should().Be(model.EmployeesCnt);
+            edited.Sector.Should().Be(model.Sector);
+            edited.WebsiteUrl.Should().Be(model.WebsiteUrl);
+            edited.FoundedDate.Should().Be(model.FoundedDate);
+        }
+
+        [Test]
+        public async Task EditAsync_ShouldNotThrowWhenModelMatchesCurrentValues()
+        {
+            var company = await dbContext.Companies.FirstAsync();
+            var model = new CompanyFormModel
+            {
+                Name = company.Name,
+                Description = company.Description,
+                Activity = company.Activity,
+                Address = company.Location,
+                EmployeesCnt = company.EmployeeCount,
+                FoundedDate = company.FoundedDate,
+                Sector = company.Sector,
+                WebsiteUrl = company.WebsiteUrl
+            };
+
+            var act = async () => await companyService
+                .EditAsync(company.Id.ToString(), model, company.CreatorId.ToString());
+
+            await act.Should().NotThrowAsync();
+        }
     }
 }

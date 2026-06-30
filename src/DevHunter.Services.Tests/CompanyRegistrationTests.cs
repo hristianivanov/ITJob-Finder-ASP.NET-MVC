@@ -93,6 +93,44 @@ namespace DevHunter.Services.Tests
             userManager.Verify(manager => manager.DeleteAsync(It.IsAny<ApplicationUser>()), Times.Once);
         }
 
+        [Test]
+        public async Task RegisterCompany_ShouldSucceedAndRedirectHome()
+        {
+            SetupSuccessfulUserCreation();
+            userManager
+                .Setup(m => m.AddToRoleAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>()))
+                .ReturnsAsync(IdentityResult.Success);
+            companyService
+                .Setup(s => s.AddAsync(It.IsAny<CompanyRegisterFormModel>(), It.IsAny<Guid>()))
+                .Returns(Task.CompletedTask);
+            var controller = CreateController();
+
+            var result = await controller.RegisterCompany(CreateModel());
+
+            var redirect = result.Should().BeOfType<RedirectToActionResult>().Subject;
+            redirect.ActionName.Should().Be("Index");
+            redirect.ControllerName.Should().Be("Home");
+            companyService.Verify(
+                s => s.AddAsync(It.IsAny<CompanyRegisterFormModel>(), It.IsAny<Guid>()),
+                Times.Once);
+        }
+
+        [Test]
+        public async Task RegisterCompany_ShouldReturnViewWhenCompanyNameAlreadyExists()
+        {
+            companyService
+                .Setup(s => s.ExistsByNameAsync(It.IsAny<string>()))
+                .ReturnsAsync(true);
+            var controller = CreateController();
+
+            var result = await controller.RegisterCompany(CreateModel());
+
+            result.Should().BeOfType<ViewResult>();
+            userManager.Verify(
+                m => m.CreateAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>()),
+                Times.Never);
+        }
+
         private AccountController CreateController()
             => new(signInManager.Object, userManager.Object, companyService.Object);
 

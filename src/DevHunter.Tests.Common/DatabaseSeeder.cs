@@ -100,17 +100,20 @@
 
         private static async Task SeedTechnologies(DevHunterDbContext dbContext)
         {
+            // URL must be Cloudinary-formatted (contain "/v") for EnhanceCloudinaryUrl to work in tests
+            const string cloudinaryUrl = "https://res.cloudinary.com/test/image/upload/v1/test.jpg";
+
             var technologies = new Technology[]
             {
                 new()
                 {
                     Name = "technology_1",
-                    ImageUrl = "image_url"
+                    ImageUrl = cloudinaryUrl
                 },
                 new()
                 {
                     Name = "technology_2",
-                    ImageUrl = "image_url"
+                    ImageUrl = cloudinaryUrl
                 },
             };
 
