@@ -215,21 +215,5 @@
                 ImageUrl = technology.ImageUrl.EnhanceCloudinaryUrl(50, "auto")
             };
 
-        private async Task<IFormFile> ConvertImageUrlToFormFileAsync(string imageUrl)
-        {
-            using (HttpClient client = new HttpClient())
-            {
-                byte[] imageBytes = await client.GetByteArrayAsync(imageUrl);
-
-                string fileName = Path.GetFileName(imageUrl);
-
-                using (MemoryStream stream = new MemoryStream(imageBytes))
-                {
-                    IFormFile formFile = new FormFile(stream, 0, imageBytes.Length, "file", fileName);
-
-                    return formFile;
-                }
-            }
-        }
     }
 }

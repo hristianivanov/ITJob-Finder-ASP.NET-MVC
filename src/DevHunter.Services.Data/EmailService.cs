@@ -43,10 +43,6 @@
                 await client.AuthenticateAsync(emailConfig.UserName, emailConfig.Password);
                 await client.SendAsync(mailMessage);
             }
-            catch (Exception)
-            {
-                throw;
-            }
             finally
             {
                 await client.DisconnectAsync(true);

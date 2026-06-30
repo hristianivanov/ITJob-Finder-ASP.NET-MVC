@@ -137,13 +137,35 @@ namespace DevHunter.Services.Tests
         [Test]
         public async Task AllAsync_ShouldCountCorrectAllDevelopmentTechnologies()
         {
+            var developments = await dbContext.Developments
+                .Include(d => d.DevelopmentTechnologies)
+                .ToListAsync();
 
+            var result = await developmentService.AllAsync();
+
+            result.Should().HaveSameCount(developments);
+
+            foreach (var dev in developments)
+            {
+                var vm = result.First(r => r.Id == dev.Id.ToString());
+                vm.Count.Should().Be(dev.DevelopmentTechnologies.Count,
+                    $"technology count for '{dev.Name}' should match seeded data");
+            }
         }
 
         [Test]
         public async Task AllAsync_ShouldOrderCorrectDevelopments()
         {
+            var expectedOrder = await dbContext.Developments
+                .OrderBy(d => d.SortOrder)
+                .Select(d => d.Id.ToString())
+                .ToListAsync();
 
+            var result = (await developmentService.AllAsync())
+                .Select(d => d.Id)
+                .ToList();
+
+            result.Should().ContainInOrder(expectedOrder);
         }
 
 

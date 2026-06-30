@@ -4,6 +4,8 @@ namespace DevHunter.Common
 
     public static class SalaryFormatter
     {
+        private const string CurrencySuffix = "lv.";
+
         public static string Format(decimal? minSalary, decimal? maxSalary)
         {
             if (minSalary == null && maxSalary == null)
@@ -20,8 +22,8 @@ namespace DevHunter.Common
                 .Replace(",", " ");
 
             return !string.IsNullOrWhiteSpace(formattedMin)
-                ? $"{formattedMin} - {formattedMax} lv."
-                : $"{formattedMax} lv.";
+                ? $"{formattedMin} - {formattedMax} {CurrencySuffix}"
+                : $"{formattedMax} {CurrencySuffix}";
         }
     }
 }
