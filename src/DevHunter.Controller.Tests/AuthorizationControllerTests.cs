@@ -42,8 +42,6 @@ namespace DevHunter.Controller.Tests
                 .BeDerivedFrom<BaseCompanyController>();
         }
 
-        // ── Area attributes ──────────────────────────────────────────────────────
-
         [TestCase(typeof(BaseAdminController), "Admin")]
         [TestCase(typeof(BaseCompanyController), "Company")]
         [TestCase(typeof(BaseManageController), "Manage")]
@@ -58,8 +56,6 @@ namespace DevHunter.Controller.Tests
             areaAttr!.RouteValue.Should().Be(expectedArea);
         }
 
-        // ── Inheritance chains ───────────────────────────────────────────────────
-
         [TestCase(typeof(Web.Areas.Company.Controllers.JobOfferController))]
         [TestCase(typeof(Web.Areas.Company.Controllers.CompanyController))]
         public void CompanyAreaControllers_ShouldDeriveFromBaseCompanyController(Type controllerType)
@@ -73,8 +69,6 @@ namespace DevHunter.Controller.Tests
         {
             controllerType.Should().BeDerivedFrom<BaseAdminController>();
         }
-
-        // ── HTTP method attributes on write actions ───────────────────────────────
 
         [TestCase(typeof(Web.Areas.Admin.Controllers.TechnologyController), "Add")]
         [TestCase(typeof(Web.Areas.Admin.Controllers.TechnologyController), "Edit")]
