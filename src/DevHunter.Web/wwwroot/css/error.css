@@ -1,0 +1,26 @@
+.error-code-container {
+	position: relative;
+	max-width: 1200px;
+	margin: 6em auto;
+}
+
+.error-code-container .error-msg {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 100%;
+	transform: translate(-50%,-50%);
+	text-align: center;
+	font-weight: 900;
+	font-size: 120px;
+	font-family: 'Satoshi-Black', sans-serif;
+}
+
+.error-code-container .error-code {
+	mix-blend-mode: soft-light;
+	font-size: 450px;
+	font-family: Arial, sans-serif;
+	font-weight: 900;
+	word-wrap: break-word;
+	text-align: center;
+}

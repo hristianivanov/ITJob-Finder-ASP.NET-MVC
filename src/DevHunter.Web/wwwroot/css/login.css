@@ -1,0 +1,128 @@
+.login-container {
+	position: relative;
+	min-width: 510px;
+	max-width: 570px;
+	margin: 3em auto;
+	padding: 1em 3em;
+	border-radius: 8px;
+}
+
+.login-container > .login-wrapper {
+	padding: 0 2em;
+}
+
+.login-container .site-login-form {
+	display: flex;
+	flex-direction: column;
+	gap: 0.8em;
+}
+
+.login-container footer {
+	margin-top: 3em;
+}
+
+.login-container .cta {
+	padding: 1em 1.5em;
+	font-family: Satoshi, sans-serif;
+	background: rgba(0, 0, 88, 0.10);
+	box-shadow: 0 0 0 1px #4056C0 inset;
+	border-radius: 2em;
+	font-size: 14px;
+	width: 160px;
+	font-weight: 500;
+	color: white;
+	text-align: center;
+	cursor: pointer;
+	display: block;
+	margin: 0 auto;
+}
+
+.login-container .cta:hover {
+	background: rgba(0, 0, 88, 0.30);
+	box-shadow: 0 0 0 2px #4056C0 inset;
+}
+
+.site-login-form > .heading {
+	text-align: center;
+	word-break: break-word;
+	font-size: 28px;
+	margin: 0.5em 0;
+	font-family: Axiforma, sans-serif;
+}
+
+.site-login-form > .submit-btn {
+	width: 100%;
+	border: none;
+	text-align: center;
+	cursor: pointer;
+	color: #fff;
+	background: #cc338b;
+	box-shadow: 0 0 0 2px rgb(136, 6, 81);
+	padding: 0.5em 1.5em;
+	border-radius: 3em;
+	font-weight: 500;
+	user-select: none;
+	margin: 0.8em 0;
+}
+
+.site-login-form > .submit-btn:hover {
+	background: #ff3fa8;
+}
+
+.input-field input {
+	color: #fff;
+	width: 100%;
+	background: #000614;
+	border-radius: 0.5em;
+	padding: 1em 1.5em;
+	font: small-caption;
+	font-size: 16px;
+	box-shadow: inset 0 0 0 1px rgba(51, 51, 52, 1.00);
+}
+
+.login-container .separator {
+	font-family: Satoshi, sans-serif;
+	text-align: center;
+	margin: 0.75em;
+	overflow: hidden;
+}
+
+.separator::before {
+	right: 10px;
+	margin-left: -50%;
+}
+
+.separator::after {
+	left: 10px;
+	margin-right: -50%;
+}
+
+.separator::before,
+.separator::after {
+	content: "";
+	background: #8f8e8e;
+	display: inline-block;
+	height: 1px;
+	position: relative;
+	vertical-align: middle;
+	width: 50%;
+}
+
+.ellipse-26 {
+	background: #010149;
+	border-radius: 50%;
+	width: 250px;
+	height: 250px;
+	filter: blur(130px);
+	position: absolute;
+	top: -69px;
+	left: -80px;
+	z-index: -1;
+}
+
+.login-container > .background-elements .ellipse-26:nth-child(2) {
+	right: -69px;
+	left: unset;
+	top: unset;
+	bottom: -80px;
+}
