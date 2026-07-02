@@ -74,13 +74,6 @@
 }
 
 @section Scripts {
-	<script>
-		var descriptionEditor = document.getElementById("description-editor");
-		var descriptionInput = document.getElementById("description-input");
-
-		descriptionEditor.addEventListener("input", function () {
-			descriptionInput.value = descriptionEditor.innerHTML;
-		});
-	</script>
+	<script src="~/js/company/description-editor.js" asp-append-version="true"></script>
 	<script src="~/js/job-offer-add/rich-tech-editor.js"></script>
 }
