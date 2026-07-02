@@ -1,0 +1,10 @@
+.file_remove > svg {
+	color: white;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%,-50%);
+	width: 19px;
+	height: 19px;
+	stroke-width: 3px;
+}
