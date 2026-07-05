@@ -6,7 +6,7 @@
 @inject IJobOfferService jobOfferService
 
 @{
-	bool isSaved = await this.jobOfferService.IsJobOfferSaved(Model.Id, this.User.GetId()!);
+	bool isSaved = await this.jobOfferService.IsJobOfferSaved(Guid.Parse(Model.Id), this.User.GetGuid());
 }
 
 <div class="job-list-item">

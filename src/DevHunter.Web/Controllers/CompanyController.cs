@@ -29,12 +29,12 @@ namespace DevHunter.Web.Controllers
 
         [HttpGet]
         [Route("company/detail")]
-        public async Task<IActionResult> Detail(string id)
+        public async Task<IActionResult> Detail(Guid id)
         {
             try
             {
                 bool companyExists = await this.companyService
-                    .ExistsByIdAsync(id!);
+                    .ExistsByIdAsync(id);
 
                 if (!companyExists)
                 {
@@ -44,7 +44,7 @@ namespace DevHunter.Web.Controllers
                 }
 
                 var model = await this.companyService
-                    .GetDetailsByIdAsync(id!);
+                    .GetDetailsByIdAsync(id);
 
                 return View(model);
             }

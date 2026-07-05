@@ -48,33 +48,19 @@
                 .AsNoTracking()
                 .AnyAsync(company => company.Name == name);
 
-        public async Task<bool> ExistsByIdAsync(string id)
-        {
-            if (!Guid.TryParse(id, out Guid companyId))
-            {
-                return false;
-            }
-
-            return await this.context.Companies
+        public async Task<bool> ExistsByIdAsync(Guid id)
+            => await this.context.Companies
                 .AsNoTracking()
-                .AnyAsync(company => company.Id == companyId);
-        }
+                .AnyAsync(company => company.Id == id);
 
-        public async Task<bool> IsOwnedByUserAsync(string id, string userId)
-        {
-            if (!Guid.TryParse(id, out Guid companyId) || !Guid.TryParse(userId, out Guid creatorId))
-            {
-                return false;
-            }
-
-            return await this.context.Companies
+        public async Task<bool> IsOwnedByUserAsync(Guid id, Guid userId)
+            => await this.context.Companies
                 .AsNoTracking()
-                .AnyAsync(company => company.Id == companyId && company.CreatorId == creatorId);
-        }
+                .AnyAsync(company => company.Id == id && company.CreatorId == userId);
 
-        public async Task<CompanyFormModel> GetForEditByIdAsync(string id)
+        public async Task<CompanyFormModel> GetForEditByIdAsync(Guid id)
         {
-            Guid companyId = ParseCompanyId(id);
+            Guid companyId = id;
 
             var company = await this.context
                 .Companies
@@ -96,12 +82,12 @@
             };
         }
 
-        public async Task EditAsync(string id, CompanyFormModel model, string userId)
+        public async Task EditAsync(Guid id, CompanyFormModel model, Guid userId)
         {
             ArgumentNullException.ThrowIfNull(model);
 
-            Guid companyId = ParseCompanyId(id);
-            Guid creatorId = ParseCreatorId(userId);
+            Guid companyId = id;
+            Guid creatorId = userId;
 
             var company = await this.context.Companies
                 .FirstOrDefaultAsync(company => company.Id == companyId && company.CreatorId == creatorId)
@@ -160,19 +146,12 @@
             }
         }
 
-        public async Task<string?> GetCompanyIdByCreatorIdAsync(string userId)
-        {
-            if (!Guid.TryParse(userId, out Guid creatorId))
-            {
-                return null;
-            }
-
-            return await this.context.Companies
+        public async Task<Guid?> GetCompanyIdByCreatorIdAsync(Guid userId)
+            => await this.context.Companies
                 .AsNoTracking()
-                .Where(company => company.CreatorId == creatorId)
-                .Select(company => (string?)company.Id.ToString())
+                .Where(company => company.CreatorId == userId)
+                .Select(company => (Guid?)company.Id)
                 .FirstOrDefaultAsync();
-        }
 
         public async Task<IEnumerable<CompanyAdminViewModel>> AllForAdminAsync()
         {
@@ -210,9 +189,9 @@
         }
 
 
-        public async Task<CompanyDetailViewModel> GetDetailsByIdAsync(string id)
+        public async Task<CompanyDetailViewModel> GetDetailsByIdAsync(Guid id)
         {
-            Guid companyId = ParseCompanyId(id);
+            Guid companyId = id;
 
             CompanyDetailsData company = await this.context.Companies
                 .AsNoTracking()
@@ -246,16 +225,6 @@
         }
 
 
-
-        private static Guid ParseCompanyId(string id)
-            => Guid.TryParse(id, out Guid companyId)
-                ? companyId
-                : throw new InvalidOperationException("A valid company id is required.");
-
-        private static Guid ParseCreatorId(string id)
-            => Guid.TryParse(id, out Guid creatorId)
-                ? creatorId
-                : throw new InvalidOperationException("A valid user id is required.");
 
         private static JobOfferAllViewModel MapJobOffer(JobOfferDetailsData jobOffer, CompanyDetailsData company)
             => new()

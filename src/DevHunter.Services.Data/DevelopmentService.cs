@@ -101,20 +101,14 @@
             return developments;
         }
 
-        public async Task<bool> ExistsByIdAsync(string id)
-        {
-            bool result = await this.dbContext
-                .Developments
-                .AnyAsync(t => t.Id.ToString() == id);
+        public async Task<bool> ExistsByIdAsync(Guid id)
+            => await this.dbContext.Developments.AnyAsync(t => t.Id == id);
 
-            return result;
-        }
-
-        public async Task<DevelopmentEditFormModel> GetForEditByIdAsync(string id)
+        public async Task<DevelopmentEditFormModel> GetForEditByIdAsync(Guid id)
         {
             var development = await this.dbContext
                 .Developments
-                .FirstAsync(t => t.Id.ToString() == id);
+                .FirstAsync(t => t.Id == id);
 
             return new DevelopmentEditFormModel
             {
@@ -123,11 +117,11 @@
             };
         }
 
-        public async Task EditDevelopmentAsync(string id, DevelopmentEditFormModel model)
+        public async Task EditDevelopmentAsync(Guid id, DevelopmentEditFormModel model)
         {
             var development = await this.dbContext
                 .Developments
-                .FirstAsync(t => t.Id.ToString() == id);
+                .FirstAsync(t => t.Id == id);
 
             bool isChanged = false;
 
@@ -150,12 +144,12 @@
             }
         }
 
-        public async Task DeleteByIdAsync(string id)
+        public async Task DeleteByIdAsync(Guid id)
         {
             var development = await this.dbContext
                 .Developments
                 .Include(d => d.DevelopmentTechnologies)
-                .FirstAsync(d => d.Id.ToString() == id);
+                .FirstAsync(d => d.Id == id);
 
             if (development.DevelopmentTechnologies.Any())
             {
@@ -169,11 +163,11 @@
             await this.dbContext.SaveChangesAsync();
         }
 
-        public async Task<DevelopmentOfferViewModel> GetByIdAsync(string id)
+        public async Task<DevelopmentOfferViewModel> GetByIdAsync(Guid id)
         {
             var development = await this.dbContext
                 .Developments
-                .FirstAsync(d => d.Id.ToString() == id);
+                .FirstAsync(d => d.Id == id);
 
             return new DevelopmentOfferViewModel()
             {

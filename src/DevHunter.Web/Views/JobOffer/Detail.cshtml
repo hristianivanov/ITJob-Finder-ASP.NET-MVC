@@ -8,7 +8,7 @@
 	ViewBag.Id = Model.Id;
 	ViewBag.JobPossition = Model.Title;
 
-	bool isSaved = await this.jobOfferService.IsJobOfferSaved(Model.Id, this.User.GetId()!);
+	bool isSaved = await this.jobOfferService.IsJobOfferSaved(Guid.Parse(Model.Id), this.User.GetGuid());
 }
 
 

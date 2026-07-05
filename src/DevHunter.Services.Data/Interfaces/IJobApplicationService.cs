@@ -4,13 +4,13 @@
 
     public interface IJobApplicationService
     {
-        Task<string> ApplyJobOfferAsync(JobApplicationFormModel model, string jobOfferId, string? userId);
-        Task<ICollection<AllJobApplicationViewModel>> AllCandidatesByCompanyIdAsync(string? companyId);
-        Task<JobApplicationViewModel> GetApplicationById(string applicationId, string companyUserId);
-        Task<IEnumerable<MyApplicationViewModel>> AllUserApplicationsAsync(string userId);
-        Task<bool> ExistsByIdAsync(string id);
-        Task<bool> IsOwnedByCompanyAsync(string id, string companyUserId);
-        Task ApproveApplicationAsync(string id, string companyUserId);
-        Task RejectApplicationAsync(string id, string companyUserId);
+        Task<string> ApplyJobOfferAsync(JobApplicationFormModel model, Guid jobOfferId, Guid userId);
+        Task<ICollection<AllJobApplicationViewModel>> AllCandidatesByCompanyIdAsync(Guid? companyId);
+        Task<JobApplicationViewModel> GetApplicationById(Guid applicationId, Guid companyUserId);
+        Task<IEnumerable<MyApplicationViewModel>> AllUserApplicationsAsync(Guid userId);
+        Task<bool> ExistsByIdAsync(Guid id);
+        Task<bool> IsOwnedByCompanyAsync(Guid id, Guid companyUserId);
+        Task ApproveApplicationAsync(Guid id, Guid companyUserId);
+        Task RejectApplicationAsync(Guid id, Guid companyUserId);
     }
 }

@@ -89,7 +89,7 @@ namespace DevHunter.Web.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Edit(string id)
+        public async Task<IActionResult> Edit(Guid id)
         {
             try
             {
@@ -115,7 +115,7 @@ namespace DevHunter.Web.Areas.Admin.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> Edit(string id, DevelopmentEditFormModel model)
+        public async Task<IActionResult> Edit(Guid id, DevelopmentEditFormModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -148,7 +148,7 @@ namespace DevHunter.Web.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> Delete(Guid id)
         {
             try
             {

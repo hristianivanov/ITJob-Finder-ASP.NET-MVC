@@ -33,7 +33,7 @@
             return exists;
         }
 
-        public async Task AddAsync(TechnologyFormModel formModel, string? developmentId)
+        public async Task AddAsync(TechnologyFormModel formModel, Guid? developmentId)
         {
             Technology technology = new Technology()
             {
@@ -42,10 +42,10 @@
                     .UploadImage(formModel.Image, "DevHunter/technology", formModel.Name)
             };
 
-            if (!string.IsNullOrWhiteSpace(developmentId))
+            if (developmentId.HasValue)
             {
                 var development = await this.dbContext.Developments
-                    .FirstOrDefaultAsync(d => d.Id.ToString() == developmentId);
+                    .FirstOrDefaultAsync(d => d.Id == developmentId.Value);
 
                 if (development != null)
                 {
@@ -75,20 +75,14 @@
             return technologies;
         }
 
-        public async Task<bool> ExistsByIdAsync(string id)
-        {
-            bool result = await this.dbContext
-                .Technologies
-                .AnyAsync(t => t.Id.ToString() == id);
+        public async Task<bool> ExistsByIdAsync(Guid id)
+            => await this.dbContext.Technologies.AnyAsync(t => t.Id == id);
 
-            return result;
-        }
-
-        public async Task<TechnologyEditFormModel> GetForEditByIdAsync(string id)
+        public async Task<TechnologyEditFormModel> GetForEditByIdAsync(Guid id)
         {
             var technology = await this.dbContext
                 .Technologies
-                .FirstAsync(t => t.Id.ToString() == id);
+                .FirstAsync(t => t.Id == id);
 
             return new TechnologyEditFormModel
             {
@@ -97,11 +91,11 @@
             };
         }
 
-        public async Task EditTechnologyAsync(string technologyId, TechnologyEditFormModel model)
+        public async Task EditTechnologyAsync(Guid technologyId, TechnologyEditFormModel model)
         {
             var technology = await this.dbContext
                 .Technologies
-                .FirstAsync(t => t.Id.ToString() == technologyId);
+                .FirstAsync(t => t.Id == technologyId);
 
             bool isChanged = false;
 
@@ -124,11 +118,11 @@
             }
         }
 
-        public async Task DeleteByIdAsync(string id)
+        public async Task DeleteByIdAsync(Guid id)
         {
             var technology = await this.dbContext
                 .Technologies
-                .FirstOrDefaultAsync(t => t.Id.ToString() == id);
+                .FirstOrDefaultAsync(t => t.Id == id);
 
             if (technology != null)
             {
@@ -137,15 +131,12 @@
             }
         }
 
-        public async Task<IEnumerable<TechnologyViewModel>> AllByDevelopmentAsync(string id)
+        public async Task<IEnumerable<TechnologyViewModel>> AllByDevelopmentAsync(Guid id)
         {
-            if (!Guid.TryParse(id, out Guid parsedId))
-                return Enumerable.Empty<TechnologyViewModel>();
-
             var technologies = await this.dbContext
                 .TechnologiesDevelopments
                 .AsNoTracking()
-                .Where(t => t.DevelopmentId == parsedId)
+                .Where(t => t.DevelopmentId == id)
                 .Select(t => t.Technology)
                 .Select(ToEnhancedViewModel)
                 .ToListAsync();
@@ -172,11 +163,11 @@
             return technologies;
         }
 
-        public async Task<IEnumerable<TechnologyViewModel>> AllByJobOfferIdAsync(string id)
+        public async Task<IEnumerable<TechnologyViewModel>> AllByJobOfferIdAsync(Guid id)
         {
             var technologies = await this.dbContext
                 .TechnologyJobOffers
-                .Where(tj => tj.JobOfferId.ToString() == id)
+                .Where(tj => tj.JobOfferId == id)
                 .Select(tj => new TechnologyViewModel()
                 {
                     Id = tj.TechnologyId.ToString(),
@@ -188,12 +179,12 @@
             return technologies;
         }
 
-        public async Task<IEnumerable<TechnologyViewModel>> AllWithoutJobOfferOnesAsync(string id)
+        public async Task<IEnumerable<TechnologyViewModel>> AllWithoutJobOfferOnesAsync(Guid id)
         {
             var jobOffer = await this.dbContext
                 .JobOffers
                 .Include(j => j.JobOfferTechnologies)
-                .FirstAsync(j => j.Id.ToString() == id);
+                .FirstAsync(j => j.Id == id);
 
             var existingTechnologyIds = jobOffer.JobOfferTechnologies.Select(t => t.TechnologyId).ToList();
 

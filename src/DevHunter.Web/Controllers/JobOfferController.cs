@@ -30,7 +30,7 @@
 
         [HttpGet]
         [Route("joboffer/all")]
-        public async Task<IActionResult> All([FromQuery] AllJobOffersQueryModel queryModel, string development)
+        public async Task<IActionResult> All([FromQuery] AllJobOffersQueryModel queryModel, Guid development)
         {
             var developmentsExists = await this.devDevelopmentService.ExistsByIdAsync(development);
 
@@ -68,7 +68,7 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> Save(string id)
+        public async Task<IActionResult> Save(Guid id)
         {
             if (!User!.Identity!.IsAuthenticated)
             {
@@ -77,7 +77,7 @@
 
             try
             {
-                string userId = this.User.GetId()!;
+                Guid userId = this.User.GetGuid();
 
                 bool jobOfferExists = await this.jobOfferService.ExistsByIdAsync(id);
 
@@ -86,7 +86,7 @@
                     return new JsonResult(new { success = false, errorMsg = "Job offer does not exist!" });
                 }
 
-                bool isJobOfferSaved = await this.jobOfferService.IsJobOfferSaved(id, this.User.GetId()!);
+                bool isJobOfferSaved = await this.jobOfferService.IsJobOfferSaved(id, userId);
 
                 if (isJobOfferSaved)
                 {
@@ -108,7 +108,7 @@
 
         [HttpGet]
         [Route("job-offer/detail")]
-        public async Task<IActionResult> Detail(string id)
+        public async Task<IActionResult> Detail(Guid id)
         {
             try
             {
@@ -143,7 +143,7 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> Apply(JobApplicationFormModel model, string id)
+        public async Task<IActionResult> Apply(JobApplicationFormModel model, Guid id)
         {
             if (!ModelState.IsValid)
             {
@@ -161,20 +161,16 @@
                     return RedirectToAction("All");
                 }
 
-                string? userId = "";
-
-                if (this.User.Identity!.IsAuthenticated)
-                {
-                    userId = this.User.GetId()!;
-                }
+                Guid userId = this.User.Identity!.IsAuthenticated ? this.User.GetGuid() : Guid.Empty;
 
                 string applicationId = await this.jobApplicationService.ApplyJobOfferAsync(model, id, userId);
 
                 if (model.Files.Count > 0)
                 {
+                    Guid parsedApplicationId = Guid.Parse(applicationId);
                     foreach (var file in model.Files)
                     {
-                        await this.documentService.UploadAndSaveAsync(file, "DevHunter/documents", applicationId);
+                        await this.documentService.UploadAndSaveAsync(file, "DevHunter/documents", parsedApplicationId);
                     }
                 }
 

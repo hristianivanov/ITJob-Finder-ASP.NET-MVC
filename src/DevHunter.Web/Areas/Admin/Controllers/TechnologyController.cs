@@ -44,7 +44,7 @@ namespace DevHunter.Web.Areas.Admin.Controllers
 
         [HttpGet]
         [Route("technology/add")]
-        public IActionResult Add(string id)
+        public IActionResult Add(Guid? id)
         {
             try
             {
@@ -65,7 +65,7 @@ namespace DevHunter.Web.Areas.Admin.Controllers
         [HttpPost]
         [Route("technology/add")]
         [RequestSizeLimit(ImageMaxMegaBytesFileSize * 1024 * 1024)]
-        public async Task<IActionResult> Add(TechnologyFormModel formModel, string? id)
+        public async Task<IActionResult> Add(TechnologyFormModel formModel, Guid? id)
         {
             try
             {
@@ -93,7 +93,7 @@ namespace DevHunter.Web.Areas.Admin.Controllers
 
                 TempData[SuccessMessage] = "Technology was created successfully!";
 
-                if (!string.IsNullOrWhiteSpace(id))
+                if (id.HasValue)
                     return RedirectToAction("All", "Development");
                 else
                     return RedirectToAction("All");
@@ -110,7 +110,7 @@ namespace DevHunter.Web.Areas.Admin.Controllers
 
         [HttpGet]
         [Route("technology/edit/{id}")]
-        public async Task<IActionResult> Edit(string id)
+        public async Task<IActionResult> Edit(Guid id)
         {
             try
             {
@@ -136,7 +136,7 @@ namespace DevHunter.Web.Areas.Admin.Controllers
 
         [HttpPost]
         [Route("technology/edit/{id}")]
-        public async Task<IActionResult> Edit(string id, TechnologyEditFormModel model)
+        public async Task<IActionResult> Edit(Guid id, TechnologyEditFormModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -170,7 +170,7 @@ namespace DevHunter.Web.Areas.Admin.Controllers
 
         [HttpPost]
         [Route("technology/delete/{id}")]
-        public async Task<IActionResult> Delete([FromRoute] string id)
+        public async Task<IActionResult> Delete([FromRoute] Guid id)
         {
             try
             {
