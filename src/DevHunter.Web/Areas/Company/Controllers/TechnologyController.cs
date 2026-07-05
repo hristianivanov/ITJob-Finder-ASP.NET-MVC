@@ -24,7 +24,7 @@
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetJobOfferTechnologies(string id)
+        public async Task<IActionResult> GetJobOfferTechnologies(Guid id)
         {
             var technologies = await this.technologyService.AllByJobOfferIdAsync(id);
 
@@ -34,7 +34,7 @@
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetRemainingTechnologies(string id)
+        public async Task<IActionResult> GetRemainingTechnologies(Guid id)
         {
             var technologies = await this.technologyService.AllWithoutJobOfferOnesAsync(id);
 

@@ -61,24 +61,19 @@
             return uploadResult.SecureUrl.ToString();
         }
 
-        public async Task AddAsync(string url, string applicationId)
+        public async Task AddAsync(string url, Guid applicationId)
         {
-            if (!Guid.TryParse(applicationId, out Guid parsedId))
-            {
-                throw new ArgumentException($"Invalid application ID: '{applicationId}'.", nameof(applicationId));
-            }
-
             ApplicationDocument document = new ApplicationDocument()
             {
                 DocumentUrl = url,
-                JobApplicationId = parsedId,
+                JobApplicationId = applicationId,
             };
 
             await this.dbContext.ApplicationDocuments.AddAsync(document);
             await this.dbContext.SaveChangesAsync();
         }
 
-        public async Task UploadAndSaveAsync(IFormFile file, string folder, string applicationId)
+        public async Task UploadAndSaveAsync(IFormFile file, string folder, Guid applicationId)
         {
             string url = await UploadDocumentAsync(file, folder);
 

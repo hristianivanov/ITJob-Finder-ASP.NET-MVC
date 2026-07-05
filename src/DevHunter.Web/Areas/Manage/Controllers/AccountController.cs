@@ -52,7 +52,7 @@
         [HttpGet]
         public async Task<IActionResult> ManageCompany()
         {
-            string? companyId = await this.companyService.GetCompanyIdByCreatorIdAsync(this.User.GetId()!);
+            Guid? companyId = await this.companyService.GetCompanyIdByCreatorIdAsync(this.User.GetGuid());
 
             if (companyId == null)
             {
@@ -69,7 +69,7 @@
         public async Task<IActionResult> MyApplications()
         {
             var model = await this.jobApplicationService
-                .AllUserApplicationsAsync(User.GetId()!);
+                .AllUserApplicationsAsync(this.User.GetGuid());
 
             return View(model);
         }
@@ -78,7 +78,7 @@
         [Route("account/saved-joboffers")]
         public async Task<IActionResult> SavedJobOffers()
         {
-            var model = await this.jobOfferService.AllSavedJobOffersByUserIdAsync(User.GetId()!);
+            var model = await this.jobOfferService.AllSavedJobOffersByUserIdAsync(this.User.GetGuid());
 
             return View(model);
         }
@@ -86,7 +86,7 @@
         [HttpGet]
         public async Task<IActionResult> DetailCompany()
         {
-            string? companyId = await this.companyService.GetCompanyIdByCreatorIdAsync(this.User.GetId()!);
+            Guid? companyId = await this.companyService.GetCompanyIdByCreatorIdAsync(this.User.GetGuid());
 
             if (companyId == null)
             {

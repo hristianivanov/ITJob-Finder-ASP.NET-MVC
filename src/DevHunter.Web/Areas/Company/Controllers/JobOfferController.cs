@@ -74,7 +74,7 @@ namespace DevHunter.Web.Areas.Company.Controllers
 
         [HttpGet]
         [Route("jobpost/edit/{id}")]
-        public async Task<IActionResult> Edit(string id)
+        public async Task<IActionResult> Edit(Guid id)
         {
             try
             {
@@ -100,7 +100,7 @@ namespace DevHunter.Web.Areas.Company.Controllers
 
         [HttpPost]
         [Route("jobpost/edit/{id}")]
-        public async Task<IActionResult> Edit(string id, JobOfferEditFormModel model)
+        public async Task<IActionResult> Edit(Guid id, JobOfferEditFormModel model)
         {
             if (model.SalaryType is SalaryType.Range)
             {
@@ -142,7 +142,7 @@ namespace DevHunter.Web.Areas.Company.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Delete([FromRoute] string id)
+        public async Task<IActionResult> Delete([FromRoute] Guid id)
         {
             try
             {

@@ -42,10 +42,10 @@
             return allUsers;
         }
 
-        public async Task<UserViewModel> GetUserByIdAsync(string userId)
+        public async Task<UserViewModel> GetUserByIdAsync(Guid userId)
         {
             return await this.context.Users
-                .Where(u => u.Id.ToString() == userId)
+                .Where(u => u.Id == userId)
                 .Select(u => new UserViewModel()
                 {
                     Id = u.Id.ToString(),

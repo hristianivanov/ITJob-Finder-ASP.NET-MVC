@@ -6,19 +6,19 @@
     public interface IJobOfferService
     {
         Task<AllJobOffersFilteredAndPagedServiceModel> AllAsync(AllJobOffersQueryModel queryModel);
-        Task<string> CreateAndReturnIdAsync(JobOfferFormModel model, string userId);
-        Task<bool> ExistsByIdAsync(string id);
-        Task<bool> IsOwnedByCompanyAsync(string id, string userId);
-        Task<JobOfferDetailsViewModel> GetDetailsByIdAsync(string id);
-        Task<IEnumerable<JobOfferAllViewModel>> AllByCompanyIdAsync(string userId);
-        Task<JobOfferEditFormModel> GetForEditByIdAsync(string id);
-        Task DeleteByIdAsync(string id, string userId);
+        Task<string> CreateAndReturnIdAsync(JobOfferFormModel model, Guid userId);
+        Task<bool> ExistsByIdAsync(Guid id);
+        Task<bool> IsOwnedByCompanyAsync(Guid id, Guid userId);
+        Task<JobOfferDetailsViewModel> GetDetailsByIdAsync(Guid id);
+        Task<IEnumerable<JobOfferAllViewModel>> AllByCompanyIdAsync(Guid userId);
+        Task<JobOfferEditFormModel> GetForEditByIdAsync(Guid id);
+        Task DeleteByIdAsync(Guid id, Guid userId);
         Task<AllFilterViewModel> LoadFiltersAsync();
-        Task EditJobOfferAsync(string id, JobOfferEditFormModel model, string userId);
+        Task EditJobOfferAsync(Guid id, JobOfferEditFormModel model, Guid userId);
         Task<AllJobOffersFilteredAndPagedServiceModel> AllBySearchAsync(AllJobOffersQueryModel queryModel);
-        Task SaveJobAsync(string jobOfferId, string userId);
-        Task<bool> IsJobOfferSaved(string jobOfferId, string userId);
-        Task RemoveSaveJobAsync(string jobOfferId, string userId);
-        Task<IEnumerable<JobOfferSavedViewModel>> AllSavedJobOffersByUserIdAsync(string userId);
+        Task SaveJobAsync(Guid jobOfferId, Guid userId);
+        Task<bool> IsJobOfferSaved(Guid jobOfferId, Guid userId);
+        Task RemoveSaveJobAsync(Guid jobOfferId, Guid userId);
+        Task<IEnumerable<JobOfferSavedViewModel>> AllSavedJobOffersByUserIdAsync(Guid userId);
     }
 }

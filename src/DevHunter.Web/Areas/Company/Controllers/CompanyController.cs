@@ -24,7 +24,7 @@ namespace DevHunter.Web.Areas.Company.Controllers
 
         [HttpGet]
         [Route("company/edit/{id}")]
-        public async Task<IActionResult> Edit(string id)
+        public async Task<IActionResult> Edit(Guid id)
         {
             try
             {
@@ -36,7 +36,7 @@ namespace DevHunter.Web.Areas.Company.Controllers
                     return RedirectToAction("Index", "Home", new { area = "" });
                 }
 
-                var model = await this.companyService.GetForEditByIdAsync(id!);
+                var model = await this.companyService.GetForEditByIdAsync(id);
 
                 return View(model);
             }
@@ -49,7 +49,7 @@ namespace DevHunter.Web.Areas.Company.Controllers
 
         [HttpPost]
         [Route("company/edit/{id}")]
-        public async Task<IActionResult> Edit([FromRoute] string id, CompanyFormModel model)
+        public async Task<IActionResult> Edit([FromRoute] Guid id, CompanyFormModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -66,7 +66,7 @@ namespace DevHunter.Web.Areas.Company.Controllers
                     return RedirectToAction("Index", "Home");
                 }
 
-                await this.companyService.EditAsync(id!, model, CurrentUserId);
+                await this.companyService.EditAsync(id, model, CurrentUserId);
             }
             catch (Exception ex)
             {
@@ -81,10 +81,9 @@ namespace DevHunter.Web.Areas.Company.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> ApproveApplication(string id)
+        public async Task<IActionResult> ApproveApplication(Guid id)
         {
-            string companyUserId = CurrentUserId;
-            bool isOwnedByCompany = await this.jobApplicationService.IsOwnedByCompanyAsync(id, companyUserId);
+            bool isOwnedByCompany = await this.jobApplicationService.IsOwnedByCompanyAsync(id, CurrentUserId);
 
             if (!isOwnedByCompany)
             {
@@ -93,7 +92,7 @@ namespace DevHunter.Web.Areas.Company.Controllers
                 return RedirectToAction("Candidates");
             }
 
-            await this.jobApplicationService.ApproveApplicationAsync(id, companyUserId);
+            await this.jobApplicationService.ApproveApplicationAsync(id, CurrentUserId);
 
             TempData[SuccessMessage] = "You successfully approved one candidate!";
 
@@ -101,10 +100,9 @@ namespace DevHunter.Web.Areas.Company.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> RejectApplication(string id)
+        public async Task<IActionResult> RejectApplication(Guid id)
         {
-            string companyUserId = CurrentUserId;
-            bool isOwnedByCompany = await this.jobApplicationService.IsOwnedByCompanyAsync(id, companyUserId);
+            bool isOwnedByCompany = await this.jobApplicationService.IsOwnedByCompanyAsync(id, CurrentUserId);
 
             if (!isOwnedByCompany)
             {
@@ -113,7 +111,7 @@ namespace DevHunter.Web.Areas.Company.Controllers
                 return RedirectToAction("Candidates");
             }
 
-            await this.jobApplicationService.RejectApplicationAsync(id, companyUserId);
+            await this.jobApplicationService.RejectApplicationAsync(id, CurrentUserId);
 
             TempData[InformationMessage] = "You successfully rejected one candidate!";
 
@@ -124,8 +122,7 @@ namespace DevHunter.Web.Areas.Company.Controllers
         [Route("company/candidates")]
         public async Task<IActionResult> Candidates()
         {
-            string? companyId =
-                await this.companyService.GetCompanyIdByCreatorIdAsync(CurrentUserId);
+            Guid? companyId = await this.companyService.GetCompanyIdByCreatorIdAsync(CurrentUserId);
 
             var model = await this.jobApplicationService
                 .AllCandidatesByCompanyIdAsync(companyId);
@@ -134,9 +131,8 @@ namespace DevHunter.Web.Areas.Company.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetApplicationDetails(string applicationId)
+        public async Task<IActionResult> GetApplicationDetails(Guid applicationId)
         {
-
             var application = await this.jobApplicationService
                 .GetApplicationById(applicationId, CurrentUserId);
 

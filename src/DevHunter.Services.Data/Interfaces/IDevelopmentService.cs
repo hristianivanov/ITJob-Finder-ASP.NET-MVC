@@ -7,10 +7,10 @@
         Task<bool> ExistsByNameAsync(string name);
         Task AddAsync(DevelopmentFormModel formModel);
         Task<List<DevelopmentViewModel>> AllAsync();
-        Task<bool> ExistsByIdAsync(string id);
-        Task<DevelopmentEditFormModel> GetForEditByIdAsync(string id);
-        Task EditDevelopmentAsync(string id, DevelopmentEditFormModel model);
-        Task DeleteByIdAsync(string id);
-        Task<DevelopmentOfferViewModel> GetByIdAsync(string id);
+        Task<bool> ExistsByIdAsync(Guid id);
+        Task<DevelopmentEditFormModel> GetForEditByIdAsync(Guid id);
+        Task EditDevelopmentAsync(Guid id, DevelopmentEditFormModel model);
+        Task DeleteByIdAsync(Guid id);
+        Task<DevelopmentOfferViewModel> GetByIdAsync(Guid id);
     }
 }

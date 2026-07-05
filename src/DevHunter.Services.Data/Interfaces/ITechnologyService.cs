@@ -5,17 +5,17 @@
     public interface ITechnologyService
     {
         Task<bool> TechnologyExistsByNameAsync(string technologyName);
-        Task AddAsync(TechnologyFormModel formModel, string? developmentId);
+        Task AddAsync(TechnologyFormModel formModel, Guid? developmentId);
         Task<IEnumerable<TechnologyViewModel>> AllAsync();
-        Task<bool> ExistsByIdAsync(string id);
-        Task<TechnologyEditFormModel> GetForEditByIdAsync(string id);
-        Task EditTechnologyAsync(string technologyId, TechnologyEditFormModel model);
-        Task DeleteByIdAsync(string id);
+        Task<bool> ExistsByIdAsync(Guid id);
+        Task<TechnologyEditFormModel> GetForEditByIdAsync(Guid id);
+        Task EditTechnologyAsync(Guid technologyId, TechnologyEditFormModel model);
+        Task DeleteByIdAsync(Guid id);
 
         //Task<Stream> GetThumbnail(string id);
         //Task<Stream> GetOriginal(string id);
-        Task<IEnumerable<TechnologyViewModel>> AllByDevelopmentAsync(string id);
-        Task<IEnumerable<TechnologyViewModel>> AllByJobOfferIdAsync(string id);
-        Task<IEnumerable<TechnologyViewModel>> AllWithoutJobOfferOnesAsync(string id);
+        Task<IEnumerable<TechnologyViewModel>> AllByDevelopmentAsync(Guid id);
+        Task<IEnumerable<TechnologyViewModel>> AllByJobOfferIdAsync(Guid id);
+        Task<IEnumerable<TechnologyViewModel>> AllWithoutJobOfferOnesAsync(Guid id);
     }
 }

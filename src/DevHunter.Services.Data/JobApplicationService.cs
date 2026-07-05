@@ -22,33 +22,17 @@
             this.context = context;
         }
 
-        public async Task<string> ApplyJobOfferAsync(JobApplicationFormModel model, string jobOfferId, string? userId)
+        public async Task<string> ApplyJobOfferAsync(JobApplicationFormModel model, Guid jobOfferId, Guid userId)
         {
             ArgumentNullException.ThrowIfNull(model);
 
-            if (!Guid.TryParse(jobOfferId, out Guid parsedJobOfferId))
-            {
-                throw new InvalidOperationException("A valid job offer id is required.");
-            }
-
             bool jobOfferExists = await this.context.JobOffers
                 .AsNoTracking()
-                .AnyAsync(jobOffer => jobOffer.Id == parsedJobOfferId);
+                .AnyAsync(jobOffer => jobOffer.Id == jobOfferId);
 
             if (!jobOfferExists)
             {
                 throw new InvalidOperationException("Job offer does not exist.");
-            }
-
-            Guid? parsedUserId = null;
-            if (!string.IsNullOrWhiteSpace(userId))
-            {
-                if (!Guid.TryParse(userId, out Guid validUserId))
-                {
-                    throw new InvalidOperationException("A valid user id is required.");
-                }
-
-                parsedUserId = validUserId;
             }
 
             var application = new JobApplication
@@ -56,15 +40,15 @@
                 Email = model.Email,
                 CandidateName = model.CandidateName,
                 MotivationalLetter = model.MotivationalLetter,
-                JobOfferId = parsedJobOfferId
+                JobOfferId = jobOfferId
             };
 
-            if (parsedUserId.HasValue)
+            if (userId != Guid.Empty)
             {
                 var userApplication = new UserJobApplications
                 {
                     JobApplicationId = application.Id,
-                    UserId = parsedUserId.Value,
+                    UserId = userId,
                     Date = DateTime.UtcNow,
                 };
 
@@ -77,9 +61,9 @@
             return application.Id.ToString();
         }
 
-        public async Task<ICollection<AllJobApplicationViewModel>> AllCandidatesByCompanyIdAsync(string? companyId)
+        public async Task<ICollection<AllJobApplicationViewModel>> AllCandidatesByCompanyIdAsync(Guid? companyId)
         {
-            if (!Guid.TryParse(companyId, out Guid parsedCompanyId))
+            if (companyId is null)
             {
                 return Array.Empty<AllJobApplicationViewModel>();
             }
@@ -87,7 +71,7 @@
             var jobOffersApplications = await this.context
                 .JobOffers
                 .AsNoTracking()
-                .Where(j => j.CompanyId == parsedCompanyId &&
+                .Where(j => j.CompanyId == companyId &&
                             j.JobApplications.Any())
                 .Select(j => new AllJobApplicationViewModel()
                 {
@@ -107,15 +91,13 @@
             return jobOffersApplications;
         }
 
-        public async Task<JobApplicationViewModel> GetApplicationById(string applicationId, string companyUserId)
+        public async Task<JobApplicationViewModel> GetApplicationById(Guid applicationId, Guid companyUserId)
         {
-            (Guid parsedApplicationId, Guid parsedCompanyUserId) = GuidParser.ParseRequiredTwo(applicationId, companyUserId);
-
             ApplicationDetailsData application = await this.context.JobApplications
                 .AsNoTracking()
                 .Where(application =>
-                    application.Id == parsedApplicationId &&
-                    application.JobOffer.Company.CreatorId == parsedCompanyUserId)
+                    application.Id == applicationId &&
+                    application.JobOffer.Company.CreatorId == companyUserId)
                 .Select(ApplicationDetailsSelector)
                 .FirstOrDefaultAsync()
                 ?? throw new InvalidOperationException("Application does not exist or does not belong to the company.");
@@ -123,17 +105,12 @@
             return MapApplicationDetails(application);
         }
 
-        public async Task<IEnumerable<MyApplicationViewModel>> AllUserApplicationsAsync(string userId)
+        public async Task<IEnumerable<MyApplicationViewModel>> AllUserApplicationsAsync(Guid userId)
         {
-            if (!Guid.TryParse(userId, out Guid parsedUserId))
-            {
-                return Array.Empty<MyApplicationViewModel>();
-            }
-
             var userApplications = await this.context
                 .UsersJobApplications
                 .AsNoTracking()
-                .Where(a => a.UserId == parsedUserId)
+                .Where(a => a.UserId == userId)
                 .Select(a => new MyApplicationViewModel()
                 {
                     SavedDate = a.Date.ToString("dd.MM.yyyy"),
@@ -148,50 +125,30 @@
             return userApplications;
         }
 
-        public async Task<bool> ExistsByIdAsync(string id)
-        {
-            if (!Guid.TryParse(id, out Guid applicationId))
-            {
-                return false;
-            }
-
-            return await this.context.JobApplications
+        public async Task<bool> ExistsByIdAsync(Guid id)
+            => await this.context.JobApplications
                 .AsNoTracking()
-                .AnyAsync(application => application.Id == applicationId);
-        }
+                .AnyAsync(application => application.Id == id);
 
-        public async Task<bool> IsOwnedByCompanyAsync(string id, string companyUserId)
-        {
-            if (!GuidParser.TryParseTwo(id, companyUserId, out Guid applicationId, out Guid parsedCompanyUserId))
-            {
-                return false;
-            }
-
-            return await this.context.JobApplications
+        public async Task<bool> IsOwnedByCompanyAsync(Guid id, Guid companyUserId)
+            => await this.context.JobApplications
                 .AsNoTracking()
                 .AnyAsync(application =>
-                    application.Id == applicationId &&
-                    application.JobOffer.Company.CreatorId == parsedCompanyUserId);
-        }
+                    application.Id == id &&
+                    application.JobOffer.Company.CreatorId == companyUserId);
 
-        public Task ApproveApplicationAsync(string id, string companyUserId)
+        public Task ApproveApplicationAsync(Guid id, Guid companyUserId)
+            => UpdateApplicationStatusAsync(id, companyUserId, ApplicationStatus.Approved);
+
+        public Task RejectApplicationAsync(Guid id, Guid companyUserId)
+            => UpdateApplicationStatusAsync(id, companyUserId, ApplicationStatus.Rejected);
+
+        private async Task UpdateApplicationStatusAsync(Guid id, Guid companyUserId, ApplicationStatus status)
         {
-            return UpdateApplicationStatusAsync(id, companyUserId, ApplicationStatus.Approved);
-        }
-
-        public Task RejectApplicationAsync(string id, string companyUserId)
-        {
-            return UpdateApplicationStatusAsync(id, companyUserId, ApplicationStatus.Rejected);
-        }
-
-        private async Task UpdateApplicationStatusAsync(string id, string companyUserId, ApplicationStatus status)
-        {
-            (Guid applicationId, Guid parsedCompanyUserId) = GuidParser.ParseRequiredTwo(id, companyUserId);
-
             var application = await this.context.JobApplications
                 .FirstOrDefaultAsync(application =>
-                    application.Id == applicationId &&
-                    application.JobOffer.Company.CreatorId == parsedCompanyUserId)
+                    application.Id == id &&
+                    application.JobOffer.Company.CreatorId == companyUserId)
                 ?? throw new InvalidOperationException("Application does not exist or does not belong to the company.");
 
             if (application.Status != status)

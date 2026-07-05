@@ -22,6 +22,6 @@ namespace DevHunter.Web.Areas.Company.Controllers
             return isOwned;
         }
 
-        protected string CurrentUserId => this.User.GetId()!;
+        protected Guid CurrentUserId => this.User.GetGuid();
     }
 }

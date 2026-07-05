@@ -94,16 +94,11 @@
             };
         }
 
-        public async Task SaveJobAsync(string jobOfferId, string userId)
+        public async Task SaveJobAsync(Guid jobOfferId, Guid userId)
         {
-            if (!GuidParser.TryParseTwo(jobOfferId, userId, out Guid parsedJobOfferId, out Guid parsedUserId))
-            {
-                throw new InvalidOperationException("A valid job offer and user are required.");
-            }
-
             bool jobOfferExists = await this.dbContext.JobOffers
                 .AsNoTracking()
-                .AnyAsync(j => j.Id == parsedJobOfferId);
+                .AnyAsync(j => j.Id == jobOfferId);
 
             if (!jobOfferExists)
             {
@@ -111,7 +106,7 @@
             }
 
             bool alreadySaved = await this.dbContext.SavedJobOffers
-                .AnyAsync(j => j.JobOfferId == parsedJobOfferId && j.UserId == parsedUserId);
+                .AnyAsync(j => j.JobOfferId == jobOfferId && j.UserId == userId);
 
             if (alreadySaved)
             {
@@ -121,35 +116,23 @@
             var model = new SavedJobOffer
             {
                 Date = DateTime.UtcNow,
-                JobOfferId = parsedJobOfferId,
-                UserId = parsedUserId
+                JobOfferId = jobOfferId,
+                UserId = userId
             };
 
             await this.dbContext.SavedJobOffers.AddAsync(model);
             await this.dbContext.SaveChangesAsync();
         }
 
-        public async Task<bool> IsJobOfferSaved(string jobOfferId, string userId)
-        {
-            if (!GuidParser.TryParseTwo(jobOfferId, userId, out Guid parsedJobOfferId, out Guid parsedUserId))
-            {
-                return false;
-            }
-
-            return await this.dbContext.SavedJobOffers
+        public async Task<bool> IsJobOfferSaved(Guid jobOfferId, Guid userId)
+            => await this.dbContext.SavedJobOffers
                 .AsNoTracking()
-                .AnyAsync(j => j.JobOfferId == parsedJobOfferId && j.UserId == parsedUserId);
-        }
+                .AnyAsync(j => j.JobOfferId == jobOfferId && j.UserId == userId);
 
-        public async Task RemoveSaveJobAsync(string jobOfferId, string userId)
+        public async Task RemoveSaveJobAsync(Guid jobOfferId, Guid userId)
         {
-            if (!GuidParser.TryParseTwo(jobOfferId, userId, out Guid parsedJobOfferId, out Guid parsedUserId))
-            {
-                return;
-            }
-
             var model = await this.dbContext.SavedJobOffers
-                .FirstOrDefaultAsync(j => j.JobOfferId == parsedJobOfferId && j.UserId == parsedUserId);
+                .FirstOrDefaultAsync(j => j.JobOfferId == jobOfferId && j.UserId == userId);
 
             if (model != null)
             {
@@ -158,17 +141,12 @@
             }
         }
 
-        public async Task<IEnumerable<JobOfferSavedViewModel>> AllSavedJobOffersByUserIdAsync(string userId)
+        public async Task<IEnumerable<JobOfferSavedViewModel>> AllSavedJobOffersByUserIdAsync(Guid userId)
         {
-            if (!Guid.TryParse(userId, out Guid parsedUserId))
-            {
-                return Array.Empty<JobOfferSavedViewModel>();
-            }
-
             var savedJobOffers = await this.dbContext
                 .SavedJobOffers
                 .AsNoTracking()
-                .Where(j => j.UserId == parsedUserId)
+                .Where(j => j.UserId == userId)
                 .Select(j => new JobOfferSavedViewModel()
                 {
                     JobOfferId = j.JobOfferId.ToString(),
@@ -181,33 +159,17 @@
             return savedJobOffers;
         }
 
-        public async Task<bool> ExistsByIdAsync(string id)
-        {
-            if (!Guid.TryParse(id, out Guid parsedId))
-            {
-                return false;
-            }
+        public async Task<bool> ExistsByIdAsync(Guid id)
+            => await this.dbContext.JobOffers.AsNoTracking().AnyAsync(j => j.Id == id);
 
-            return await this.dbContext.JobOffers
+        public async Task<bool> IsOwnedByCompanyAsync(Guid id, Guid userId)
+            => await this.dbContext.JobOffers
                 .AsNoTracking()
-                .AnyAsync(j => j.Id == parsedId);
-        }
+                .AnyAsync(j => j.Id == id && j.Company.CreatorId == userId);
 
-        public async Task<bool> IsOwnedByCompanyAsync(string id, string userId)
+        public async Task<JobOfferDetailsViewModel> GetDetailsByIdAsync(Guid id)
         {
-            if (!GuidParser.TryParseTwo(id, userId, out Guid parsedId, out Guid parsedUserId))
-            {
-                return false;
-            }
-
-            return await this.dbContext.JobOffers
-                .AsNoTracking()
-                .AnyAsync(j => j.Id == parsedId && j.Company.CreatorId == parsedUserId);
-        }
-
-        public async Task<JobOfferDetailsViewModel> GetDetailsByIdAsync(string id)
-        {
-            Guid parsedId = GuidParser.ParseRequired(id, "job offer");
+            Guid parsedId = id;
 
             var jobOffer = await this.dbContext
                 .JobOffers
@@ -256,9 +218,9 @@
             return model;
         }
 
-        public async Task<IEnumerable<JobOfferAllViewModel>> AllByCompanyIdAsync(string userId)
+        public async Task<IEnumerable<JobOfferAllViewModel>> AllByCompanyIdAsync(Guid userId)
         {
-            Guid parsedUserId = GuidParser.ParseRequired(userId, "user");
+            Guid parsedUserId = userId;
 
             bool companyExists = await this.dbContext.Companies
                 .AsNoTracking()
@@ -291,9 +253,9 @@
                 .ToListAsync();
         }
 
-        public async Task<JobOfferEditFormModel> GetForEditByIdAsync(string id)
+        public async Task<JobOfferEditFormModel> GetForEditByIdAsync(Guid id)
         {
-            Guid parsedId = GuidParser.ParseRequired(id, "job offer");
+            Guid parsedId = id;
 
             var jobOffer = await this.dbContext
                 .JobOffers
@@ -317,18 +279,13 @@
             };
         }
 
-        public async Task DeleteByIdAsync(string id, string userId)
+        public async Task DeleteByIdAsync(Guid id, Guid userId)
         {
-            if (!GuidParser.TryParseTwo(id, userId, out Guid parsedId, out Guid parsedUserId))
-            {
-                return;
-            }
-
             var jobOffer = await this.dbContext
                 .JobOffers
                 .FirstOrDefaultAsync(jobOffer =>
-                    jobOffer.Id == parsedId &&
-                    jobOffer.Company.CreatorId == parsedUserId);
+                    jobOffer.Id == id &&
+                    jobOffer.Company.CreatorId == userId);
 
             if (jobOffer != null)
             {
@@ -390,16 +347,13 @@
             };
         }
 
-        public async Task EditJobOfferAsync(string id, JobOfferEditFormModel model, string userId)
+        public async Task EditJobOfferAsync(Guid id, JobOfferEditFormModel model, Guid userId)
         {
-            Guid parsedId = GuidParser.ParseRequired(id, "job offer");
-            Guid parsedUserId = GuidParser.ParseRequired(userId, "user");
-
             var jobOffer = await this.dbContext
                 .JobOffers
                 .FirstOrDefaultAsync(jobOffer =>
-                    jobOffer.Id == parsedId &&
-                    jobOffer.Company.CreatorId == parsedUserId)
+                    jobOffer.Id == id &&
+                    jobOffer.Company.CreatorId == userId)
                 ?? throw new InvalidOperationException("Job offer does not exist or does not belong to the company.");
 
             bool isChanged = UpdateJobOfferFields(jobOffer, model);
@@ -411,13 +365,11 @@
             }
         }
 
-        public async Task<string> CreateAndReturnIdAsync(JobOfferFormModel model, string userId)
+        public async Task<string> CreateAndReturnIdAsync(JobOfferFormModel model, Guid userId)
         {
-            Guid parsedUserId = GuidParser.ParseRequired(userId, "user");
-
             var company = await this.dbContext
                 .Companies
-                .FirstOrDefaultAsync(c => c.CreatorId == parsedUserId)
+                .FirstOrDefaultAsync(c => c.CreatorId == userId)
                 ?? throw new InvalidOperationException("Company does not exist.");
 
             JobOffer jobOffer = CreateJobOffer(model, company.Id);
