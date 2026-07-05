@@ -80,18 +80,15 @@ namespace DevHunter.Services.Tests
         {
             var existingDevelopment = await dbContext.Developments.FirstAsync();
 
-            bool result = await developmentService.ExistsByIdAsync(existingDevelopment.Id.ToString());
+            bool result = await developmentService.ExistsByIdAsync(existingDevelopment.Id);
 
             result.Should().BeTrue();
         }
 
-        [TestCase("")]
-        [TestCase("  ")]
-        [TestCase(null)]
-        [TestCase("invalid_id")]
-        public async Task ExistsByIdAsync_ShouldReturnFalseForNonExistingDevelopment(string existingDevelopmentId)
+        [Test]
+        public async Task ExistsByIdAsync_ShouldReturnFalseForNonExistingDevelopment()
         {
-            bool result = await developmentService.ExistsByIdAsync(existingDevelopmentId);
+            bool result = await developmentService.ExistsByIdAsync(Guid.NewGuid());
 
             result.Should().BeFalse();
         }
@@ -174,7 +171,7 @@ namespace DevHunter.Services.Tests
         {
             var development = await dbContext.Developments.FirstAsync();
 
-            var result = await developmentService.GetByIdAsync(development.Id.ToString());
+            var result = await developmentService.GetByIdAsync(development.Id);
 
             result.Should().NotBeNull()
                 .And
@@ -186,13 +183,10 @@ namespace DevHunter.Services.Tests
                         .Including(x => x.ImageUrl));
         }
 
-        [TestCase("")]
-        [TestCase("  ")]
-        [TestCase(null)]
-        [TestCase("invalid_id")]
-        public async Task GetByIdAsync_ShouldThrowExceptionForNonExistingId(string nonExistingId)
+        [Test]
+        public async Task GetByIdAsync_ShouldThrowExceptionForNonExistingId()
         {
-            var act = async () => await developmentService.GetByIdAsync(nonExistingId);
+            var act = async () => await developmentService.GetByIdAsync(Guid.NewGuid());
 
             await act.Should().ThrowAsync<InvalidOperationException>();
         }
@@ -202,7 +196,7 @@ namespace DevHunter.Services.Tests
         {
             var development = await dbContext.Developments.FirstAsync();
 
-            var result = await developmentService.GetForEditByIdAsync(development.Id.ToString());
+            var result = await developmentService.GetForEditByIdAsync(development.Id);
 
 
             result.Should().NotBeNull()
@@ -215,13 +209,10 @@ namespace DevHunter.Services.Tests
                         .Including(x => x.ImageUrl));
         }
 
-        [TestCase("")]
-        [TestCase("  ")]
-        [TestCase(null)]
-        [TestCase("invalid_id")]
-        public async Task GetForEditByIdAsync_ShouldThrowExceptionForNonExistingId(string nonExistingId)
+        [Test]
+        public async Task GetForEditByIdAsync_ShouldThrowExceptionForNonExistingId()
         {
-            var act = async () => await developmentService.GetForEditByIdAsync(nonExistingId);
+            var act = async () => await developmentService.GetForEditByIdAsync(Guid.NewGuid());
 
             await act.Should().ThrowAsync<InvalidOperationException>();
         }
@@ -237,7 +228,7 @@ namespace DevHunter.Services.Tests
                 Image = new FormFile(Stream.Null, 0, 0, "test.jpg", "test.jpg")
             };
 
-            await developmentService.EditDevelopmentAsync(development.Id.ToString(), model);
+            await developmentService.EditDevelopmentAsync(development.Id, model);
 
             var editedDevelopment = await dbContext.Developments.FindAsync(development.Id);
 
@@ -247,13 +238,10 @@ namespace DevHunter.Services.Tests
                 .NotBeNull();
         }
 
-        [TestCase("")]
-        [TestCase("  ")]
-        [TestCase(null)]
-        [TestCase("invalid_id")]
-        public async Task EditDevelopmentAsync_ShouldThrowExceptionForNonExistingId(string? nonExistingDevelopmentId)
+        [Test]
+        public async Task EditDevelopmentAsync_ShouldThrowExceptionForNonExistingId()
         {
-            var act = async () => await developmentService.EditDevelopmentAsync(nonExistingDevelopmentId!, null!);
+            var act = async () => await developmentService.EditDevelopmentAsync(Guid.NewGuid(), null!);
 
             await act.Should().ThrowAsync<InvalidOperationException>();
         }
@@ -263,7 +251,7 @@ namespace DevHunter.Services.Tests
         {
             var development = await dbContext.Developments.FirstAsync();
 
-            var act = async () => await developmentService.EditDevelopmentAsync(development.Id.ToString(), null!);
+            var act = async () => await developmentService.EditDevelopmentAsync(development.Id, null!);
 
             await act.Should().ThrowAsync<NullReferenceException>();
         }
@@ -273,20 +261,17 @@ namespace DevHunter.Services.Tests
         {
             var development = await dbContext.Developments.FirstAsync();
 
-            await developmentService.DeleteByIdAsync(development.Id.ToString());
+            await developmentService.DeleteByIdAsync(development.Id);
 
             var deletedDevelopment = await dbContext.Developments.FindAsync(development.Id);
 
             deletedDevelopment.Should().BeNull();
         }
 
-        [TestCase("")]
-        [TestCase("  ")]
-        [TestCase(null)]
-        [TestCase("invalid_id")]
-        public async Task DeleteByIdAsync_ShouldThrowExceptionForNonExistingId(string nonExistingId)
+        [Test]
+        public async Task DeleteByIdAsync_ShouldThrowExceptionForNonExistingId()
         {
-            var act = async () => await developmentService.DeleteByIdAsync(nonExistingId);
+            var act = async () => await developmentService.DeleteByIdAsync(Guid.NewGuid());
 
             await act.Should().ThrowAsync<InvalidOperationException>();
         }

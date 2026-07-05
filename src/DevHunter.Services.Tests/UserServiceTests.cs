@@ -115,7 +115,7 @@ namespace DevHunter.Services.Tests
         {
             var dbUser = await dbContext.Users.FirstAsync();
 
-            var result = await userService.GetUserByIdAsync(dbUser.Id.ToString());
+            var result = await userService.GetUserByIdAsync(dbUser.Id);
 
             result.Should().NotBeNull().And.BeOfType<UserViewModel>();
             result.Id.Should().Be(dbUser.Id.ToString());
@@ -129,8 +129,8 @@ namespace DevHunter.Services.Tests
             var companyUser = await dbContext.Users.FirstAsync(u => u.Companies.Any());
             var regularUser = await dbContext.Users.FirstAsync(u => !u.Companies.Any());
 
-            var companyVm = await userService.GetUserByIdAsync(companyUser.Id.ToString());
-            var regularVm = await userService.GetUserByIdAsync(regularUser.Id.ToString());
+            var companyVm = await userService.GetUserByIdAsync(companyUser.Id);
+            var regularVm = await userService.GetUserByIdAsync(regularUser.Id);
 
             companyVm.IsCompany.Should().BeTrue();
             regularVm.IsCompany.Should().BeFalse();
@@ -139,7 +139,7 @@ namespace DevHunter.Services.Tests
         [Test]
         public async Task GetUserByIdAsync_ShouldThrowForNonExistingUser()
         {
-            var act = async () => await userService.GetUserByIdAsync(Guid.NewGuid().ToString());
+            var act = async () => await userService.GetUserByIdAsync(Guid.NewGuid());
 
             await act.Should().ThrowAsync<Exception>();
         }
