@@ -1,4 +1,4 @@
-﻿namespace DevHunter.Services.Tests
+namespace DevHunter.Services.Tests
 {
     using FluentAssertions;
     using Microsoft.EntityFrameworkCore;
@@ -57,7 +57,7 @@
 
             var user = await dbContext.Users.FirstAsync();
 
-            var result = await jobApplicationService.ApplyJobOfferAsync(model, jobOffer.Id.ToString(), user.Id.ToString());
+            var result = await jobApplicationService.ApplyJobOfferAsync(model, jobOffer.Id, user.Id);
 
             var addedApplication = await dbContext.JobApplications.FirstAsync(j => j.Id.ToString() == result);
 
@@ -70,13 +70,13 @@
         [Test]
         public async Task ApplyJobOfferAsync_ShouldThrowExceptionForNullableFormModel()
         {
-            var act = async () => await jobApplicationService.ApplyJobOfferAsync(null!, "", "");
+            var act = async () => await jobApplicationService.ApplyJobOfferAsync(null!, Guid.Empty, Guid.Empty);
 
             await act.Should().ThrowAsync<ArgumentNullException>();
         }
 
         [Test]
-        public async Task ApplyJobOfferAsync_ShouldThrowExceptionForInvalidGuid()
+        public async Task ApplyJobOfferAsync_ShouldThrowExceptionForInvalidJobOfferId()
         {
             var model = new JobApplicationFormModel()
             {
@@ -85,7 +85,7 @@
                 MotivationalLetter = "letter",
             };
 
-            var act = async () => await jobApplicationService.ApplyJobOfferAsync(model, "", "");
+            var act = async () => await jobApplicationService.ApplyJobOfferAsync(model, Guid.Empty, Guid.Empty);
 
             await act.Should().ThrowAsync<InvalidOperationException>();
         }
@@ -101,7 +101,7 @@
             };
 
             var act = async () => await jobApplicationService
-                .ApplyJobOfferAsync(model, Guid.NewGuid().ToString(), null);
+                .ApplyJobOfferAsync(model, Guid.NewGuid(), Guid.Empty);
 
             await act.Should().ThrowAsync<InvalidOperationException>();
         }
@@ -118,7 +118,7 @@
             var jobOffer = await dbContext.JobOffers.FirstAsync();
 
             var act = async () => await jobApplicationService
-                .ApplyJobOfferAsync(model, jobOffer.Id.ToString(), "invalid");
+                .ApplyJobOfferAsync(model, jobOffer.Id, Guid.NewGuid());
 
             await act.Should().ThrowAsync<InvalidOperationException>();
         }
@@ -128,7 +128,7 @@
         {
             var company = await dbContext.Companies.FirstAsync();
 
-            var result = await jobApplicationService.AllCandidatesByCompanyIdAsync(company.Id.ToString());
+            var result = await jobApplicationService.AllCandidatesByCompanyIdAsync(company.Id);
 
             var jobOfferApplications = await dbContext.JobOffers
                 .Where(j => j.CompanyId == company.Id && j.JobApplications.Count != 0).ToListAsync();
@@ -143,13 +143,18 @@
                 .HaveCount(jobOfferApplications.Count);
         }
 
-        [TestCase("")]
-        [TestCase(" ")]
-        [TestCase("invalid")]
-        [TestCase(null)]
-        public async Task AllCandidatesByCompanyIdAsync_ShouldReturnNothingForNonExistingCompany(string nonExistingCompanyId)
+        [Test]
+        public async Task AllCandidatesByCompanyIdAsync_ShouldReturnNothingForNonExistingCompany()
         {
-            var result = await jobApplicationService.AllCandidatesByCompanyIdAsync(nonExistingCompanyId);
+            var result = await jobApplicationService.AllCandidatesByCompanyIdAsync(Guid.NewGuid());
+
+            result.Should().BeEmpty();
+        }
+
+        [Test]
+        public async Task AllCandidatesByCompanyIdAsync_ShouldReturnNothingForNullCompanyId()
+        {
+            var result = await jobApplicationService.AllCandidatesByCompanyIdAsync(null);
 
             result.Should().BeEmpty();
         }
@@ -161,7 +166,7 @@
             var company = await dbContext.Companies.FirstAsync();
 
             var result = await jobApplicationService
-                .GetApplicationById(jobApplication.Id.ToString(), company.CreatorId.ToString());
+                .GetApplicationById(jobApplication.Id, company.CreatorId);
 
             result.Should()
                 .NotBeNull()
@@ -178,7 +183,7 @@
 
             var userApplications = await dbContext.UsersJobApplications.Where(x => x.UserId == user.Id).ToListAsync();
 
-            var result = await jobApplicationService.AllUserApplicationsAsync(user.Id.ToString());
+            var result = await jobApplicationService.AllUserApplicationsAsync(user.Id);
 
             result.Should()
                 .NotBeNull()
@@ -190,13 +195,10 @@
                 .HaveCount(userApplications.Count);
         }
 
-        [TestCase("")]
-        [TestCase(" ")]
-        [TestCase(null)]
-        [TestCase("invalid")]
-        public async Task AllUserApplicationsAsync_ShouldReturnEmptyListForNonExistingUser(string nonExistingUserId)
+        [Test]
+        public async Task AllUserApplicationsAsync_ShouldReturnEmptyListForNonExistingUser()
         {
-            var result = await jobApplicationService.AllUserApplicationsAsync(nonExistingUserId);
+            var result = await jobApplicationService.AllUserApplicationsAsync(Guid.NewGuid());
 
             result.Should().BeEmpty();
         }
@@ -206,18 +208,15 @@
         {
             var jobApplication = await dbContext.JobApplications.FirstAsync();
 
-            var result = await jobApplicationService.ExistsByIdAsync(jobApplication.Id.ToString());
+            var result = await jobApplicationService.ExistsByIdAsync(jobApplication.Id);
 
             result.Should().BeTrue();
         }
 
-        [TestCase("")]
-        [TestCase(" ")]
-        [TestCase(null)]
-        [TestCase("invalid")]
-        public async Task ExistsByIdAsync_ShouldReturnFalse(string nonExistingApplicationId)
+        [Test]
+        public async Task ExistsByIdAsync_ShouldReturnFalse()
         {
-            var result = await jobApplicationService.ExistsByIdAsync(nonExistingApplicationId);
+            var result = await jobApplicationService.ExistsByIdAsync(Guid.NewGuid());
 
             result.Should().BeFalse();
         }
@@ -229,7 +228,7 @@
             var company = await dbContext.Companies.FirstAsync();
 
             await jobApplicationService
-                .ApproveApplicationAsync(jobApplication.Id.ToString(), company.CreatorId.ToString());
+                .ApproveApplicationAsync(jobApplication.Id, company.CreatorId);
 
             jobApplication.Status.Should()
                 .BeDefined()
@@ -237,15 +236,12 @@
                 .Be(ApplicationStatus.Approved);
         }
 
-        [TestCase("")]
-        [TestCase(" ")]
-        [TestCase(null)]
-        [TestCase("invalid")]
-        public async Task ApproveApplicationAsync_ShouldThrowExceptionForNonExistingApplication(string nonExistingApplicationId)
+        [Test]
+        public async Task ApproveApplicationAsync_ShouldThrowExceptionForNonExistingApplication()
         {
             var company = await dbContext.Companies.FirstAsync();
             var act = async () => await jobApplicationService
-                .ApproveApplicationAsync(nonExistingApplicationId, company.CreatorId.ToString());
+                .ApproveApplicationAsync(Guid.NewGuid(), company.CreatorId);
 
             await act.Should().ThrowAsync<InvalidOperationException>();
         }
@@ -257,7 +253,7 @@
             var company = await dbContext.Companies.FirstAsync();
 
             await jobApplicationService
-                .RejectApplicationAsync(jobApplication.Id.ToString(), company.CreatorId.ToString());
+                .RejectApplicationAsync(jobApplication.Id, company.CreatorId);
 
             jobApplication.Status.Should()
                 .BeDefined()
@@ -265,15 +261,12 @@
                 .Be(ApplicationStatus.Rejected);
         }
 
-        [TestCase("")]
-        [TestCase(" ")]
-        [TestCase(null)]
-        [TestCase("invalid")]
-        public async Task RejectApplicationAsync_ShouldThrowExceptionForNonExistingApplication(string nonExistingApplicationId)
+        [Test]
+        public async Task RejectApplicationAsync_ShouldThrowExceptionForNonExistingApplication()
         {
             var company = await dbContext.Companies.FirstAsync();
             var act = async () => await jobApplicationService
-                .RejectApplicationAsync(nonExistingApplicationId, company.CreatorId.ToString());
+                .RejectApplicationAsync(Guid.NewGuid(), company.CreatorId);
 
             await act.Should().ThrowAsync<InvalidOperationException>();
         }
@@ -286,9 +279,9 @@
             var otherUser = await dbContext.Users.FirstAsync(user => user.Id != company.CreatorId);
 
             bool ownedByCompany = await jobApplicationService
-                .IsOwnedByCompanyAsync(jobApplication.Id.ToString(), company.CreatorId.ToString());
+                .IsOwnedByCompanyAsync(jobApplication.Id, company.CreatorId);
             bool ownedByOtherUser = await jobApplicationService
-                .IsOwnedByCompanyAsync(jobApplication.Id.ToString(), otherUser.Id.ToString());
+                .IsOwnedByCompanyAsync(jobApplication.Id, otherUser.Id);
 
             ownedByCompany.Should().BeTrue();
             ownedByOtherUser.Should().BeFalse();
@@ -302,7 +295,7 @@
             var otherUser = await dbContext.Users.FirstAsync(user => user.Id != company.CreatorId);
 
             var act = async () => await jobApplicationService
-                .ApproveApplicationAsync(jobApplication.Id.ToString(), otherUser.Id.ToString());
+                .ApproveApplicationAsync(jobApplication.Id, otherUser.Id);
 
             await act.Should().ThrowAsync<InvalidOperationException>();
         }
@@ -314,9 +307,9 @@
             var company = await dbContext.Companies.FirstAsync();
 
             await jobApplicationService
-                .ApproveApplicationAsync(jobApplication.Id.ToString(), company.CreatorId.ToString());
+                .ApproveApplicationAsync(jobApplication.Id, company.CreatorId);
             var act = async () => await jobApplicationService
-                .ApproveApplicationAsync(jobApplication.Id.ToString(), company.CreatorId.ToString());
+                .ApproveApplicationAsync(jobApplication.Id, company.CreatorId);
 
             await act.Should().NotThrowAsync();
             jobApplication.Status.Should().Be(ApplicationStatus.Approved);
@@ -332,7 +325,7 @@
             var otherUser = await dbContext.Users.FirstAsync(user => user.Id != company.CreatorId);
 
             var act = async () => await jobApplicationService
-                .RejectApplicationAsync(jobApplication.Id.ToString(), otherUser.Id.ToString());
+                .RejectApplicationAsync(jobApplication.Id, otherUser.Id);
 
             await act.Should().ThrowAsync<InvalidOperationException>();
         }
@@ -344,9 +337,9 @@
             var company = await dbContext.Companies.FirstAsync();
 
             await jobApplicationService
-                .RejectApplicationAsync(jobApplication.Id.ToString(), company.CreatorId.ToString());
+                .RejectApplicationAsync(jobApplication.Id, company.CreatorId);
             var act = async () => await jobApplicationService
-                .RejectApplicationAsync(jobApplication.Id.ToString(), company.CreatorId.ToString());
+                .RejectApplicationAsync(jobApplication.Id, company.CreatorId);
 
             await act.Should().NotThrowAsync();
             jobApplication.Status.Should().Be(ApplicationStatus.Rejected);

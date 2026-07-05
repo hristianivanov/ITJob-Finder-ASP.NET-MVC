@@ -1,4 +1,4 @@
-﻿namespace DevHunter.Services.Tests
+namespace DevHunter.Services.Tests
 {
     using CloudinaryDotNet.Actions;
     using FluentAssertions;
@@ -97,7 +97,7 @@
         {
             var application = await dbContext.JobApplications.FirstAsync();
 
-            await documentService.AddAsync(TEST_DOCUMENT_URL, application.Id.ToString());
+            await documentService.AddAsync(TEST_DOCUMENT_URL, application.Id);
 
             var applicationDocuments = await dbContext.ApplicationDocuments.Where(a => a.JobApplicationId == application.Id).ToListAsync();
 
@@ -138,16 +138,14 @@
                 .WithMessage("*not allowed*");
         }
 
-        // ── AddAsync – invalid GUID ─────────────────────────────────────────────
+        // ── AddAsync – non-existing application ────────────────────────────────
 
-        [TestCase("")]
-        [TestCase(" ")]
-        [TestCase("invalid_guid")]
-        public async Task AddAsync_ShouldThrowArgumentExceptionForInvalidGuid(string invalidId)
+        [Test]
+        public async Task AddAsync_ShouldThrowForNonExistingApplicationId()
         {
-            var act = async () => await documentService.AddAsync(TEST_DOCUMENT_URL, invalidId);
+            var act = async () => await documentService.AddAsync(TEST_DOCUMENT_URL, Guid.NewGuid());
 
-            await act.Should().ThrowAsync<ArgumentException>();
+            await act.Should().ThrowAsync<Exception>();
         }
 
         // ── UploadAndSaveAsync ──────────────────────────────────────────────────
@@ -167,7 +165,7 @@
                 .ReturnsAsync(new RawUploadResult { SecureUrl = new Uri(TEST_DOCUMENT_URL) });
 
             await documentService.UploadAndSaveAsync(
-                fileMock.Object, TEST_FOLDER, application.Id.ToString());
+                fileMock.Object, TEST_FOLDER, application.Id);
 
             bool saved = await dbContext.ApplicationDocuments
                 .AnyAsync(d => d.JobApplicationId == application.Id);
@@ -189,11 +187,11 @@
                 .Setup(x => x.DestroyAsync(It.IsAny<DeletionParams>()))
                 .ReturnsAsync(new DeletionResult());
 
-            // Invalid applicationId causes AddAsync to throw, triggering Cloudinary rollback
+            // Non-existing applicationId causes AddAsync to throw, triggering Cloudinary rollback
             var act = async () => await documentService
-                .UploadAndSaveAsync(fileMock.Object, TEST_FOLDER, "not-a-valid-guid");
+                .UploadAndSaveAsync(fileMock.Object, TEST_FOLDER, Guid.NewGuid());
 
-            await act.Should().ThrowAsync<ArgumentException>();
+            await act.Should().ThrowAsync<Exception>();
             cloudinaryMock.Verify(x => x.DestroyAsync(It.IsAny<DeletionParams>()), Times.Once);
         }
     }

@@ -1,4 +1,4 @@
-﻿namespace DevHunter.Services.Tests
+namespace DevHunter.Services.Tests
 {
     using FluentAssertions;
     using Microsoft.EntityFrameworkCore;
@@ -85,13 +85,10 @@
             result.Should().BeTrue();
         }
 
-        [TestCase("")]
-        [TestCase("  ")]
-        [TestCase("invalid")]
-        [TestCase(null)]
-        public async Task ExistsByIdAsync_ShouldReturnFalseForNonExistingCompany(string nonExistingCompanyName)
+        [Test]
+        public async Task ExistsByIdAsync_ShouldReturnFalseForNonExistingCompany()
         {
-            var result = await companyService.ExistsByIdAsync(nonExistingCompanyName);
+            var result = await companyService.ExistsByIdAsync(Guid.NewGuid());
 
             result.Should().BeFalse();
         }
@@ -101,7 +98,7 @@
         {
             var existingCompany = await dbContext.Companies.FirstAsync();
 
-            var result = await companyService.ExistsByIdAsync(existingCompany.Id.ToString());
+            var result = await companyService.ExistsByIdAsync(existingCompany.Id);
 
             result.Should().BeTrue();
         }
@@ -113,9 +110,9 @@
             var otherUser = await dbContext.Users.FirstAsync(user => user.Id != company.CreatorId);
 
             bool ownedByCreator = await companyService
-                .IsOwnedByUserAsync(company.Id.ToString(), company.CreatorId.ToString());
+                .IsOwnedByUserAsync(company.Id, company.CreatorId);
             bool ownedByOtherUser = await companyService
-                .IsOwnedByUserAsync(company.Id.ToString(), otherUser.Id.ToString());
+                .IsOwnedByUserAsync(company.Id, otherUser.Id);
 
             ownedByCreator.Should().BeTrue();
             ownedByOtherUser.Should().BeFalse();
@@ -126,7 +123,7 @@
         {
             var company = await dbContext.Companies.FirstAsync();
 
-            var result = await companyService.GetForEditByIdAsync(company.Id.ToString());
+            var result = await companyService.GetForEditByIdAsync(company.Id);
 
             result.Should().NotBeNull()
                 .And
@@ -135,13 +132,10 @@
                 .BeEquivalentTo(company, options => options.ExcludingMissingMembers());
         }
 
-        [TestCase("")]
-        [TestCase("  ")]
-        [TestCase(null)]
-        [TestCase("invalid_id")]
-        public async Task GetForEditByIdAsync_ShouldThrowExceptionForNonExistingCompany(string nonExistingCompanyId)
+        [Test]
+        public async Task GetForEditByIdAsync_ShouldThrowExceptionForNonExistingCompany()
         {
-            var act = async () => await companyService.GetForEditByIdAsync(nonExistingCompanyId);
+            var act = async () => await companyService.GetForEditByIdAsync(Guid.NewGuid());
 
             await act.Should().ThrowAsync<InvalidOperationException>();
         }
@@ -151,19 +145,17 @@
         {
             var companyUser = await dbContext.Users.FirstAsync(u => u.Companies.Any());
 
-            var result = await companyService.GetCompanyIdByCreatorIdAsync(companyUser.Id.ToString());
+            var result = await companyService.GetCompanyIdByCreatorIdAsync(companyUser.Id);
 
             result.Should().NotBeNull();
 
-            companyUser.Companies.Should().ContainSingle(c => c.Id.ToString() == result);
+            companyUser.Companies.Should().ContainSingle(c => c.Id == result);
         }
 
         [Test]
         public async Task GetCompanyIdByCreatorIdAsync_ShouldReturnNullForNonExistingCompanyProfile()
         {
-            var nonExistingUserCompanyId = "invalid";
-
-            var result = await companyService.GetCompanyIdByCreatorIdAsync(nonExistingUserCompanyId);
+            var result = await companyService.GetCompanyIdByCreatorIdAsync(Guid.NewGuid());
 
             result.Should().BeNull();
         }
@@ -173,7 +165,7 @@
         {
             var user = await dbContext.Users.FirstAsync(existingUser => !existingUser.Companies.Any());
 
-            var result = await companyService.GetCompanyIdByCreatorIdAsync(user.Id.ToString());
+            var result = await companyService.GetCompanyIdByCreatorIdAsync(user.Id);
 
             result.Should().BeNull();
         }
@@ -199,7 +191,7 @@
         {
             var company = await dbContext.Companies.FirstAsync();
 
-            var result = await companyService.GetDetailsByIdAsync(company.Id.ToString());
+            var result = await companyService.GetDetailsByIdAsync(company.Id);
 
             result.Should()
                 .NotBeNull()
@@ -244,7 +236,7 @@
                 WebsiteUrl = "new_website_url"
             };
 
-            await companyService.EditAsync(company.Id.ToString(), model, company.CreatorId.ToString());
+            await companyService.EditAsync(company.Id, model, company.CreatorId);
 
             var editedCompany = await dbContext.Companies.FindAsync(company.Id);
 
@@ -257,10 +249,8 @@
                         .Including(x => x.Description));
         }
 
-        [TestCase("")]
-        [TestCase("invalid")]
-        [TestCase(null)]
-        public async Task EditAsync_ShouldRejectInvalidCompanyId(string invalidCompanyId)
+        [Test]
+        public async Task EditAsync_ShouldRejectInvalidCompanyId()
         {
             var model = new CompanyFormModel
             {
@@ -270,7 +260,7 @@
 
             var company = await dbContext.Companies.FirstAsync();
             var act = async () => await companyService
-                .EditAsync(invalidCompanyId, model, company.CreatorId.ToString());
+                .EditAsync(Guid.NewGuid(), model, company.CreatorId);
 
             await act.Should().ThrowAsync<InvalidOperationException>();
         }
@@ -288,7 +278,7 @@
             };
 
             var act = async () => await companyService
-                .EditAsync(company.Id.ToString(), model, otherUser.Id.ToString());
+                .EditAsync(company.Id, model, otherUser.Id);
 
             await act.Should().ThrowAsync<InvalidOperationException>();
             company.Name.Should().Be(originalName);
@@ -339,7 +329,7 @@
                 WebsiteUrl = "https://updated.com"
             };
 
-            await companyService.EditAsync(company.Id.ToString(), model, company.CreatorId.ToString());
+            await companyService.EditAsync(company.Id, model, company.CreatorId);
 
             var edited = await dbContext.Companies.FindAsync(company.Id);
             edited!.Activity.Should().Be(model.Activity);
@@ -367,7 +357,7 @@
             };
 
             var act = async () => await companyService
-                .EditAsync(company.Id.ToString(), model, company.CreatorId.ToString());
+                .EditAsync(company.Id, model, company.CreatorId);
 
             await act.Should().NotThrowAsync();
         }

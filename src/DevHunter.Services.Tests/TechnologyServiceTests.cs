@@ -112,7 +112,7 @@ namespace DevHunter.Services.Tests
                 Image = Mock.Of<IFormFile>()
             };
 
-            await technologyService.AddAsync(model, development.Id.ToString());
+            await technologyService.AddAsync(model, development.Id);
 
             var added = await dbContext.Technologies.FirstOrDefaultAsync(t => t.Name == model.Name);
             added.Should().NotBeNull();
@@ -122,10 +122,8 @@ namespace DevHunter.Services.Tests
             linked.Should().BeTrue();
         }
 
-        [TestCase("")]
-        [TestCase("  ")]
-        [TestCase("invalid_guid")]
-        public async Task AddAsync_ShouldNotCreateDevelopmentLinkForInvalidDevelopmentId(string invalidDevId)
+        [Test]
+        public async Task AddAsync_ShouldNotCreateDevelopmentLinkForNonExistingDevelopmentId()
         {
             int countBefore = await dbContext.TechnologiesDevelopments.CountAsync();
             var model = new TechnologyFormModel
@@ -134,7 +132,7 @@ namespace DevHunter.Services.Tests
                 Image = Mock.Of<IFormFile>()
             };
 
-            await technologyService.AddAsync(model, invalidDevId);
+            await technologyService.AddAsync(model, Guid.NewGuid());
 
             int countAfter = await dbContext.TechnologiesDevelopments.CountAsync();
             countAfter.Should().Be(countBefore);
@@ -162,18 +160,15 @@ namespace DevHunter.Services.Tests
         {
             var technology = await dbContext.Technologies.FirstAsync();
 
-            var result = await technologyService.ExistsByIdAsync(technology.Id.ToString());
+            var result = await technologyService.ExistsByIdAsync(technology.Id);
 
             result.Should().BeTrue();
         }
 
-        [TestCase("")]
-        [TestCase(" ")]
-        [TestCase(null)]
-        [TestCase("invalid_id")]
-        public async Task ExistsByIdAsync_ShouldReturnFalseForNonExistingId(string id)
+        [Test]
+        public async Task ExistsByIdAsync_ShouldReturnFalseForNonExistingId()
         {
-            var result = await technologyService.ExistsByIdAsync(id);
+            var result = await technologyService.ExistsByIdAsync(Guid.NewGuid());
 
             result.Should().BeFalse();
         }
@@ -185,7 +180,7 @@ namespace DevHunter.Services.Tests
         {
             var technology = await dbContext.Technologies.FirstAsync();
 
-            var result = await technologyService.GetForEditByIdAsync(technology.Id.ToString());
+            var result = await technologyService.GetForEditByIdAsync(technology.Id);
 
             result.Should().NotBeNull().And.BeOfType<TechnologyEditFormModel>();
             result.Name.Should().Be(technology.Name);
@@ -195,7 +190,7 @@ namespace DevHunter.Services.Tests
         [Test]
         public async Task GetForEditByIdAsync_ShouldThrowForNonExistingId()
         {
-            var act = async () => await technologyService.GetForEditByIdAsync(Guid.NewGuid().ToString());
+            var act = async () => await technologyService.GetForEditByIdAsync(Guid.NewGuid());
 
             await act.Should().ThrowAsync<Exception>();
         }
@@ -208,7 +203,7 @@ namespace DevHunter.Services.Tests
             var technology = await dbContext.Technologies.FirstAsync();
             var model = new TechnologyEditFormModel { Name = "edited_name" };
 
-            await technologyService.EditTechnologyAsync(technology.Id.ToString(), model);
+            await technologyService.EditTechnologyAsync(technology.Id, model);
 
             var edited = await dbContext.Technologies.FindAsync(technology.Id);
             edited!.Name.Should().Be("edited_name");
@@ -224,7 +219,7 @@ namespace DevHunter.Services.Tests
                 Image = Mock.Of<IFormFile>()
             };
 
-            await technologyService.EditTechnologyAsync(technology.Id.ToString(), model);
+            await technologyService.EditTechnologyAsync(technology.Id, model);
 
             imageServiceMock.Verify(
                 s => s.EditImage(It.IsAny<IFormFile>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()),
@@ -237,7 +232,7 @@ namespace DevHunter.Services.Tests
             var technology = await dbContext.Technologies.FirstAsync();
             var model = new TechnologyEditFormModel { Name = technology.Name };
 
-            await technologyService.EditTechnologyAsync(technology.Id.ToString(), model);
+            await technologyService.EditTechnologyAsync(technology.Id, model);
 
             imageServiceMock.Verify(
                 s => s.EditImage(It.IsAny<IFormFile>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()),
@@ -251,20 +246,18 @@ namespace DevHunter.Services.Tests
         {
             var technology = await dbContext.Technologies.LastAsync();
 
-            await technologyService.DeleteByIdAsync(technology.Id.ToString());
+            await technologyService.DeleteByIdAsync(technology.Id);
 
             var deleted = await dbContext.Technologies.FindAsync(technology.Id);
             deleted.Should().BeNull();
         }
 
-        [TestCase("")]
-        [TestCase(" ")]
-        [TestCase("invalid_id")]
-        public async Task DeleteByIdAsync_ShouldIgnoreNonExistingId(string id)
+        [Test]
+        public async Task DeleteByIdAsync_ShouldIgnoreNonExistingId()
         {
             int countBefore = await dbContext.Technologies.CountAsync();
 
-            await technologyService.DeleteByIdAsync(id);
+            await technologyService.DeleteByIdAsync(Guid.NewGuid());
 
             int countAfter = await dbContext.Technologies.CountAsync();
             countAfter.Should().Be(countBefore);
@@ -278,7 +271,7 @@ namespace DevHunter.Services.Tests
             var development = await dbContext.Developments
                 .FirstAsync(d => d.DevelopmentTechnologies.Any());
 
-            var result = await technologyService.AllByDevelopmentAsync(development.Id.ToString());
+            var result = await technologyService.AllByDevelopmentAsync(development.Id);
 
             result.Should().NotBeNullOrEmpty()
                 .And.HaveCount(development.DevelopmentTechnologies.Count)
@@ -291,18 +284,15 @@ namespace DevHunter.Services.Tests
             var development = await dbContext.Developments
                 .FirstAsync(d => !d.DevelopmentTechnologies.Any());
 
-            var result = await technologyService.AllByDevelopmentAsync(development.Id.ToString());
+            var result = await technologyService.AllByDevelopmentAsync(development.Id);
 
             result.Should().BeEmpty();
         }
 
-        [TestCase("")]
-        [TestCase(" ")]
-        [TestCase(null)]
-        [TestCase("invalid_guid")]
-        public async Task AllByDevelopmentAsync_ShouldReturnEmptyForInvalidId(string id)
+        [Test]
+        public async Task AllByDevelopmentAsync_ShouldReturnEmptyForNonExistingId()
         {
-            var result = await technologyService.AllByDevelopmentAsync(id);
+            var result = await technologyService.AllByDevelopmentAsync(Guid.NewGuid());
 
             result.Should().BeEmpty();
         }
@@ -316,7 +306,7 @@ namespace DevHunter.Services.Tests
                 .Include(j => j.JobOfferTechnologies)
                 .FirstAsync();
 
-            var result = await technologyService.AllByJobOfferIdAsync(jobOffer.Id.ToString());
+            var result = await technologyService.AllByJobOfferIdAsync(jobOffer.Id);
 
             result.Should().NotBeNullOrEmpty()
                 .And.HaveCount(jobOffer.JobOfferTechnologies.Count)
@@ -327,7 +317,7 @@ namespace DevHunter.Services.Tests
         [Test]
         public async Task AllByJobOfferIdAsync_ShouldReturnEmptyForNonExistingJobOffer()
         {
-            var result = await technologyService.AllByJobOfferIdAsync(Guid.NewGuid().ToString());
+            var result = await technologyService.AllByJobOfferIdAsync(Guid.NewGuid());
 
             result.Should().BeEmpty();
         }
@@ -345,7 +335,7 @@ namespace DevHunter.Services.Tests
                 .Select(t => t.TechnologyId)
                 .ToHashSet();
 
-            var result = await technologyService.AllWithoutJobOfferOnesAsync(jobOffer.Id.ToString());
+            var result = await technologyService.AllWithoutJobOfferOnesAsync(jobOffer.Id);
 
             result.Should().NotContain(vm => attachedIds.Contains(Guid.Parse(vm.Id)),
                 "already attached technologies must be excluded");
@@ -361,7 +351,7 @@ namespace DevHunter.Services.Tests
             int totalTechnologies = await dbContext.Technologies.CountAsync();
             int attachedCount = jobOffer.JobOfferTechnologies.Count;
 
-            var result = await technologyService.AllWithoutJobOfferOnesAsync(jobOffer.Id.ToString());
+            var result = await technologyService.AllWithoutJobOfferOnesAsync(jobOffer.Id);
 
             result.Should().HaveCount(totalTechnologies - attachedCount);
         }
