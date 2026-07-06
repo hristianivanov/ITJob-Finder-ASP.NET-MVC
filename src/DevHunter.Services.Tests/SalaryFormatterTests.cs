@@ -7,7 +7,6 @@ namespace DevHunter.Services.Tests
     [TestFixture]
     public class SalaryFormatterTests
     {
-        // ── Both null ───────────────────────────────────────────────────────────
 
         [Test]
         public void Format_ShouldReturnEmptyStringWhenBothNull()
@@ -15,7 +14,6 @@ namespace DevHunter.Services.Tests
             SalaryFormatter.Format(null, null).Should().BeEmpty();
         }
 
-        // ── Max only (min is null) ───────────────────────────────────────────────
 
         [TestCase(null, 2500, "2 500 lv.")]
         [TestCase(null, 1000, "1 000 lv.")]
@@ -27,7 +25,6 @@ namespace DevHunter.Services.Tests
             SalaryFormatter.Format(min, max).Should().Be(expected);
         }
 
-        // ── Range (both provided) ────────────────────────────────────────────────
 
         [TestCase(2000, 3500, "2 000 - 3 500 lv.")]
         [TestCase(1000, 5000, "1 000 - 5 000 lv.")]
@@ -38,7 +35,6 @@ namespace DevHunter.Services.Tests
             SalaryFormatter.Format(min, max).Should().Be(expected);
         }
 
-        // ── Thousand separator ───────────────────────────────────────────────────
 
         [Test]
         public void Format_ShouldUseSpaceAsThousandSeparator()
@@ -48,7 +44,6 @@ namespace DevHunter.Services.Tests
             result.Should().Be("100 000 lv.");
         }
 
-        // ── Currency suffix ──────────────────────────────────────────────────────
 
         [Test]
         public void Format_ShouldAlwaysEndWithLvSuffix()
@@ -57,7 +52,6 @@ namespace DevHunter.Services.Tests
             SalaryFormatter.Format(500, 1000).Should().EndWith("lv.");
         }
 
-        // ── Edge cases ───────────────────────────────────────────────────────────
 
         [Test]
         public void Format_ShouldHandleZeroValues()
@@ -74,7 +68,6 @@ namespace DevHunter.Services.Tests
         [Test]
         public void Format_ShouldHandleDecimalValues()
         {
-            // The format pattern "#,0" rounds to whole numbers
             SalaryFormatter.Format(null, 1500.99m).Should().Be("1 501 lv.");
         }
     }

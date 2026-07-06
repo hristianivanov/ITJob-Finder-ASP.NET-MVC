@@ -13,13 +13,11 @@
 
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> logger;
         private readonly IDevelopmentService developmentService;
         private readonly IEmailService emailService;
 
-        public HomeController(ILogger<HomeController> logger, IDevelopmentService developmentService, IEmailService emailService)
+        public HomeController(IDevelopmentService developmentService, IEmailService emailService)
         {
-            this.logger = logger;
             this.developmentService = developmentService;
             this.emailService = emailService;
         }
@@ -31,7 +29,7 @@
             {
                 return RedirectToAction("All", "JobOffer", new { area = CompanyAreaName });
             }
-            if (this.User.IsAdmin())
+            else if (this.User.IsAdmin())
             {
                 return this.RedirectToAction("Index", "Home", new { Area = AdminAreaName });
             }

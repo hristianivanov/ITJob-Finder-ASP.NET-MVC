@@ -642,7 +642,6 @@ namespace DevHunter.Services.Tests
             await act.Should().ThrowAsync<NullReferenceException>();
         }
 
-        // ── AllAsync – no-filter path ────────────────────────────────────────────
 
         [Test]
         public async Task AllAsync_ShouldReturnAllJobOffersWhenNoFiltersApplied()
@@ -662,7 +661,6 @@ namespace DevHunter.Services.Tests
                 .And.Equal(allJobOffers, (j1, j2) => j1.Id == j2.Id.ToString());
         }
 
-        // ── GetDetailsByIdAsync – error path ────────────────────────────────────
 
         [Test]
         public async Task GetDetailsByIdAsync_ShouldThrowForNonExistingJobOffer()

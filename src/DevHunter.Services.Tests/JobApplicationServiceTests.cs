@@ -299,7 +299,6 @@ namespace DevHunter.Services.Tests
             jobApplication.Status.Should().Be(ApplicationStatus.Approved);
         }
 
-        // ── RejectApplicationAsync – missing coverage ────────────────────────────
 
         [Test]
         public async Task RejectApplicationAsync_ShouldRejectAnotherCompanyUser()

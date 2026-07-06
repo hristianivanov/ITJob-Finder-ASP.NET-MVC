@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720">
+  <defs>
+    <radialGradient id="g">
+      <stop stop-color="#18345a"/>
+      <stop offset="1" stop-color="#07101f"/>
+    </radialGradient>
+  </defs>
+  <rect width="1280" height="720" fill="url(#g)"/>
+  <circle cx="640" cy="336" r="74" fill="#66e5ba"/>
+  <path d="M620 292l72 44-72 44z" fill="#07101f"/>
+  <text x="640" y="470" text-anchor="middle" fill="#e9eefc" font-family="Arial" font-size="30" font-weight="700">DevHunter demo video</text>
+  <text x="640" y="512" text-anchor="middle" fill="#95a3b9" font-family="Arial" font-size="18">Replace /public/media/devhunter-demo.mp4</text>
+</svg>
+

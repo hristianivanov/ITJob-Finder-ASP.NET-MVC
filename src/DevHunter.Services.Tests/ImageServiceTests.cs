@@ -43,7 +43,6 @@ namespace DevHunter.Services.Tests
         private static DeletionResult FailedDeletionResult(string message = "Delete error")
             => new DeletionResult { Error = new Error { Message = message } };
 
-        // ── UploadImage ─────────────────────────────────────────────────────────
 
         [Test]
         public async Task UploadImage_ShouldReturnUrlOnSuccess()
@@ -83,7 +82,6 @@ namespace DevHunter.Services.Tests
             await act.Should().ThrowAsync<InvalidOperationException>();
         }
 
-        // ── EditImage ───────────────────────────────────────────────────────────
 
         [Test]
         public async Task EditImage_ShouldDeleteOldAndUploadNew()

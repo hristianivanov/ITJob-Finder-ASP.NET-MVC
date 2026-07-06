@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="720" viewBox="0 0 1440 720">
+  <rect width="1440" height="720" fill="#0b1527"/>
+  <rect x="48" y="42" width="1344" height="64" rx="16" fill="#13213a"/>
+  <rect x="48" y="142" width="322" height="530" rx="18" fill="#101d32"/>
+  <rect x="402" y="142" width="990" height="236" rx="18" fill="#14233b"/>
+  <rect x="402" y="410" width="480" height="262" rx="18" fill="#14233b"/>
+  <rect x="912" y="410" width="480" height="262" rx="18" fill="#14233b"/>
+  <circle cx="209" cy="236" r="64" fill="#66e5ba"/>
+  <text x="86" y="84" fill="#e9eefc" font-family="Arial" font-size="22" font-weight="700">DevHunter / Company profile</text>
+  <text x="116" y="344" fill="#e9eefc" font-family="Arial" font-size="26" font-weight="700">Example Company</text>
+  <text x="446" y="198" fill="#66e5ba" font-family="Arial" font-size="16">ABOUT</text>
+  <text x="446" y="465" fill="#66e5ba" font-family="Arial" font-size="16">ACTIVE JOBS</text>
+  <text x="956" y="465" fill="#66e5ba" font-family="Arial" font-size="16">TECHNOLOGIES</text>
+</svg>
+
