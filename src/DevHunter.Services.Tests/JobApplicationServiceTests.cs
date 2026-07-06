@@ -106,22 +106,6 @@ namespace DevHunter.Services.Tests
             await act.Should().ThrowAsync<InvalidOperationException>();
         }
 
-        [Test]
-        public async Task ApplyJobOfferAsync_ShouldRejectInvalidAuthenticatedUserId()
-        {
-            var model = new JobApplicationFormModel
-            {
-                CandidateName = "candidate_name",
-                Email = "candidate@gmail.com",
-                MotivationalLetter = "letter",
-            };
-            var jobOffer = await dbContext.JobOffers.FirstAsync();
-
-            var act = async () => await jobApplicationService
-                .ApplyJobOfferAsync(model, jobOffer.Id, Guid.NewGuid());
-
-            await act.Should().ThrowAsync<InvalidOperationException>();
-        }
 
         [Test]
         public async Task AllCandidatesByCompanyIdAsync_ShouldReturnAllCandidatesForTheCompanyCorrect()

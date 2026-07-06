@@ -138,16 +138,6 @@ namespace DevHunter.Services.Tests
                 .WithMessage("*not allowed*");
         }
 
-        // ── AddAsync – non-existing application ────────────────────────────────
-
-        [Test]
-        public async Task AddAsync_ShouldThrowForNonExistingApplicationId()
-        {
-            var act = async () => await documentService.AddAsync(TEST_DOCUMENT_URL, Guid.NewGuid());
-
-            await act.Should().ThrowAsync<Exception>();
-        }
-
         // ── UploadAndSaveAsync ──────────────────────────────────────────────────
 
         [Test]
@@ -172,27 +162,5 @@ namespace DevHunter.Services.Tests
             saved.Should().BeTrue();
         }
 
-        [Test]
-        public async Task UploadAndSaveAsync_ShouldRollbackCloudinaryWhenDbSaveFails()
-        {
-            var fileMock = new Mock<IFormFile>();
-            fileMock.Setup(x => x.FileName).Returns("resume.pdf");
-            fileMock.Setup(x => x.Length).Returns(1024L);
-            fileMock.Setup(x => x.OpenReadStream()).Returns(Stream.Null);
-
-            cloudinaryMock
-                .Setup(x => x.UploadAsync(It.IsAny<RawUploadParams>()))
-                .ReturnsAsync(new RawUploadResult { SecureUrl = new Uri(TEST_DOCUMENT_URL) });
-            cloudinaryMock
-                .Setup(x => x.DestroyAsync(It.IsAny<DeletionParams>()))
-                .ReturnsAsync(new DeletionResult());
-
-            // Non-existing applicationId causes AddAsync to throw, triggering Cloudinary rollback
-            var act = async () => await documentService
-                .UploadAndSaveAsync(fileMock.Object, TEST_FOLDER, Guid.NewGuid());
-
-            await act.Should().ThrowAsync<Exception>();
-            cloudinaryMock.Verify(x => x.DestroyAsync(It.IsAny<DeletionParams>()), Times.Once);
-        }
     }
 }

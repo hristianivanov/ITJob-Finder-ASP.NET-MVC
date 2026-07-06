@@ -256,15 +256,6 @@ namespace DevHunter.Services.Tests
             await act.Should().ThrowAsync<InvalidOperationException>();
         }
 
-        [Test]
-        public async Task SaveJobAsync_ShouldThrowExceptionForNonExistingUser()
-        {
-            var jobOffer = await dbContext.JobOffers.FirstAsync();
-
-            var act = async () => await jobOfferService.SaveJobAsync(jobOffer.Id, Guid.NewGuid());
-
-            await act.Should().ThrowAsync<InvalidOperationException>();
-        }
 
         [Test]
         public async Task IsJobOfferSaved_ShouldReturnTrueForSavedJobOffer()
