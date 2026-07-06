@@ -40,7 +40,6 @@ namespace DevHunter.Services.Tests
             dbContext.Database.EnsureDeleted();
         }
 
-        // ── AllAsync ────────────────────────────────────────────────────────────
 
         [Test]
         public async Task AllAsync_ShouldReturnAllUsers()
@@ -108,7 +107,6 @@ namespace DevHunter.Services.Tests
             vm.Email.Should().Be(dbUser.Email);
         }
 
-        // ── GetUserByIdAsync ────────────────────────────────────────────────────
 
         [Test]
         public async Task GetUserByIdAsync_ShouldReturnCorrectUser()

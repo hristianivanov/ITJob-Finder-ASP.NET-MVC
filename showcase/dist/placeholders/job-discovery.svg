@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="720" viewBox="0 0 1440 720">
+  <rect width="1440" height="720" fill="#0b1527"/>
+  <rect x="48" y="42" width="1344" height="64" rx="16" fill="#13213a"/>
+  <rect x="48" y="142" width="300" height="530" rx="18" fill="#101d32"/>
+  <rect x="380" y="142" width="1012" height="158" rx="18" fill="#14233b"/>
+  <rect x="380" y="326" width="1012" height="158" rx="18" fill="#14233b"/>
+  <rect x="380" y="510" width="1012" height="162" rx="18" fill="#14233b"/>
+  <circle cx="426" cy="198" r="28" fill="#66e5ba"/>
+  <circle cx="426" cy="382" r="28" fill="#4c72ff"/>
+  <circle cx="426" cy="566" r="28" fill="#66e5ba"/>
+  <text x="86" y="84" fill="#e9eefc" font-family="Arial" font-size="22" font-weight="700">DevHunter / Job discovery</text>
+  <text x="82" y="192" fill="#66e5ba" font-family="Arial" font-size="16">FILTERS</text>
+  <text x="486" y="202" fill="#e9eefc" font-family="Arial" font-size="24" font-weight="700">Backend Developer</text>
+  <text x="486" y="386" fill="#e9eefc" font-family="Arial" font-size="24" font-weight="700">Junior .NET Engineer</text>
+  <text x="486" y="570" fill="#e9eefc" font-family="Arial" font-size="24" font-weight="700">Full-stack Developer</text>
+</svg>
+

@@ -52,7 +52,6 @@ namespace DevHunter.Services.Tests
             dbContext.Database.EnsureDeleted();
         }
 
-        // ── TechnologyExistsByNameAsync ──────────────────────────────────────────
 
         [Test]
         public async Task TechnologyExistsByNameAsync_ShouldReturnTrueForExistingName()
@@ -84,7 +83,6 @@ namespace DevHunter.Services.Tests
             result.Should().BeTrue();
         }
 
-        // ── AddAsync ────────────────────────────────────────────────────────────
 
         [Test]
         public async Task AddAsync_ShouldAddTechnologyWithoutDevelopmentLink()
@@ -138,7 +136,6 @@ namespace DevHunter.Services.Tests
             countAfter.Should().Be(countBefore);
         }
 
-        // ── AllAsync ────────────────────────────────────────────────────────────
 
         [Test]
         public async Task AllAsync_ShouldReturnAllTechnologies()
@@ -153,7 +150,6 @@ namespace DevHunter.Services.Tests
                 .And.Equal(dbTechs, (vm, t) => vm.Id == t.Id.ToString());
         }
 
-        // ── ExistsByIdAsync ─────────────────────────────────────────────────────
 
         [Test]
         public async Task ExistsByIdAsync_ShouldReturnTrueForExistingId()
@@ -173,7 +169,6 @@ namespace DevHunter.Services.Tests
             result.Should().BeFalse();
         }
 
-        // ── GetForEditByIdAsync ─────────────────────────────────────────────────
 
         [Test]
         public async Task GetForEditByIdAsync_ShouldReturnCorrectTechnology()
@@ -195,7 +190,6 @@ namespace DevHunter.Services.Tests
             await act.Should().ThrowAsync<Exception>();
         }
 
-        // ── EditTechnologyAsync ─────────────────────────────────────────────────
 
         [Test]
         public async Task EditTechnologyAsync_ShouldEditName()
@@ -239,7 +233,6 @@ namespace DevHunter.Services.Tests
                 Times.Never);
         }
 
-        // ── DeleteByIdAsync ─────────────────────────────────────────────────────
 
         [Test]
         public async Task DeleteByIdAsync_ShouldDeleteTechnology()
@@ -263,7 +256,6 @@ namespace DevHunter.Services.Tests
             countAfter.Should().Be(countBefore);
         }
 
-        // ── AllByDevelopmentAsync ───────────────────────────────────────────────
 
         [Test]
         public async Task AllByDevelopmentAsync_ShouldReturnTechnologiesForDevelopment()
@@ -297,7 +289,6 @@ namespace DevHunter.Services.Tests
             result.Should().BeEmpty();
         }
 
-        // ── AllByJobOfferIdAsync ────────────────────────────────────────────────
 
         [Test]
         public async Task AllByJobOfferIdAsync_ShouldReturnTechnologiesForJobOffer()
@@ -322,7 +313,6 @@ namespace DevHunter.Services.Tests
             result.Should().BeEmpty();
         }
 
-        // ── AllWithoutJobOfferOnesAsync ─────────────────────────────────────────
 
         [Test]
         public async Task AllWithoutJobOfferOnesAsync_ShouldExcludeAlreadyAttachedTechnologies()

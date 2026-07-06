@@ -107,7 +107,6 @@ namespace DevHunter.Services.Tests
                 .HaveCount(1);
         }
 
-        // ── UploadDocumentAsync – validation ────────────────────────────────────
 
         [Test]
         public async Task UploadDocumentAsync_ShouldThrowForOversizedFile()
@@ -138,7 +137,6 @@ namespace DevHunter.Services.Tests
                 .WithMessage("*not allowed*");
         }
 
-        // ── UploadAndSaveAsync ──────────────────────────────────────────────────
 
         [Test]
         public async Task UploadAndSaveAsync_ShouldUploadAndSaveDocument()

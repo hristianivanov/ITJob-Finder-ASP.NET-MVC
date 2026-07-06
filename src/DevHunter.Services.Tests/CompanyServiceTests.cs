@@ -284,7 +284,6 @@ namespace DevHunter.Services.Tests
             company.Name.Should().Be(originalName);
         }
 
-        // ── AllAsync (public, CompanyAllViewModel) ──────────────────────────────
 
         [Test]
         public async Task AllAsync_ShouldReturnAllCompaniesAsCompanyAllViewModel()
@@ -311,7 +310,6 @@ namespace DevHunter.Services.Tests
             vm.ImageUrl.Should().Be(company.ImageUrl);
         }
 
-        // ── EditAsync – all fields and no-change guard ───────────────────────────
 
         [Test]
         public async Task EditAsync_ShouldEditAllFields()
