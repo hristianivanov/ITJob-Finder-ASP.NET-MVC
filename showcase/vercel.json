@@ -1,5 +1,0 @@
-{
-  "framework": "vite",
-  "buildCommand": "pnpm build",
-  "outputDirectory": "dist"
-}
