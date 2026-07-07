@@ -13,7 +13,7 @@ Role-based IT recruitment platform built with ASP.NET Core MVC. Candidates can d
 
 > The showcase is a static React site. The full ASP.NET MVC application runs locally.
 
-![DevHunter home page](showcase/public/media/screenshots/home.png)
+![DevHunter home page](docs/screenshots/home.png)
 
 ## Quick Highlights
 
@@ -31,15 +31,15 @@ Role-based IT recruitment platform built with ASP.NET Core MVC. Candidates can d
 
 | Job discovery | Job details |
 | --- | --- |
-| ![DevHunter job list](showcase/public/media/screenshots/job-list.png) | ![DevHunter job details](showcase/public/media/screenshots/job-details.png) |
+| ![DevHunter job list](docs/screenshots/job-list.png) | ![DevHunter job details](docs/screenshots/job-details.png) |
 
 | Candidate application | Company dashboard |
 | --- | --- |
-| ![DevHunter candidate application](showcase/public/media/screenshots/candidate-apply.png) | ![DevHunter company dashboard](showcase/public/media/screenshots/company-dashboard.png) |
+| ![DevHunter candidate application](docs/screenshots/candidate-apply.png) | ![DevHunter company dashboard](docs/screenshots/company-dashboard.png) |
 
 | Company details | Admin panel |
 | --- | --- |
-| ![DevHunter company details](showcase/public/media/screenshots/company-details.png) | ![DevHunter admin panel](showcase/public/media/screenshots/admin-panel.png) |
+| ![DevHunter company details](docs/screenshots/company-details.png) | ![DevHunter admin panel](docs/screenshots/admin-panel.png) |
 
 ## Features by Role
 
