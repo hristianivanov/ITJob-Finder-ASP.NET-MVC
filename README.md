@@ -1,70 +1,97 @@
-<p align="center">
-  <img src="docs/devhunter-logo.svg" width="1100" alt="DevHunter logo">
-</p>
+<div align="center">
 
-<h1 align="center">
-DevHunter
-<strong>IT Recruitment Platform</strong>
-</h1>
+[![Build and test](https://github.com/hristianivanov/ITJob-Finder-ASP.NET-MVC/actions/workflows/dotnet.yml/badge.svg)](https://github.com/hristianivanov/ITJob-Finder-ASP.NET-MVC/actions/workflows/dotnet.yml)
+![GitHub Repo stars](https://img.shields.io/github/stars/hristianivanov/ITJob-Finder-ASP.NET-MVC)
+![GitHub forks](https://img.shields.io/github/forks/hristianivanov/ITJob-Finder-ASP.NET-MVC)
 
-Role-based IT recruitment platform built with ASP.NET Core MVC. Candidates can discover and apply for jobs, companies can manage offers and applicants, and administrators can maintain platform content.
+</div>
+
+</br>
+
+![DevHunter logo](docs/devhunter-logo.svg)
+
+<div align="center">
+
+# DevHunter **IT Recruitment Platform**
+
+Role-based **IT Recruitment Platform** built with **ASP.NET Core MVC**
+
+**candidates** can discover and apply for jobs,
+
+**companies** can manage offers and applicants,
+
+and **administrators** can maintain platform content.
+
+</div>
+
+## Landing page
 
 [Live Demo Showcase](https://devhuntershowcase.vercel.app/)
 
 > The showcase is a static React site. The full ASP.NET MVC application runs locally.
 
-![DevHunter home page](docs/screenshots/home.png)
+![Landing Page](docs/brandbird-browser-mockup.png)
 
 ## Quick Highlights
 
-| Area | Details |
-| --- | --- |
-| Application | ASP.NET Core MVC on .NET 8 |
-| Data | Entity Framework Core and SQL Server |
+| Area           | Details                                                        |
+| -------------- | -------------------------------------------------------------- |
+| Application    | ASP.NET Core MVC on .NET 8                                     |
+| Architecture   | Areas-based MVC (Admin, Company, Manage)                       |
+| Data           | Entity Framework Core and SQL Server                           |
 | Authentication | ASP.NET Core Identity with candidate, company, and admin roles |
-| Testing | 177 automated tests |
-| Delivery | GitHub Actions CI |
-| Configuration | Local secrets managed with `dotnet user-secrets` |
-| Security | Role checks and service-level ownership enforcement |
+| Storage        | Cloudinary for images and document uploads                     |
+| Testing        | NUnit + FluentAssertions                                       |
+| Delivery       | GitHub Actions CI (build + test)                               |
+| Configuration  | Local secrets managed with `dotnet user-secrets`               |
+| Security       | Role checks and service-level ownership enforcement            |
 
 ## Screenshots
 
-| Job discovery | Job details |
-| --- | --- |
+| Job discovery                                        | Job details                                                |
+| ---------------------------------------------------- | ---------------------------------------------------------- |
 | ![DevHunter job list](docs/screenshots/job-list.png) | ![DevHunter job details](docs/screenshots/job-details.png) |
 
-| Candidate application | Company dashboard |
-| --- | --- |
+| Candidate application                                                    | Company dashboard                                                      |
+| ------------------------------------------------------------------------ | ---------------------------------------------------------------------- |
 | ![DevHunter candidate application](docs/screenshots/candidate-apply.png) | ![DevHunter company dashboard](docs/screenshots/company-dashboard.png) |
 
-| Company details | Admin panel |
-| --- | --- |
+| Company details                                                    | Admin panel                                                |
+| ------------------------------------------------------------------ | ---------------------------------------------------------- |
 | ![DevHunter company details](docs/screenshots/company-details.png) | ![DevHunter admin panel](docs/screenshots/admin-panel.png) |
 
 ## Features by Role
 
-| Candidate | Company | Admin |
-| --- | --- | --- |
-| Search and filter job offers | Create and manage owned job offers | Manage users and companies |
-| Save jobs for later | Review job applications | Manage technologies |
-| Apply with documents | Approve or reject applicants | Manage development categories |
-| Track submitted applications | Maintain company profile | Access role-protected admin tools |
-
-Additional features include server-side pagination, HTML-sanitized job descriptions, Cloudinary uploads, and SMTP contact messages.
+| Candidate 👤                 | Company 🏢                         | Admin 🛡️                          |
+| ---------------------------- | ---------------------------------- | --------------------------------- |
+| Search and filter job offers | Create and manage owned job offers | Manage users and companies        |
+| Save jobs for later          | Review job applications            | Manage technologies               |
+| Apply with documents         | Approve or reject applicants       | Manage development tracks         |
+| Track submitted applications | Maintain company profile           | Access role-protected admin tools |
 
 ## Tech Stack
 
-| Category | Technologies |
-| --- | --- |
-| Backend | C#, .NET 8, ASP.NET Core MVC |
-| Data | Entity Framework Core, SQL Server |
-| Identity and security | ASP.NET Core Identity, role authorization, HTML sanitization |
-| Integrations | Cloudinary, MailKit |
-| Testing | NUnit, Moq, in-memory test data |
-| Delivery | GitHub Actions |
-| Showcase | React, Vite, TypeScript |
+| Category     | Technologies                                             |
+| ------------ | -------------------------------------------------------- |
+| Backend      | C#, .NET 8, ASP.NET Core MVC                             |
+| Frontend     | Razor Views, Bootstrap, vanilla JS                       |
+| Data         | Entity Framework Core, SQL Server                        |
+| Security     | ASP.NET Core Identity, role authorization, HtmlSanitizer |
+| Integrations | Cloudinary, MailKit                                      |
+| Testing      | NUnit, Moq, FluentAssertions, in-memory EF Core          |
+| Delivery     | GitHub Actions CI (build + test)                         |
 
+<!--
 ## Local Setup
+### Configure and Run
+
+Configuration keys are documented in [`src/DevHunter.Web/appsettings.example.json`](src/DevHunter.Web/appsettings.example.json).
+
+Database migrations and seeded demo data are applied during startup.
+
+### Requirements
+- .NET 8 SDK
+- SQL Server or SQL Server Express
 
 ### Requirements
 
@@ -73,58 +100,60 @@ Additional features include server-side pagination, HTML-sanitized job descripti
 - Optional Cloudinary account for uploads
 - Optional SMTP account for contact messages
 
-### Configure and Run
 
-```powershell
+<details>
+<summary>Steps to run</summary>
+
+1. **Clone the repository**
+
+```bash
 git clone https://github.com/hristianivanov/ITJob-Finder-ASP.NET-MVC.git
-cd ITJob-Finder-ASP.NET-MVC/src
+```
+2. **Set your connection string**
 
-dotnet restore DevHunter.sln
+```bash
+dotnet user-secrets set "ConnectionStrings:DefaultConnection" "Server=YOUR_SERVER;Database=DevHunter;Trusted_Connection=True;"
+```
+3. **Run the app — migrations and seed data apply automatically on first startup**
 
-cd DevHunter.Web
-dotnet user-secrets set "ConnectionStrings:DefaultConnection" "your-sql-server-connection-string"
-dotnet user-secrets set "AccountSettings:CloudName" "your-cloud-name"
-dotnet user-secrets set "AccountSettings:ApiKey" "your-cloudinary-api-key"
-dotnet user-secrets set "AccountSettings:ApiSecret" "your-cloudinary-api-secret"
-dotnet user-secrets set "EmailConfiguration:To" "recipient@example.com"
-dotnet user-secrets set "EmailConfiguration:SmtpServer" "smtp.example.com"
-dotnet user-secrets set "EmailConfiguration:Port" "465"
-dotnet user-secrets set "EmailConfiguration:UserName" "smtp-user@example.com"
-dotnet user-secrets set "EmailConfiguration:Password" "your-smtp-password"
+```bash
+dotnet run --project src/DevHunter.Web
+```
+</details> 
 
-dotnet run
+<details> 
+<summary>Optional — Cloudinary (image & document uploads)</summary>
+
+Create a free account at cloudinary.com, then set your credentials:
+
+```bash
+dotnet user-secrets set "Cloudinary:CloudName" "your_cloud_name"
+dotnet user-secrets set "Cloudinary:ApiKey" "your_api_key"
+dotnet user-secrets set "Cloudinary:ApiSecret" "your_api_secret"
 ```
 
-Configuration keys are documented in [`src/DevHunter.Web/appsettings.example.json`](src/DevHunter.Web/appsettings.example.json). Do not commit real credentials.
+</details>
 
-Database migrations and seeded demo data are applied during startup.
+<details> 
+<summary>Optional — SMTP (contact messages)</summary>
 
-### Build and Test
-
-```powershell
-cd src
-dotnet build DevHunter.sln
-dotnet test DevHunter.Services.Tests/DevHunter.Services.Tests.csproj
+```bash
+dotnet user-secrets set "Email:Host" "smtp.your-provider.com"
+dotnet user-secrets set "Email:Port" "587"
+dotnet user-secrets set "Email:Username" "your@email.com"
+dotnet user-secrets set "Email:Password" "your_password"
 ```
-
-### Static Showcase
-
-```powershell
-cd showcase
-corepack pnpm install
-corepack pnpm build
-corepack pnpm dev
-```
+</details> -->
 
 ## Demo Accounts
 
 These accounts are created only for the seeded local demo environment.
 
-| Role | Email | Password |
-| --- | --- | --- |
-| Candidate | `defi@gmail.com` | `123456` |
-| Company | `smartit@gmail.com` | `company123` |
-| Administrator | `admin@gmail.com` | `Admin12345678!` |
+| Role          | Email               | Password         |
+| ------------- | ------------------- | ---------------- |
+| Candidate     | `defi@gmail.com`    | `123456`         |
+| Company       | `smartit@gmail.com` | `company123`     |
+| Administrator | `admin@gmail.com`   | `Admin12345678!` |
 
 Do not use these credentials in a production environment.
 
