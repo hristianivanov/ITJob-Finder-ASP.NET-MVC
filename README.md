@@ -1,8 +1,8 @@
 <div align="center">
 
-[![Build and test](https://github.com/hristianivanov/ITJob-Finder-ASP.NET-MVC/actions/workflows/dotnet.yml/badge.svg)](https://github.com/hristianivanov/ITJob-Finder-ASP.NET-MVC/actions/workflows/dotnet.yml)
-![GitHub Repo stars](https://img.shields.io/github/stars/hristianivanov/ITJob-Finder-ASP.NET-MVC)
-![GitHub forks](https://img.shields.io/github/forks/hristianivanov/ITJob-Finder-ASP.NET-MVC)
+[![Build and test][ci-img]][ci-url]
+[![Stars][stars-img]][stars-url]
+[![Forks][forks-img]][forks-url]
 
 </div>
 
@@ -164,3 +164,17 @@ These accounts are created only for the seeded local demo environment.
 ## Give a Star ⭐
 
 If you find this project useful, please consider giving it a star! It helps to show appreciation for the effort put into this project.
+
+
+<!---------------------------------- LINKS ------------------------------------->
+
+[stars-img]: https://img.shields.io/github/stars/hristianivanov/ITJob-Finder-ASP.NET-MVC
+[stars-url]: https://github.com/hristianivanov/ITJob-Finder-ASP.NET-MVC/stargazers
+
+[ci-img]:    https://github.com/hristianivanov/ITJob-Finder-ASP.NET-MVC/actions/workflows/dotnet.yml/badge.svg
+[ci-url]:    https://github.com/hristianivanov/ITJob-Finder-ASP.NET-MVC/actions/workflows/dotnet.yml
+
+[forks-img]: https://img.shields.io/github/forks/hristianivanov/ITJob-Finder-ASP.NET-MVC
+[forks-url]: https://github.com/hristianivanov/ITJob-Finder-ASP.NET-MVC/network/members
+
+
