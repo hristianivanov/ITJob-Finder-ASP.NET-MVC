@@ -93,7 +93,7 @@ Configuration keys are documented in [`src/DevHunter.Web/appsettings.example.jso
 
 Database migrations and seeded demo data are applied during startup.
 
-> [!IMPORTANT] Requirements
+> [!IMPORTANT]
 > - [x] __*.NET 8 SDK*__   
 > - [x]  __*SQL Server / SQL Server Express*__
 
