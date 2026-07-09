@@ -62,7 +62,7 @@ and **administrators** can maintain platform content.
 
 ## Features by Role
 
-| Candidate 👤                 | Company 🏢                         | Admin 🛡️                          |
+| Candidate 👤                  | Company 🏢                          | Admin 🛡️                           |
 | ---------------------------- | ---------------------------------- | --------------------------------- |
 | Search and filter job offers | Create and manage owned job offers | Manage users and companies        |
 | Save jobs for later          | Review job applications            | Manage technologies               |
@@ -81,7 +81,7 @@ and **administrators** can maintain platform content.
 | Testing      | NUnit, Moq, FluentAssertions, in-memory EF Core          |
 | Delivery     | GitHub Actions CI (build + test)                         |
 
-<!--
+
 ## Local Setup
 ### Configure and Run
 
@@ -89,40 +89,37 @@ Configuration keys are documented in [`src/DevHunter.Web/appsettings.example.jso
 
 Database migrations and seeded demo data are applied during startup.
 
-### Requirements
-- .NET 8 SDK
-- SQL Server or SQL Server Express
+> [!IMPORTANT] Requirements
+> - [x] __*.NET 8 SDK*__   
+> - [x]  __*SQL Server / SQL Server Express*__
 
-### Requirements
+> __OPTIONAL :__ _Cloudinary account for uploads, 
+> SMTP account for contact messages_
 
-- .NET 8 SDK
-- SQL Server or SQL Server Express
-- Optional Cloudinary account for uploads
-- Optional SMTP account for contact messages
+</br>
 
+### Steps to run
 
-<details>
-<summary>Steps to run</summary>
-
-1. **Clone the repository**
+**1. Clone the repository**
 
 ```bash
 git clone https://github.com/hristianivanov/ITJob-Finder-ASP.NET-MVC.git
 ```
-2. **Set your connection string**
+**2. Set your connection string**
 
 ```bash
 dotnet user-secrets set "ConnectionStrings:DefaultConnection" "Server=YOUR_SERVER;Database=DevHunter;Trusted_Connection=True;"
 ```
-3. **Run the app — migrations and seed data apply automatically on first startup**
+> Replace `YOUR_SERVER` with your SQL Server instance name (e.g. `localhost` or `.\SQLEXPRESS`)
+
+**3. Run the app — migrations and seed data apply automatically on first startup**
 
 ```bash
 dotnet run --project src/DevHunter.Web
 ```
-</details> 
 
 <details> 
-<summary>Optional — Cloudinary (image & document uploads)</summary>
+<summary><strong>Optional — Cloudinary</strong> <i>(image & document uploads)</i></summary>
 
 Create a free account at cloudinary.com, then set your credentials:
 
@@ -135,7 +132,7 @@ dotnet user-secrets set "Cloudinary:ApiSecret" "your_api_secret"
 </details>
 
 <details> 
-<summary>Optional — SMTP (contact messages)</summary>
+<summary><strong>Optional — SMTP </strong> <i>(contact messages)</i></summary>
 
 ```bash
 dotnet user-secrets set "Email:Host" "smtp.your-provider.com"
@@ -143,9 +140,11 @@ dotnet user-secrets set "Email:Port" "587"
 dotnet user-secrets set "Email:Username" "your@email.com"
 dotnet user-secrets set "Email:Password" "your_password"
 ```
-</details> -->
+</details>
 
-## Demo Accounts
+</br>
+
+### Demo Accounts
 
 These accounts are created only for the seeded local demo environment.
 
@@ -155,7 +154,8 @@ These accounts are created only for the seeded local demo environment.
 | Company       | `smartit@gmail.com` | `company123`     |
 | Administrator | `admin@gmail.com`   | `Admin12345678!` |
 
-Do not use these credentials in a production environment.
+> [!CAUTION]
+> Do not use these credentials in a production environment.
 
 ## Give a Star ⭐
 
