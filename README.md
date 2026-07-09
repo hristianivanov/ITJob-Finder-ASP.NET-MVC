@@ -8,7 +8,11 @@
 
 </br>
 
-![DevHunter logo](docs/devhunter-logo.svg)
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/devhunter-logo-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="docs/devhunter-logo.svg">
+  <img src="docs/devhunter-logo.svg" alt="DevHunter logo">
+</picture>
 
 <div align="center">
 
