@@ -5,10 +5,12 @@ namespace DevHunter.Services.Tests
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
     using Moq;
 
+    using DevHunter.Data;
     using DevHunter.Data.Models;
     using Services.Data.Interfaces;
     using Web.Controllers;
@@ -19,6 +21,7 @@ namespace DevHunter.Services.Tests
         private Mock<UserManager<ApplicationUser>> userManager;
         private Mock<SignInManager<ApplicationUser>> signInManager;
         private Mock<ICompanyService> companyService;
+        private DevHunterDbContext dbContext;
 
         [SetUp]
         public void Setup()
@@ -27,15 +30,20 @@ namespace DevHunter.Services.Tests
             signInManager = CreateSignInManagerMock(userManager.Object);
             companyService = new Mock<ICompanyService>();
 
+            var options = new DbContextOptionsBuilder<DevHunterDbContext>()
+                .UseInMemoryDatabase("CompanyRegistration" + Guid.NewGuid())
+                .Options;
+            dbContext = new DevHunterDbContext(options);
+
             companyService
                 .Setup(service => service.ExistsByNameAsync(It.IsAny<string>()))
                 .ReturnsAsync(false);
-            userManager
-                .Setup(manager => manager.SetEmailAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>()))
-                .ReturnsAsync(IdentityResult.Success);
-            userManager
-                .Setup(manager => manager.SetUserNameAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>()))
-                .ReturnsAsync(IdentityResult.Success);
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            dbContext.Database.EnsureDeleted();
         }
 
         [Test]
@@ -58,7 +66,7 @@ namespace DevHunter.Services.Tests
         }
 
         [Test]
-        public async Task RegisterCompany_ShouldDeleteCreatedUserWhenRoleAssignmentFails()
+        public async Task RegisterCompany_ShouldReturnViewWhenRoleAssignmentFails()
         {
             SetupSuccessfulUserCreation();
             userManager
@@ -69,14 +77,13 @@ namespace DevHunter.Services.Tests
             IActionResult result = await controller.RegisterCompany(CreateModel());
 
             result.Should().BeOfType<ViewResult>();
-            userManager.Verify(manager => manager.DeleteAsync(It.IsAny<ApplicationUser>()), Times.Once);
             companyService.Verify(
                 service => service.AddAsync(It.IsAny<CompanyRegisterFormModel>(), It.IsAny<Guid>()),
                 Times.Never);
         }
 
         [Test]
-        public async Task RegisterCompany_ShouldDeleteCreatedUserWhenCompanyCreationFails()
+        public async Task RegisterCompany_ShouldRethrowWhenCompanyCreationFails()
         {
             SetupSuccessfulUserCreation();
             userManager
@@ -90,7 +97,6 @@ namespace DevHunter.Services.Tests
             var act = async () => await controller.RegisterCompany(CreateModel());
 
             await act.Should().ThrowAsync<InvalidOperationException>();
-            userManager.Verify(manager => manager.DeleteAsync(It.IsAny<ApplicationUser>()), Times.Once);
         }
 
         [Test]
@@ -132,15 +138,18 @@ namespace DevHunter.Services.Tests
         }
 
         private AccountController CreateController()
-            => new(signInManager.Object, userManager.Object, companyService.Object);
+        {
+            var controller = new AccountController(signInManager.Object, userManager.Object, companyService.Object, dbContext);
+            controller.TempData = new Microsoft.AspNetCore.Mvc.ViewFeatures.TempDataDictionary(
+                new DefaultHttpContext(),
+                Mock.Of<Microsoft.AspNetCore.Mvc.ViewFeatures.ITempDataProvider>());
+            return controller;
+        }
 
         private void SetupSuccessfulUserCreation()
         {
             userManager
                 .Setup(manager => manager.CreateAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>()))
-                .ReturnsAsync(IdentityResult.Success);
-            userManager
-                .Setup(manager => manager.DeleteAsync(It.IsAny<ApplicationUser>()))
                 .ReturnsAsync(IdentityResult.Success);
         }
 
