@@ -93,10 +93,22 @@
             {
                 RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier,
                 StatusCode = statusCode,
-                Error = errorMsg.InsertSpacesBeforeUppercase()
+                Error = InsertSpacesBeforeUppercase(errorMsg)
             };
 
             return View(model);
+        }
+
+        private static string InsertSpacesBeforeUppercase(string input)
+        {
+            var sb = new System.Text.StringBuilder();
+            foreach (var ch in input)
+            {
+                if (char.IsUpper(ch) && sb.Length > 0)
+                    sb.Append(' ');
+                sb.Append(ch);
+            }
+            return sb.ToString();
         }
     }
 }

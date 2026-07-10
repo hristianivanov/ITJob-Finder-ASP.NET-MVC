@@ -9,13 +9,7 @@
     {
         public void Configure(EntityTypeBuilder<Technology> builder)
         {
-            //builder.OwnsOne(t => t.Image, i =>
-            //	{
-            //		i.Property(i => i.OriginalFileName).HasColumnName("ImageFileName");
-            //		i.Property(i => i.OriginalContent).HasColumnName("ImageOriginalContent");
-            //		i.Property(i => i.ThumbnailContent).HasColumnName("ImageThumbnailContent");
-            //		i.Property(i => i.OriginalType).HasColumnName("ImageOriginalType");
-            //	});
+            
         }
     }
 }
