@@ -12,7 +12,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DevHunter.Common\DevHunter.Common.csproj" />
-    <ProjectReference Include="..\DevHunter.Data.Models.Complex\DevHunter.Data.Models.Complex.csproj" />
   </ItemGroup>
 
 </Project>
