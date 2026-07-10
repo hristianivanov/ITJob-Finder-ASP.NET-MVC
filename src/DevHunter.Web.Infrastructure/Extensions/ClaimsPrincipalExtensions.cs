@@ -15,14 +15,10 @@
             return Guid.TryParse(raw, out Guid id) ? id : Guid.Empty;
         }
 
-        public static bool IsAdmin(this ClaimsPrincipal user)
-        {
-            return user.IsInRole(AdminRoleName);
-        }
+        public static bool IsAdmin(this ClaimsPrincipal user) 
+            => user.IsInRole(AdminRoleName);
 
-        public static bool IsCompany(this ClaimsPrincipal user)
-        {
-            return user.IsInRole(CompanyRoleName);
-        }
+        public static bool IsCompany(this ClaimsPrincipal user) 
+            => user.IsInRole(CompanyRoleName);
     }
 }

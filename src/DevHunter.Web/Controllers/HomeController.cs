@@ -29,7 +29,8 @@
             {
                 return RedirectToAction("All", "JobOffer", new { area = CompanyAreaName });
             }
-            else if (this.User.IsAdmin())
+
+            if (this.User.IsAdmin())
             {
                 return this.RedirectToAction("Index", "Home", new { Area = AdminAreaName });
             }
@@ -42,10 +43,7 @@
             return View(model);
         }
 
-        public IActionResult About()
-        {
-            return View();
-        }
+        public IActionResult About() => View();
 
         [HttpGet]
         [Route("/contact")]

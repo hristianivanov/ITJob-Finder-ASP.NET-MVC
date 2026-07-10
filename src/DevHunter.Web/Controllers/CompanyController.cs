@@ -57,7 +57,7 @@ namespace DevHunter.Web.Controllers
 
         private IActionResult GeneralError()
         {
-                TempData[ErrorMessage] = UnexpectedError;
+            TempData[ErrorMessage] = UnexpectedError;
 
             return RedirectToAction("Index", "Home");
         }

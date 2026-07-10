@@ -98,7 +98,8 @@ namespace DevHunter.Web.Controllers
 
                 await this.companyService.AddAsync(model, user.Id);
 
-                if (transaction != null) await transaction.CommitAsync();
+                if (transaction != null) 
+                    await transaction.CommitAsync();
 
                 await this.signInManager.SignInAsync(user, isPersistent: false);
 
@@ -108,18 +109,20 @@ namespace DevHunter.Web.Controllers
             }
             catch
             {
-                if (transaction != null) await transaction.RollbackAsync();
+                if (transaction != null) 
+                    await transaction.RollbackAsync();
                 throw;
             }
             finally
             {
-                if (transaction != null) await transaction.DisposeAsync();
+                if (transaction != null)
+                    await transaction.DisposeAsync();
             }
         }
 
         [HttpGet]
-        [Route("account/register-user")]
         [AlreadyAuthenticated]
+        [Route("account/register-user")]
         public IActionResult Register()
         {
             return View(new RegisterFormModel());
@@ -163,8 +166,8 @@ namespace DevHunter.Web.Controllers
         }
 
         [HttpGet]
-        [Route("account/login")]
         [AlreadyAuthenticated]
+        [Route("account/login")]
         public IActionResult Login()
         {
             return View();
@@ -181,7 +184,8 @@ namespace DevHunter.Web.Controllers
                 return View();
             }
 
-            var result = await signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
+            var result = await signInManager
+                .PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
 
             if (!result.Succeeded)
             {
