@@ -1,10 +1,7 @@
 namespace DevHunter.Services.Tests
 {
     using FluentAssertions;
-    using Microsoft.AspNetCore.Authentication;
-    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
-    using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
@@ -12,14 +9,13 @@ namespace DevHunter.Services.Tests
 
     using DevHunter.Data;
     using DevHunter.Data.Models;
+    using Services.Data;
     using Services.Data.Interfaces;
-    using Web.Controllers;
     using Web.ViewModels.User;
 
     public class CompanyRegistrationTests
     {
         private Mock<UserManager<ApplicationUser>> userManager;
-        private Mock<SignInManager<ApplicationUser>> signInManager;
         private Mock<ICompanyService> companyService;
         private DevHunterDbContext dbContext;
 
@@ -27,7 +23,6 @@ namespace DevHunter.Services.Tests
         public void Setup()
         {
             userManager = CreateUserManagerMock();
-            signInManager = CreateSignInManagerMock(userManager.Object);
             companyService = new Mock<ICompanyService>();
 
             var options = new DbContextOptionsBuilder<DevHunterDbContext>()
@@ -36,7 +31,7 @@ namespace DevHunter.Services.Tests
             dbContext = new DevHunterDbContext(options);
 
             companyService
-                .Setup(service => service.ExistsByNameAsync(It.IsAny<string>()))
+                .Setup(s => s.ExistsByNameAsync(It.IsAny<string>()))
                 .ReturnsAsync(false);
         }
 
@@ -47,60 +42,66 @@ namespace DevHunter.Services.Tests
         }
 
         [Test]
-        public async Task RegisterCompany_ShouldNotAssignRoleWhenUserCreationFails()
+        public async Task RegisterCompanyAsync_ShouldFailWhenCompanyNameAlreadyExists()
+        {
+            companyService.Setup(s => s.ExistsByNameAsync(It.IsAny<string>())).ReturnsAsync(true);
+            var service = CreateService();
+
+            var result = await service.RegisterCompanyAsync(CreateModel());
+
+            result.Succeeded.Should().BeFalse();
+            userManager.Verify(m => m.CreateAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>()), Times.Never);
+        }
+
+        [Test]
+        public async Task RegisterCompanyAsync_ShouldFailWhenUserCreationFails()
         {
             userManager
-                .Setup(manager => manager.CreateAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>()))
+                .Setup(m => m.CreateAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>()))
                 .ReturnsAsync(IdentityResult.Failed(new IdentityError { Description = "Creation failed." }));
-            var controller = CreateController();
+            var service = CreateService();
 
-            IActionResult result = await controller.RegisterCompany(CreateModel());
+            var result = await service.RegisterCompanyAsync(CreateModel());
 
-            result.Should().BeOfType<ViewResult>();
-            userManager.Verify(
-                manager => manager.AddToRoleAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>()),
-                Times.Never);
-            companyService.Verify(
-                service => service.AddAsync(It.IsAny<CompanyRegisterFormModel>(), It.IsAny<Guid>()),
-                Times.Never);
+            result.Succeeded.Should().BeFalse();
+            userManager.Verify(m => m.AddToRoleAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>()), Times.Never);
+            companyService.Verify(s => s.AddAsync(It.IsAny<CompanyRegisterFormModel>(), It.IsAny<Guid>()), Times.Never);
         }
 
         [Test]
-        public async Task RegisterCompany_ShouldReturnViewWhenRoleAssignmentFails()
+        public async Task RegisterCompanyAsync_ShouldFailWhenRoleAssignmentFails()
         {
             SetupSuccessfulUserCreation();
             userManager
-                .Setup(manager => manager.AddToRoleAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>()))
-                .ReturnsAsync(IdentityResult.Failed(new IdentityError { Description = "Role assignment failed." }));
-            var controller = CreateController();
+                .Setup(m => m.AddToRoleAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>()))
+                .ReturnsAsync(IdentityResult.Failed(new IdentityError { Description = "Role failed." }));
+            var service = CreateService();
 
-            IActionResult result = await controller.RegisterCompany(CreateModel());
+            var result = await service.RegisterCompanyAsync(CreateModel());
 
-            result.Should().BeOfType<ViewResult>();
-            companyService.Verify(
-                service => service.AddAsync(It.IsAny<CompanyRegisterFormModel>(), It.IsAny<Guid>()),
-                Times.Never);
+            result.Succeeded.Should().BeFalse();
+            companyService.Verify(s => s.AddAsync(It.IsAny<CompanyRegisterFormModel>(), It.IsAny<Guid>()), Times.Never);
         }
 
         [Test]
-        public async Task RegisterCompany_ShouldRethrowWhenCompanyCreationFails()
+        public async Task RegisterCompanyAsync_ShouldRethrowWhenCompanyCreationFails()
         {
             SetupSuccessfulUserCreation();
             userManager
-                .Setup(manager => manager.AddToRoleAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>()))
+                .Setup(m => m.AddToRoleAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>()))
                 .ReturnsAsync(IdentityResult.Success);
             companyService
-                .Setup(service => service.AddAsync(It.IsAny<CompanyRegisterFormModel>(), It.IsAny<Guid>()))
+                .Setup(s => s.AddAsync(It.IsAny<CompanyRegisterFormModel>(), It.IsAny<Guid>()))
                 .ThrowsAsync(new InvalidOperationException("Company creation failed."));
-            var controller = CreateController();
+            var service = CreateService();
 
-            var act = async () => await controller.RegisterCompany(CreateModel());
+            var act = async () => await service.RegisterCompanyAsync(CreateModel());
 
             await act.Should().ThrowAsync<InvalidOperationException>();
         }
 
         [Test]
-        public async Task RegisterCompany_ShouldSucceedAndRedirectHome()
+        public async Task RegisterCompanyAsync_ShouldSucceed()
         {
             SetupSuccessfulUserCreation();
             userManager
@@ -109,47 +110,21 @@ namespace DevHunter.Services.Tests
             companyService
                 .Setup(s => s.AddAsync(It.IsAny<CompanyRegisterFormModel>(), It.IsAny<Guid>()))
                 .Returns(Task.CompletedTask);
-            var controller = CreateController();
+            var service = CreateService();
 
-            var result = await controller.RegisterCompany(CreateModel());
+            var result = await service.RegisterCompanyAsync(CreateModel());
 
-            var redirect = result.Should().BeOfType<RedirectToActionResult>().Subject;
-            redirect.ActionName.Should().Be("Index");
-            redirect.ControllerName.Should().Be("Home");
-            companyService.Verify(
-                s => s.AddAsync(It.IsAny<CompanyRegisterFormModel>(), It.IsAny<Guid>()),
-                Times.Once);
+            result.Succeeded.Should().BeTrue();
+            companyService.Verify(s => s.AddAsync(It.IsAny<CompanyRegisterFormModel>(), It.IsAny<Guid>()), Times.Once);
         }
 
-        [Test]
-        public async Task RegisterCompany_ShouldReturnViewWhenCompanyNameAlreadyExists()
-        {
-            companyService
-                .Setup(s => s.ExistsByNameAsync(It.IsAny<string>()))
-                .ReturnsAsync(true);
-            var controller = CreateController();
-
-            var result = await controller.RegisterCompany(CreateModel());
-
-            result.Should().BeOfType<ViewResult>();
-            userManager.Verify(
-                m => m.CreateAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>()),
-                Times.Never);
-        }
-
-        private AccountController CreateController()
-        {
-            var controller = new AccountController(signInManager.Object, userManager.Object, companyService.Object, dbContext);
-            controller.TempData = new Microsoft.AspNetCore.Mvc.ViewFeatures.TempDataDictionary(
-                new DefaultHttpContext(),
-                Mock.Of<Microsoft.AspNetCore.Mvc.ViewFeatures.ITempDataProvider>());
-            return controller;
-        }
+        private AccountService CreateService()
+            => new(userManager.Object, companyService.Object, dbContext);
 
         private void SetupSuccessfulUserCreation()
         {
             userManager
-                .Setup(manager => manager.CreateAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>()))
+                .Setup(m => m.CreateAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>()))
                 .ReturnsAsync(IdentityResult.Success);
         }
 
@@ -174,16 +149,5 @@ namespace DevHunter.Services.Tests
                 new IdentityErrorDescriber(),
                 Mock.Of<IServiceProvider>(),
                 Mock.Of<ILogger<UserManager<ApplicationUser>>>());
-
-        private static Mock<SignInManager<ApplicationUser>> CreateSignInManagerMock(
-            UserManager<ApplicationUser> manager)
-            => new(
-                manager,
-                Mock.Of<IHttpContextAccessor>(),
-                Mock.Of<IUserClaimsPrincipalFactory<ApplicationUser>>(),
-                Mock.Of<IOptions<IdentityOptions>>(),
-                Mock.Of<ILogger<SignInManager<ApplicationUser>>>(),
-                Mock.Of<IAuthenticationSchemeProvider>(),
-                Mock.Of<IUserConfirmation<ApplicationUser>>());
     }
 }
