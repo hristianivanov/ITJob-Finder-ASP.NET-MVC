@@ -94,7 +94,7 @@ namespace DevHunter.Web.Areas.Company.Controllers
             catch (Exception ex)
             {
                 logger.LogError(ex, "Unhandled exception in {Controller}", nameof(JobOfferController));
-                return GeneralError();
+                return JobOfferError();
             }
         }
 
@@ -163,11 +163,11 @@ namespace DevHunter.Web.Areas.Company.Controllers
             catch (Exception ex)
             {
                 logger.LogError(ex, "Unhandled exception in {Controller}", nameof(JobOfferController));
-                return GeneralError();
+                return JobOfferError();
             }
         }
 
-        private IActionResult GeneralError()
+        private IActionResult JobOfferError()
         {
                 TempData[ErrorMessage] = UnexpectedError;
 

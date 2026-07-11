@@ -23,5 +23,11 @@ namespace DevHunter.Web.Areas.Company.Controllers
         }
 
         protected Guid CurrentUserId => this.User.GetGuid();
+
+        protected IActionResult GeneralError()
+        {
+            TempData[ErrorMessage] = UnexpectedError;
+            return RedirectToAction("Index", "Home", new { area = "" });
+        }
     }
 }

@@ -5,7 +5,6 @@ namespace DevHunter.Web.Areas.Company.Controllers
 
     using ViewModels.Company;
     using Services.Data.Interfaces;
-    using Infrastructure.Extensions;
 
     using static Common.NotificationMessagesConstants;
 
@@ -28,13 +27,10 @@ namespace DevHunter.Web.Areas.Company.Controllers
         {
             try
             {
-                bool isOwnedByCompany = await this.companyService
-                    .IsOwnedByUserAsync(id, CurrentUserId);
+                bool isOwned = await this.companyService.IsOwnedByUserAsync(id, CurrentUserId);
 
-                if (!AssertOwnership(isOwnedByCompany))
-                {
+                if (!AssertOwnership(isOwned))
                     return RedirectToAction("Index", "Home", new { area = "" });
-                }
 
                 var model = await this.companyService.GetForEditByIdAsync(id);
 
@@ -52,28 +48,21 @@ namespace DevHunter.Web.Areas.Company.Controllers
         public async Task<IActionResult> Edit([FromRoute] Guid id, CompanyFormModel model)
         {
             if (!ModelState.IsValid)
-            {
-                return this.View();
-            }
+                return View(model);
 
             try
             {
-                bool isOwnedByCompany = await this.companyService
-                    .IsOwnedByUserAsync(id, CurrentUserId);
+                bool isOwned = await this.companyService.IsOwnedByUserAsync(id, CurrentUserId);
 
-                if (!AssertOwnership(isOwnedByCompany))
-                {
-                    return RedirectToAction("Index", "Home");
-                }
+                if (!AssertOwnership(isOwned))
+                    return RedirectToAction("Index", "Home", new { area = "" });
 
                 await this.companyService.EditAsync(id, model, CurrentUserId);
             }
             catch (Exception ex)
             {
                 logger.LogError(ex, "Unhandled exception in {Controller}", nameof(CompanyController));
-                ModelState.AddModelError(string.Empty,
-                    "Unexpected error occurred while trying to edit the company!");
-
+                ModelState.AddModelError(string.Empty, "Unexpected error occurred while trying to edit the company!");
                 return View(model);
             }
 
@@ -83,18 +72,20 @@ namespace DevHunter.Web.Areas.Company.Controllers
         [HttpPost]
         public async Task<IActionResult> ApproveApplication(Guid id)
         {
-            bool isOwnedByCompany = await this.jobApplicationService.IsOwnedByCompanyAsync(id, CurrentUserId);
-
-            if (!isOwnedByCompany)
+            try
             {
-                TempData[ErrorMessage] = "Application does not exist or does not belong to your company!";
+                if (!await AssertApplicationOwnershipAsync(id))
+                    return RedirectToAction("Candidates");
 
-                return RedirectToAction("Candidates");
+                await this.jobApplicationService.ApproveApplicationAsync(id, CurrentUserId);
+
+                TempData[SuccessMessage] = "You successfully approved one candidate!";
             }
-
-            await this.jobApplicationService.ApproveApplicationAsync(id, CurrentUserId);
-
-            TempData[SuccessMessage] = "You successfully approved one candidate!";
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Unhandled exception in {Controller}", nameof(CompanyController));
+                return GeneralError();
+            }
 
             return RedirectToAction("Candidates");
         }
@@ -102,18 +93,20 @@ namespace DevHunter.Web.Areas.Company.Controllers
         [HttpPost]
         public async Task<IActionResult> RejectApplication(Guid id)
         {
-            bool isOwnedByCompany = await this.jobApplicationService.IsOwnedByCompanyAsync(id, CurrentUserId);
-
-            if (!isOwnedByCompany)
+            try
             {
-                TempData[ErrorMessage] = "Application does not exist or does not belong to your company!";
+                if (!await AssertApplicationOwnershipAsync(id))
+                    return RedirectToAction("Candidates");
 
-                return RedirectToAction("Candidates");
+                await this.jobApplicationService.RejectApplicationAsync(id, CurrentUserId);
+
+                TempData[InformationMessage] = "You successfully rejected one candidate!";
             }
-
-            await this.jobApplicationService.RejectApplicationAsync(id, CurrentUserId);
-
-            TempData[InformationMessage] = "You successfully rejected one candidate!";
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Unhandled exception in {Controller}", nameof(CompanyController));
+                return GeneralError();
+            }
 
             return RedirectToAction("Candidates");
         }
@@ -122,28 +115,50 @@ namespace DevHunter.Web.Areas.Company.Controllers
         [Route("company/candidates")]
         public async Task<IActionResult> Candidates()
         {
-            Guid? companyId = await this.companyService.GetCompanyIdByCreatorIdAsync(CurrentUserId);
+            try
+            {
+                Guid? companyId = await this.companyService.GetCompanyIdByCreatorIdAsync(CurrentUserId);
 
-            var model = await this.jobApplicationService
-                .AllCandidatesByCompanyIdAsync(companyId);
+                var model = await this.jobApplicationService.AllCandidatesByCompanyIdAsync(companyId);
 
-            return View(model);
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Unhandled exception in {Controller}", nameof(CompanyController));
+                return GeneralError();
+            }
         }
 
         [HttpGet]
         public async Task<IActionResult> GetApplicationDetails(Guid applicationId)
         {
-            var application = await this.jobApplicationService
-                .GetApplicationById(applicationId, CurrentUserId);
+            try
+            {
+                bool isOwned = await this.jobApplicationService.IsOwnedByCompanyAsync(applicationId, CurrentUserId);
 
-            return PartialView("_JobApplicationModalPartial", application);
+                if (!AssertOwnership(isOwned))
+                    return RedirectToAction("Candidates");
+
+                var application = await this.jobApplicationService.GetApplicationById(applicationId, CurrentUserId);
+
+                return PartialView("_JobApplicationModalPartial", application);
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Unhandled exception in {Controller}", nameof(CompanyController));
+                return GeneralError();
+            }
         }
 
-        private IActionResult GeneralError()
+        private async Task<bool> AssertApplicationOwnershipAsync(Guid applicationId)
         {
-                TempData[ErrorMessage] = UnexpectedError;
+            bool isOwned = await this.jobApplicationService.IsOwnedByCompanyAsync(applicationId, CurrentUserId);
 
-            return RedirectToAction("Index", "Home", new { area = "" });
+            if (!isOwned)
+                TempData[ErrorMessage] = "Application does not exist or does not belong to your company!";
+
+            return isOwned;
         }
     }
 }
