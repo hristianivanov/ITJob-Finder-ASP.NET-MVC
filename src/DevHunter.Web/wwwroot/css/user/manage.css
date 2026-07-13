@@ -235,3 +235,7 @@
     border-radius: 50%;
     filter: blur(330px);
 }
+
+.validation-summary ul {
+    list-style-type: none;
+}

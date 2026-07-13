@@ -1,27 +1,20 @@
-@import url(variables.css);
+@import url(base/variables.css);
+@import url(base/reset.css);
+@import url(base/typography.css);
+@import url(base/layout.css);
 
-@import url(reset.css);
+@import url(components/background.css);
+@import url(components/navigation.css);
+@import url(components/auth-modal.css);
+@import url(components/toastr.css);
 
-@import url(typography.css);
+@import url(pages/home.css);
 
-@import url(layout.css);
+@import url(job-listing/board.css);
+@import url(job-listing/categories.css);
 
-@import url(background.css);
+@import url(auth/register.css);
 
-@import url(navigation.css);
+@import url(admin/technology.css);
 
-@import url(section-homepage.css);
-
-@import url(job-board.css);
-
-@import url(login-register-modal.css);
-
-@import url(job-offer-category/job-category-all.css);
-
-@import url(toastr/overwrite-toastr.css);
-
-@import url(technology/global.css);
-
-@import url(register/global.css);
-
-@import url(footer.css);
+@import url(components/footer.css);
