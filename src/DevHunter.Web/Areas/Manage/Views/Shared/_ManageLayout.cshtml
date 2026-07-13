@@ -1,4 +1,4 @@
-﻿@using DevHunter.Web.Infrastructure.Extensions
+@using DevHunter.Web.Infrastructure.Extensions
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @using DevHunter.Services.Data.Interfaces
 <!DOCTYPE html>
@@ -10,7 +10,7 @@
 
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-	<link href="~/css/user-manage/styles.css" rel="stylesheet" />
+	<link href="~/css/user/manage.css" rel="stylesheet" />
 	@await RenderSectionAsync("Styles", required: false)
 
 	<script src="~/lib/jquery/dist/jquery.min.js"></script>
@@ -133,3 +133,4 @@
 	@await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+

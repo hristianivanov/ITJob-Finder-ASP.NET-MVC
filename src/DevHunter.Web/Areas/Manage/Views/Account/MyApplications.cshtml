@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MyApplicationViewModel>
+@model IEnumerable<MyApplicationViewModel>
 
 <div class="outside-wrapper">
 	<div class="table-container">
@@ -52,14 +52,13 @@
 </div>
 
 @section Styles {
-	<link href="~/css/job-offer-crud-table/styles.css" rel="stylesheet" />
-	<link href="~/css/job-offer-crud-table/custom-pagination.css" rel="stylesheet" />
-	<link href="~/css/job-offer-detail/job-apply-modal.css" rel="stylesheet" />
-	<link href="~/css/job-offer-detail/curtain.css" rel="stylesheet" />
-	<link rel="stylesheet" href="~/css/user-manage/application-form.css" asp-append-version="true" />
+	<link href="~/css/components/table.css" rel="stylesheet" />
+	<link href="~/css/job-offer/apply-modal.css" rel="stylesheet" />
+	<link rel="stylesheet" href="~/css/user/applications.css" asp-append-version="true" />
 }
 
 @section Scripts {
 	<script src="~/js/company/script.js"></script>
 	<script src="~/js/apply-job-offer/script.js"></script>
 }
+

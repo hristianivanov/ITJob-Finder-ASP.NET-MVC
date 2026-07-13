@@ -1,4 +1,4 @@
-﻿@model AllJobOffersQueryModel
+@model AllJobOffersQueryModel
 
 <header class="search-heading">
 	<h1>Found <span class="search-cnt">@Model.JobOffers.Count()</span> with keyword <span class="search-text">@Model.SearchString</span> </h1>
@@ -21,7 +21,7 @@
 </div>
 
 @section Styles {
-	<link href="~/css/search-job-offer.css" rel="stylesheet" />
+	<link href="~/css/pages/search.css" rel="stylesheet" />
 }
 
 @section Scripts {
