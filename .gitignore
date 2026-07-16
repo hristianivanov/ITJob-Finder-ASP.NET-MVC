@@ -396,3 +396,9 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+# JetBrains IDE project files
+.idea/
+
+# Verification/patch artifacts
+.verification/
