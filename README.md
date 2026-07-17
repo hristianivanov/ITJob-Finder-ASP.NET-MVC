@@ -30,7 +30,7 @@ and **administrators** can maintain platform content.
 
 ## Landing page
 
-[Live Demo Showcase](https://devhuntershowcase.vercel.app/)
+[Live Demo Showcase](https://youtu.be/9f-O99ygbmk)
 
 > The showcase is a static React site. The full ASP.NET MVC application runs locally.
 
