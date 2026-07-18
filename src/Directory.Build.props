@@ -1,7 +1,6 @@
 <Project>
   <!-- Pin vulnerable transitive packages to safe versions -->
   <ItemGroup>
-    <PackageReference Include="AngleSharp" Version="1.5.2" />
     <PackageReference Include="NuGet.Packaging" Version="7.6.0" />
     <PackageReference Include="NuGet.Protocol" Version="7.6.0" />
   </ItemGroup>
