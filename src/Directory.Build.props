@@ -1,4 +1,10 @@
 <Project>
+  <PropertyGroup>
+    <!-- AngleSharp 0.17.1 moderate vuln (GHSA-pgww-w46g-26qg) cannot be fixed until
+         HtmlSanitizer updates its strict = 0.17.1 constraint to support AngleSharp 1.x -->
+    <NoWarn>$(NoWarn);NU1902</NoWarn>
+  </PropertyGroup>
+
   <!-- Pin vulnerable transitive packages to safe versions -->
   <ItemGroup>
     <PackageReference Include="NuGet.Packaging" Version="7.6.0" />
