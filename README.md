@@ -32,7 +32,7 @@ and **administrators** can maintain platform content.
 
 [Live Demo Showcase](https://youtu.be/9f-O99ygbmk)
 
-> The showcase is a static React site. The full ASP.NET MVC application runs locally.
+> The showcase is a video demonstration. The full ASP.NET MVC application runs locally.
 
 ![Landing Page](docs/brandbird-browser-mockup.png)
 
@@ -40,7 +40,7 @@ and **administrators** can maintain platform content.
 
 | Area           | Details                                                        |
 | -------------- | -------------------------------------------------------------- |
-| Application    | ASP.NET Core MVC on .NET 8                                     |
+| Application    | ASP.NET Core MVC on .NET 10                                    |
 | Architecture   | Areas-based MVC (Admin, Company, Manage)                       |
 | Data           | Entity Framework Core and SQL Server                           |
 | Authentication | ASP.NET Core Identity with candidate, company, and admin roles |
