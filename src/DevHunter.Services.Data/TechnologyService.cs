@@ -2,6 +2,7 @@
 {
     using System.Linq.Expressions;
 
+    using Mapster;
     using Microsoft.AspNetCore.Http;
     using Microsoft.EntityFrameworkCore;
 
@@ -84,11 +85,7 @@
                 .Technologies
                 .FirstAsync(t => t.Id == id);
 
-            return new TechnologyEditFormModel
-            {
-                Name = technology.Name,
-                ImageUrl = technology.ImageUrl,
-            };
+            return technology.Adapt<TechnologyEditFormModel>();
         }
 
         public async Task EditTechnologyAsync(Guid technologyId, TechnologyEditFormModel model)

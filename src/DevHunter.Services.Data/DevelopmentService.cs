@@ -1,5 +1,6 @@
 ﻿namespace DevHunter.Services.Data
 {
+    using Mapster;
     using Microsoft.EntityFrameworkCore;
 
     using DevHunter.Data;
@@ -110,11 +111,7 @@
                 .Developments
                 .FirstAsync(t => t.Id == id);
 
-            return new DevelopmentEditFormModel
-            {
-                Name = development.Name,
-                ImageUrl = development.ImageUrl,
-            };
+            return development.Adapt<DevelopmentEditFormModel>();
         }
 
         public async Task EditDevelopmentAsync(Guid id, DevelopmentEditFormModel model)
@@ -169,11 +166,7 @@
                 .Developments
                 .FirstAsync(d => d.Id == id);
 
-            return new DevelopmentOfferViewModel()
-            {
-                Name = development.Name,
-                ImageUrl = development.ImageUrl
-            };
+            return development.Adapt<DevelopmentOfferViewModel>();
         }
     }
 }

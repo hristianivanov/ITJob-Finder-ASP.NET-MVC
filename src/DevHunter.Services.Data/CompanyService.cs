@@ -3,6 +3,8 @@
     using System.Globalization;
     using System.Linq.Expressions;
 
+    using Mapster;
+
     using Ganss.Xss;
     using Microsoft.EntityFrameworkCore;
 
@@ -68,18 +70,7 @@
                 .FirstOrDefaultAsync(company => company.Id == companyId)
                 ?? throw new InvalidOperationException("Company does not exist.");
 
-            return new CompanyFormModel
-            {
-                Name = company.Name,
-                ImageUrl = company.ImageUrl!,
-                Description = company.Description,
-                Activity = company.Activity,
-                WebsiteUrl = company.WebsiteUrl,
-                Sector = company.Sector,
-                Address = company.Location,
-                EmployeesCnt = company.EmployeeCount,
-                FoundedDate = company.FoundedDate,
-            };
+            return company.Adapt<CompanyFormModel>();
         }
 
         public async Task EditAsync(Guid id, CompanyFormModel model, Guid userId)

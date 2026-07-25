@@ -3,6 +3,8 @@
     using System.Globalization;
     using System.Text.RegularExpressions;
 
+    using Mapster;
+
     using Ganss.Xss;
     using Newtonsoft.Json;
     using Microsoft.EntityFrameworkCore;
@@ -265,18 +267,7 @@
                 .FirstOrDefaultAsync(j => j.Id == parsedId)
                 ?? throw new InvalidOperationException("Job offer does not exist.");
 
-            return new JobOfferEditFormModel()
-            {
-                Title = jobOffer.JobPosition,
-                Description = jobOffer.Description,
-                Location = jobOffer.PlaceToWork,
-                MaxSalary = jobOffer.MaxSalary,
-                MinSalary = jobOffer.MinSalary,
-                SalaryType = jobOffer.SalaryType,
-                LocationType = jobOffer.JobPlace,
-                WorkingHours = jobOffer.WorkingHours,
-                WorkingExperience = jobOffer.WorkingExperience,
-            };
+            return jobOffer.Adapt<JobOfferEditFormModel>();
         }
 
         public async Task DeleteByIdAsync(Guid id, Guid userId)

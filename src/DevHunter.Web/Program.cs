@@ -8,6 +8,7 @@ using Data;
 using Data.Models;
 using Data.Seeding;
 using Infrastructure.Extensions;
+using Services.Data;
 using Infrastructure.ModelBinders;
 using Services.Data.Interfaces;
 
@@ -50,6 +51,8 @@ public class Program
             cfg.LogoutPath = "/Account/Logout";
             cfg.AccessDeniedPath = "/Error/403";
         });
+
+        MappingConfig.RegisterMappings();
 
         builder.Services.AddApplicationServices(typeof(IJobOfferService), builder.Configuration);
 
