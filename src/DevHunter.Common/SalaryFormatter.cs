@@ -6,20 +6,19 @@ namespace DevHunter.Common
     {
         private const string CurrencySuffix = "lv.";
 
+        private static readonly NumberFormatInfo SalaryFormat = new()
+        {
+            NumberGroupSeparator = " ",
+            NumberDecimalDigits = 0
+        };
+
         public static string Format(decimal? minSalary, decimal? maxSalary)
         {
             if (minSalary == null && maxSalary == null)
-            {
                 return string.Empty;
-            }
 
-            string? formattedMax = maxSalary?
-                .ToString("#,0", CultureInfo.InvariantCulture)
-                .Replace(",", " ");
-
-            string? formattedMin = minSalary?
-                .ToString("#,0", CultureInfo.InvariantCulture)
-                .Replace(",", " ");
+            string? formattedMax = maxSalary?.ToString("N", SalaryFormat);
+            string? formattedMin = minSalary?.ToString("N", SalaryFormat);
 
             return !string.IsNullOrWhiteSpace(formattedMin)
                 ? $"{formattedMin} - {formattedMax} {CurrencySuffix}"
