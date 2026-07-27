@@ -75,26 +75,22 @@ and **administrators** can maintain platform content.
 
 ## Tech Stack
 
-| Category     | Technologies                                             |
-| ------------ | -------------------------------------------------------- |
-| Backend      | C#, .NET 8, ASP.NET Core MVC                             |
-| Frontend     | Razor Views, Bootstrap, vanilla JS                       |
-| Data         | Entity Framework Core, SQL Server                        |
-| Security     | ASP.NET Core Identity, role authorization, HtmlSanitizer |
-| Integrations | Cloudinary, MailKit                                      |
-| Testing      | NUnit, Moq, FluentAssertions, in-memory EF Core          |
-| Delivery     | GitHub Actions CI (build + test)                         |
+| Area         | Technologies                                                                                                                              |
+| ------------ | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| Backend      | [![C#][badge-csharp]][badge-csharp] [![.NET 10][badge-dotnet]][badge-dotnet] [![ASP.NET Core MVC][badge-aspnet]][badge-aspnet]            |
+| Frontend     | [![Razor Views][badge-razor]][badge-razor] [![Bootstrap][badge-bootstrap]][badge-bootstrap] [![JavaScript][badge-js]][badge-js]           |
+| Data         | [![EF Core][badge-efcore]][badge-efcore] [![SQL Server][badge-sqlserver]][badge-sqlserver]                                                |
+| Security     | [![ASP.NET Identity][badge-identity]][badge-identity] [![HtmlSanitizer][badge-htmlsanitizer]][badge-htmlsanitizer]                        |
+| Integrations | [![Cloudinary][badge-cloudinary]][badge-cloudinary] [![MailKit][badge-mailkit]][badge-mailkit]                                            |
+| Testing      | [![NUnit][badge-nunit]][badge-nunit] [![Moq][badge-moq]][badge-moq] [![FluentAssertions][badge-fluentassertions]][badge-fluentassertions] |
+| Delivery     | [![GitHub Actions][badge-ghactions]][badge-ghactions]                                                                                     |
 
 
 ## Local Setup
 ### Configure and Run
 
-Configuration keys are documented in [`src/DevHunter.Web/appsettings.example.json`](src/DevHunter.Web/appsettings.example.json).
-
-Database migrations and seeded demo data are applied during startup.
-
 > [!IMPORTANT]
-> - [x] __*.NET 8 SDK*__   
+> - [x] __*.NET 10 SDK*__   
 > - [x]  __*SQL Server / SQL Server Express*__
 
 > __OPTIONAL :__ _Cloudinary account for uploads, 
@@ -149,6 +145,9 @@ dotnet user-secrets set "Email:Password" "your_password"
 </br>
 
 ### Demo Accounts
+###### Database migrations and seeded demo data are applied during startup.
+
+</br>
 
 These accounts are created only for the seeded local demo environment.
 
@@ -177,4 +176,21 @@ If you find this project useful, please consider giving it a star! It helps to s
 [forks-img]: https://img.shields.io/github/forks/hristianivanov/ITJob-Finder-ASP.NET-MVC
 [forks-url]: https://github.com/hristianivanov/ITJob-Finder-ASP.NET-MVC/network/members
 
+<!--------------------------------- BADGES ------------------------------------>
 
+[badge-csharp]:           https://img.shields.io/badge/C%23-239120?style=for-the-badge&logo=csharp&logoColor=white
+[badge-dotnet]:           https://img.shields.io/badge/.NET_10-512BD4?style=for-the-badge&logo=dotnet&logoColor=white
+[badge-aspnet]:           https://img.shields.io/badge/ASP.NET_Core_MVC-0078D4?style=for-the-badge&logo=dotnet&logoColor=white
+[badge-razor]:            https://img.shields.io/badge/Razor_Views-68217A?style=for-the-badge&logo=dotnet&logoColor=white
+[badge-bootstrap]:        https://img.shields.io/badge/Bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white
+[badge-js]:               https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black
+[badge-efcore]:           https://img.shields.io/badge/EF_Core-512BD4?style=for-the-badge&logo=dotnet&logoColor=white
+[badge-sqlserver]:        https://img.shields.io/badge/SQL_Server-CC2927?style=for-the-badge&logo=microsoftsqlserver&logoColor=white
+[badge-identity]:         https://img.shields.io/badge/ASP.NET_Identity-0078D4?style=for-the-badge&logo=microsoft&logoColor=white
+[badge-htmlsanitizer]:    https://img.shields.io/badge/HtmlSanitizer-E34F26?style=for-the-badge&logo=html5&logoColor=white
+[badge-cloudinary]:       https://img.shields.io/badge/Cloudinary-3448C5?style=for-the-badge&logo=cloudinary&logoColor=white
+[badge-mailkit]:          https://img.shields.io/badge/MailKit-EA4335?style=for-the-badge&logo=gmail&logoColor=white
+[badge-nunit]:            https://img.shields.io/badge/NUnit-25A162?style=for-the-badge&logo=dotnet&logoColor=white
+[badge-moq]:              https://img.shields.io/badge/Moq-7B2FBE?style=for-the-badge&logo=dotnet&logoColor=white
+[badge-fluentassertions]: https://img.shields.io/badge/FluentAssertions-00897B?style=for-the-badge&logo=checkmarx&logoColor=white
+[badge-ghactions]:        https://img.shields.io/badge/GitHub_Actions-2088FF?style=for-the-badge&logo=githubactions&logoColor=white
