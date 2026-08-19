@@ -3,6 +3,8 @@ namespace DevHunter.Services.Tests
     using FluentAssertions;
     using Microsoft.AspNetCore.Http;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Caching.Memory;
+    using Microsoft.Extensions.Options;
     using Moq;
 
     using Data;
@@ -22,6 +24,7 @@ namespace DevHunter.Services.Tests
 
         private ITechnologyService technologyService;
         private Mock<IImageService> imageServiceMock;
+        private IMemoryCache cache;
 
         [SetUp]
         public async Task Setup()
@@ -43,13 +46,15 @@ namespace DevHunter.Services.Tests
                 .Setup(s => s.EditImage(It.IsAny<IFormFile>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
                 .ReturnsAsync(Common.TestEntityConstants.TEST_CLOUDINARY_IMAGE_URL);
 
-            technologyService = new TechnologyService(dbContext, imageServiceMock.Object);
+            cache = new MemoryCache(Options.Create(new MemoryCacheOptions()));
+            technologyService = new TechnologyService(dbContext, imageServiceMock.Object, cache);
         }
 
         [TearDown]
         public void TearDown()
         {
             dbContext.Database.EnsureDeleted();
+            cache.Dispose();
         }
 
 

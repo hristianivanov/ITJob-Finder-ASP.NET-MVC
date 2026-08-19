@@ -3,6 +3,8 @@ namespace DevHunter.Services.Tests
     using FluentAssertions;
     using Microsoft.AspNetCore.Http;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Caching.Memory;
+    using Microsoft.Extensions.Options;
     using Moq;
 
     using Data;
@@ -20,6 +22,7 @@ namespace DevHunter.Services.Tests
     {
         private DbContextOptions<DevHunterDbContext> dbOptions;
         private DevHunterDbContext dbContext;
+        private IMemoryCache cache;
 
         private IDevelopmentService developmentService;
 
@@ -36,14 +39,16 @@ namespace DevHunter.Services.Tests
 
             await SeedDatabase(dbContext);
 
+            cache = new MemoryCache(Options.Create(new MemoryCacheOptions()));
             developmentService =
-                new DevelopmentService(dbContext, ImageServiceMock.Instance, TechnologyServiceMock.Instance);
+                new DevelopmentService(dbContext, ImageServiceMock.Instance, TechnologyServiceMock.Instance, cache);
         }
 
         [TearDown]
         public void TearDown()
         {
             dbContext.Database.EnsureDeleted();
+            cache.Dispose();
         }
 
         [TestCase("")]

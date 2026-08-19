@@ -2,6 +2,7 @@
 {
     using Mapster;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Caching.Memory;
 
     using DevHunter.Data;
 
@@ -13,15 +14,20 @@
 
     public class DevelopmentService : IDevelopmentService
     {
+        private const string AllDevelopmentsCacheKey = "all_developments";
+        private static readonly TimeSpan CacheDuration = TimeSpan.FromMinutes(30);
+
         private readonly IImageService imageService;
         private readonly ITechnologyService technologyService;
         private readonly DevHunterDbContext dbContext;
+        private readonly IMemoryCache cache;
 
-        public DevelopmentService(DevHunterDbContext dbContext, IImageService imageService, ITechnologyService technologyService)
+        public DevelopmentService(DevHunterDbContext dbContext, IImageService imageService, ITechnologyService technologyService, IMemoryCache cache)
         {
             this.dbContext = dbContext;
             this.imageService = imageService;
             this.technologyService = technologyService;
+            this.cache = cache;
         }
 
         public async Task<bool> ExistsByNameAsync(string name)
@@ -44,10 +50,15 @@
 
             await this.dbContext.Developments.AddAsync(development);
             await this.dbContext.SaveChangesAsync();
+
+            this.cache.Remove(AllDevelopmentsCacheKey);
         }
 
         public async Task<List<DevelopmentViewModel>> AllAsync()
         {
+            if (this.cache.TryGetValue(AllDevelopmentsCacheKey, out List<DevelopmentViewModel>? cached))
+                return cached!;
+
             var developments = await this.dbContext
                 .Developments
                 .OrderBy(d => d.SortOrder)
@@ -99,6 +110,8 @@
                 development.Count = techs.Sum(t => t.Count);
             }
 
+            this.cache.Set(AllDevelopmentsCacheKey, developments, CacheDuration);
+
             return developments;
         }
 
@@ -138,6 +151,7 @@
             if (isChanged)
             {
                 await this.dbContext.SaveChangesAsync();
+                this.cache.Remove(AllDevelopmentsCacheKey);
             }
         }
 
@@ -158,6 +172,7 @@
 
             this.dbContext.Developments.Remove(development);
             await this.dbContext.SaveChangesAsync();
+            this.cache.Remove(AllDevelopmentsCacheKey);
         }
 
         public async Task<DevelopmentOfferViewModel> GetByIdAsync(Guid id)

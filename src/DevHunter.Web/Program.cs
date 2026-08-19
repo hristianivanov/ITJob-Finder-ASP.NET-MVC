@@ -54,6 +54,8 @@ public class Program
 
         MappingConfig.RegisterMappings();
 
+        builder.Services.AddMemoryCache();
+
         builder.Services.AddApplicationServices(typeof(IJobOfferService), builder.Configuration);
 
         builder.Services.AddControllersWithViews()

@@ -5,6 +5,7 @@
     using Mapster;
     using Microsoft.AspNetCore.Http;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Caching.Memory;
 
     using DevHunter.Data;
     using DevHunter.Data.Models;
@@ -15,14 +16,18 @@
 
     public class TechnologyService : ITechnologyService
     {
+        private const string AllTechnologiesCacheKey = "all_technologies";
+        private static readonly TimeSpan CacheDuration = TimeSpan.FromMinutes(30);
+
         private readonly DevHunterDbContext dbContext;
-
         private readonly IImageService imageService;
+        private readonly IMemoryCache cache;
 
-        public TechnologyService(DevHunterDbContext dbContext, IImageService imageService)
+        public TechnologyService(DevHunterDbContext dbContext, IImageService imageService, IMemoryCache cache)
         {
             this.dbContext = dbContext;
             this.imageService = imageService;
+            this.cache = cache;
         }
 
         public async Task<bool> TechnologyExistsByNameAsync(string technologyName)
@@ -63,15 +68,22 @@
 
             await this.dbContext.Technologies.AddAsync(technology);
             await this.dbContext.SaveChangesAsync();
+
+            this.cache.Remove(AllTechnologiesCacheKey);
         }
 
         public async Task<IEnumerable<TechnologyViewModel>> AllAsync()
         {
+            if (this.cache.TryGetValue(AllTechnologiesCacheKey, out List<TechnologyViewModel>? cached))
+                return cached!;
+
             var technologies = await this.dbContext
                 .Technologies
                 .AsNoTracking()
                 .Select(ToEnhancedViewModel)
                 .ToListAsync();
+
+            this.cache.Set(AllTechnologiesCacheKey, technologies, CacheDuration);
 
             return technologies;
         }
@@ -112,6 +124,7 @@
             if (isChanged)
             {
                 await this.dbContext.SaveChangesAsync();
+                this.cache.Remove(AllTechnologiesCacheKey);
             }
         }
 
@@ -125,6 +138,7 @@
             {
                 this.dbContext.Technologies.Remove(technology);
                 await this.dbContext.SaveChangesAsync();
+                this.cache.Remove(AllTechnologiesCacheKey);
             }
         }
 
